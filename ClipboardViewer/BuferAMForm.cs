@@ -10,11 +10,14 @@ using System.Windows.Forms;
 
 namespace ClipboardViewer
 {
-    public partial class Form1 : Form
+    public partial class BuferAMForm : Form
     {
-        public Form1()
+        private IntPtr _nextViewer;
+        
+        protected override void OnClosed(EventArgs e)
         {
-            InitializeComponent();
+            base.OnClosed(e);
+            UnregisterHotKey(this.Handle, 0);
         }
     }
 }
