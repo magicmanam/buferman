@@ -7,17 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Windows;
 
 namespace ClipboardViewer
 {
     public partial class BuferAMForm : Form
     {
-        private IntPtr _nextViewer;
-        
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-            UnregisterHotKey(this.Handle, 0);
+            WindowsFunctions.UnregisterHotKey(this.Handle, 1);
         }
     }
 }

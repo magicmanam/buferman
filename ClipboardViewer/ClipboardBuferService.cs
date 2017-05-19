@@ -10,6 +10,11 @@ namespace ClipboardViewer
         private readonly IList<IDataObject> _dataObjects = new List<IDataObject>();
         private readonly IEqualityComparer<IDataObject> _comparer = new DataObjectComparer();
 
+		public ClipboardBuferService(IEqualityComparer<IDataObject> comparer)
+		{
+			this._comparer = comparer;
+		}
+
         public IEnumerable<IDataObject> GetClips()
         {
             return _dataObjects.ToList();

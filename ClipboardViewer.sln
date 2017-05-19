@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipboardViewer", "ClipboardViewer\ClipboardViewer.csproj", "{C4258F22-E51F-40DD-8B8A-00A62BC44DCF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windows", "Windows\Windows.csproj", "{5A51C93A-8FD0-4A47-8802-05B36CF7242E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Logger\Logger.csproj", "{0DEECDC2-CF30-4625-A465-671F851F937E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{C4258F22-E51F-40DD-8B8A-00A62BC44DCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4258F22-E51F-40DD-8B8A-00A62BC44DCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4258F22-E51F-40DD-8B8A-00A62BC44DCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A51C93A-8FD0-4A47-8802-05B36CF7242E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A51C93A-8FD0-4A47-8802-05B36CF7242E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A51C93A-8FD0-4A47-8802-05B36CF7242E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A51C93A-8FD0-4A47-8802-05B36CF7242E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DEECDC2-CF30-4625-A465-671F851F937E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DEECDC2-CF30-4625-A465-671F851F937E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DEECDC2-CF30-4625-A465-671F851F937E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DEECDC2-CF30-4625-A465-671F851F937E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logger;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -21,14 +22,19 @@ namespace ClipboardViewer
             {
                 if (isNew)
                 {
+					Logger.Logger.Current = new ConsoleLogger();
+
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
-                    var form = new BuferAMForm(new ClipboardBuferService());
+					var comparer = new DataObjectComparer();
+                    var form = new BuferAMForm(new ClipboardBuferService(comparer), comparer);
                     Application.Run(form);
-                } else
-                {                    
-                    MessageBox.Show("Program is already run. Press Alt+C to view current bufers.", BuferAMForm.PROGRAM_CAPTION);
-                }                
+
+				}
+				else
+				{
+					MessageBox.Show("Program is already run. Press Alt+C to view current bufers.", BuferAMForm.PROGRAM_CAPTION);
+				}                
             }
         }        
     }

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Input;
 using System.Linq;
+using Windows;
 
 namespace ClipboardViewer
 {
@@ -17,20 +18,18 @@ namespace ClipboardViewer
         private readonly RenderingHandler _renderingHandler;
         private readonly WindowHidingHandler _hidingHandler;
         private readonly CopyingToClipboardInterceptor _clipboardInterceptor;
+		private IntPtr _nextViewer;
 
-        internal BuferAMForm(IClipboardBuferService clipboardBuferService)
+		internal BuferAMForm(IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer)
         {
             this._clipboardBuferService = clipboardBuferService;
-            this._renderingHandler = new RenderingHandler(this, this._clipboardBuferService);
+            this._renderingHandler = new RenderingHandler(this, this._clipboardBuferService, comparer);
             this._hidingHandler = new WindowHidingHandler(this);
-            this._clipboardInterceptor = new CopyingToClipboardInterceptor(clipboardBuferService, this, this._renderingHandler);
+            this._clipboardInterceptor = new CopyingToClipboardInterceptor(clipboardBuferService, this, this._renderingHandler, comparer);
             
             InitializeComponent();
             this.ShowInTaskbar = false;
-            
-            this._nextViewer = SetClipboardViewer(this.Handle);
-
-            RegisterHotKey(this.Handle, 0, 1, (int)Keys.C);
+			Logger.Logger.Current.Write(this.Handle.ToString());
         }
 
         /// <summary>
@@ -50,18 +49,28 @@ namespace ClipboardViewer
             }
             base.Dispose(disposing);
         }
-
-        private static int WM_HOTKEY = 0x0312;
-        private static int WM_DRAWCLIPBOARD = 0x308;
-        private string _lastText;
+		
+		private string _lastText;
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == WM_DRAWCLIPBOARD)
-            {
-                this._clipboardInterceptor.DoOnCtrlC();
-            }
+			if (m.Msg == Messages.WM_CREATE)
+			{
+				this._nextViewer = WindowsFunctions.SetClipboardViewer(this.Handle);
+				Logger.Logger.Current.Write("Next viewer " + this._nextViewer.ToString());
+				WindowsFunctions.RegisterHotKey(this.Handle, 0, 1, (int)Keys.C);
+			}
 
-            if (m.Msg == WM_HOTKEY)
+			if (m.Msg == Messages.WM_DRAWCLIPBOARD)
+			{
+				this._clipboardInterceptor.DoOnCtrlC();
+
+				if (this._nextViewer != IntPtr.Zero)
+				{
+					WindowsFunctions.SendMessage(this._nextViewer, m.Msg, IntPtr.Zero, IntPtr.Zero);
+				}
+			}
+
+            if (m.Msg == Messages.WM_HOTKEY)
             {
                 Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
                 ModifierKeys modifier = (ModifierKeys)((int)m.LParam & 0xFFFF);   
@@ -70,18 +79,30 @@ namespace ClipboardViewer
                 {               
                     this.Activate();
                 }
+				WindowsFunctions.SendMessage(this._nextViewer, m.Msg, m.WParam, m.LParam);
             }
+
+			if(m.Msg == Messages.WM_DESTROY)
+			{
+				WindowsFunctions.ChangeClipboardChain(this.Handle, this._nextViewer);
+				WindowsFunctions.UnregisterHotKey(this.Handle, 0);
+				base.WndProc(ref m);
+				System.Environment.Exit(0);
+			}
+
+			if(m.Msg == Messages.WM_CHANGECBCHAIN)
+			{
+				if(this._nextViewer == m.WParam)
+				{
+					this._nextViewer = m.LParam;
+				} else
+				{
+					WindowsFunctions.SendMessage(this._nextViewer, m.Msg, m.WParam, m.LParam);
+				}
+			}
 
             base.WndProc(ref m);
         }
-                
-        [DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
-        [DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr SetClipboardViewer(IntPtr hWndNewViewer);
 
         #region Код, автоматически созданный конструктором форм Windows
 
@@ -121,7 +142,7 @@ namespace ClipboardViewer
         
         private void OnExit(object sender, EventArgs args)
         {
-            System.Environment.Exit(0);
+			WindowsFunctions.SendMessage(this.Handle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);			
         }
 
         private void OnDeleteAll(object sender, EventArgs args)
@@ -138,10 +159,26 @@ namespace ClipboardViewer
         
         private void BuferAMForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Escape)
-            {
-                this._hidingHandler.HideWindow();
-            }
+			switch (e.KeyCode)
+			{
+				case Keys.Escape:
+					this._hidingHandler.HideWindow();
+					break;
+				case Keys.Space:
+					SendKeys.Send("~");//Enter
+					break;
+				case Keys.C:
+					SendKeys.Send("{TAB}");
+					SendKeys.Send("{TAB}");
+					SendKeys.Send("{TAB}");
+					break;
+				case Keys.X:
+					SendKeys.Send("+{TAB}");
+					break;
+				case Keys.V:
+					SendKeys.Send("{TAB}");
+					break;
+			}
         }
 
         #endregion

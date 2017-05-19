@@ -16,7 +16,6 @@ namespace ClipboardViewer
 
         public ClipSelectionHandler(Form form, IDataObject dataObject)
         {
-            //_form = form;
             _hidingHandler = new WindowHidingHandler(form);
             this._dataObject = dataObject;
         }
