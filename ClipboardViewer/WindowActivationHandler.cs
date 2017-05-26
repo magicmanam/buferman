@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClipboardViewer
 {
-    class WindowActivationHandler
+	class WindowActivationHandler
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly Form _form;
@@ -25,7 +20,8 @@ namespace ClipboardViewer
                 
         public void OnActivated(object sender, EventArgs e)
         {
-            this._form.WindowState = FormWindowState.Normal;
+			Logger.Logger.Current.Write("On Activated");
+			this._form.WindowState = FormWindowState.Normal;
             this._form.Visible = true;
 
             this._renderingHandler.Render();

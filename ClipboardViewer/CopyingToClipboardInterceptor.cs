@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Logger;
 
 namespace ClipboardViewer
 {
-    class CopyingToClipboardInterceptor
+	class CopyingToClipboardInterceptor
     {
         private readonly IClipboardBuferService _clipboardBuferService;
 		private readonly IEqualityComparer<IDataObject> _comparer;
@@ -35,7 +31,13 @@ namespace ClipboardViewer
 				if (this._clipboardBuferService.Contains(currentObject))
                 {
 					Logger.Logger.Current.Write("Already contains this clip");
-					_clipboardBuferService.RemoveClip(currentObject);					
+					if (this._clipboardBuferService.IsNotPersistent(currentObject))
+					{
+						_clipboardBuferService.RemoveClip(currentObject);
+					} else
+					{
+						return;
+					}
                 }
 				
                 if (_clipboardBuferService.GetClips().Count() == 30)
@@ -45,7 +47,7 @@ namespace ClipboardViewer
                 }
 
 				Logger.Logger.Current.Write("Add Clip");
-				_clipboardBuferService.AddClip(currentObject);
+				_clipboardBuferService.AddTemporaryClip(currentObject);
 
                 if (this._form.WindowState != FormWindowState.Minimized && this._form.Visible)
                 {

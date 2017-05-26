@@ -23,8 +23,8 @@ namespace ClipboardViewer
 		internal BuferAMForm(IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer)
         {
             this._clipboardBuferService = clipboardBuferService;
-            this._renderingHandler = new RenderingHandler(this, this._clipboardBuferService, comparer);
             this._hidingHandler = new WindowHidingHandler(this);
+            this._renderingHandler = new RenderingHandler(this, this._clipboardBuferService, comparer, this._hidingHandler);
             this._clipboardInterceptor = new CopyingToClipboardInterceptor(clipboardBuferService, this, this._renderingHandler, comparer);
             
             InitializeComponent();
@@ -50,7 +50,6 @@ namespace ClipboardViewer
             base.Dispose(disposing);
         }
 		
-		private string _lastText;
         protected override void WndProc(ref Message m)
         {
 			if (m.Msg == Messages.WM_CREATE)
@@ -66,6 +65,7 @@ namespace ClipboardViewer
 
 				if (this._nextViewer != IntPtr.Zero)
 				{
+					Logger.Logger.Current.Write("Send message to the next clipboard viewer.");
 					WindowsFunctions.SendMessage(this._nextViewer, m.Msg, IntPtr.Zero, IntPtr.Zero);
 				}
 			}
@@ -76,18 +76,17 @@ namespace ClipboardViewer
                 ModifierKeys modifier = (ModifierKeys)((int)m.LParam & 0xFFFF);   
                 
                 if(key == Keys.C && modifier == System.Windows.Input.ModifierKeys.Alt)
-                {               
-                    this.Activate();
+                {
+					Logger.Logger.Current.Write("Activate window on Alt + C");
+					this.Activate();
                 }
-				WindowsFunctions.SendMessage(this._nextViewer, m.Msg, m.WParam, m.LParam);
             }
 
 			if(m.Msg == Messages.WM_DESTROY)
 			{
 				WindowsFunctions.ChangeClipboardChain(this.Handle, this._nextViewer);
 				WindowsFunctions.UnregisterHotKey(this.Handle, 0);
-				base.WndProc(ref m);
-				System.Environment.Exit(0);
+				Application.Exit();//Note
 			}
 
 			if(m.Msg == Messages.WM_CHANGECBCHAIN)
@@ -119,11 +118,12 @@ namespace ClipboardViewer
             this.Activated += new WindowActivationHandler(_clipboardBuferService, this, this._renderingHandler).OnActivated;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             
-            this.KeyDown += BuferAMForm_KeyDown;
+            this.KeyDown += this._renderingHandler.OnKeyDown;
             this.KeyPreview = true;
 
             var mainMenu = new MainMenu();
-            mainMenu.MenuItems.Add(new MenuItem("Actions", new MenuItem[] { new MenuItem("Undo", (sender, args) => MessageBox.Show("Feature is not supported now. Pay money to support.", "Keep calm and copy&paste!"), Shortcut.CtrlZ), new MenuItem("Delete All", OnDeleteAll), new MenuItem("Bufer's Basket", (sender, args) => MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")), new MenuItem("Exit session", OnExit) }));
+			mainMenu.MenuItems.Add(new MenuItem("File", new MenuItem[] { new MenuItem("Load from file"), new MenuItem("Exit session", OnExit) }));
+            mainMenu.MenuItems.Add(new MenuItem("Edit", new MenuItem[] { new MenuItem("Undo", (sender, args) => MessageBox.Show("Feature is not supported now. Pay money to support.", "Keep calm and copy&paste!"), Shortcut.CtrlZ), new MenuItem("Delete All", OnDeleteAll), new MenuItem("Bufer's Basket", (sender, args) => MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")) }));
             this.Menu = mainMenu;
 
             this.FormClosing += BuferAMForm_FormClosing;
@@ -147,7 +147,9 @@ namespace ClipboardViewer
 
         private void OnDeleteAll(object sender, EventArgs args)
         {
-            var clips = this._clipboardBuferService.GetClips();
+			Logger.Logger.Current.Write("Delete All");
+
+			var clips = this._clipboardBuferService.GetClips();
 
             foreach (var clip in clips)
             {
@@ -155,30 +157,6 @@ namespace ClipboardViewer
             }
 
             this._renderingHandler.Render();
-        }
-        
-        private void BuferAMForm_KeyDown(object sender, KeyEventArgs e)
-        {
-			switch (e.KeyCode)
-			{
-				case Keys.Escape:
-					this._hidingHandler.HideWindow();
-					break;
-				case Keys.Space:
-					SendKeys.Send("~");//Enter
-					break;
-				case Keys.C:
-					SendKeys.Send("{TAB}");
-					SendKeys.Send("{TAB}");
-					SendKeys.Send("{TAB}");
-					break;
-				case Keys.X:
-					SendKeys.Send("+{TAB}");
-					break;
-				case Keys.V:
-					SendKeys.Send("{TAB}");
-					break;
-			}
         }
 
         #endregion

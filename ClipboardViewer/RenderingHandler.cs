@@ -3,32 +3,32 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClipboardViewer
 {
-    class RenderingHandler : IRenderingHandler
+	class RenderingHandler : IRenderingHandler
     {
         private readonly Form _form;
         private readonly IClipboardBuferService _clipboardBuferService;
-        private readonly IDictionary<IDataObject, Button> _buttonsMap = new Dictionary<IDataObject, Button>(30);
+		private readonly WindowHidingHandler _hidingHandler;
+		private readonly IDictionary<IDataObject, Button> _buttonsMap = new Dictionary<IDataObject, Button>(30);
 		private readonly IEqualityComparer<IDataObject> _comparer;
         
         private const int BUTTON_HEIGHT = 25;
 
-        public RenderingHandler(Form form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer)
+        public RenderingHandler(Form form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, WindowHidingHandler hidingHandler)
         {
             this._form = form;
             this._clipboardBuferService = clipboardBuferService;
 			this._comparer = comparer;
+			this._hidingHandler = hidingHandler;
         }
 
         public void Render()
         {
 			Logger.Logger.Current.Write("On render");
-            var bufers = _clipboardBuferService.GetClips().ToArray();
+            var bufers = _clipboardBuferService.GetClips(true).ToArray();
             
             int y = bufers.Length * BUTTON_HEIGHT;
             int width = _form.ClientRectangle.Width;
@@ -46,7 +46,7 @@ namespace ClipboardViewer
                 }
                 else
                 {
-                    var buferString = bufer.GetData("Text") as string;
+                    var buferString = bufer.GetData("System.String") as string;//Only this format to support Unicode
                     button = new Button() { TextAlign = ContentAlignment.MiddleLeft, Margin = new Padding(0) };
 					var isChangeTextAvailable = true;
 					string buferTitle = null;
@@ -67,7 +67,9 @@ namespace ClipboardViewer
                                 buferTitle = $"<< Files ({files.Length}) >>:";
                             }
 
-							buferString = string.Join(Environment.NewLine, files.ToList());
+							var folder = Path.GetDirectoryName(files.First());
+							buferString += folder + ": " + Environment.NewLine + Environment.NewLine;
+							buferString += string.Join(Environment.NewLine, files.Select(f => Path.GetFileName(f)).ToList());
 
                             button.BackColor = Color.Brown;
                         }
@@ -111,6 +113,10 @@ namespace ClipboardViewer
 					{
 						contextMenu.MenuItems.Add(new MenuItem("Change text", buttonWrapper.ChangeText));
 					}
+					contextMenu.MenuItems.Add(new MenuItem("Paste", (object sender, EventArgs ars) => {
+						SendKeys.Send("~");
+					}));
+					contextMenu.MenuItems.Add(new MenuItem("Mark as persistent", buttonWrapper.MarkAsPersistent));//This item must be the last
                     button.ContextMenu = contextMenu;
                     button.Width = width;
                 }
@@ -123,7 +129,8 @@ namespace ClipboardViewer
 
         private void RemoveOldButtons(IEnumerable<IDataObject> bufers)
         {
-            var deletedKeys = new List<IDataObject>();
+			Logger.Logger.Current.Write("Rendering Handler: Remove Old Buttons");
+			var deletedKeys = new List<IDataObject>();
 
             foreach (var key in this._buttonsMap.Keys.ToList())
             {
@@ -141,80 +148,38 @@ namespace ClipboardViewer
             }
         }
 
-        class BuferHandlersWrapper
-        {
-            private readonly IClipboardBuferService _clipboardBuferService;
-            private readonly RenderingHandler _renderingHandler;
-            private readonly IDataObject _dataObject;
-			private readonly Button _button;
-			private readonly string _originButtonText;
-			private readonly ToolTip _mouseOverTooltip;
-			private readonly ToolTip _focusTooltip = new ToolTip();
-			private string _tooltipText;
-			
-			public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, RenderingHandler renderingHandler, IDataObject dataObject, Button button, Form form, string tooltipTitle, string tooltipText)
-            {
-                this._clipboardBuferService = clipboardBuferService;
-                this._renderingHandler = renderingHandler;
-                this._dataObject = dataObject;
-                this._button = button;
-				this._originButtonText = button.Text;
-				this._tooltipText = tooltipText;
-
-				var tooltip = new ToolTip() { InitialDelay = 0 };
-				tooltip.IsBalloon = true;
-				tooltip.SetToolTip(button, tooltipText);
-				if (!string.IsNullOrWhiteSpace(tooltipTitle))
-				{
-					tooltip.ToolTipTitle = tooltipTitle;
-					this._focusTooltip.ToolTipTitle = tooltipTitle;
-				}
-				this._mouseOverTooltip = tooltip;
-
-				button.GotFocus += Button_GotFocus;
-				button.LostFocus += Button_LostFocus;
-
-				button.Click += new ClipSelectionHandler(form, dataObject).DoOnClipSelection;
-			}
-
-            public void DeleteBufer(object sender, EventArgs e)
-            {
-                this._clipboardBuferService.RemoveClip(this._dataObject);
-                this._renderingHandler.Render();
-            }
-
-			public void ChangeText(object sender, EventArgs e)
+		 public void OnKeyDown(object sender, KeyEventArgs e)
+		{
+			switch (e.KeyCode)
 			{
-				var newText = Microsoft.VisualBasic.Interaction.InputBox($"Enter a new text for this bufer. It can be useful to hide copied passwords or alias some enourmous text. Primary button value was \"{this._originButtonText}\".",
-					   "Change bufer's text",
-					   this._button.Text);
-
-				if (!string.IsNullOrWhiteSpace(newText) && newText != this._button.Text)
-				{
-					this._button.Text = newText;
-					this._tooltipText = newText;
-					if (newText == this._originButtonText)
+				case Keys.Escape:
+					this._hidingHandler.HideWindow();
+					break;
+				case Keys.Space:
+					SendKeys.Send("~");
+					break;
+				case Keys.C:
+					SendKeys.Send("{TAB}");
+					SendKeys.Send("{TAB}");
+					SendKeys.Send("{TAB}");
+					break;
+				case Keys.X:
+					var lastBufer = this._clipboardBuferService.LastClip;
+					if(lastBufer != null)
 					{
-						MessageBox.Show("Bufer alias was returned to its primary value");
-						this._button.Font = new Font(this._button.Font, FontStyle.Regular);
-					} else
+						var button = this._buttonsMap[lastBufer];
+						button.Focus();
+					}					
+					break;
+				case Keys.V:
+					var firstBufer = this._clipboardBuferService.FirstClip;
+					if (firstBufer != null)
 					{
-						this._button.Font = new Font(this._button.Font, FontStyle.Bold);
+						var button = this._buttonsMap[firstBufer];
+						button.Focus();
 					}
-
-					this._mouseOverTooltip.SetToolTip(this._button, newText);
-				}
+					break;
 			}
-
-			private void Button_GotFocus(object sender, EventArgs e)
-			{
-				this._focusTooltip.Show(this._tooltipText, this._button, 2500);
-			}
-
-			private void Button_LostFocus(object sender, EventArgs e)
-			{
-				this._focusTooltip.Hide(this._button);
-			}
-		}
+		}		
     }
 }

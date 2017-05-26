@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace ClipboardViewer
 {
-    class WindowHidingHandler
+	class WindowHidingHandler
     {
         private readonly Form _form;
 

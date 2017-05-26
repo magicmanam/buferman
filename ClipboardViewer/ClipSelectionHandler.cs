@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClipboardViewer
 {
-    class ClipSelectionHandler
+	class ClipSelectionHandler
     {
-        //private readonly Form _form;
         private readonly WindowHidingHandler _hidingHandler;
         private readonly IDataObject _dataObject;
 
@@ -22,7 +17,8 @@ namespace ClipboardViewer
 
         public void DoOnClipSelection(object sender, EventArgs e)
         {
-            Clipboard.SetDataObject(this._dataObject);
+			Logger.Logger.Current.Write("Do on clip selection");
+			Clipboard.SetDataObject(this._dataObject);
 
             this._hidingHandler.HideWindow();
 

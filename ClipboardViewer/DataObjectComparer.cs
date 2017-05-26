@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClipboardViewer
 {
-    class DataObjectComparer : IEqualityComparer<IDataObject>
+	class DataObjectComparer : IEqualityComparer<IDataObject>
     {
         private static readonly IList<string> _stringFormats = new List<string>() { "Text", "System.String", "Rich Text Format", "UnicodeText", "OEMText", "Locale" };
         private static readonly IList<string> _arrayFormats = new List<string>() { "FileName", "FileNameW", "FileDrop" };
 
         public bool Equals(IDataObject x, IDataObject y)
         {
-            if (x == null || y == null)
+			Logger.Logger.Current.Write("DataObjectComparer.Equals");
+			if (x == null || y == null)
             {
                 return false;
             }

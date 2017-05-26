@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Windows
+﻿namespace Windows
 {
-    public static class Messages
+	public static class Messages
     {
 		public static int WM_CREATE = 0x0001;
 		public static int WM_HOTKEY = 0x0312;

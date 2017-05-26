@@ -1,15 +1,12 @@
-﻿using Logger;
+﻿using log4net.Config;
+using Logger;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ClipboardViewer
 {
-    static class Program
+	static class Program
     {        
         /// <summary>
         /// Главная точка входа для приложения.
@@ -22,7 +19,11 @@ namespace ClipboardViewer
             {
                 if (isNew)
                 {
-					Logger.Logger.Current = new ConsoleLogger();
+					XmlConfigurator.Configure();//Note
+					Logger.Logger.Current = new Log4netLogger();
+					//Logger.Logger.Current = new ConsoleLogger();
+
+					Application.ThreadException += Application_ThreadException;//Must be run before Application.Run() //Note
 
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
@@ -36,6 +37,11 @@ namespace ClipboardViewer
 					MessageBox.Show("Program is already run. Press Alt+C to view current bufers.", BuferAMForm.PROGRAM_CAPTION);
 				}                
             }
-        }        
-    }
+        }
+
+		private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
+		{
+			Logger.Logger.Current.Write("Exception " + e.Exception.Message);
+		}
+	}
 }

@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CopyingToClipboardInterceptor.cs" />
+    <Compile Include="BuferHandlersWrapper.cs" />
     <Compile Include="DataObjectComparer.cs" />
     <Compile Include="IRenderingHandler.cs" />
     <Compile Include="WindowHidingHandler.cs" />

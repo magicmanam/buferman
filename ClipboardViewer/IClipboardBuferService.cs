@@ -1,23 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ClipboardViewer
 {
-    interface IClipboardBuferService
+	interface IClipboardBuferService
     {
-        IEnumerable<IDataObject> GetClips();
+		/// <summary>
+		/// Returns persistent + temporary clips.
+		/// </summary>
+		/// <returns></returns>
+        IEnumerable<IDataObject> GetClips(bool persistentFirst = false);
 
-        void AddClip(IDataObject clipDataObject);
-        
+        void AddTemporaryClip(IDataObject clipDataObject);
+
+		void MarkClipAsPersistent(IDataObject dataObject);
+
         IDataObject LastClip { get; }
 
         bool IsLastClip(IDataObject clipObject);
 
-        IDataObject FirstClip { get; }
+		bool IsNotPersistent(IDataObject clipObject);
+
+		IDataObject FirstClip { get; }
 
         bool Contains(IDataObject clipDataObject);
 
