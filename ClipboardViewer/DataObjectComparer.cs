@@ -11,7 +11,6 @@ namespace ClipboardViewer
 
         public bool Equals(IDataObject x, IDataObject y)
         {
-			Logger.Logger.Current.Write("DataObjectComparer.Equals");
 			if (x == null || y == null)
             {
                 return false;

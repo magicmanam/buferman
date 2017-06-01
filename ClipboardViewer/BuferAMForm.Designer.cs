@@ -8,13 +8,16 @@ using System.Drawing;
 using System.Windows.Input;
 using System.Linq;
 using Windows;
+using System.IO;
+using System.Text;
 
 namespace ClipboardViewer
 {
     partial class BuferAMForm
     {
         private readonly IClipboardBuferService _clipboardBuferService;
-        internal const string PROGRAM_CAPTION = "BuferMAN";
+		private readonly OpenFileDialog _dialog = new OpenFileDialog();
+		internal const string PROGRAM_CAPTION = "BuferMAN";
         private readonly RenderingHandler _renderingHandler;
         private readonly WindowHidingHandler _hidingHandler;
         private readonly CopyingToClipboardInterceptor _clipboardInterceptor;
@@ -26,8 +29,13 @@ namespace ClipboardViewer
             this._hidingHandler = new WindowHidingHandler(this);
             this._renderingHandler = new RenderingHandler(this, this._clipboardBuferService, comparer, this._hidingHandler);
             this._clipboardInterceptor = new CopyingToClipboardInterceptor(clipboardBuferService, this, this._renderingHandler, comparer);
-            
-            InitializeComponent();
+			this._dialog.Filter = "Текстовые файлы (*.txt)|*.txt";
+			this._dialog.CheckFileExists = true;
+			this._dialog.CheckPathExists = true;
+			this._dialog.RestoreDirectory = true;
+			this._dialog.Multiselect = false;
+
+			InitializeComponent();
             this.ShowInTaskbar = false;
 			Logger.Logger.Current.Write(this.Handle.ToString());
         }
@@ -61,6 +69,7 @@ namespace ClipboardViewer
 
 			if (m.Msg == Messages.WM_DRAWCLIPBOARD)
 			{
+				Logger.Logger.Current.Write("Clipboard copied!");
 				this._clipboardInterceptor.DoOnCtrlC();
 
 				if (this._nextViewer != IntPtr.Zero)
@@ -122,7 +131,7 @@ namespace ClipboardViewer
             this.KeyPreview = true;
 
             var mainMenu = new MainMenu();
-			mainMenu.MenuItems.Add(new MenuItem("File", new MenuItem[] { new MenuItem("Load from file"), new MenuItem("Exit session", OnExit) }));
+			mainMenu.MenuItems.Add(new MenuItem("File", new MenuItem[] { new MenuItem("Load from file", OnLoadFile), new MenuItem("Exit session", OnExit) }));
             mainMenu.MenuItems.Add(new MenuItem("Edit", new MenuItem[] { new MenuItem("Undo", (sender, args) => MessageBox.Show("Feature is not supported now. Pay money to support.", "Keep calm and copy&paste!"), Shortcut.CtrlZ), new MenuItem("Delete All", OnDeleteAll), new MenuItem("Bufer's Basket", (sender, args) => MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")) }));
             this.Menu = mainMenu;
 
@@ -140,7 +149,29 @@ namespace ClipboardViewer
             form.WindowState = FormWindowState.Minimized;
         }
         
-        private void OnExit(object sender, EventArgs args)
+		private void OnLoadFile(object sender, EventArgs args)
+		{
+			var result = this._dialog.ShowDialog();
+			
+			if (result == DialogResult.OK) {
+				var fileName = this._dialog.FileName;
+				using (var fileReader = new StreamReader(new FileStream(fileName, FileMode.Open, FileAccess.Read), Encoding.Default))
+				{
+					while (!fileReader.EndOfStream)
+					{
+						var bufer = fileReader.ReadLine();
+						if (!string.IsNullOrWhiteSpace(bufer))
+						{
+							var dataObject = new DataObject("System.String", bufer);
+							Clipboard.SetDataObject(dataObject);
+						}
+					}
+				}
+			}
+		}
+
+
+		private void OnExit(object sender, EventArgs args)
         {
 			WindowsFunctions.SendMessage(this.Handle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);			
         }

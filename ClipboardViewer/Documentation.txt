@@ -1,12 +1,12 @@
-﻿- extract Windows project into Nuget!
+﻿- file encryption
+- extract Windows project into Nuget!
 - Read WinForms book!
 - Complete presentation!
 - Log4net mastering!
 - Console remove!
 - Git!
-- load from file menu
 - При появлении программы фокусироваться на нужном буфере
-- Increase height 			                     
+- Increase height
 - unknown publisher error
 
 ? - идея шаредного буфера - копируешь себе, получает в буфер адресат, или ты видишь свои буферы на другой машине
