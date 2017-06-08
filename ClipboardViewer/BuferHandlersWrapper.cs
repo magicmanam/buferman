@@ -37,7 +37,7 @@ namespace ClipboardViewer
 			button.GotFocus += Button_GotFocus;
 			button.LostFocus += Button_LostFocus;
 
-			button.Click += new ClipSelectionHandler(form, dataObject).DoOnClipSelection;
+			button.Click += new BuferSelectionHandler(form, dataObject).DoOnClipSelection;
 		}
 
 		public void DeleteBufer(object sender, EventArgs e)

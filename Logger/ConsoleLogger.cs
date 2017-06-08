@@ -8,5 +8,10 @@ namespace Logger
 		{
 			Console.WriteLine(message);
 		}
+
+		public void WriteError(string message, Exception exc)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

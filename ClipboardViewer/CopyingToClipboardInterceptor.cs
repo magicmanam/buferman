@@ -23,9 +23,9 @@ namespace ClipboardViewer
         {
 			Logger.Logger.Current.Write("On Ctrl+C");
 
-            var currentObject = Clipboard.GetDataObject();
+            var currentObject = ClipboardWrapper.GetDataObject();
 
-            if (currentObject.GetFormats().Any() && !this._clipboardBuferService.IsLastClip(currentObject))
+            if (currentObject.GetFormats().Any() && !this._clipboardBuferService.IsLastTemporaryClip(currentObject))
             {
 				Logger.Logger.Current.Write("Is not last clip");
 				if (this._clipboardBuferService.Contains(currentObject))

@@ -15,9 +15,9 @@ namespace ClipboardViewer
 
 		void MarkClipAsPersistent(IDataObject dataObject);
 
-        IDataObject LastClip { get; }
+        IDataObject LastTemporaryClip { get; }
 
-        bool IsLastClip(IDataObject clipObject);
+        bool IsLastTemporaryClip(IDataObject clipObject);
 
 		bool IsNotPersistent(IDataObject clipObject);
 

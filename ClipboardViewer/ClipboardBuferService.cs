@@ -32,17 +32,17 @@ namespace ClipboardViewer
 			}
 		}
 
-        public IDataObject LastClip
+        public IDataObject LastTemporaryClip
         {
             get
             {
-                return this._GetAllClips(false).LastOrDefault();
+                return this._tempObjects.LastOrDefault();
             }
         }
         
-        public bool IsLastClip(IDataObject dataObject)
+        public bool IsLastTemporaryClip(IDataObject dataObject)
         {
-            return this._comparer.Equals(this.LastClip, dataObject);
+            return this._comparer.Equals(this.LastTemporaryClip, dataObject);
         }
 
 		public bool IsNotPersistent(IDataObject dataObject)

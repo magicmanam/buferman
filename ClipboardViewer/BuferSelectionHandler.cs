@@ -4,12 +4,12 @@ using System.Windows.Forms;
 
 namespace ClipboardViewer
 {
-	class ClipSelectionHandler
+	class BuferSelectionHandler
     {
         private readonly WindowHidingHandler _hidingHandler;
         private readonly IDataObject _dataObject;
 
-        public ClipSelectionHandler(Form form, IDataObject dataObject)
+        public BuferSelectionHandler(Form form, IDataObject dataObject)
         {
             _hidingHandler = new WindowHidingHandler(form);
             this._dataObject = dataObject;
@@ -17,7 +17,7 @@ namespace ClipboardViewer
 
         public void DoOnClipSelection(object sender, EventArgs e)
         {
-			Logger.Logger.Current.Write("Do on clip selection");
+			Logger.Logger.Current.Write("Do on bufer selection");
 			Clipboard.SetDataObject(this._dataObject);
 
             this._hidingHandler.HideWindow();

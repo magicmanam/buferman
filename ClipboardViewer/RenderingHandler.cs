@@ -86,7 +86,7 @@ namespace ClipboardViewer
                         }
                     }
 
-                    button.Text = buferTitle ?? buferString;
+                    button.Text = (buferTitle ?? buferString).Trim();
                     
                     this._buttonsMap.Add(bufer, button);
                     this._form.Controls.Add(button);
@@ -164,7 +164,7 @@ namespace ClipboardViewer
 					SendKeys.Send("{TAB}");
 					break;
 				case Keys.X:
-					var lastBufer = this._clipboardBuferService.LastClip;
+					var lastBufer = this._clipboardBuferService.LastTemporaryClip;
 					if(lastBufer != null)
 					{
 						var button = this._buttonsMap[lastBufer];

@@ -41,7 +41,7 @@ namespace ClipboardViewer
 
 		private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
 		{
-			Logger.Logger.Current.Write("Exception " + e.Exception.Message);
+			Logger.Logger.Current.WriteError("Exception " + e.Exception.Message, e.Exception);
 		}
 	}
 }
