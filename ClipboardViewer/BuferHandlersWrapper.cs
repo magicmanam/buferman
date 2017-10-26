@@ -4,10 +4,10 @@ using System.Windows.Forms;
 
 namespace ClipboardViewer
 {
-	class BuferHandlersWrapper
-	{
+	class BuferHandlersWrapper : IBuferHandlersWrapper
+    {
 		private readonly IClipboardBuferService _clipboardBuferService;
-		private readonly RenderingHandler _renderingHandler;
+		private readonly IRenderingHandler _renderingHandler;
 		private readonly IDataObject _dataObject;
 		private readonly Button _button;
 		private readonly string _originButtonText;
@@ -15,7 +15,7 @@ namespace ClipboardViewer
 		private readonly ToolTip _focusTooltip = new ToolTip();
 		private string _tooltipText;
 
-		public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, RenderingHandler renderingHandler, IDataObject dataObject, Button button, Form form, string tooltipTitle, string tooltipText)
+		public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IRenderingHandler renderingHandler, IDataObject dataObject, Button button, Form form, string tooltipTitle, string tooltipText)
 		{
 			this._clipboardBuferService = clipboardBuferService;
 			this._renderingHandler = renderingHandler;
@@ -37,7 +37,7 @@ namespace ClipboardViewer
 			button.GotFocus += Button_GotFocus;
 			button.LostFocus += Button_LostFocus;
 
-			button.Click += new BuferSelectionHandler(form, dataObject).DoOnClipSelection;
+			button.Click += new BuferSelectionHandler(form, dataObject, new WindowHidingHandler(form)).DoOnClipSelection;
 		}
 
 		public void DeleteBufer(object sender, EventArgs e)

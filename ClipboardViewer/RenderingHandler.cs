@@ -11,13 +11,13 @@ namespace ClipboardViewer
     {
         private readonly Form _form;
         private readonly IClipboardBuferService _clipboardBuferService;
-		private readonly WindowHidingHandler _hidingHandler;
+		private readonly IWindowHidingHandler _hidingHandler;
 		private readonly IDictionary<IDataObject, Button> _buttonsMap = new Dictionary<IDataObject, Button>(30);
 		private readonly IEqualityComparer<IDataObject> _comparer;
         
         private const int BUTTON_HEIGHT = 25;
 
-        public RenderingHandler(Form form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, WindowHidingHandler hidingHandler)
+        public RenderingHandler(Form form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IWindowHidingHandler hidingHandler)
         {
             this._form = form;
             this._clipboardBuferService = clipboardBuferService;

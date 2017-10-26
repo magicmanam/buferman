@@ -28,14 +28,14 @@ namespace ClipboardViewer
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
 					var comparer = new DataObjectComparer();
-                    var form = new BuferAMForm(new ClipboardBuferService(comparer), comparer);
+                    var form = new BuferAMForm(new ClipboardBuferService(comparer), comparer, new ClipboardWrapper());
                     Application.Run(form);
 
 				}
 				else
 				{
 					MessageBox.Show("Program is already run. Press Alt+C to view current bufers.", BuferAMForm.PROGRAM_CAPTION);
-				}                
+				}
             }
         }
 

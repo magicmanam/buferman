@@ -3,14 +3,14 @@ using System.Windows.Forms;
 
 namespace ClipboardViewer
 {
-	class WindowActivationHandler
+	class WindowActivationHandler : IWindowActivationHandler
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly Form _form;
 
-        private readonly RenderingHandler _renderingHandler;
+        private readonly IRenderingHandler _renderingHandler;
 
-        public WindowActivationHandler(IClipboardBuferService clipboadService, Form form, RenderingHandler renderingHandler)
+        public WindowActivationHandler(IClipboardBuferService clipboadService, Form form, IRenderingHandler renderingHandler)
         {
             _clipboardBuferService = clipboadService;
             _form = form;

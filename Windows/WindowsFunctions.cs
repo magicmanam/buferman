@@ -5,7 +5,7 @@ namespace Windows
 {
 	public static class WindowsFunctions
 	{
-		[DllImport("User32.dll")]
+		[DllImport("user32.dll")]
 		public static extern bool ChangeClipboardChain(IntPtr hWndRemove, IntPtr hWndNewNext);
 
 		[DllImport("user32.dll")]
@@ -16,7 +16,7 @@ namespace Windows
 		[DllImport("user32.dll")]
 		public static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
-		[DllImport("User32.dll", CharSet = CharSet.Auto)]
+		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		public static extern IntPtr SetClipboardViewer(IntPtr hWndNewViewer);
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace ClipboardViewer
 {
-	class WindowHidingHandler
+	class WindowHidingHandler : IWindowHidingHandler
     {
         private readonly Form _form;
 

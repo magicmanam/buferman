@@ -4,26 +4,28 @@ using System.Windows.Forms;
 
 namespace ClipboardViewer
 {
-	class CopyingToClipboardInterceptor
+	class CopyingToClipboardInterceptor : ICopyingToClipboardInterceptor
     {
         private readonly IClipboardBuferService _clipboardBuferService;
 		private readonly IEqualityComparer<IDataObject> _comparer;
 		private readonly Form _form;
         private readonly IRenderingHandler _renderingHandler;
+        private readonly IClipboardWrapper _clipboardWrapper;
 
-        public CopyingToClipboardInterceptor(IClipboardBuferService clipboardBuferService, Form form, IRenderingHandler renderingHandler, IEqualityComparer<IDataObject> comparer)
+        public CopyingToClipboardInterceptor(IClipboardBuferService clipboardBuferService, Form form, IRenderingHandler renderingHandler, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._form = form;
             this._renderingHandler = renderingHandler;
 			this._comparer = comparer;
+            this._clipboardWrapper = clipboardWrapper;
         }
 
         public void DoOnCtrlC()
         {
 			Logger.Logger.Current.Write("On Ctrl+C");
 
-            var currentObject = ClipboardWrapper.GetDataObject();
+            var currentObject = this._clipboardWrapper.GetDataObject();
 
             if (currentObject.GetFormats().Any() && !this._clipboardBuferService.IsLastTemporaryClip(currentObject))
             {

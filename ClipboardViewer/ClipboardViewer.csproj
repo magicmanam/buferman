@@ -65,6 +65,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LegacyWindows.1.0.0\lib\Windows.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
@@ -72,7 +75,16 @@
     <Compile Include="CopyingToClipboardInterceptor.cs" />
     <Compile Include="BuferHandlersWrapper.cs" />
     <Compile Include="DataObjectComparer.cs" />
+    <Compile Include="IBuferHandlersWrapper.cs" />
+    <Compile Include="IClipboardWrapper.cs" />
+    <Compile Include="ICopyingToClipboardInterceptor.cs" />
+    <Compile Include="ILoadingFileHandler.cs" />
+    <Compile Include="IMenuGenerator.cs" />
     <Compile Include="IRenderingHandler.cs" />
+    <Compile Include="IWindowActivationHandler.cs" />
+    <Compile Include="IWindowHidingHandler.cs" />
+    <Compile Include="LoadingFileHandler.cs" />
+    <Compile Include="MenuGenerator.cs" />
     <Compile Include="WindowHidingHandler.cs" />
     <Compile Include="ClipboardBuferService.cs" />
     <Compile Include="BuferAMForm.cs">
@@ -96,7 +108,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -106,12 +120,19 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Scripts\jquery-2.1.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Documentation.txt" />
+    <Content Include="Scripts\jquery-2.1.1.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.1.js" />
+    <Content Include="Scripts\jquery-2.1.1.min.js" />
+    <Content Include="Scripts\nugetexample.js" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -129,10 +150,6 @@
     <ProjectReference Include="..\Logger\Logger.csproj">
       <Project>{0deecdc2-cf30-4625-a465-671f851f937e}</Project>
       <Name>Logger</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Windows\Windows.csproj">
-      <Project>{5A51C93A-8FD0-4A47-8802-05B36CF7242E}</Project>
-      <Name>Windows</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

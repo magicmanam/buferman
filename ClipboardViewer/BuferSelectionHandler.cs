@@ -6,12 +6,12 @@ namespace ClipboardViewer
 {
 	class BuferSelectionHandler
     {
-        private readonly WindowHidingHandler _hidingHandler;
+        private readonly IWindowHidingHandler _hidingHandler;
         private readonly IDataObject _dataObject;
 
-        public BuferSelectionHandler(Form form, IDataObject dataObject)
+        public BuferSelectionHandler(Form form, IDataObject dataObject, IWindowHidingHandler hidingHandler)
         {
-            _hidingHandler = new WindowHidingHandler(form);
+            _hidingHandler = hidingHandler;
             this._dataObject = dataObject;
         }
 

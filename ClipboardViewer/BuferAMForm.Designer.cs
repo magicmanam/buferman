@@ -16,25 +16,21 @@ namespace ClipboardViewer
     partial class BuferAMForm
     {
         private readonly IClipboardBuferService _clipboardBuferService;
-		private readonly OpenFileDialog _dialog = new OpenFileDialog();
 		internal const string PROGRAM_CAPTION = "BuferMAN";
-        private readonly RenderingHandler _renderingHandler;
-        private readonly WindowHidingHandler _hidingHandler;
-        private readonly CopyingToClipboardInterceptor _clipboardInterceptor;
+        private readonly IRenderingHandler _renderingHandler;
+        private readonly IWindowHidingHandler _hidingHandler;
+        private readonly ICopyingToClipboardInterceptor _clipboardInterceptor;
+        private readonly IMenuGenerator _menuGenerator;
 		private IntPtr _nextViewer;
 
-		internal BuferAMForm(IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer)
+		internal BuferAMForm(IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._hidingHandler = new WindowHidingHandler(this);
             this._renderingHandler = new RenderingHandler(this, this._clipboardBuferService, comparer, this._hidingHandler);
-            this._clipboardInterceptor = new CopyingToClipboardInterceptor(clipboardBuferService, this, this._renderingHandler, comparer);
-			this._dialog.Filter = "Текстовые файлы (*.txt)|*.txt";
-			this._dialog.CheckFileExists = true;
-			this._dialog.CheckPathExists = true;
-			this._dialog.RestoreDirectory = true;
-			this._dialog.Multiselect = false;
-
+            this._clipboardInterceptor = new CopyingToClipboardInterceptor(clipboardBuferService, this, this._renderingHandler, comparer, clipboardWrapper);
+            this._menuGenerator = new MenuGenerator(new LoadingFileHandler(clipboardWrapper), this._clipboardBuferService, this._renderingHandler);
+                
 			InitializeComponent();
             this.ShowInTaskbar = false;
 			Logger.Logger.Current.Write(this.Handle.ToString());
@@ -129,11 +125,8 @@ namespace ClipboardViewer
             
             this.KeyDown += this._renderingHandler.OnKeyDown;
             this.KeyPreview = true;
-
-            var mainMenu = new MainMenu();
-			mainMenu.MenuItems.Add(new MenuItem("File", new MenuItem[] { new MenuItem("Load from file", OnLoadFile), new MenuItem("Exit session", OnExit) }));
-            mainMenu.MenuItems.Add(new MenuItem("Edit", new MenuItem[] { new MenuItem("Undo", (sender, args) => MessageBox.Show("Feature is not supported now. Pay money to support.", "Keep calm and copy&paste!"), Shortcut.CtrlZ), new MenuItem("Delete All", OnDeleteAll), new MenuItem("Bufer's Basket", (sender, args) => MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")) }));
-            this.Menu = mainMenu;
+                        
+            this.Menu = this._menuGenerator.GenerateMenu(this);
 
             this.FormClosing += BuferAMForm_FormClosing;
 
@@ -147,47 +140,6 @@ namespace ClipboardViewer
             e.Cancel = true;
             var form = (Form)sender;
             form.WindowState = FormWindowState.Minimized;
-        }
-        
-		private void OnLoadFile(object sender, EventArgs args)
-		{
-			var result = this._dialog.ShowDialog();
-			
-			if (result == DialogResult.OK) {
-				var fileName = this._dialog.FileName;
-				using (var fileReader = new StreamReader(new FileStream(fileName, FileMode.Open, FileAccess.Read), Encoding.Default))
-				{
-					while (!fileReader.EndOfStream)
-					{
-						var bufer = fileReader.ReadLine();
-						if (!string.IsNullOrWhiteSpace(bufer))
-						{
-							var dataObject = new DataObject("System.String", bufer);
-							Clipboard.SetDataObject(dataObject);
-						}
-					}
-				}
-			}
-		}
-
-
-		private void OnExit(object sender, EventArgs args)
-        {
-			WindowsFunctions.SendMessage(this.Handle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);			
-        }
-
-        private void OnDeleteAll(object sender, EventArgs args)
-        {
-			Logger.Logger.Current.Write("Delete All");
-
-			var clips = this._clipboardBuferService.GetClips();
-
-            foreach (var clip in clips)
-            {
-                this._clipboardBuferService.RemoveClip(clip);
-            }
-
-            this._renderingHandler.Render();
         }
 
         #endregion
