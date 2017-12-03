@@ -3,13 +3,11 @@
 - Read WinForms book!
 - Complete presentation!
 - Log4net mastering!
-- Console remove!
 - Git!
 - При появлении программы фокусироваться на нужном буфере
 - Increase height
 - unknown publisher error
 
-//В компараторе поддерживать больше форматов (скайп и т.д.), чтобы не дублировались буферы. Для этого сделать админскую версию, которая будет находить новые буферы.
 //Quick navigation (via 1, 2, 3 or a-b-c-d)
 //Refactor: add DI
 //Improve Performance (try different tools)

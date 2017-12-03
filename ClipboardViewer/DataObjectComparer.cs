@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -6,7 +7,7 @@ namespace ClipboardViewer
 {
 	class DataObjectComparer : IEqualityComparer<IDataObject>
     {
-        private static readonly IList<string> _stringFormats = new List<string>() { "Text", "System.String", "Rich Text Format", "UnicodeText", "OEMText", "Locale" };
+        private static readonly IList<string> _stringFormats = new List<string>() { "Text", "System.String", "Rich Text Format", "UnicodeText", "OEMText", "Locale" };//"VX Clipboard Descriptor Format", "CF_VSSTGPROJECTITEMS" };
         private static readonly IList<string> _arrayFormats = new List<string>() { "FileName", "FileNameW", "FileDrop" };
 
         public bool Equals(IDataObject x, IDataObject y)
@@ -23,6 +24,28 @@ namespace ClipboardViewer
 
             var xFormats = x.GetFormats();
             var yFormats = y.GetFormats();
+
+            //
+            //if (ConfigurationManager.AppSettings["inspectNewFormats"] == "true")
+            {
+                var allFormats = _stringFormats.Union(_arrayFormats);
+                foreach (var f in xFormats.Union(yFormats).Where(f => !allFormats.Contains(f)))
+                {
+                    if (x.GetData(f) as string != null)
+                    {
+                        var d = x.GetData(f) as string;
+                        MessageBox.Show($"Unknown string format {f} with value {d}");
+                        _stringFormats.Add(f);
+                    }
+                    if (x.GetData(f) as string[] != null)
+                    {
+                        var d = x.GetData(f) as string [];
+                        MessageBox.Show($"Unknown array string format {f} with value {d}");
+                        _arrayFormats.Add(f);
+                    }
+                }
+            }
+            //
 
             if (xFormats.Length != yFormats.Length)
             {
