@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace ClipboardViewer
+namespace ClipboardViewer.Window
 {
     interface IRenderingHandler
     {

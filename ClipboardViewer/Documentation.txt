@@ -4,18 +4,15 @@
 - Complete presentation!
 - Log4net mastering!
 - Git!
-- При появлении программы фокусироваться на нужном буфере
 - Increase height
 - unknown publisher error
 
-//Quick navigation (via 1, 2, 3 or a-b-c-d)
 //Refactor: add DI
 //Improve Performance (try different tools)
 
 ---- New branch ----
 //Save the most popular
-//Basket for deleted bufers (to quiacky restore)
-//Ctrl + Z - escape remove Undo
+//Basket for deleted bufers (to quickly restore)
 //Для клипа картинки показывать саму картинку в туллтипе.
 
 Settings:  //Minimalize settings to ease using
@@ -32,6 +29,7 @@ Settings:  //Minimalize settings to ease using
 
 
 	Документация:
+Чтобы отменить удаление/добавление буфера, используйте горячие клавиши Ctrl + Z
 Сразу же при запуске программы в буфере будет находится текущий клип (если он там есть).
 Программа поддерживает русские и английские буферы.
 Текст кнопки буфера показывает текст буфера с обрезанными лидирующими и заканчивающими знаками невидимых символов (пробелы, перевод каретки и т.д.).

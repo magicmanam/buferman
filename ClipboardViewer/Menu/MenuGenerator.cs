@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClipboardViewer.Window;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Windows;
 
-namespace ClipboardViewer
+namespace ClipboardViewer.Menu
 {
     class MenuGenerator : IMenuGenerator
     {
@@ -27,7 +28,7 @@ namespace ClipboardViewer
         {
             WindowsFunctions.SendMessage(form.Handle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);
         }) }));
-            mainMenu.MenuItems.Add(new MenuItem("Edit", new MenuItem[] { new MenuItem("Undo", (sender, args) => MessageBox.Show("Feature is not supported now. Pay money to support.", "Keep calm and copy&paste!"), Shortcut.CtrlZ), new MenuItem("Delete All", OnDeleteAll), new MenuItem("Bufer's Basket", (sender, args) => MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")) }));
+            mainMenu.MenuItems.Add(new MenuItem("Edit", new MenuItem[] { new MenuItem("Undo", (sender, args) => { this._clipboardBuferService.Undo(); this._renderingHandler.Render(); }, Shortcut.CtrlZ), new MenuItem("Delete All", OnDeleteAll), new MenuItem("Bufer's Basket", (sender, args) => MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")) }));
 
             return mainMenu;
         }
@@ -45,5 +46,7 @@ namespace ClipboardViewer
 
             this._renderingHandler.Render();
         }
+
+        //MessageBox.Show("Feature is not supported now. Pay money to support.", "Keep calm and copy&paste!")
     }
 }

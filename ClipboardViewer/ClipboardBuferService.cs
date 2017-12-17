@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -6,8 +7,9 @@ namespace ClipboardViewer
 {
 	class ClipboardBuferService : IClipboardBuferService
     {
-        private readonly IList<IDataObject> _tempObjects = new List<IDataObject>();
-		private readonly IList<IDataObject> _persistentObjects = new List<IDataObject>();
+        private readonly Stack<ClipboardBuferServiceState> _serviceStates = new Stack<ClipboardBuferServiceState>();
+        private IList<IDataObject> _tempObjects = new List<IDataObject>();
+		private IList<IDataObject> _persistentObjects = new List<IDataObject>();
 		private readonly IEqualityComparer<IDataObject> _comparer = new DataObjectComparer();
 
 		public ClipboardBuferService(IEqualityComparer<IDataObject> comparer)
@@ -22,14 +24,7 @@ namespace ClipboardViewer
 
 		private IEnumerable<IDataObject> _GetAllClips(bool persistentFirst)
 		{
-			if (persistentFirst)
-			{
-				return this._persistentObjects.Union(this._tempObjects);
-			}
-			else
-			{
-				return this._tempObjects.Union(this._persistentObjects);
-			}
+            return persistentFirst ? this._persistentObjects.Union(this._tempObjects) : this._tempObjects.Union(this._persistentObjects);
 		}
 
         public IDataObject LastTemporaryClip
@@ -64,19 +59,31 @@ namespace ClipboardViewer
         }
 
         public void RemoveClip(IDataObject clipDataObject)
-        {			
-			var dataObject = this._tempObjects.FirstOrDefault(d => this._comparer.Equals(d, clipDataObject));//Only this way
+        {
+            if (this._RemoveClipObject(this._tempObjects, clipDataObject) == false)
+            {
+                this._RemoveClipObject(this._persistentObjects, clipDataObject);
+            }
+        }
+
+        private bool _RemoveClipObject(IList<IDataObject> list, IDataObject clip)
+        {
+            var dataObject = list.FirstOrDefault(d => this._comparer.Equals(d, clip));
             if (dataObject != null)
             {
-                this._tempObjects.Remove(dataObject);                
-            } else
-			{
-				dataObject = this._persistentObjects.FirstOrDefault(d => this._comparer.Equals(d, clipDataObject));
-				if (dataObject != null)
-				{
-					this._persistentObjects.Remove(dataObject);
-				}
-			}
+                this._SaveCurrentState();
+                list.Remove(dataObject);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void _SaveCurrentState()
+        {
+            this._serviceStates.Push(new ClipboardBuferServiceState(this._tempObjects.ToList(), this._persistentObjects.ToList()));
         }
 
         public void AddTemporaryClip(IDataObject dataObject)
@@ -99,19 +106,36 @@ namespace ClipboardViewer
                     }
                 }
             }
+            this._SaveCurrentState();
             this._tempObjects.Add(copy);
         }
 
 		public void MarkClipAsPersistent(IDataObject dataObject)
 		{
+            this._SaveCurrentState();
 			if (this._tempObjects.Remove(dataObject))
 			{
 				this._persistentObjects.Add(dataObject);
 			} else
 			{
+                this._serviceStates.Pop();
 				Logger.Logger.Current.Write("An attempt to mark unexistent object as persistent.");
 			}
 		}
 
-	}
+        public void Undo()
+        {
+            if (this._serviceStates.Count > 0)
+            {
+                var lastState = this._serviceStates.Pop();
+                this._tempObjects = lastState.TempObjects;
+                this._persistentObjects = lastState.PersistentObjects;
+            }
+        }
+
+        public void CancelUndo()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

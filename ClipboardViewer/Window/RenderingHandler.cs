@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ClipboardViewer
+namespace ClipboardViewer.Window
 {
 	class RenderingHandler : IRenderingHandler
     {

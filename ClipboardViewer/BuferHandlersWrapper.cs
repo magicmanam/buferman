@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ClipboardViewer.Window;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 

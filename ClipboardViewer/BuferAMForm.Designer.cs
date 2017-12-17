@@ -10,6 +10,8 @@ using System.Linq;
 using Windows;
 using System.IO;
 using System.Text;
+using ClipboardViewer.Menu;
+using ClipboardViewer.Window;
 
 namespace ClipboardViewer
 {

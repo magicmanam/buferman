@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace ClipboardViewer
+namespace ClipboardViewer.Window
 {
 	class WindowActivationHandler : IWindowActivationHandler
     {

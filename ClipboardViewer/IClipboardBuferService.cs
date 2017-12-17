@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace ClipboardViewer
 {
-	interface IClipboardBuferService
+	interface IClipboardBuferService : IUndoable
     {
 		/// <summary>
 		/// Returns persistent + temporary clips.
