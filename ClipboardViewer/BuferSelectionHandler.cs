@@ -2,6 +2,7 @@
 using System;
 using System.Globalization;
 using System.Windows.Forms;
+using Logging;
 
 namespace ClipboardViewer
 {
@@ -18,7 +19,7 @@ namespace ClipboardViewer
 
         public void DoOnClipSelection(object sender, EventArgs e)
         {
-			Logger.Logger.Current.Write("Do on bufer selection");
+			Logger.Write("Do on bufer selection");
 			Clipboard.SetDataObject(this._dataObject);
 
             this._hidingHandler.HideWindow();

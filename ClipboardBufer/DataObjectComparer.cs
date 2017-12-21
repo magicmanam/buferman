@@ -3,9 +3,9 @@ using System.Configuration;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ClipboardViewer
+namespace ClipboardBufer
 {
-	class DataObjectComparer : IEqualityComparer<IDataObject>
+	public class DataObjectComparer : IEqualityComparer<IDataObject>
     {
         private static readonly IList<string> _stringFormats = new List<string>() { "Text", "System.String", "Rich Text Format", "UnicodeText", "OEMText", "Locale" };//"VX Clipboard Descriptor Format", "CF_VSSTGPROJECTITEMS" };
         private static readonly IList<string> _arrayFormats = new List<string>() { "FileName", "FileNameW", "FileDrop" };

@@ -72,15 +72,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClipboardBuferServiceState.cs" />
-    <Compile Include="ClipboardWrapper.cs" />
     <Compile Include="CopyingToClipboardInterceptor.cs" />
     <Compile Include="BuferHandlersWrapper.cs" />
-    <Compile Include="DataObjectComparer.cs" />
     <Compile Include="IBuferHandlersWrapper.cs" />
-    <Compile Include="IClipboardWrapper.cs" />
     <Compile Include="ICopyingToClipboardInterceptor.cs" />
-    <Compile Include="IUndoable.cs" />
     <Compile Include="Menu\ILoadingFileHandler.cs" />
     <Compile Include="Menu\IMenuGenerator.cs" />
     <Compile Include="Window\IRenderingHandler.cs" />
@@ -89,7 +84,6 @@
     <Compile Include="Menu\LoadingFileHandler.cs" />
     <Compile Include="Menu\MenuGenerator.cs" />
     <Compile Include="Window\WindowHidingHandler.cs" />
-    <Compile Include="ClipboardBuferService.cs" />
     <Compile Include="BuferAMForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -97,7 +91,6 @@
       <DependentUpon>BuferAMForm.cs</DependentUpon>
     </Compile>
     <Compile Include="BuferSelectionHandler.cs" />
-    <Compile Include="IClipboardBuferService.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Window\RenderingHandler.cs" />
@@ -145,9 +138,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Logger\Logger.csproj">
+    <ProjectReference Include="..\ClipboardBufer\ClipboardBufer.csproj">
+      <Project>{77a59517-cced-4778-8ce4-e106ef61b8d0}</Project>
+      <Name>ClipboardBufer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logger\Logging.csproj">
       <Project>{0deecdc2-cf30-4625-a465-671f851f937e}</Project>
-      <Name>Logger</Name>
+      <Name>Logging</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

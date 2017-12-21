@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
-namespace ClipboardViewer
+namespace ClipboardBufer
 {
-	interface IClipboardBuferService : IUndoable
+	public interface IClipboardBuferService : IUndoable
     {
 		/// <summary>
 		/// Returns persistent + temporary clips.
@@ -11,7 +12,7 @@ namespace ClipboardViewer
 		/// <returns></returns>
         IEnumerable<IDataObject> GetClips(bool persistentFirst = false);
 
-        void AddTemporaryClip(IDataObject clipDataObject);
+        void AddTemporaryClip(IDataObject clipDataObject, Image image = null);
 
 		void MarkClipAsPersistent(IDataObject dataObject);
 

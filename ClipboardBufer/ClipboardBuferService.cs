@@ -2,20 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using Logging;
+using System.Drawing;
 
-namespace ClipboardViewer
+namespace ClipboardBufer
 {
-	class ClipboardBuferService : IClipboardBuferService
+	public class ClipboardBuferService : IClipboardBuferService
     {
+        public const string CUSTOM_IMAGE_FORMAT = "Buferman.Image";
         private readonly Stack<ClipboardBuferServiceState> _serviceStates = new Stack<ClipboardBuferServiceState>();
         private IList<IDataObject> _tempObjects = new List<IDataObject>();
 		private IList<IDataObject> _persistentObjects = new List<IDataObject>();
 		private readonly IEqualityComparer<IDataObject> _comparer = new DataObjectComparer();
+        private DataObjectComparer comparer;
 
-		public ClipboardBuferService(IEqualityComparer<IDataObject> comparer)
+        public ClipboardBuferService(IEqualityComparer<IDataObject> comparer)
 		{
 			this._comparer = comparer;
 		}
+
+        public ClipboardBuferService(DataObjectComparer comparer)
+        {
+            this.comparer = comparer;
+        }
 
         public IEnumerable<IDataObject> GetClips(bool persistentFirst = false)
         {
@@ -37,7 +46,7 @@ namespace ClipboardViewer
         
         public bool IsLastTemporaryClip(IDataObject dataObject)
         {
-            return this._comparer.Equals(this.LastTemporaryClip, dataObject);
+            return dataObject.GetFormats().Any() && this._comparer.Equals(this.LastTemporaryClip, dataObject);
         }
 
 		public bool IsNotPersistent(IDataObject dataObject)
@@ -86,8 +95,14 @@ namespace ClipboardViewer
             this._serviceStates.Push(new ClipboardBuferServiceState(this._tempObjects.ToList(), this._persistentObjects.ToList()));
         }
 
-        public void AddTemporaryClip(IDataObject dataObject)
+        public void AddTemporaryClip(IDataObject dataObject, Image image)
         {
+            if (this.GetClips().Count() == 30)
+            {
+                Logger.Write("More than maximum count. Need to remove the first clip");
+                this.RemoveClip(this.FirstClip);
+            }
+
             var copy = new DataObject();
             foreach (var format in dataObject.GetFormats())
             {
@@ -106,6 +121,12 @@ namespace ClipboardViewer
                     }
                 }
             }
+
+            if (image != null)
+            {
+                copy.SetData(CUSTOM_IMAGE_FORMAT, image);
+            }
+
             this._SaveCurrentState();
             this._tempObjects.Add(copy);
         }
@@ -119,7 +140,7 @@ namespace ClipboardViewer
 			} else
 			{
                 this._serviceStates.Pop();
-				Logger.Logger.Current.Write("An attempt to mark unexistent object as persistent.");
+				Logger.Write("An attempt to mark unexistent object as persistent.");
 			}
 		}
 

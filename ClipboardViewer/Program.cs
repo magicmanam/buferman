@@ -1,8 +1,10 @@
 ﻿using log4net.Config;
-using Logger;
+using Logging;
 using System;
 using System.Threading;
+using ClipboardBufer;
 using System.Windows.Forms;
+using Logging;
 
 namespace ClipboardViewer
 {
@@ -20,7 +22,7 @@ namespace ClipboardViewer
                 if (isNew)
                 {
 					XmlConfigurator.Configure();//Note
-					Logger.Logger.Current = new Log4netLogger();
+					Logging.Logger.Current = new Log4netLogger();
 					//Logger.Logger.Current = new ConsoleLogger();
 
 					Application.ThreadException += Application_ThreadException;//Must be run before Application.Run() //Note
@@ -41,7 +43,7 @@ namespace ClipboardViewer
 
 		private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
 		{
-			Logger.Logger.Current.WriteError("Exception " + e.Exception.Message, e.Exception);
+			Logger.WriteError("Exception " + e.Exception.Message, e.Exception);
 		}
 	}
 }

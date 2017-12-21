@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using Logging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
 
-namespace ClipboardViewer
+namespace ClipboardBufer
 {
-    class ClipboardWrapper : IClipboardWrapper
+    public class ClipboardWrapper : IClipboardWrapper
     {
         public IDataObject GetDataObject()
         {
@@ -18,7 +20,21 @@ namespace ClipboardViewer
             }
             catch (ExternalException exc)
             {
-                Logger.Logger.Current.WriteError("An error during get clipboard operation", exc);
+                Logger.WriteError("An error during get clipboard operation", exc);
+                MessageBox.Show("An error occurred. See logs for more details.");
+                throw;
+            }
+        }
+
+        public Image GetImage()
+        {
+            try
+            {
+                return Clipboard.ContainsImage() ? Clipboard.GetImage() : null;
+            }
+            catch (ExternalException exc)
+            {
+                Logger.WriteError("An error during get clipboard operation", exc);
                 MessageBox.Show("An error occurred. See logs for more details.");
                 throw;
             }

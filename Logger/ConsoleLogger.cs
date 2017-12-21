@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Logger
+namespace Logging
 {
 	public class ConsoleLogger : ILogger
 	{
@@ -11,7 +11,7 @@ namespace Logger
 
 		public void WriteError(string message, Exception exc)
 		{
-			throw new NotImplementedException();
+            Console.Write(message, exc.StackTrace);
 		}
 	}
 }

@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logging;
 using System.Windows.Forms;
 using Windows;
+using ClipboardBufer;
 
 namespace ClipboardViewer.Menu
 {
@@ -35,7 +37,7 @@ namespace ClipboardViewer.Menu
 
         private void OnDeleteAll(object sender, EventArgs args)
         {
-            Logger.Logger.Current.Write("Delete All");
+            Logger.Write("Delete All");
 
             var clips = this._clipboardBuferService.GetClips();
 

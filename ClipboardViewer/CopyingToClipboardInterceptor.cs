@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using ClipboardBufer;
+using Logging;
 
 namespace ClipboardViewer
 {
@@ -24,16 +26,16 @@ namespace ClipboardViewer
 
         public void DoOnCtrlC()
         {
-			Logger.Logger.Current.Write("On Ctrl+C");
+			Logger.Write("On Ctrl+C");
 
             var currentObject = this._clipboardWrapper.GetDataObject();
 
-            if (currentObject.GetFormats().Any() && !this._clipboardBuferService.IsLastTemporaryClip(currentObject))
+            if (!this._clipboardBuferService.IsLastTemporaryClip(currentObject))
             {
-				Logger.Logger.Current.Write("Is not last clip");
+				Logger.Write("Is not last clip");
 				if (this._clipboardBuferService.Contains(currentObject))
                 {
-					Logger.Logger.Current.Write("Already contains this clip");
+					Logger.Write("Already contains this clip");
 					if (this._clipboardBuferService.IsNotPersistent(currentObject))
 					{
 						_clipboardBuferService.RemoveClip(currentObject);
@@ -42,15 +44,9 @@ namespace ClipboardViewer
 						return;
 					}
                 }
-				
-                if (_clipboardBuferService.GetClips().Count() == 30)
-                {
-					Logger.Logger.Current.Write("More than maximum count. Need to remove the first clip");
-					_clipboardBuferService.RemoveClip(_clipboardBuferService.FirstClip);
-                }
 
-				Logger.Logger.Current.Write("Add Clip");
-				_clipboardBuferService.AddTemporaryClip(currentObject);
+				Logger.Write("Add Clip");
+				_clipboardBuferService.AddTemporaryClip(currentObject, this._clipboardWrapper.GetImage());
 
                 if (this._form.WindowState != FormWindowState.Minimized && this._form.Visible)
                 {

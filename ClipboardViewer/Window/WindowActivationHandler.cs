@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
+using ClipboardBufer;
+using Logging;
 
 namespace ClipboardViewer.Window
 {
@@ -20,7 +22,7 @@ namespace ClipboardViewer.Window
                 
         public void OnActivated(object sender, EventArgs e)
         {
-			Logger.Logger.Current.Write("On Activated");
+			Logger.Write("On Activated");
 			this._form.WindowState = FormWindowState.Normal;
             this._form.Visible = true;
 

@@ -4,6 +4,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using ClipboardBufer;
+using Logging;
 
 namespace ClipboardViewer.Window
 {
@@ -27,7 +29,7 @@ namespace ClipboardViewer.Window
 
         public void Render()
         {
-			Logger.Logger.Current.Write("On render");
+			Logger.Write("On render");
             var bufers = _clipboardBuferService.GetClips(true).ToArray();
             
             int y = bufers.Length * BUTTON_HEIGHT;
@@ -42,7 +44,7 @@ namespace ClipboardViewer.Window
 				var equalObject = this._buttonsMap.Keys.FirstOrDefault(k => this._comparer.Equals(k, bufer));
                 if (equalObject != null)
                 {
-                    button = this._buttonsMap[equalObject];                    
+                    button = this._buttonsMap[equalObject];
                 }
                 else
                 {
@@ -129,7 +131,7 @@ namespace ClipboardViewer.Window
 
         private void RemoveOldButtons(IEnumerable<IDataObject> bufers)
         {
-			Logger.Logger.Current.Write("Rendering Handler: Remove Old Buttons");
+			Logger.Write("Rendering Handler: Remove Old Buttons");
 			var deletedKeys = new List<IDataObject>();
 
             foreach (var key in this._buttonsMap.Keys.ToList())

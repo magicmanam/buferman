@@ -2,6 +2,9 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using ClipboardBufer;
+using Logging;
+using System.Linq;
 
 namespace ClipboardViewer
 {
@@ -13,7 +16,7 @@ namespace ClipboardViewer
 		private readonly Button _button;
 		private readonly string _originButtonText;
 		private readonly ToolTip _mouseOverTooltip;
-		private readonly ToolTip _focusTooltip = new ToolTip();
+        private readonly ToolTip _focusTooltip = new ToolTip() { OwnerDraw = true };
 		private string _tooltipText;
 
 		public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IRenderingHandler renderingHandler, IDataObject dataObject, Button button, Form form, string tooltipTitle, string tooltipText)
@@ -24,6 +27,8 @@ namespace ClipboardViewer
 			this._button = button;
 			this._originButtonText = button.Text;
 			this._tooltipText = tooltipText;
+            this._focusTooltip.Popup += Tooltip_Popup;
+            this._focusTooltip.Draw += Tooltip_Draw;
 
 			var tooltip = new ToolTip() { InitialDelay = 0 };
 			tooltip.IsBalloon = true;
@@ -33,7 +38,16 @@ namespace ClipboardViewer
 				tooltip.ToolTipTitle = tooltipTitle;
 				this._focusTooltip.ToolTipTitle = tooltipTitle;
 			}
-			this._mouseOverTooltip = tooltip;
+
+            if (_dataObject.GetFormats().Contains(ClipboardBuferService.CUSTOM_IMAGE_FORMAT))
+            {
+                button.Tag = _dataObject.GetData(ClipboardBuferService.CUSTOM_IMAGE_FORMAT) as Image;
+                tooltip.IsBalloon = false;
+                tooltip.OwnerDraw = true;
+                tooltip.Popup += Tooltip_Popup;
+                tooltip.Draw += Tooltip_Draw;
+            }
+            this._mouseOverTooltip = tooltip;
 
 			button.GotFocus += Button_GotFocus;
 			button.LostFocus += Button_LostFocus;
@@ -41,16 +55,46 @@ namespace ClipboardViewer
 			button.Click += new BuferSelectionHandler(form, dataObject, new WindowHidingHandler(form)).DoOnClipSelection;
 		}
 
-		public void DeleteBufer(object sender, EventArgs e)
+        private void Tooltip_Draw(object sender, DrawToolTipEventArgs e)
+        {
+            // to set the tag for each button or object
+            Control parent = e.AssociatedControl;
+            Image preview = parent.Tag as Image;
+
+            if (preview != null)
+            {
+                Graphics g = e.Graphics;
+
+                //create your own custom brush to fill the background with the image
+                TextureBrush b = new TextureBrush(new Bitmap(preview));
+                b.ScaleTransform(0.5f, 0.5f);
+
+                g.FillRectangle(b, e.Bounds);
+                b.Dispose();
+            }
+        }
+
+        private void Tooltip_Popup(object sender, PopupEventArgs e)
+        {
+            Control parent = e.AssociatedControl;
+            var previewImage = parent.Tag as Image;
+
+            if (previewImage != null)
+            {
+                e.ToolTipSize = new Size(previewImage.Width / 2, previewImage.Height / 2);
+            }
+        }
+
+        public void DeleteBufer(object sender, EventArgs e)
 		{
-			Logger.Logger.Current.Write("On Delete Bufer");
+			Logger.Write("On Delete Bufer");
 			this._clipboardBuferService.RemoveClip(this._dataObject);
 			this._renderingHandler.Render();
 		}
 
 		public void MarkAsPersistent(object sender, EventArgs e)
 		{
-			Logger.Logger.Current.Write("On Mark As Persistent");
+			Logger.Write("On Mark As Persistent");
 			this._clipboardBuferService.MarkClipAsPersistent(this._dataObject);
 			var menuItems = this._button.ContextMenu.MenuItems;
 			menuItems[menuItems.Count - 1].Enabled = false;
@@ -59,7 +103,7 @@ namespace ClipboardViewer
 
 		public void ChangeText(object sender, EventArgs e)
 		{
-			Logger.Logger.Current.Write("On Change Text");
+			Logger.Write("On Change Text");
 
 			var newText = Microsoft.VisualBasic.Interaction.InputBox($"Enter a new text for this bufer. It can be useful to hide copied passwords or alias some enourmous text. Primary button value was \"{this._originButtonText}\".",
 				   "Change bufer's text",
@@ -85,16 +129,19 @@ namespace ClipboardViewer
 
 		private void Button_GotFocus(object sender, EventArgs e)
 		{
-			Logger.Logger.Current.Write("Got Focus");
+			Logger.Write("Got Focus");
 			this._focusTooltip.Show(this._tooltipText, this._button, 2500);
-			Logger.Logger.Current.Write("After Got Focus");
+            this._focusTooltip.OwnerDraw = true;
+
+
+            Logger.Write("After Got Focus");
 		}
 
 		private void Button_LostFocus(object sender, EventArgs e)
 		{
-			Logger.Logger.Current.Write("Lost Focus");
+			Logger.Write("Lost Focus");
 			this._focusTooltip.Hide(this._button);
-			Logger.Logger.Current.Write("After Lost Focus");
+			Logger.Write("After Lost Focus");
 		}
 	}
 }

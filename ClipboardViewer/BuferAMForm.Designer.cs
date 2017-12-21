@@ -12,6 +12,8 @@ using System.IO;
 using System.Text;
 using ClipboardViewer.Menu;
 using ClipboardViewer.Window;
+using ClipboardBufer;
+using Logging;
 
 namespace ClipboardViewer
 {
@@ -35,7 +37,7 @@ namespace ClipboardViewer
                 
 			InitializeComponent();
             this.ShowInTaskbar = false;
-			Logger.Logger.Current.Write(this.Handle.ToString());
+			Logger.Write(this.Handle.ToString());
         }
 
         /// <summary>
@@ -61,18 +63,18 @@ namespace ClipboardViewer
 			if (m.Msg == Messages.WM_CREATE)
 			{
 				this._nextViewer = WindowsFunctions.SetClipboardViewer(this.Handle);
-				Logger.Logger.Current.Write("Next viewer " + this._nextViewer.ToString());
+				Logger.Write("Next viewer " + this._nextViewer.ToString());
 				WindowsFunctions.RegisterHotKey(this.Handle, 0, 1, (int)Keys.C);
 			}
 
 			if (m.Msg == Messages.WM_DRAWCLIPBOARD)
 			{
-				Logger.Logger.Current.Write("Clipboard copied!");
+				Logger.Write("Clipboard copied!");
 				this._clipboardInterceptor.DoOnCtrlC();
 
 				if (this._nextViewer != IntPtr.Zero)
 				{
-					Logger.Logger.Current.Write("Send message to the next clipboard viewer.");
+					Logger.Write("Send message to the next clipboard viewer.");
 					WindowsFunctions.SendMessage(this._nextViewer, m.Msg, IntPtr.Zero, IntPtr.Zero);
 				}
 			}
@@ -84,7 +86,7 @@ namespace ClipboardViewer
                 
                 if(key == Keys.C && modifier == System.Windows.Input.ModifierKeys.Alt)
                 {
-					Logger.Logger.Current.Write("Activate window on Alt + C");
+					Logger.Write("Activate window on Alt + C");
 					this.Activate();
                 }
             }

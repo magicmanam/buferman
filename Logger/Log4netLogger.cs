@@ -1,7 +1,7 @@
 ﻿using log4net;
 using System;
 
-namespace Logger
+namespace Logging
 {
 	public class Log4netLogger : ILogger
 	{
