@@ -12,6 +12,7 @@
 //Improve Performance (try different tools)
 
 ---- New branch ----
+//Make plugins for preview tooltips with settings
 //Save the most popular
 //Basket for deleted bufers (to quickly restore)
 

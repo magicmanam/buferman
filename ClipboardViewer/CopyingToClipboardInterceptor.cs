@@ -46,7 +46,7 @@ namespace ClipboardViewer
                 }
 
 				Logger.Write("Add Clip");
-				_clipboardBuferService.AddTemporaryClip(currentObject, this._clipboardWrapper.GetImage());
+				_clipboardBuferService.AddTemporaryClip(currentObject);
 
                 if (this._form.WindowState != FormWindowState.Minimized && this._form.Visible)
                 {

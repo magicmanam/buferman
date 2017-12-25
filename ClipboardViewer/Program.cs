@@ -29,7 +29,7 @@ namespace ClipboardViewer
 
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
-					var comparer = new DataObjectComparer();
+					var comparer = new DataObjectComparer(ClipboardFormats.StringFormats, ClipboardFormats.FileFormats);
                     var form = new BuferAMForm(new ClipboardBuferService(comparer), comparer, new ClipboardWrapper());
                     Application.Run(form);
 

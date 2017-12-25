@@ -39,9 +39,9 @@ namespace ClipboardViewer
 				this._focusTooltip.ToolTipTitle = tooltipTitle;
 			}
 
-            if (_dataObject.GetFormats().Contains(ClipboardBuferService.CUSTOM_IMAGE_FORMAT))
+            if (_dataObject.GetFormats().Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT))
             {
-                button.Tag = _dataObject.GetData(ClipboardBuferService.CUSTOM_IMAGE_FORMAT) as Image;
+                button.Tag = _dataObject.GetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT) as Image;
                 tooltip.IsBalloon = false;
                 tooltip.OwnerDraw = true;
                 tooltip.Popup += Tooltip_Popup;

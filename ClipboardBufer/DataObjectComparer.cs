@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -7,8 +8,14 @@ namespace ClipboardBufer
 {
 	public class DataObjectComparer : IEqualityComparer<IDataObject>
     {
-        private static readonly IList<string> _stringFormats = new List<string>() { "Text", "System.String", "Rich Text Format", "UnicodeText", "OEMText", "Locale" };//"VX Clipboard Descriptor Format", "CF_VSSTGPROJECTITEMS" };
-        private static readonly IList<string> _arrayFormats = new List<string>() { "FileName", "FileNameW", "FileDrop" };
+        private readonly IList<string> _stringFormats;
+        private readonly IList<string> _arrayFormats;
+
+        public DataObjectComparer(IList<string> stringFormats, IList<string> arrayFormats)
+        {
+            this._stringFormats = stringFormats;
+            this._arrayFormats = arrayFormats;
+        }
 
         public bool Equals(IDataObject x, IDataObject y)
         {
@@ -29,18 +36,16 @@ namespace ClipboardBufer
             //if (ConfigurationManager.AppSettings["inspectNewFormats"] == "true")
             {
                 var allFormats = _stringFormats.Union(_arrayFormats);
-                foreach (var f in xFormats.Union(yFormats).Where(f => !allFormats.Contains(f)))
+                foreach (var f in xFormats.Where(f => !allFormats.Contains(f)))
                 {
                     if (x.GetData(f) as string != null)
                     {
-                        var d = x.GetData(f) as string;
-                        MessageBox.Show($"Unknown string format {f} with value {d}");
+                        this.TrackUnknownFormat("string", f);
                         _stringFormats.Add(f);
                     }
                     if (x.GetData(f) as string[] != null)
                     {
-                        var d = x.GetData(f) as string [];
-                        MessageBox.Show($"Unknown array string format {f} with value {d}");
+                        this.TrackUnknownFormat("array", f);
                         _arrayFormats.Add(f);
                     }
                 }
@@ -128,6 +133,15 @@ namespace ClipboardBufer
         public int GetHashCode(IDataObject obj)
         {
             return obj.GetHashCode();
+        }
+
+        private void TrackUnknownFormat(string type, string format)
+        {
+            using (var fs = new StreamWriter(new FileStream("unknown-formats.txt", FileMode.Append)))
+            {
+                fs.WriteLine(type);
+                fs.WriteLine(format);
+            }
         }
     }
 }

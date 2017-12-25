@@ -9,22 +9,15 @@ namespace ClipboardBufer
 {
 	public class ClipboardBuferService : IClipboardBuferService
     {
-        public const string CUSTOM_IMAGE_FORMAT = "Buferman.Image";
         private readonly Stack<ClipboardBuferServiceState> _serviceStates = new Stack<ClipboardBuferServiceState>();
         private IList<IDataObject> _tempObjects = new List<IDataObject>();
 		private IList<IDataObject> _persistentObjects = new List<IDataObject>();
-		private readonly IEqualityComparer<IDataObject> _comparer = new DataObjectComparer();
-        private DataObjectComparer comparer;
+		private readonly IEqualityComparer<IDataObject> _comparer;
 
         public ClipboardBuferService(IEqualityComparer<IDataObject> comparer)
 		{
 			this._comparer = comparer;
 		}
-
-        public ClipboardBuferService(DataObjectComparer comparer)
-        {
-            this.comparer = comparer;
-        }
 
         public IEnumerable<IDataObject> GetClips(bool persistentFirst = false)
         {
@@ -95,7 +88,7 @@ namespace ClipboardBufer
             this._serviceStates.Push(new ClipboardBuferServiceState(this._tempObjects.ToList(), this._persistentObjects.ToList()));
         }
 
-        public void AddTemporaryClip(IDataObject dataObject, Image image)
+        public void AddTemporaryClip(IDataObject dataObject)
         {
             if (this.GetClips().Count() == 30)
             {
@@ -103,35 +96,11 @@ namespace ClipboardBufer
                 this.RemoveClip(this.FirstClip);
             }
 
-            var copy = new DataObject();
-            foreach (var format in dataObject.GetFormats())
-            {
-                if (format == "EnhancedMetafile")//Fixes bug with copy in Word
-                {
-                    copy.SetData(format, "<< !!! EnhancedMetafile !!! >>");
-                }
-                else
-                {
-                    try
-                    {
-                        copy.SetData(format, dataObject.GetData(format));
-                    } catch
-                    {
-                        //Log input parameters and other details.
-                    }
-                }
-            }
-
-            if (image != null)
-            {
-                copy.SetData(CUSTOM_IMAGE_FORMAT, image);
-            }
-
             this._SaveCurrentState();
-            this._tempObjects.Add(copy);
+            this._tempObjects.Add(dataObject);
         }
 
-		public void MarkClipAsPersistent(IDataObject dataObject)
+        public void MarkClipAsPersistent(IDataObject dataObject)
 		{
             this._SaveCurrentState();
 			if (this._tempObjects.Remove(dataObject))

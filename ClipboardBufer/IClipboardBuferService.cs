@@ -12,7 +12,7 @@ namespace ClipboardBufer
 		/// <returns></returns>
         IEnumerable<IDataObject> GetClips(bool persistentFirst = false);
 
-        void AddTemporaryClip(IDataObject clipDataObject, Image image = null);
+        void AddTemporaryClip(IDataObject clipDataObject);
 
 		void MarkClipAsPersistent(IDataObject dataObject);
 

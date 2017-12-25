@@ -16,21 +16,34 @@ namespace ClipboardBufer
         {
             try
             {
-                return Clipboard.GetDataObject();
-            }
-            catch (ExternalException exc)
-            {
-                Logger.WriteError("An error during get clipboard operation", exc);
-                MessageBox.Show("An error occurred. See logs for more details.");
-                throw;
-            }
-        }
+                IDataObject dataObject = Clipboard.GetDataObject();
 
-        public Image GetImage()
-        {
-            try
-            {
-                return Clipboard.ContainsImage() ? Clipboard.GetImage() : null;
+                var copy = new DataObject();
+                foreach (var format in dataObject.GetFormats())
+                {
+                    if (format == "EnhancedMetafile")//Fixes bug with copy in Word
+                    {
+                        copy.SetData(format, "<< !!! EnhancedMetafile !!! >>");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            copy.SetData(format, dataObject.GetData(format));
+                        }
+                        catch
+                        {
+                            //Log input parameters and other details.
+                        }
+                    }
+                }
+
+                if (Clipboard.ContainsImage())
+                {
+                    copy.SetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT, Clipboard.GetImage());
+                }
+
+                return copy;
             }
             catch (ExternalException exc)
             {

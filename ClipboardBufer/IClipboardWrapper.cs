@@ -7,6 +7,5 @@ namespace ClipboardBufer
     {
         IDataObject GetDataObject();
         void SetDataObject(DataObject dataObject);
-        Image GetImage();
     }
 }

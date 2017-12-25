@@ -48,13 +48,13 @@ namespace ClipboardViewer.Window
                 }
                 else
                 {
-                    var buferString = bufer.GetData("System.String") as string;//Only this format to support Unicode
+                    var buferString = bufer.GetData(ClipboardFormats.UNICODE_STRING_FORMAT) as string;
                     button = new Button() { TextAlign = ContentAlignment.MiddleLeft, Margin = new Padding(0) };
 					var isChangeTextAvailable = true;
 					string buferTitle = null;
                     if (buferString == null)
                     {
-                        var files = bufer.GetData("FileDrop") as string[];
+                        var files = bufer.GetData(ClipboardFormats.FILE_FORMAT) as string[];
                         if (files != null && files.Length > 0)
                         {
 							isChangeTextAvailable = false;
@@ -79,7 +79,7 @@ namespace ClipboardViewer.Window
 
                     if (buferString == null)
                     {
-                        var isBitmap = bufer.GetFormats().Contains("Bitmap");
+                        var isBitmap = bufer.GetFormats().Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT);
                         if (isBitmap)
                         {
 							isChangeTextAvailable = false;
@@ -99,12 +99,15 @@ namespace ClipboardViewer.Window
                     formatsMenu.Shortcut = Shortcut.AltDownArrow;
                     foreach (var format in bufer.GetFormats())
                     {
-                        var particularFormatMenu = new MenuItem(format);
-                        particularFormatMenu.Click += (object sender, EventArgs args) =>
+                        if (format != ClipboardFormats.CUSTOM_IMAGE_FORMAT)
                         {
-                            MessageBox.Show(bufer.GetData(format).ToString(), format);
-                        };
-                        formatsMenu.MenuItems.Add(particularFormatMenu);
+                            var particularFormatMenu = new MenuItem(format);
+                            particularFormatMenu.Click += (object sender, EventArgs args) =>
+                            {
+                                MessageBox.Show(bufer.GetData(format).ToString(), format);
+                            };
+                            formatsMenu.MenuItems.Add(particularFormatMenu);
+                        }
                     }
 
 					var buttonWrapper = new BuferHandlersWrapper(this._clipboardBuferService, this, bufer, button, this._form, buferTitle, buferString);

@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="ClipboardBuferService.cs" />
     <Compile Include="ClipboardBuferServiceState.cs" />
+    <Compile Include="ClipboardFormats.cs" />
     <Compile Include="ClipboardWrapper.cs" />
     <Compile Include="DataObjectComparer.cs" />
     <Compile Include="IClipboardBuferService.cs" />
