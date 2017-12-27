@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace ClipboardViewer.Menu
+namespace ClipboardViewerForm.Menu
 {
-    interface IMenuGenerator
+    interface ILoadingFileHandler
     {
-        MainMenu GenerateMenu(Form form);
+        void OnLoadFile(object sender, EventArgs args);
     }
 }

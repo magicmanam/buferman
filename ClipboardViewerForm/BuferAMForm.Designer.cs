@@ -10,34 +10,37 @@ using System.Linq;
 using Windows;
 using System.IO;
 using System.Text;
-using ClipboardViewer.Menu;
-using ClipboardViewer.Window;
+using ClipboardViewerForm.Menu;
+using ClipboardViewerForm.Window;
 using ClipboardBufer;
 using Logging;
 
-namespace ClipboardViewer
+namespace ClipboardViewerForm
 {
     partial class BuferAMForm
     {
         private readonly IClipboardBuferService _clipboardBuferService;
-		internal const string PROGRAM_CAPTION = "BuferMAN";
+        public const string PROGRAM_CAPTION = "BuferMAN";
         private readonly IRenderingHandler _renderingHandler;
         private readonly IWindowHidingHandler _hidingHandler;
         private readonly ICopyingToClipboardInterceptor _clipboardInterceptor;
         private readonly IMenuGenerator _menuGenerator;
-		private IntPtr _nextViewer;
+        private IntPtr _nextViewer;
 
-		internal BuferAMForm(IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper)
+        internal StatusStrip StatusLine { get; set; }
+        internal ToolStripStatusLabel StatusLabel { get; set; }
+
+        public BuferAMForm(IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._hidingHandler = new WindowHidingHandler(this);
             this._renderingHandler = new RenderingHandler(this, this._clipboardBuferService, comparer, this._hidingHandler);
             this._clipboardInterceptor = new CopyingToClipboardInterceptor(clipboardBuferService, this, this._renderingHandler, comparer, clipboardWrapper);
             this._menuGenerator = new MenuGenerator(new LoadingFileHandler(clipboardWrapper), this._clipboardBuferService, this._renderingHandler);
-                
-			InitializeComponent();
+
+            InitializeComponent();
             this.ShowInTaskbar = false;
-			Logger.Write(this.Handle.ToString());
+            Logger.Write(this.Handle.ToString());
         }
 
         /// <summary>
@@ -57,57 +60,58 @@ namespace ClipboardViewer
             }
             base.Dispose(disposing);
         }
-		
+
         protected override void WndProc(ref Message m)
         {
-			if (m.Msg == Messages.WM_CREATE)
-			{
-				this._nextViewer = WindowsFunctions.SetClipboardViewer(this.Handle);
-				Logger.Write("Next viewer " + this._nextViewer.ToString());
-				WindowsFunctions.RegisterHotKey(this.Handle, 0, 1, (int)Keys.C);
-			}
+            if (m.Msg == Messages.WM_CREATE)
+            {
+                this._nextViewer = WindowsFunctions.SetClipboardViewer(this.Handle);
+                Logger.Write("Next viewer " + this._nextViewer.ToString());
+                WindowsFunctions.RegisterHotKey(this.Handle, 0, 1, (int)Keys.C);
+            }
 
-			if (m.Msg == Messages.WM_DRAWCLIPBOARD)
-			{
-				Logger.Write("Clipboard copied!");
-				this._clipboardInterceptor.DoOnCtrlC();
+            if (m.Msg == Messages.WM_DRAWCLIPBOARD)
+            {
+                Logger.Write("Clipboard copied!");
+                this._clipboardInterceptor.DoOnCtrlC();
 
-				if (this._nextViewer != IntPtr.Zero)
-				{
-					Logger.Write("Send message to the next clipboard viewer.");
-					WindowsFunctions.SendMessage(this._nextViewer, m.Msg, IntPtr.Zero, IntPtr.Zero);
-				}
-			}
+                if (this._nextViewer != IntPtr.Zero)
+                {
+                    Logger.Write("Send message to the next clipboard viewer.");
+                    WindowsFunctions.SendMessage(this._nextViewer, m.Msg, IntPtr.Zero, IntPtr.Zero);
+                }
+            }
 
             if (m.Msg == Messages.WM_HOTKEY)
             {
                 Keys key = (Keys)(((int)m.LParam >> 16) & 0xFFFF);
-                ModifierKeys modifier = (ModifierKeys)((int)m.LParam & 0xFFFF);   
-                
-                if(key == Keys.C && modifier == System.Windows.Input.ModifierKeys.Alt)
+                ModifierKeys modifier = (ModifierKeys)((int)m.LParam & 0xFFFF);
+
+                if (key == Keys.C && modifier == System.Windows.Input.ModifierKeys.Alt)
                 {
-					Logger.Write("Activate window on Alt + C");
-					this.Activate();
+                    Logger.Write("Activate window on Alt + C");
+                    this.Activate();
                 }
             }
 
-			if(m.Msg == Messages.WM_DESTROY)
-			{
-				WindowsFunctions.ChangeClipboardChain(this.Handle, this._nextViewer);
-				WindowsFunctions.UnregisterHotKey(this.Handle, 0);
-				Application.Exit();//Note
-			}
+            if (m.Msg == Messages.WM_DESTROY)
+            {
+                WindowsFunctions.ChangeClipboardChain(this.Handle, this._nextViewer);
+                WindowsFunctions.UnregisterHotKey(this.Handle, 0);
+                Application.Exit();//Note
+            }
 
-			if(m.Msg == Messages.WM_CHANGECBCHAIN)
-			{
-				if(this._nextViewer == m.WParam)
-				{
-					this._nextViewer = m.LParam;
-				} else
-				{
-					WindowsFunctions.SendMessage(this._nextViewer, m.Msg, m.WParam, m.LParam);
-				}
-			}
+            if (m.Msg == Messages.WM_CHANGECBCHAIN)
+            {
+                if (this._nextViewer == m.WParam)
+                {
+                    this._nextViewer = m.LParam;
+                }
+                else
+                {
+                    WindowsFunctions.SendMessage(this._nextViewer, m.Msg, m.WParam, m.LParam);
+                }
+            }
 
             base.WndProc(ref m);
         }
@@ -126,17 +130,51 @@ namespace ClipboardViewer
             this.Height = 807;
             this.Activated += new WindowActivationHandler(_clipboardBuferService, this, this._renderingHandler).OnActivated;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            
+
             this.KeyDown += this._renderingHandler.OnKeyDown;
             this.KeyPreview = true;
-                        
+
             this.Menu = this._menuGenerator.GenerateMenu(this);
 
             this.FormClosing += BuferAMForm_FormClosing;
 
             this.MaximizeBox = false;
 
-            this.WindowState = FormWindowState.Minimized;            
+            this.WindowState = FormWindowState.Minimized;
+
+            this.CreateStatusBar();
+        }
+
+        private void CreateStatusBar()
+        {
+            StatusLine = new StatusStrip();
+            StatusLabel = new ToolStripStatusLabel();
+            StatusLine.SuspendLayout();
+            SuspendLayout();
+
+            StatusLine.Dock = DockStyle.Bottom;
+            StatusLine.GripStyle = ToolStripGripStyle.Visible;
+            StatusLine.Items.AddRange(new ToolStripItem[] {
+            StatusLabel });
+            StatusLine.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            StatusLine.Location = new Point(0, 0);
+            StatusLine.Name = "statusStrip1";
+            StatusLine.ShowItemToolTips = true;
+            StatusLine.Size = new Size(109, 17);
+            StatusLine.SizingGrip = false;
+            StatusLine.Stretch = false;
+            StatusLine.TabIndex = 0;
+            StatusLine.Text = "statusStrip1";
+
+            StatusLabel.Name = "toolStripStatusLabel1";
+            StatusLabel.Size = new Size(109, 17);
+            StatusLabel.Text = "toolStripStatusLabel1";
+
+            StatusLine.ResumeLayout(false);
+            StatusLine.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
+
         }
 
         private void BuferAMForm_FormClosing(object sender, FormClosingEventArgs e)

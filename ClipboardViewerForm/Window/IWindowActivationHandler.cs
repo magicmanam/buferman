@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ClipboardViewer.Window
+namespace ClipboardViewerForm.Window
 {
     interface IWindowActivationHandler
     {

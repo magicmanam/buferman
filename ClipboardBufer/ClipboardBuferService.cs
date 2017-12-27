@@ -13,6 +13,7 @@ namespace ClipboardBufer
         private IList<IDataObject> _tempObjects = new List<IDataObject>();
 		private IList<IDataObject> _persistentObjects = new List<IDataObject>();
 		private readonly IEqualityComparer<IDataObject> _comparer;
+        private int _maxBuferCount = 30;
 
         public ClipboardBuferService(IEqualityComparer<IDataObject> comparer)
 		{
@@ -22,6 +23,13 @@ namespace ClipboardBufer
         public IEnumerable<IDataObject> GetClips(bool persistentFirst = false)
         {
             return this._GetAllClips(persistentFirst).ToList();
+        }
+
+        public void RemoveAllClips()
+        {
+            this._SaveCurrentState();
+            this._tempObjects.Clear();
+            this._persistentObjects.Clear();
         }
 
 		private IEnumerable<IDataObject> _GetAllClips(bool persistentFirst)
@@ -90,7 +98,7 @@ namespace ClipboardBufer
 
         public void AddTemporaryClip(IDataObject dataObject)
         {
-            if (this.GetClips().Count() == 30)
+            if (this.GetClips().Count() == this.MaxBuferCount)
             {
                 Logger.Write("More than maximum count. Need to remove the first clip");
                 this.RemoveClip(this.FirstClip);
@@ -112,6 +120,8 @@ namespace ClipboardBufer
 				Logger.Write("An attempt to mark unexistent object as persistent.");
 			}
 		}
+        
+        public int MaxBuferCount { get { return this._maxBuferCount; } set { this._maxBuferCount = value; } }
 
         public void Undo()
         {

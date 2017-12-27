@@ -1,11 +1,11 @@
-﻿using ClipboardViewer.Window;
+﻿using ClipboardViewerForm.Window;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using ClipboardBufer;
 using Logging;
 
-namespace ClipboardViewer
+namespace ClipboardViewerForm
 {
 	class CopyingToClipboardInterceptor : ICopyingToClipboardInterceptor
     {

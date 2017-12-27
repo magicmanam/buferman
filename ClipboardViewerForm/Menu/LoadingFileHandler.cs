@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClipboardBufer;
 
-namespace ClipboardViewer.Menu
+namespace ClipboardViewerForm.Menu
 {
     class LoadingFileHandler : ILoadingFileHandler
     {

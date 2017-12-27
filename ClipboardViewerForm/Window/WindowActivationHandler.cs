@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using ClipboardBufer;
 using Logging;
 
-namespace ClipboardViewer.Window
+namespace ClipboardViewerForm.Window
 {
 	class WindowActivationHandler : IWindowActivationHandler
     {

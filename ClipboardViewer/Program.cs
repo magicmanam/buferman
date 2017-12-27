@@ -4,7 +4,7 @@ using System;
 using System.Threading;
 using ClipboardBufer;
 using System.Windows.Forms;
-using Logging;
+using ClipboardViewerForm;
 
 namespace ClipboardViewer
 {

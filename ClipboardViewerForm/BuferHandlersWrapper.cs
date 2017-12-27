@@ -1,4 +1,4 @@
-﻿using ClipboardViewer.Window;
+﻿using ClipboardViewerForm.Window;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -6,7 +6,7 @@ using ClipboardBufer;
 using Logging;
 using System.Linq;
 
-namespace ClipboardViewer
+namespace ClipboardViewerForm
 {
 	class BuferHandlersWrapper : IBuferHandlersWrapper
     {
@@ -16,7 +16,7 @@ namespace ClipboardViewer
 		private readonly Button _button;
 		private readonly string _originButtonText;
 		private readonly ToolTip _mouseOverTooltip;
-        private readonly ToolTip _focusTooltip = new ToolTip() { OwnerDraw = true };
+        private readonly ToolTip _focusTooltip = new ToolTip() { OwnerDraw = false };
 		private string _tooltipText;
 
 		public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IRenderingHandler renderingHandler, IDataObject dataObject, Button button, Form form, string tooltipTitle, string tooltipText)
@@ -27,8 +27,6 @@ namespace ClipboardViewer
 			this._button = button;
 			this._originButtonText = button.Text;
 			this._tooltipText = tooltipText;
-            this._focusTooltip.Popup += Tooltip_Popup;
-            this._focusTooltip.Draw += Tooltip_Draw;
 
 			var tooltip = new ToolTip() { InitialDelay = 0 };
 			tooltip.IsBalloon = true;
@@ -131,9 +129,7 @@ namespace ClipboardViewer
 		{
 			Logger.Write("Got Focus");
 			this._focusTooltip.Show(this._tooltipText, this._button, 2500);
-            this._focusTooltip.OwnerDraw = true;
-
-
+            
             Logger.Write("After Got Focus");
 		}
 

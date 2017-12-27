@@ -1,4 +1,4 @@
-﻿using ClipboardViewer.Window;
+﻿using ClipboardViewerForm.Window;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using Windows;
 using ClipboardBufer;
 
-namespace ClipboardViewer.Menu
+namespace ClipboardViewerForm.Menu
 {
     class MenuGenerator : IMenuGenerator
     {
@@ -29,6 +29,11 @@ namespace ClipboardViewer.Menu
             mainMenu.MenuItems.Add(new MenuItem("File", new MenuItem[] { new MenuItem("Load from file", this._loadingFileHandler.OnLoadFile), new MenuItem("Exit session", (object sender, EventArgs args) =>
         {
             WindowsFunctions.SendMessage(form.Handle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);
+        }), new MenuItem("SendKeys", (object sender, EventArgs args) => {
+            var newText = Microsoft.VisualBasic.Interaction.InputBox($"Enter a new text for this bufer. It can be useful to hide copied passwords or alias some enourmous text. Primary button value was.",
+                   "Change bufer's text", "");
+            //SendKeys.Send("{^TAB}");
+            //SendKeys.Send(newText);
         }) }));
             mainMenu.MenuItems.Add(new MenuItem("Edit", new MenuItem[] { new MenuItem("Undo", (sender, args) => { this._clipboardBuferService.Undo(); this._renderingHandler.Render(); }, Shortcut.CtrlZ), new MenuItem("Delete All", OnDeleteAll), new MenuItem("Bufer's Basket", (sender, args) => MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")) }));
 
@@ -39,13 +44,7 @@ namespace ClipboardViewer.Menu
         {
             Logger.Write("Delete All");
 
-            var clips = this._clipboardBuferService.GetClips();
-
-            foreach (var clip in clips)
-            {
-                this._clipboardBuferService.RemoveClip(clip);
-            }
-
+            this._clipboardBuferService.RemoveAllClips();
             this._renderingHandler.Render();
         }
 

@@ -7,14 +7,14 @@ using System.Windows.Forms;
 using ClipboardBufer;
 using Logging;
 
-namespace ClipboardViewer.Window
+namespace ClipboardViewerForm.Window
 {
 	class RenderingHandler : IRenderingHandler
     {
         private readonly Form _form;
         private readonly IClipboardBuferService _clipboardBuferService;
 		private readonly IWindowHidingHandler _hidingHandler;
-		private readonly IDictionary<IDataObject, Button> _buttonsMap = new Dictionary<IDataObject, Button>(30);
+		private readonly IDictionary<IDataObject, Button> _buttonsMap;
 		private readonly IEqualityComparer<IDataObject> _comparer;
         
         private const int BUTTON_HEIGHT = 25;
@@ -25,6 +25,7 @@ namespace ClipboardViewer.Window
             this._clipboardBuferService = clipboardBuferService;
 			this._comparer = comparer;
 			this._hidingHandler = hidingHandler;
+            this._buttonsMap = new Dictionary<IDataObject, Button>(clipboardBuferService.MaxBuferCount);
         }
 
         public void Render()
@@ -40,6 +41,11 @@ namespace ClipboardViewer.Window
 
             foreach (var bufer in bufers)
             {
+                if (bufer.GetFormats().Length == 0)
+                {
+                    MessageBox.Show("On Rendering handler, bufer.GetFormats().Length = 0.");
+                    continue;
+                }
                 Button button;
 				var equalObject = this._buttonsMap.Keys.FirstOrDefault(k => this._comparer.Equals(k, bufer));
                 if (equalObject != null)
@@ -48,8 +54,8 @@ namespace ClipboardViewer.Window
                 }
                 else
                 {
-                    var buferString = bufer.GetData(ClipboardFormats.UNICODE_STRING_FORMAT) as string;
                     button = new Button() { TextAlign = ContentAlignment.MiddleLeft, Margin = new Padding(0) };
+                    var buferString = bufer.GetData(ClipboardFormats.UNICODE_STRING_FORMAT) as string;
 					var isChangeTextAvailable = true;
 					string buferTitle = null;
                     if (buferString == null)
@@ -58,7 +64,6 @@ namespace ClipboardViewer.Window
                         if (files != null && files.Length > 0)
                         {
 							isChangeTextAvailable = false;
-							var firstFileName = files.GetValue(0) as string;
                             
                             if (files.Length == 1)
                             {
@@ -88,7 +93,13 @@ namespace ClipboardViewer.Window
                         }
                     }
 
-                    button.Text = (buferTitle ?? buferString).Trim();
+                    string buttonText = buferTitle ?? buferString;
+                    if (buttonText == null)
+                    {
+                        MessageBox.Show($"On Rendering handler, buttonText == null. Bufer get formats length = {bufer.GetFormats().Length}.");
+                        continue;
+                    }
+                    button.Text = buttonText.Trim();
                     
                     this._buttonsMap.Add(bufer, button);
                     this._form.Controls.Add(button);
@@ -121,7 +132,8 @@ namespace ClipboardViewer.Window
 					contextMenu.MenuItems.Add(new MenuItem("Paste", (object sender, EventArgs ars) => {
 						SendKeys.Send("~");
 					}));
-					contextMenu.MenuItems.Add(new MenuItem("Mark as persistent", buttonWrapper.MarkAsPersistent));//This item must be the last
+					contextMenu.MenuItems.Add(new MenuItem("Mark as persistent", buttonWrapper.MarkAsPersistent));//This item must be the last because it is convenient to mark persistent via keyboard
+                    contextMenu.Popup += ContextMenu_Popup;
                     button.ContextMenu = contextMenu;
                     button.Width = width;
                 }
@@ -129,7 +141,12 @@ namespace ClipboardViewer.Window
                 button.TabIndex = --buttonIndex;
                 y -= BUTTON_HEIGHT;
                 button.Location = new Point(0, y);
-            }            
+            }
+        }
+
+        private void ContextMenu_Popup(object sender, EventArgs e)
+        {
+            
         }
 
         private void RemoveOldButtons(IEnumerable<IDataObject> bufers)

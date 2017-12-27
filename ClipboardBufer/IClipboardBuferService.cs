@@ -27,5 +27,9 @@ namespace ClipboardBufer
         bool Contains(IDataObject clipDataObject);
 
         void RemoveClip(IDataObject clip);
+
+        void RemoveAllClips();
+
+        int MaxBuferCount { get; set; }
     }
 }

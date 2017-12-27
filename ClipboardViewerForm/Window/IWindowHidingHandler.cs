@@ -1,4 +1,4 @@
-﻿namespace ClipboardViewer.Window
+﻿namespace ClipboardViewerForm.Window
 {
     interface IWindowHidingHandler
     {

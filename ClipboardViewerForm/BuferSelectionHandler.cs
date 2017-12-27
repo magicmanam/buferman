@@ -1,10 +1,10 @@
-﻿using ClipboardViewer.Window;
+﻿using ClipboardViewerForm.Window;
 using System;
 using System.Globalization;
 using System.Windows.Forms;
 using Logging;
 
-namespace ClipboardViewer
+namespace ClipboardViewerForm
 {
 	class BuferSelectionHandler
     {

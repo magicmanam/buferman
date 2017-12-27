@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using Windows;
 
-namespace ClipboardViewer
+namespace ClipboardViewerForm
 {
 	public partial class BuferAMForm : Form
     {

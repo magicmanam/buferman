@@ -1,4 +1,4 @@
-﻿namespace ClipboardViewer
+﻿namespace ClipboardViewerForm
 {
     interface ICopyingToClipboardInterceptor
     {

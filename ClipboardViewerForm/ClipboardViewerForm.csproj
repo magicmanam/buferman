@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{362D3ACE-2118-43DC-A221-E4AB53A12C7D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ClipboardViewerForm</RootNamespace>
+    <AssemblyName>ClipboardViewerForm</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BuferAMForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BuferAMForm.Designer.cs">
+      <DependentUpon>BuferAMForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BuferHandlersWrapper.cs" />
+    <Compile Include="BuferSelectionHandler.cs" />
+    <Compile Include="CopyingToClipboardInterceptor.cs" />
+    <Compile Include="IBuferHandlersWrapper.cs" />
+    <Compile Include="ICopyingToClipboardInterceptor.cs" />
+    <Compile Include="Menu\ILoadingFileHandler.cs" />
+    <Compile Include="Menu\IMenuGenerator.cs" />
+    <Compile Include="Menu\LoadingFileHandler.cs" />
+    <Compile Include="Menu\MenuGenerator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Window\IRenderingHandler.cs" />
+    <Compile Include="Window\IWindowActivationHandler.cs" />
+    <Compile Include="Window\IWindowHidingHandler.cs" />
+    <Compile Include="Window\RenderingHandler.cs" />
+    <Compile Include="Window\WindowActivationHandler.cs" />
+    <Compile Include="Window\WindowHidingHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ClipMenu\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClipboardBufer\ClipboardBufer.csproj">
+      <Project>{77a59517-cced-4778-8ce4-e106ef61b8d0}</Project>
+      <Name>ClipboardBufer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logger\Logging.csproj">
+      <Project>{0deecdc2-cf30-4625-a465-671f851f937e}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Windows\Windows.csproj">
+      <Project>{5a51c93a-8fd0-4a47-8802-05b36cf7242e}</Project>
+      <Name>Windows</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

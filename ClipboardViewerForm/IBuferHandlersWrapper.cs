@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ClipboardViewer
+namespace ClipboardViewerForm
 {
     interface IBuferHandlersWrapper
     {
