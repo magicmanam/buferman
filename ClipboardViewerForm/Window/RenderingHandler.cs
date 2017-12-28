@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows.Forms;
 using ClipboardBufer;
 using Logging;
+using ClipboardViewerForm.ClipMenu;
 
 namespace ClipboardViewerForm.Window
 {
@@ -16,6 +17,7 @@ namespace ClipboardViewerForm.Window
 		private readonly IWindowHidingHandler _hidingHandler;
 		private readonly IDictionary<IDataObject, Button> _buttonsMap;
 		private readonly IEqualityComparer<IDataObject> _comparer;
+        private readonly int _buttonWidth;
         
         private const int BUTTON_HEIGHT = 25;
 
@@ -26,127 +28,54 @@ namespace ClipboardViewerForm.Window
 			this._comparer = comparer;
 			this._hidingHandler = hidingHandler;
             this._buttonsMap = new Dictionary<IDataObject, Button>(clipboardBuferService.MaxBuferCount);
+            this._buttonWidth = this._form.ClientRectangle.Width;
         }
 
         public void Render()
         {
-			Logger.Write("On render");
-            var bufers = _clipboardBuferService.GetClips(true).ToArray();
-            
-            int y = bufers.Length * BUTTON_HEIGHT;
-            int width = _form.ClientRectangle.Width;
-            
+            var bufers = _clipboardBuferService.GetClips(true).ToList();
+
             this.RemoveOldButtons(bufers);
-            int buttonIndex = bufers.Length;
+
+            this.DrawButtonsForBufers(bufers);
+        }
+
+        private void DrawButtonsForBufers(List<IDataObject> bufers)
+        {
+            int currentButtonIndex = this._clipboardBuferService.ClipsCount - 1;
+            int y = currentButtonIndex * BUTTON_HEIGHT;
 
             foreach (var bufer in bufers)
             {
-                if (bufer.GetFormats().Length == 0)
+                if (bufer.GetFormats().Length == 0)//Debug
                 {
-                    MessageBox.Show("On Rendering handler, bufer.GetFormats().Length = 0.");
+                    MessageBox.Show("On Rendering handler, bufer.GetFormats().Length = 0. Delete some button to avoid this message in the future and find out why it occured.");
                     continue;
                 }
+
                 Button button;
-				var equalObject = this._buttonsMap.Keys.FirstOrDefault(k => this._comparer.Equals(k, bufer));
+                var equalObject = this._buttonsMap.Keys.FirstOrDefault(k => this._comparer.Equals(k, bufer));
+
                 if (equalObject != null)
                 {
                     button = this._buttonsMap[equalObject];
                 }
                 else
                 {
-                    button = new Button() { TextAlign = ContentAlignment.MiddleLeft, Margin = new Padding(0) };
-                    var buferString = bufer.GetData(ClipboardFormats.UNICODE_STRING_FORMAT) as string;
-					var isChangeTextAvailable = true;
-					string buferTitle = null;
-                    if (buferString == null)
-                    {
-                        var files = bufer.GetData(ClipboardFormats.FILE_FORMAT) as string[];
-                        if (files != null && files.Length > 0)
-                        {
-							isChangeTextAvailable = false;
-                            
-                            if (files.Length == 1)
-                            {
-                                buferTitle = $"<< File >>:";
-                            }
-                            else
-                            {
-                                buferTitle = $"<< Files ({files.Length}) >>:";
-                            }
+                    button = new Button() { TextAlign = ContentAlignment.MiddleLeft, Margin = new Padding(0), Width = this._buttonWidth };
 
-							var folder = Path.GetDirectoryName(files.First());
-							buferString += folder + ": " + Environment.NewLine + Environment.NewLine;
-							buferString += string.Join(Environment.NewLine, files.Select(f => Path.GetFileName(f)).ToList());
-
-                            button.BackColor = Color.Brown;
-                        }
-                    }
-
-                    if (buferString == null)
-                    {
-                        var isBitmap = bufer.GetFormats().Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT);
-                        if (isBitmap)
-                        {
-							isChangeTextAvailable = false;
-							buferString = "<< Image >>";
-                            button.Font = new Font(button.Font, FontStyle.Italic | FontStyle.Bold);
-                        }
-                    }
-
-                    string buttonText = buferTitle ?? buferString;
-                    if (buttonText == null)
-                    {
-                        MessageBox.Show($"On Rendering handler, buttonText == null. Bufer get formats length = {bufer.GetFormats().Length}.");
-                        continue;
-                    }
-                    button.Text = buttonText.Trim();
-                    
                     this._buttonsMap.Add(bufer, button);
                     this._form.Controls.Add(button);
 
-                    var contextMenu = new ContextMenu();
-                    var formats = bufer.GetFormats();
-                    var formatsMenu = new MenuItem($"Formats ({formats.Length})");
-                    formatsMenu.Shortcut = Shortcut.AltDownArrow;
-                    foreach (var format in bufer.GetFormats())
-                    {
-                        if (format != ClipboardFormats.CUSTOM_IMAGE_FORMAT)
-                        {
-                            var particularFormatMenu = new MenuItem(format);
-                            particularFormatMenu.Click += (object sender, EventArgs args) =>
-                            {
-                                MessageBox.Show(bufer.GetData(format).ToString(), format);
-                            };
-                            formatsMenu.MenuItems.Add(particularFormatMenu);
-                        }
-                    }
-
-					var buttonWrapper = new BuferHandlersWrapper(this._clipboardBuferService, this, bufer, button, this._form, buferTitle, buferString);
-
-					contextMenu.MenuItems.Add(formatsMenu);
-                    contextMenu.MenuItems.Add(new MenuItem("Delete", buttonWrapper.DeleteBufer, Shortcut.Del));
-					if (isChangeTextAvailable)
-					{
-						contextMenu.MenuItems.Add(new MenuItem("Change text", buttonWrapper.ChangeText));
-					}
-					contextMenu.MenuItems.Add(new MenuItem("Paste", (object sender, EventArgs ars) => {
-						SendKeys.Send("~");
-					}));
-					contextMenu.MenuItems.Add(new MenuItem("Mark as persistent", buttonWrapper.MarkAsPersistent));//This item must be the last because it is convenient to mark persistent via keyboard
-                    contextMenu.Popup += ContextMenu_Popup;
-                    button.ContextMenu = contextMenu;
-                    button.Width = width;
+                    new BuferHandlersWrapper(this._clipboardBuferService, this, bufer, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, this));
                 }
 
-                button.TabIndex = --buttonIndex;
-                y -= BUTTON_HEIGHT;
+                button.TabIndex = currentButtonIndex;
                 button.Location = new Point(0, y);
-            }
-        }
 
-        private void ContextMenu_Popup(object sender, EventArgs e)
-        {
-            
+                currentButtonIndex -= 1;
+                y -= BUTTON_HEIGHT;
+            }
         }
 
         private void RemoveOldButtons(IEnumerable<IDataObject> bufers)

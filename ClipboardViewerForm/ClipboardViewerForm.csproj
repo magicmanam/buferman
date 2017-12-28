@@ -52,8 +52,9 @@
     </Compile>
     <Compile Include="BuferHandlersWrapper.cs" />
     <Compile Include="BuferSelectionHandler.cs" />
+    <Compile Include="ClipMenu\ClipMenuGenerator.cs" />
+    <Compile Include="ClipMenu\IClipMenuGenerator.cs" />
     <Compile Include="CopyingToClipboardInterceptor.cs" />
-    <Compile Include="IBuferHandlersWrapper.cs" />
     <Compile Include="ICopyingToClipboardInterceptor.cs" />
     <Compile Include="Menu\ILoadingFileHandler.cs" />
     <Compile Include="Menu\IMenuGenerator.cs" />
@@ -67,9 +68,7 @@
     <Compile Include="Window\WindowActivationHandler.cs" />
     <Compile Include="Window\WindowHidingHandler.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ClipMenu\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\ClipboardBufer\ClipboardBufer.csproj">
       <Project>{77a59517-cced-4778-8ce4-e106ef61b8d0}</Project>

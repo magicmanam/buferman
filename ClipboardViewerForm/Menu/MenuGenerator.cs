@@ -49,5 +49,6 @@ namespace ClipboardViewerForm.Menu
         }
 
         //MessageBox.Show("Feature is not supported now. Pay money to support.", "Keep calm and copy&paste!")
+        //To keep array of message boxes for not implemented features.
     }
 }

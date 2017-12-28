@@ -3,8 +3,8 @@ Done section is deleted with updating documentation and check list
 
 ******************* sorted ****************
 Done - Ctrl + Z после Delete All работает некорректно
+Done - Add context menu to return to initial value without changed text
 
-- add context menu to return to initial value without changed text + hide sensitive data context menu
 - Show last update time in status bar on window activation
 - Show tooltips (like Ctrl + Z instead of confirmation) - rigth in undoable action, which send message, in status bar
 By 01/01/2018
@@ -38,9 +38,12 @@ By 01/01/2018
 - Ctrl + Y
 - Delete all with persistent, separate persistent
 - Separate persistent bufer with some marker or just line
+- Remove all '//Debug'-sections
+- Bug on the first change text: wrong original text (empty string)
 
 Settings:  //Minimalize settings to ease using
   - Bufer's width: 300 by default
+  - Toolip duration (2500 by default)
   - Show tooltip when bufer gets focus (arrows keys or Tab). Set up time of tooltip
   - Show tooltip when mouse is over bufer
   - Show confirmation dialog on delete
@@ -76,7 +79,7 @@ Settings:  //Minimalize settings to ease using
 После нажатия на Alt+C (или Alt+Tab), окно появляется снова, кнопки отрисовываются шириной, равной ширине окна программы.
 При нажатии на кнопку закрытия окна программы или горячих клавиш Alt+F4 окно сворачивается, но не закрывается. Для закрытия программы используйте пункт меню Actions->Exit Session.
 Возможность редактирования буферов отсутствует, ибо нефик. Каждый буфер хранится в нескольких форматах, в том числе бинарных, неподдающихся изменению.
-Если вам нужно скрыть скопированный пароль, либо дать более смысловое имя-алиас для буфера, воспользуйтесь пунктом меню "Change text". Если изменённый таким образом буфер будет отличаться от первоначального значеня, то будет выделен жирным шрифтом. Когда текст возвращается к первоначальному, шрифт становится обычным.
+Если вам нужно скрыть скопированный пароль, либо дать более смысловое имя-алиас для буфера, воспользуйтесь пунктом меню "Change text". Если изменённый таким образом буфер будет отличаться от первоначального значения, то будет выделен жирным шрифтом. Когда текст возвращается к первоначальному, шрифт становится обычным. Вернуть текст к первоначальному можно, воспользовавшись пунктом меню "Return text to initial", которое может доступно или недоступно.
 Текст нельзя изменять для буферов с файлами или скриншотами.
 Программа позволяет сохранять постоянные буферы (через пункт контекстного меню "Mark as persistent"), они не будут перезаписываться и всегда будут находиться внизу списка.
 По нажатию на 'x' выделится первый буфер, а по нажатию на 'v' - последний.

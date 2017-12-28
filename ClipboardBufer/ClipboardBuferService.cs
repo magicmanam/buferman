@@ -25,6 +25,8 @@ namespace ClipboardBufer
             return this._GetAllClips(persistentFirst).ToList();
         }
 
+        public int ClipsCount { get { return this._tempObjects.Count + this._persistentObjects.Count; } }
+
         public void RemoveAllClips()
         {
             this._SaveCurrentState();
