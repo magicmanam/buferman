@@ -4,8 +4,8 @@ Done section is deleted with updating documentation and check list
 ******************* sorted ****************
 Done - Ctrl + Z после Delete All работает некорректно
 Done - Add context menu to return to initial value without changed text
+Done - Show last update time in status bar on window activation
 
-- Show last update time in status bar on window activation
 - Show tooltips (like Ctrl + Z instead of confirmation) - rigth in undoable action, which send message, in status bar
 By 01/01/2018
 
@@ -84,6 +84,7 @@ Settings:  //Minimalize settings to ease using
 Программа позволяет сохранять постоянные буферы (через пункт контекстного меню "Mark as persistent"), они не будут перезаписываться и всегда будут находиться внизу списка.
 По нажатию на 'x' выделится первый буфер, а по нажатию на 'v' - последний.
 
+/*Check: Статус бар обновляется на каждый Ctrl+C. */
 /*Check: После удаления всех буферов через пункт меню, по нажатию на Ctrl+Z, они восстанавливаются. */
 /*Check: Все пункты меню работают. */
 /*Check: Files: /n FolderPath /n FileName0, FileName1

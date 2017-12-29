@@ -72,8 +72,9 @@ namespace ClipboardViewerForm
 
             if (m.Msg == Messages.WM_DRAWCLIPBOARD)
             {
-                Logger.Write("Clipboard copied!");
                 this._clipboardInterceptor.DoOnCtrlC();
+
+                StatusLabel.Text = $"Clipboard last update was at {DateTime.Now.ToShortTimeString()}";
 
                 if (this._nextViewer != IntPtr.Zero)
                 {
@@ -127,7 +128,7 @@ namespace ClipboardViewerForm
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Text = PROGRAM_CAPTION;
-            this.Height = 807;
+            this.Height = 832;
             this.Activated += new WindowActivationHandler(_clipboardBuferService, this, this._renderingHandler).OnActivated;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
@@ -154,27 +155,20 @@ namespace ClipboardViewerForm
 
             StatusLine.Dock = DockStyle.Bottom;
             StatusLine.GripStyle = ToolStripGripStyle.Visible;
-            StatusLine.Items.AddRange(new ToolStripItem[] {
-            StatusLabel });
+            StatusLine.Items.AddRange(new ToolStripItem[] { StatusLabel });
             StatusLine.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            StatusLine.Location = new Point(0, 0);
-            StatusLine.Name = "statusStrip1";
             StatusLine.ShowItemToolTips = true;
-            StatusLine.Size = new Size(109, 17);
             StatusLine.SizingGrip = false;
             StatusLine.Stretch = false;
-            StatusLine.TabIndex = 0;
-            StatusLine.Text = "statusStrip1";
+            StatusLine.TabIndex = 1000;
 
-            StatusLabel.Name = "toolStripStatusLabel1";
-            StatusLabel.Size = new Size(109, 17);
             StatusLabel.Text = "toolStripStatusLabel1";
 
+            Controls.Add(StatusLine);
             StatusLine.ResumeLayout(false);
             StatusLine.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
-
         }
 
         private void BuferAMForm_FormClosing(object sender, FormClosingEventArgs e)
