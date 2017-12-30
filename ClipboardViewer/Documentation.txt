@@ -5,8 +5,7 @@ Done section is deleted with updating documentation and check list
 Done - Ctrl + Z после Delete All работает некорректно
 Done - Add context menu to return to initial value without changed text
 Done - Show last update time in status bar on window activation
-
-- Show tooltips (like Ctrl + Z instead of confirmation) - rigth in undoable action, which send message, in status bar
+Done - Show tooltips (like Ctrl + Z instead of confirmation) - rigth in undoable action, which send message, in status bar
 By 01/01/2018
 
 - suggest to add user / password wth separator and submit keys
@@ -35,11 +34,14 @@ By 01/01/2018
 - Log4net mastering!
 - Basket for deleted bufers (to quickly restore): restore particular and all at once
 ******************* unsorted ****************
+- Add clips count into status bar
 - Ctrl + Y
 - Delete all with persistent, separate persistent
 - Separate persistent bufer with some marker or just line
 - Remove all '//Debug'-sections
 - Bug on the first change text: wrong original text (empty string)
+- MAX_STATUS_LENGTH = 55
+- Дизэйблить пункт меню CtrlZ и CtrlY если они недоступны. Через события!!!
 
 Settings:  //Minimalize settings to ease using
   - Bufer's width: 300 by default
@@ -88,11 +90,12 @@ Settings:  //Minimalize settings to ease using
 /*Check: После удаления всех буферов через пункт меню, по нажатию на Ctrl+Z, они восстанавливаются. */
 /*Check: Все пункты меню работают. */
 /*Check: Files: /n FolderPath /n FileName0, FileName1
-/*Check: Пометить буфер постоянным, пункт меню должен задизэйблиться, и он переместиться вниз. При добавлении новых буферов все постоянны буферы остаются, не удаляются.*/
+/*Check: Пометить буфер постоянным, пункт меню должен задизэйблиться, и он переместиться вниз. При добавлении новых буферов все постоянные буферы остаются, не удаляются.*/
 /*Check: Окно нельзя ресайзить (не перерисовываются кнопки). Попробовать замаксимайзить окно, растянуть - оно не должно поддаваться. */
 /*Check: Когда окно программы видно на экране и в это время буфер обновляется, список буферов в окне программы обновляется сразу же. */
 /*Check: Запустить студию в режиме админа и попробовать вставить туда текст. */
 /*Check: Если копируется несколько файлов, то на бутоне и тултипе будет "<< Files (9) >>: firstFileName ...". Если 1 файл - "<< File >>: firstFileName". */
+*** Checked ***
 /*Check: При добавлении нового буфера, тултип на первом буфере не должен всплывать (окно программы должно быть открыто) */
 /*Check: Выбрать буфер, нажав на соответствующую кнопку. Окно программы скрывается. */
 /*Check: Скопировать несколько клипов. Открыть окно программы слева. Сделать активным другое окно справа (так, чтобы окно программы всё ещё было видимо,

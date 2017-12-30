@@ -35,15 +35,13 @@ namespace ClipboardViewerForm.Menu
             //SendKeys.Send("{^TAB}");
             //SendKeys.Send(newText);
         }) }));
-            mainMenu.MenuItems.Add(new MenuItem("Edit", new MenuItem[] { new MenuItem("Undo", (sender, args) => { this._clipboardBuferService.Undo(); this._renderingHandler.Render(); }, Shortcut.CtrlZ), new MenuItem("Delete All", OnDeleteAll), new MenuItem("Bufer's Basket", (sender, args) => MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")) }));
+            mainMenu.MenuItems.Add(new MenuItem("Edit", new MenuItem[] { new MenuItem("Undo", (sender, args) => { this._clipboardBuferService.Undo(); this._renderingHandler.Render(); }, Shortcut.CtrlZ), new MenuItem("Cancel Undo", (sender, args) => { this._clipboardBuferService.CancelUndo(); this._renderingHandler.Render(); }, Shortcut.CtrlY), new MenuItem("Delete All", OnDeleteAll), new MenuItem("Bufer's Basket", (sender, args) => MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")) }));
 
             return mainMenu;
         }
 
         private void OnDeleteAll(object sender, EventArgs args)
         {
-            Logger.Write("Delete All");
-
             this._clipboardBuferService.RemoveAllClips();
             this._renderingHandler.Render();
         }

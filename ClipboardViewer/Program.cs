@@ -30,7 +30,20 @@ namespace ClipboardViewer
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
 					var comparer = new DataObjectComparer(ClipboardFormats.StringFormats, ClipboardFormats.FileFormats);
-                    var form = new BuferAMForm(new ClipboardBuferService(comparer), comparer, new ClipboardWrapper());
+                    var clipboardService = new ClipboardBuferService(comparer);
+                    var form = new BuferAMForm(clipboardService, comparer, new ClipboardWrapper());
+                    clipboardService.UndoableAction += (object sender, UndoableActionEventArgs e) =>
+                    {
+                        form.SetStatusBarText($"{e.Action} Ctrl+Z to cancel");
+                    };
+                    clipboardService.UndoAction += (object sender, UndoableActionEventArgs e) =>
+                    {
+                        form.SetStatusBarText($"{e.Action} Ctrl+Y to restore it or Ctrl+Z to cancel one more previous operation");
+                    };
+                    clipboardService.CancelUndoAction += (object sender, UndoableActionEventArgs e) =>
+                    {
+                        form.SetStatusBarText($"{e.Action} Ctrl+Y to restore one more or Ctrl+Z to cancel other operation");
+                    };
                     Application.Run(form);
 
 				}
@@ -41,7 +54,7 @@ namespace ClipboardViewer
             }
         }
 
-		private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
+        private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
 		{
 			Logger.WriteError("Exception " + e.Exception.Message, e.Exception);
 		}

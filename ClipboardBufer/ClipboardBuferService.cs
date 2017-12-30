@@ -10,6 +10,7 @@ namespace ClipboardBufer
 	public class ClipboardBuferService : IClipboardBuferService
     {
         private readonly Stack<ClipboardBuferServiceState> _serviceStates = new Stack<ClipboardBuferServiceState>();
+        private readonly Stack<ClipboardBuferServiceState> _undoableStates = new Stack<ClipboardBuferServiceState>();
         private IList<IDataObject> _tempObjects = new List<IDataObject>();
 		private IList<IDataObject> _persistentObjects = new List<IDataObject>();
 		private readonly IEqualityComparer<IDataObject> _comparer;
@@ -20,6 +21,16 @@ namespace ClipboardBufer
 			this._comparer = comparer;
 		}
 
+        public event EventHandler<UndoableActionEventArgs> UndoableAction;
+        public event EventHandler<UndoableActionEventArgs> UndoAction;
+        public event EventHandler<UndoableActionEventArgs> CancelUndoAction;
+
+        protected virtual void OnUndoableAction(string action)
+        {
+            this._undoableStates.Clear();
+            UndoableAction?.Invoke(this, new UndoableActionEventArgs(action));
+        }
+
         public IEnumerable<IDataObject> GetClips(bool persistentFirst = false)
         {
             return this._GetAllClips(persistentFirst).ToList();
@@ -29,9 +40,10 @@ namespace ClipboardBufer
 
         public void RemoveAllClips()
         {
-            this._SaveCurrentState();
+            this._serviceStates.Push(this._GetCurrentState());
             this._tempObjects.Clear();
             this._persistentObjects.Clear();
+            this.OnUndoableAction("All clips were deleted.");
         }
 
 		private IEnumerable<IDataObject> _GetAllClips(bool persistentFirst)
@@ -83,8 +95,9 @@ namespace ClipboardBufer
             var dataObject = list.FirstOrDefault(d => this._comparer.Equals(d, clip));
             if (dataObject != null)
             {
-                this._SaveCurrentState();
+                this._serviceStates.Push(this._GetCurrentState());
                 list.Remove(dataObject);
+                this.OnUndoableAction("Clip was removed.");
                 return true;
             }
             else
@@ -93,9 +106,9 @@ namespace ClipboardBufer
             }
         }
 
-        private void _SaveCurrentState()
+        private ClipboardBuferServiceState _GetCurrentState()
         {
-            this._serviceStates.Push(new ClipboardBuferServiceState(this._tempObjects.ToList(), this._persistentObjects.ToList()));
+            return new ClipboardBuferServiceState(this._tempObjects.ToList(), this._persistentObjects.ToList());
         }
 
         public void AddTemporaryClip(IDataObject dataObject)
@@ -106,20 +119,22 @@ namespace ClipboardBufer
                 this.RemoveClip(this.FirstClip);
             }
 
-            this._SaveCurrentState();
+            this._serviceStates.Push(this._GetCurrentState());
             this._tempObjects.Add(dataObject);
+            this.OnUndoableAction("New clip was added.");
         }
 
         public void MarkClipAsPersistent(IDataObject dataObject)
 		{
-            this._SaveCurrentState();
-			if (this._tempObjects.Remove(dataObject))
+            this._serviceStates.Push(this._GetCurrentState());
+            if (this._tempObjects.Remove(dataObject))
 			{
 				this._persistentObjects.Add(dataObject);
-			} else
+                this.OnUndoableAction("Clip was marked as persistent.");
+
+            } else
 			{
                 this._serviceStates.Pop();
-				Logger.Write("An attempt to mark unexistent object as persistent.");
 			}
 		}
         
@@ -129,15 +144,30 @@ namespace ClipboardBufer
         {
             if (this._serviceStates.Count > 0)
             {
+                this._undoableStates.Push(this._GetCurrentState());
+
                 var lastState = this._serviceStates.Pop();
                 this._tempObjects = lastState.TempObjects;
                 this._persistentObjects = lastState.PersistentObjects;
+                this.UndoAction?.Invoke(this, new UndoableActionEventArgs("Operation cancelled."));
+            } else
+            {
+                //Here we can notify user, but other event should be used.
             }
         }
 
         public void CancelUndo()
         {
-            throw new NotImplementedException();
+            if (this._undoableStates.Count > 0)
+            {
+                var undoState = this._undoableStates.Pop();
+                this._tempObjects = undoState.TempObjects;
+                this._persistentObjects = undoState.PersistentObjects;
+                this.CancelUndoAction?.Invoke(this, new UndoableActionEventArgs("Operation restored."));
+            } else
+            {
+                //Here we can notify user, but other event should be used.
+            }
         }
     }
 }

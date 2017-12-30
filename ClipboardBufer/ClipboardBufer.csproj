@@ -51,6 +51,7 @@
     <Compile Include="IClipboardWrapper.cs" />
     <Compile Include="IUndoable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UndoableActionEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logger\Logging.csproj">

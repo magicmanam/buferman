@@ -8,6 +8,9 @@ namespace ClipboardBufer
 {
     public interface IUndoable
     {
+        event EventHandler<UndoableActionEventArgs> UndoableAction;
+        event EventHandler<UndoableActionEventArgs> UndoAction;
+        event EventHandler<UndoableActionEventArgs> CancelUndoAction;
         void Undo();
         void CancelUndo();
     }

@@ -28,7 +28,7 @@ namespace ClipboardViewerForm
         private IntPtr _nextViewer;
 
         internal StatusStrip StatusLine { get; set; }
-        internal ToolStripStatusLabel StatusLabel { get; set; }
+        public ToolStripStatusLabel StatusLabel { get; set; }
 
         public BuferAMForm(IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper)
         {
@@ -66,7 +66,6 @@ namespace ClipboardViewerForm
             if (m.Msg == Messages.WM_CREATE)
             {
                 this._nextViewer = WindowsFunctions.SetClipboardViewer(this.Handle);
-                Logger.Write("Next viewer " + this._nextViewer.ToString());
                 WindowsFunctions.RegisterHotKey(this.Handle, 0, 1, (int)Keys.C);
             }
 
@@ -74,11 +73,10 @@ namespace ClipboardViewerForm
             {
                 this._clipboardInterceptor.DoOnCtrlC();
 
-                StatusLabel.Text = $"Clipboard last update was at {DateTime.Now.ToShortTimeString()}";
+                this.SetStatusBarText($"Clipboard last update was at {DateTime.Now.ToShortTimeString()}");//Should be in separate strip label
 
                 if (this._nextViewer != IntPtr.Zero)
                 {
-                    Logger.Write("Send message to the next clipboard viewer.");
                     WindowsFunctions.SendMessage(this._nextViewer, m.Msg, IntPtr.Zero, IntPtr.Zero);
                 }
             }
@@ -90,7 +88,6 @@ namespace ClipboardViewerForm
 
                 if (key == Keys.C && modifier == System.Windows.Input.ModifierKeys.Alt)
                 {
-                    Logger.Write("Activate window on Alt + C");
                     this.Activate();
                 }
             }
@@ -115,6 +112,14 @@ namespace ClipboardViewerForm
             }
 
             base.WndProc(ref m);
+        }
+
+        public void SetStatusBarText(string newText)
+        {
+            //this.StatusLabel.ToolTipText = newText;
+            const int MAX_STATUS_LENGTH = 45;//Define based on window's width
+            this.StatusLabel.Text = newText.Length <= MAX_STATUS_LENGTH ? newText : newText.Substring(0, MAX_STATUS_LENGTH);
+            this.StatusLine.Update();
         }
 
         #region Код, автоматически созданный конструктором форм Windows
@@ -149,7 +154,7 @@ namespace ClipboardViewerForm
         private void CreateStatusBar()
         {
             StatusLine = new StatusStrip();
-            StatusLabel = new ToolStripStatusLabel();
+            StatusLabel = new ToolStripStatusLabel() { AutoToolTip = true, Spring = true, TextAlign = ContentAlignment.MiddleLeft };
             StatusLine.SuspendLayout();
             SuspendLayout();
 
@@ -161,8 +166,6 @@ namespace ClipboardViewerForm
             StatusLine.SizingGrip = false;
             StatusLine.Stretch = false;
             StatusLine.TabIndex = 1000;
-
-            StatusLabel.Text = "toolStripStatusLabel1";
 
             Controls.Add(StatusLine);
             StatusLine.ResumeLayout(false);
