@@ -6,7 +6,7 @@ using Logging;
 
 namespace ClipboardViewerForm
 {
-	class BuferSelectionHandler
+	class BuferSelectionHandler : IBuferSelectionHandler
     {
         private readonly IWindowHidingHandler _hidingHandler;
         private readonly IDataObject _dataObject;

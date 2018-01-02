@@ -53,7 +53,7 @@ namespace ClipboardBufer
             }
         }
 
-        public void SetDataObject(DataObject dataObject)
+        public void SetDataObject(IDataObject dataObject)
         {
             Clipboard.SetDataObject(dataObject);
         }

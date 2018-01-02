@@ -6,6 +6,6 @@ namespace ClipboardBufer
     public interface IClipboardWrapper
     {
         IDataObject GetDataObject();
-        void SetDataObject(DataObject dataObject);
+        void SetDataObject(IDataObject dataObject);
     }
 }

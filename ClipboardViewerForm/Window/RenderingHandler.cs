@@ -67,7 +67,9 @@ namespace ClipboardViewerForm.Window
                     this._buttonsMap.Add(bufer, button);
                     this._form.Controls.Add(button);
 
-                    new BuferHandlersWrapper(this._clipboardBuferService, this, bufer, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, this));
+                    var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._hidingHandler);
+
+                    new BuferHandlersWrapper(this._clipboardBuferService, this, bufer, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, this, buferSelectionHandler, this._hidingHandler), buferSelectionHandler);
                 }
 
                 button.TabIndex = currentButtonIndex;

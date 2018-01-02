@@ -13,6 +13,7 @@ namespace ClipboardBufer
         public static IList<string> FileFormats = new List<string>() { FILE_FORMAT, "FileName", "FileNameW" };
 
         public const string CUSTOM_IMAGE_FORMAT = "Buferman.Image";
+        public const string PASSWORD_FORMAT = "Buferman.Password";
         public const string UNICODE_STRING_FORMAT = "System.String";
         public const string FILE_FORMAT = "FileDrop";
 

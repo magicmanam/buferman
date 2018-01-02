@@ -55,6 +55,7 @@
     <Compile Include="ClipMenu\ClipMenuGenerator.cs" />
     <Compile Include="ClipMenu\IClipMenuGenerator.cs" />
     <Compile Include="CopyingToClipboardInterceptor.cs" />
+    <Compile Include="IBuferSelectionHandler.cs" />
     <Compile Include="ICopyingToClipboardInterceptor.cs" />
     <Compile Include="Menu\ILoadingFileHandler.cs" />
     <Compile Include="Menu\IMenuGenerator.cs" />

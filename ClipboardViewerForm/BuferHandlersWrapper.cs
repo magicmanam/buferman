@@ -16,16 +16,18 @@ namespace ClipboardViewerForm
         private readonly IClipboardBuferService _clipboardBuferService;
 		private readonly IRenderingHandler _renderingHandler;
 		private readonly IDataObject _dataObject;
+        private readonly IBuferSelectionHandler _buferSelectionHandler;
 		private readonly Button _button;
         private readonly ToolTip _focusTooltip = new ToolTip() { OwnerDraw = false };
 		private string _tooltipText;
 
-        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IRenderingHandler renderingHandler, IDataObject dataObject, Button button, Form form, IClipMenuGenerator clipMenuGenerator)
+        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IRenderingHandler renderingHandler, IDataObject dataObject, Button button, Form form, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._renderingHandler = renderingHandler;
             this._dataObject = dataObject;
             this._button = button;
+            this._buferSelectionHandler = buferSelectionHandler;
 
             var buferString = dataObject.GetData(ClipboardFormats.UNICODE_STRING_FORMAT) as string;
             var isChangeTextAvailable = true;
@@ -97,7 +99,7 @@ namespace ClipboardViewerForm
             button.GotFocus += Bufer_GotFocus;
             button.LostFocus += Bufer_LostFocus;
 
-            button.Click += new BuferSelectionHandler(form, dataObject, new WindowHidingHandler(form)).DoOnClipSelection;
+            button.Click += this._buferSelectionHandler.DoOnClipSelection;
 
             button.ContextMenu = clipMenuGenerator.GenerateContextMenu(this._dataObject, button, originBuferText, this._tooltipText, tooltip, isChangeTextAvailable);
         }
