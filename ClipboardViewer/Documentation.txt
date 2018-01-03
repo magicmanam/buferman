@@ -6,12 +6,6 @@ Done -
 By DD/01/2018
 ***
 
-Done as not reproduced - Bug on the first change text: wrong original text (empty string)
-Done - One bufer for username/password
-Done - Add support for special symbols in password
-Done at 04/01/2018
-By 05/01/2018
-
 - Separate persistent bufer with some marker or just line
 - Delete all with persistent, separate persistent
 - Just paste with saving current clipboard (exchanging)

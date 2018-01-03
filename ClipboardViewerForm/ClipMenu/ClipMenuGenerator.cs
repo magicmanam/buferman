@@ -115,7 +115,8 @@ namespace ClipboardViewerForm.ClipMenu
                 MessageBox.Show("Password can not be empty blank. Try again! Try better!");
             } else
             {
-                password = this.ReplaceSpecialSendKeysCharacters(password);
+                var escapedPasswordChars = ClipMenuGenerator._ReplaceSpecialSendKeysCharacters(password);
+                password = String.Join(String.Empty, escapedPasswordChars);
                 this._createLoginDataMenuItem.Text = "Login credentials";
                 this._dataObject.SetData(ClipboardFormats.PASSWORD_FORMAT, password);
                 this.TryChangeText($"Creds for {this._button.Text}");
@@ -149,9 +150,9 @@ namespace ClipboardViewerForm.ClipMenu
                     SendKeys.Flush();
                     this._hidingHandler.HideWindow();
 
-                    foreach (var letter in password.ToCharArray())
+                    foreach (var escapedChar in escapedPasswordChars)
                     {
-                        SendKeys.SendWait(letter.ToString());
+                        SendKeys.SendWait(escapedChar);
                     }
 
                     SendKeys.Send("~");
@@ -160,15 +161,16 @@ namespace ClipboardViewerForm.ClipMenu
                 {
                     SendKeys.Flush();
                     this._hidingHandler.HideWindow();
-                    SendKeys.Send(this._originBuferText);
+                    SendKeys.Send(String.Join(String.Empty, ClipMenuGenerator._ReplaceSpecialSendKeysCharacters(this._originBuferText)));
                 }));
             }
         }
 
-        private static string ReplaceSpecialSendKeysCharacters(string password)
+        private static IEnumerable<string> _ReplaceSpecialSendKeysCharacters(string password)
         {
             const string specialSendKeysChars = "+^%[]{}";
-            return String.Join(String.Empty, password.ToCharArray().Select(c => specialSendKeysChars.Contains(c) ? $"{{{c}}}" : c.ToString()));
+
+            return password.ToCharArray().Select(c => specialSendKeysChars.Contains(c) ? $"{{{c}}}" : c.ToString());
         }
 
         private void ChangeText(object sender, EventArgs e)
