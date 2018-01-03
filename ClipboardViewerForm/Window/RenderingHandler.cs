@@ -47,9 +47,9 @@ namespace ClipboardViewerForm.Window
 
             foreach (var bufer in bufers)
             {
-                if (bufer.GetFormats().Length == 0)//Debug
+                if (bufer.GetFormats().Length == 0)
                 {
-                    MessageBox.Show("On Rendering handler, bufer.GetFormats().Length = 0. Delete some button to avoid this message in the future and find out why it occured.");
+                    this._clipboardBuferService.RemoveClip(bufer);
                     continue;
                 }
 
