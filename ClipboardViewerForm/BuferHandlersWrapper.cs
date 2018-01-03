@@ -70,7 +70,9 @@ namespace ClipboardViewerForm
             string buttonText = buferTitle ?? buferString;
             if (buttonText == null)
             {
-                MessageBox.Show($"On Rendering handler, buttonText == null. Bufer get formats length = {dataObject.GetFormats().Length}.");
+                buttonText = "<< Not text >>";
+                button.Font = new Font(button.Font, FontStyle.Italic | FontStyle.Bold);
+                isChangeTextAvailable = false;
             }
 
             this._tooltipText = buferString;

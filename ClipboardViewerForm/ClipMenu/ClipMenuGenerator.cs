@@ -44,7 +44,9 @@ namespace ClipboardViewerForm.ClipMenu
 
             var contextMenu = new ContextMenu();
             var formats = this._dataObject.GetFormats();
-            var formatsMenu = new MenuItem($"Formats ({formats.Length})");
+            var formatsMenu = new MenuItem();
+            var formatsCount = formats.Length;
+            
             formatsMenu.Shortcut = Shortcut.AltDownArrow;
             foreach (var format in this._dataObject.GetFormats())
             {
@@ -57,7 +59,13 @@ namespace ClipboardViewerForm.ClipMenu
                     };
                     formatsMenu.MenuItems.Add(particularFormatMenu);
                 }
+                else
+                {
+                    formatsCount -= 1;
+                }
             }
+
+            formatsMenu.Text = $"Formats ({formatsCount})";
 
             contextMenu.MenuItems.Add(formatsMenu);
             contextMenu.MenuItems.Add(new MenuItem("Delete", this.DeleteBufer, Shortcut.Del));
