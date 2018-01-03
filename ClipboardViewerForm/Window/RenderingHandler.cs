@@ -49,6 +49,7 @@ namespace ClipboardViewerForm.Window
             {
                 if (bufer.GetFormats().Length == 0)
                 {
+                    //In this case we do not need to have Ctrl+Z available, so, undoable context is quite good here
                     this._clipboardBuferService.RemoveClip(bufer);
                     continue;
                 }

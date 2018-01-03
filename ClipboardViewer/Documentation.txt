@@ -8,8 +8,8 @@ By DD/01/2018
 
 Done as not reproduced - Bug on the first change text: wrong original text (empty string)
 Done - One bufer for username/password
-
-- Add support for special symbols in password
+Done - Add support for special symbols in password
+Done at 04/01/2018
 By 05/01/2018
 
 - Separate persistent bufer with some marker or just line
@@ -52,6 +52,8 @@ By 20/01/2018
 - Log4net mastering!
 - Basket for deleted bufers (to quickly restore): restore particular and all at once
 ******************* unsorted ****************
+If link is copied in browser, Enter should be clicked automatically.
+
 
 Settings:  //Minimalize settings to ease using
   - Bufer's width: 300 by default
@@ -97,6 +99,8 @@ Settings:  //Minimalize settings to ease using
 Программа позволяет сохранять постоянные буферы (через пункт контекстного меню "Mark as persistent"), они не будут перезаписываться и всегда будут находиться внизу списка.
 По нажатию на 'x' выделится первый буфер, а по нажатию на 'v' - последний.
 
+/*Check: . */
+/*Check: Создать креды с спецсимволами +^%{}[] - проверить, что пароль вставляется правильно (спецсимволы заменяются на '{special_char}'). Пример пароля: '{+}%^[{]{{' */
 /*Check: Создать креды и проверить, что буфер с логином добавляется в список буферов. */
 /*Check: Начать создавать креды, пока пароль не засабмитан, скопировать в буфер обмена и только потом сохранить. Убедиться, что правильный пароль вводится */
 /*Check: Статус бар обновляется на каждый Ctrl+C. */
