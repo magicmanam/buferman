@@ -133,7 +133,7 @@ namespace ClipboardViewerForm
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Text = PROGRAM_CAPTION;
-            this.Height = 832;
+            this.Height = 832 + 3;//+ is divider height
             this.Activated += new WindowActivationHandler(_clipboardBuferService, this, this._renderingHandler).OnActivated;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
 

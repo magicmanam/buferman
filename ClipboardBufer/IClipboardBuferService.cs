@@ -12,6 +12,10 @@ namespace ClipboardBufer
 		/// <returns></returns>
         IEnumerable<IDataObject> GetClips(bool persistentFirst = false);
 
+        IEnumerable<IDataObject> GetTemporaryClips();
+
+        IEnumerable<IDataObject> GetPersistentClips();
+
         int ClipsCount { get; }
 
         void AddTemporaryClip(IDataObject clipDataObject);
@@ -31,6 +35,10 @@ namespace ClipboardBufer
         void RemoveClip(IDataObject clip);
 
         void RemoveAllClips();
+
+        void RemovePersistentClips();
+
+        void RemoveTemporaryClips();
 
         int MaxBuferCount { get; set; }
     }

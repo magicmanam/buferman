@@ -40,10 +40,13 @@ namespace ClipboardBufer
 
         public void RemoveAllClips()
         {
-            this._serviceStates.Push(this._GetCurrentState());
-            this._tempObjects.Clear();
-            this._persistentObjects.Clear();
-            this.OnUndoableAction("All clips were deleted.");
+            if (this._tempObjects.Count + this._persistentObjects.Count > 0)
+            {
+                this._serviceStates.Push(this._GetCurrentState());
+                this._tempObjects.Clear();
+                this._persistentObjects.Clear();
+                this.OnUndoableAction("All clips were deleted.");
+            }
         }
 
 		private IEnumerable<IDataObject> _GetAllClips(bool persistentFirst)
@@ -115,7 +118,6 @@ namespace ClipboardBufer
         {
             if (this.GetClips().Count() == this.MaxBuferCount)
             {
-                Logger.Write("More than maximum count. Need to remove the first clip");
                 this.RemoveClip(this.FirstClip);
             }
 
@@ -167,6 +169,36 @@ namespace ClipboardBufer
             } else
             {
                 //Here we can notify user, but other event should be used.
+            }
+        }
+
+        public IEnumerable<IDataObject> GetTemporaryClips()
+        {
+            return this._tempObjects.ToList();
+        }
+
+        public IEnumerable<IDataObject> GetPersistentClips()
+        {
+            return this._persistentObjects.ToList();
+        }
+
+        public void RemovePersistentClips()
+        {
+            if (this._persistentObjects.Count > 0)
+            {
+                this._serviceStates.Push(this._GetCurrentState());
+                this._persistentObjects.Clear();
+                this.OnUndoableAction("Persistent clips were deleted.");
+            }
+        }
+
+        public void RemoveTemporaryClips()
+        {
+            if (this._tempObjects.Count > 0)
+            {
+                this._serviceStates.Push(this._GetCurrentState());
+                this._tempObjects.Clear();
+                this.OnUndoableAction("Temporary clips were deleted.");
             }
         }
     }

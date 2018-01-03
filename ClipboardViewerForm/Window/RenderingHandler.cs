@@ -18,6 +18,7 @@ namespace ClipboardViewerForm.Window
 		private readonly IDictionary<IDataObject, Button> _buttonsMap;
 		private readonly IEqualityComparer<IDataObject> _comparer;
         private readonly int _buttonWidth;
+        private readonly Label _persistentClipsDivider;
         
         private const int BUTTON_HEIGHT = 25;
 
@@ -29,21 +30,31 @@ namespace ClipboardViewerForm.Window
 			this._hidingHandler = hidingHandler;
             this._buttonsMap = new Dictionary<IDataObject, Button>(clipboardBuferService.MaxBuferCount);
             this._buttonWidth = this._form.ClientRectangle.Width;
+            this._persistentClipsDivider = new Label() { Text = string.Empty, BorderStyle = BorderStyle.FixedSingle, AutoSize = false, Height = 3, BackColor = Color.AliceBlue, Width = this._buttonWidth };
+            this._form.Controls.Add(this._persistentClipsDivider);
         }
 
         public void Render()
         {
-            var bufers = _clipboardBuferService.GetClips(true).ToList();
+            var temporaryClips = this._clipboardBuferService.GetTemporaryClips().ToList();
+            this._RemoveOldButtons(temporaryClips);
 
-            this.RemoveOldButtons(bufers);
+            var persistentClips = this._clipboardBuferService.GetPersistentClips();
+            this._RemoveOldButtons(persistentClips);
 
-            this.DrawButtonsForBufers(bufers);
+            this._DrawButtonsForBufers(temporaryClips, 0);
+            this._persistentClipsDivider.Location = new Point(0, temporaryClips.Count * BUTTON_HEIGHT);
+
+            if (persistentClips.Any())
+            {
+                this._DrawButtonsForBufers(persistentClips.ToList(), this._persistentClipsDivider.Location.Y + this._persistentClipsDivider.Height);
+            }
         }
 
-        private void DrawButtonsForBufers(List<IDataObject> bufers)
+        private void _DrawButtonsForBufers(List<IDataObject> bufers, int startFromY)
         {
-            int currentButtonIndex = this._clipboardBuferService.ClipsCount - 1;
-            int y = currentButtonIndex * BUTTON_HEIGHT;
+            int currentButtonIndex = bufers.Count - 1;
+            int y = currentButtonIndex * BUTTON_HEIGHT + startFromY;
 
             foreach (var bufer in bufers)
             {
@@ -81,9 +92,8 @@ namespace ClipboardViewerForm.Window
             }
         }
 
-        private void RemoveOldButtons(IEnumerable<IDataObject> bufers)
+        private void _RemoveOldButtons(IEnumerable<IDataObject> bufers)
         {
-			Logger.Write("Rendering Handler: Remove Old Buttons");
 			var deletedKeys = new List<IDataObject>();
 
             foreach (var key in this._buttonsMap.Keys.ToList())
@@ -92,7 +102,7 @@ namespace ClipboardViewerForm.Window
                 if (equalKey == null)
                 {
                     this._form.Controls.Remove(this._buttonsMap[key]);
-                    deletedKeys.Add(key);                    
+                    deletedKeys.Add(key);
                 }
             }
 

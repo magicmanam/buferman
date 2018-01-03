@@ -6,8 +6,8 @@ Done -
 By DD/01/2018
 ***
 
-- Separate persistent bufer with some marker or just line
-- Delete all with persistent, separate persistent
+Done - Separate persistent bufer with some marker or just line
+Done - Delete all with persistent, separate persistent
 - Just paste with saving current clipboard (exchanging)
 - Just copy in clipboard menu
 By 13/01/2018
@@ -47,7 +47,8 @@ By 20/01/2018
 - Basket for deleted bufers (to quickly restore): restore particular and all at once
 ******************* unsorted ****************
 If link is copied in browser, Enter should be clicked automatically.
-
+Make creds as persistent bufer or not ? Get an answer and implement if needed.
+Enable/disable 'Delete All' and 'Delete All Temporary' based on availability.
 
 Settings:  //Minimalize settings to ease using
   - Bufer's width: 300 by default
@@ -65,6 +66,7 @@ Settings:  //Minimalize settings to ease using
 
 
 	Документация:
+Вы можете удалить все буферы, только временные.
 Вы можете создать пару имя/пароль, используя контекстное меню.
 При добавлении в буфер картинки, вместо тултипа добавляется превью картинки.
 Неизвестные форматы записываются в файле с именем "unknown-formats.txt".
@@ -92,9 +94,10 @@ Settings:  //Minimalize settings to ease using
 Текст нельзя изменять для буферов с файлами или скриншотами.
 Программа позволяет сохранять постоянные буферы (через пункт контекстного меню "Mark as persistent"), они не будут перезаписываться и всегда будут находиться внизу списка.
 По нажатию на 'x' выделится первый буфер, а по нажатию на 'v' - последний.
+Постоянные клипы отделены от временных горизонтальной полоской.
 
 /*Check: . */
-/*Check: Создать креды с спецсимволами +^%{}[] - проверить, что пароль вставляется правильно (спецсимволы заменяются на '{special_char}'). Пример пароля: '{+}%^[{]{{' */
+/*Check: Создать креды с спецсимволами +^%{}[] (логин и пароль) - проверить, что пароль и логин по отдельности вставляются правильно (спецсимволы заменяются на '{special_char}'). Пример пароля: '{+}%^[{]{{' */
 /*Check: Создать креды и проверить, что буфер с логином добавляется в список буферов. */
 /*Check: Начать создавать креды, пока пароль не засабмитан, скопировать в буфер обмена и только потом сохранить. Убедиться, что правильный пароль вводится */
 /*Check: Статус бар обновляется на каждый Ctrl+C. */
