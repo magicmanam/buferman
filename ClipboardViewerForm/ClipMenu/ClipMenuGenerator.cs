@@ -74,8 +74,11 @@ namespace ClipboardViewerForm.ClipMenu
             this._markAsPersistentMenuItem = new MenuItem("Mark as persistent", this.MarkAsPersistent);
             contextMenu.MenuItems.Add(this._markAsPersistentMenuItem);
 
-            this._createLoginDataMenuItem = new MenuItem("Create login credentials", this._CreateLoginCredentials);
-            contextMenu.MenuItems.Add(this._createLoginDataMenuItem);
+            if (isChangeTextAvailable)
+            {
+                this._createLoginDataMenuItem = new MenuItem("Create login credentials", this._CreateLoginCredentials);
+                contextMenu.MenuItems.Add(this._createLoginDataMenuItem);
+            }
 
             return contextMenu;
         }
