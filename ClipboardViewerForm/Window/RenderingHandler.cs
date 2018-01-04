@@ -37,10 +37,8 @@ namespace ClipboardViewerForm.Window
         public void Render()
         {
             var temporaryClips = this._clipboardBuferService.GetTemporaryClips().ToList();
-            this._RemoveOldButtons(temporaryClips);
-
             var persistentClips = this._clipboardBuferService.GetPersistentClips();
-            this._RemoveOldButtons(persistentClips);
+            this._RemoveOldButtons(temporaryClips.Union(persistentClips));
 
             this._DrawButtonsForBufers(temporaryClips, 0);
             this._persistentClipsDivider.Location = new Point(0, temporaryClips.Count * BUTTON_HEIGHT);
