@@ -40,7 +40,6 @@ namespace ClipboardViewerForm
 
             InitializeComponent();
             this.ShowInTaskbar = false;
-            Logger.Write(this.Handle.ToString());
         }
 
         /// <summary>

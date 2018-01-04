@@ -22,7 +22,6 @@ namespace ClipboardViewerForm.Window
                 
         public void OnActivated(object sender, EventArgs e)
         {
-			Logger.Write("On Activated");
 			this._form.WindowState = FormWindowState.Normal;
             this._form.Visible = true;
 

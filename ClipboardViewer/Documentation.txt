@@ -8,8 +8,8 @@ By DD/01/2018
 
 Done - Separate persistent bufer with some marker or just line
 Done - Delete all with persistent, separate persistent
-- Just paste with saving current clipboard (exchanging)
-- Just copy in clipboard menu
+? - Just paste with saving current clipboard (exchanging)
+? - Just copy in clipboard menu
 By 13/01/2018
 
 - to enter char by char (for case in console)

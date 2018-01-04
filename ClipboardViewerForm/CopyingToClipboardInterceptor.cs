@@ -26,16 +26,12 @@ namespace ClipboardViewerForm
 
         public void DoOnCtrlC()
         {
-			Logger.Write("On Ctrl+C");
-
             var currentObject = this._clipboardWrapper.GetDataObject();
 
             if (!this._clipboardBuferService.IsLastTemporaryClip(currentObject))
             {
-				Logger.Write("Is not last clip");
 				if (this._clipboardBuferService.Contains(currentObject))
                 {
-					Logger.Write("Already contains this clip");
 					if (this._clipboardBuferService.IsNotPersistent(currentObject))
 					{
 						_clipboardBuferService.RemoveClip(currentObject);
@@ -44,8 +40,7 @@ namespace ClipboardViewerForm
 						return;
 					}
                 }
-
-				Logger.Write("Add Clip");
+                
 				_clipboardBuferService.AddTemporaryClip(currentObject);
 
                 if (this._form.WindowState != FormWindowState.Minimized && this._form.Visible)
