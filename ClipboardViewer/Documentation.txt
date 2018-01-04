@@ -15,7 +15,7 @@ By 13/01/2018
 - to enter char by char (for case in console)
 - Дизэйблить пункт меню CtrlZ и CtrlY если они недоступны. Через события!!!
 - console has the program much slowlier
-- extract nuget packages: send keys. Method with flush, Send(params strings[] args), undoable, windows
+- extract nuget packages: send keys. Method with flush, Send(params strings[] args), escapint, Enter(), PressShift, UnPressShift, ... undoable, windows, 
 By 20/01/2018
 
 # RC Tested and Vitaly notified by 1 February 2018
@@ -49,6 +49,9 @@ By 20/01/2018
 If link is copied in browser, Enter should be clicked automatically.
 Make creds as persistent bufer or not ? Get an answer and implement if needed.
 Enable/disable 'Delete All' and 'Delete All Temporary' based on availability.
+Add drag an drop for temp/persistnt bufers
+Disable 'Mark as persistent' for persistent bufers.
+order menu items in popularity way
 
 Settings:  //Minimalize settings to ease using
   - Bufer's width: 300 by default

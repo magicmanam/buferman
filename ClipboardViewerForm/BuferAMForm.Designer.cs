@@ -34,7 +34,7 @@ namespace ClipboardViewerForm
         {
             this._clipboardBuferService = clipboardBuferService;
             this._hidingHandler = new WindowHidingHandler(this);
-            this._renderingHandler = new RenderingHandler(this, this._clipboardBuferService, comparer, this._hidingHandler);
+            this._renderingHandler = new RenderingHandler(this, this._clipboardBuferService, comparer, this._hidingHandler, clipboardWrapper);
             this._clipboardInterceptor = new CopyingToClipboardInterceptor(clipboardBuferService, this, this._renderingHandler, comparer, clipboardWrapper);
             this._menuGenerator = new MenuGenerator(new LoadingFileHandler(clipboardWrapper), this._clipboardBuferService, this._renderingHandler);
 

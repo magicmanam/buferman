@@ -19,10 +19,11 @@ namespace ClipboardViewerForm.Window
 		private readonly IEqualityComparer<IDataObject> _comparer;
         private readonly int _buttonWidth;
         private readonly Label _persistentClipsDivider;
-        
+        private readonly IClipboardWrapper _clipboardWrapper;
+
         private const int BUTTON_HEIGHT = 25;
 
-        public RenderingHandler(Form form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IWindowHidingHandler hidingHandler)
+        public RenderingHandler(Form form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IWindowHidingHandler hidingHandler, IClipboardWrapper clipboardWrapper)
         {
             this._form = form;
             this._clipboardBuferService = clipboardBuferService;
@@ -32,6 +33,7 @@ namespace ClipboardViewerForm.Window
             this._buttonWidth = this._form.ClientRectangle.Width;
             this._persistentClipsDivider = new Label() { Text = string.Empty, BorderStyle = BorderStyle.FixedSingle, AutoSize = false, Height = 3, BackColor = Color.AliceBlue, Width = this._buttonWidth };
             this._form.Controls.Add(this._persistentClipsDivider);
+            this._clipboardWrapper = clipboardWrapper;
         }
 
         public void Render()
@@ -79,7 +81,7 @@ namespace ClipboardViewerForm.Window
                     this._buttonsMap.Add(bufer, button);
                     this._form.Controls.Add(button);
 
-                    var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._hidingHandler);
+                    var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._hidingHandler, this._clipboardWrapper);
 
                     new BuferHandlersWrapper(this._clipboardBuferService, this, bufer, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, this, buferSelectionHandler, this._hidingHandler), buferSelectionHandler);
                 }
