@@ -31,26 +31,30 @@ namespace ClipboardViewerForm.Menu
 
             if (result == DialogResult.OK)
             {
-                var fileName = this._dialog.FileName;
-                try
+                this.LoadBufersFromFile(this._dialog.FileName);
+            }
+        }
+
+        public void LoadBufersFromFile(string fileName)
+        {
+            try
+            {
+                using (var fileReader = new StreamReader(new FileStream(fileName, FileMode.Open, FileAccess.Read), Encoding.Default))
                 {
-                    using (var fileReader = new StreamReader(new FileStream(fileName, FileMode.Open, FileAccess.Read), Encoding.Default))
+                    while (!fileReader.EndOfStream)
                     {
-                        while (!fileReader.EndOfStream)
+                        var bufer = fileReader.ReadLine();
+                        if (!string.IsNullOrWhiteSpace(bufer))
                         {
-                            var bufer = fileReader.ReadLine();
-                            if (!string.IsNullOrWhiteSpace(bufer))
-                            {
-                                var dataObject = new DataObject(ClipboardFormats.UNICODE_STRING_FORMAT, bufer);
-                                Clipboard.SetDataObject(dataObject);
-                            }
+                            var dataObject = new DataObject(ClipboardFormats.UNICODE_STRING_FORMAT, bufer);
+                            this._clipboardWrapper.SetDataObject(dataObject);
                         }
                     }
                 }
-                catch (IOException exc)
-                {
-                    MessageBox.Show($"There is an error while reading a file {this._dialog.FileName}:\n\n {exc.Message}", "Loading file error");
-                }
+            }
+            catch (IOException exc)
+            {
+                MessageBox.Show($"There is an error while reading a file {this._dialog.FileName}:\n\n {exc.Message}", "Loading file error");
             }
         }
     }

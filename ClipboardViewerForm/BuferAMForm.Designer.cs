@@ -25,6 +25,7 @@ namespace ClipboardViewerForm
         private readonly IWindowHidingHandler _hidingHandler;
         private readonly ICopyingToClipboardInterceptor _clipboardInterceptor;
         private readonly IMenuGenerator _menuGenerator;
+        private readonly ILoadingFileHandler _loadingFileHandler;
         private IntPtr _nextViewer;
 
         internal StatusStrip StatusLine { get; set; }
@@ -36,7 +37,8 @@ namespace ClipboardViewerForm
             this._hidingHandler = new WindowHidingHandler(this);
             this._renderingHandler = new RenderingHandler(this, this._clipboardBuferService, comparer, this._hidingHandler, clipboardWrapper);
             this._clipboardInterceptor = new CopyingToClipboardInterceptor(clipboardBuferService, this, this._renderingHandler, comparer, clipboardWrapper);
-            this._menuGenerator = new MenuGenerator(new LoadingFileHandler(clipboardWrapper), this._clipboardBuferService, this._renderingHandler);
+            this._loadingFileHandler = new LoadingFileHandler(clipboardWrapper);
+            this._menuGenerator = new MenuGenerator(this._loadingFileHandler, this._clipboardBuferService, this._renderingHandler);
 
             InitializeComponent();
             this.ShowInTaskbar = false;
@@ -58,6 +60,11 @@ namespace ClipboardViewerForm
                 components.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public void LoadBufersFromFile(string fileName)
+        {
+            this._loadingFileHandler.LoadBufersFromFile(fileName);
         }
 
         protected override void WndProc(ref Message m)

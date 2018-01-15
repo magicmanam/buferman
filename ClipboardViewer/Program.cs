@@ -5,11 +5,16 @@ using System.Threading;
 using ClipboardBufer;
 using System.Windows.Forms;
 using ClipboardViewerForm;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace ClipboardViewer
 {
 	static class Program
-    {        
+    {
+        private const string DEFAULT_BUFERS_FILE_NAME = "bufers.txt";
+        private delegate void _LoadBufersFromDefaultFileInvoker(string fileName);
+
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -22,7 +27,7 @@ namespace ClipboardViewer
                 if (isNew)
                 {
 					XmlConfigurator.Configure();//Note
-					Logging.Logger.Current = new Log4netLogger();
+					Logger.Current = new Log4netLogger();
 					//Logger.Logger.Current = new ConsoleLogger();
 
 					Application.ThreadException += Application_ThreadException;//Must be run before Application.Run() //Note
@@ -32,6 +37,16 @@ namespace ClipboardViewer
 					var comparer = new DataObjectComparer(ClipboardFormats.StringFormats, ClipboardFormats.FileFormats);
                     var clipboardService = new ClipboardBuferService(comparer);
                     var form = new BuferAMForm(clipboardService, comparer, new ClipboardWrapper());
+
+                    Task.Delay(777).ContinueWith(t =>
+                    {
+                        if (File.Exists(DEFAULT_BUFERS_FILE_NAME))
+                        {
+                            var invoker = new _LoadBufersFromDefaultFileInvoker(form.LoadBufersFromFile);
+                            form.Invoke(invoker, DEFAULT_BUFERS_FILE_NAME);
+                        }
+                    });
+
                     clipboardService.UndoableAction += (object sender, UndoableActionEventArgs e) =>
                     {
                         form.SetStatusBarText($"{e.Action} Ctrl+Z to cancel");

@@ -29,10 +29,10 @@ namespace ClipboardViewerForm
             this._button = button;
             this._buferSelectionHandler = buferSelectionHandler;
 
-            var buferString = dataObject.GetData(ClipboardFormats.UNICODE_STRING_FORMAT) as string;
+            var buferTextRepresentation = dataObject.GetData(ClipboardFormats.UNICODE_STRING_FORMAT) as string;
             var isChangeTextAvailable = true;
             string buferTitle = null;
-            if (buferString == null)
+            if (buferTextRepresentation == null)
             {
                 var files = dataObject.GetData(ClipboardFormats.FILE_FORMAT) as string[];
                 if (files != null && files.Length > 0)
@@ -41,33 +41,34 @@ namespace ClipboardViewerForm
 
                     if (files.Length == 1)
                     {
-                        buferTitle = $"<< File >>:";
+                        buferTitle = $"<< File >>";
                     }
                     else
                     {
-                        buferTitle = $"<< Files ({files.Length}) >>:";
+                        buferTitle = $"<< Files ({files.Length}) >>";
                     }
 
                     var folder = Path.GetDirectoryName(files.First());
-                    buferString += folder + " " + Environment.NewLine + Environment.NewLine;
-                    buferString += string.Join(Environment.NewLine, files.Select(f => Path.GetFileName(f)).ToList());
+                    buferTextRepresentation += folder + " " + Environment.NewLine + Environment.NewLine;
+                    buferTextRepresentation += string.Join(Environment.NewLine, files.Select(f => Path.GetFileName(f)).ToList());
 
                     button.BackColor = Color.Brown;
+                } else {
+                    var isBitmap = dataObject.GetFormats().Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT);
+                    if (isBitmap)
+                    {
+                        isChangeTextAvailable = false;
+                        buferTextRepresentation = "<< Image >>";
+                        button.Font = new Font(button.Font, FontStyle.Italic | FontStyle.Bold);
+                    }
+                    else
+                    {
+                        buferTextRepresentation = dataObject.GetData(ClipboardFormats.TEXT_STRING_FORMAT) as string;
+                    }
                 }
             }
 
-            if (buferString == null)
-            {
-                var isBitmap = dataObject.GetFormats().Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT);
-                if (isBitmap)
-                {
-                    isChangeTextAvailable = false;
-                    buferString = "<< Image >>";
-                    button.Font = new Font(button.Font, FontStyle.Italic | FontStyle.Bold);
-                }
-            }
-
-            string buttonText = buferTitle ?? buferString;
+            string buttonText = buferTitle ?? buferTextRepresentation;
             if (buttonText == null)
             {
                 buttonText = "<< Not text >>";
@@ -75,14 +76,14 @@ namespace ClipboardViewerForm
                 isChangeTextAvailable = false;
             }
 
-            this._tooltipText = buferString;
+            this._tooltipText = buferTextRepresentation;
             button.Text = buttonText.Trim();
 
             string originBuferText = button.Text;
 
             var tooltip = new ToolTip() { InitialDelay = 0 };
             tooltip.IsBalloon = true;
-            tooltip.SetToolTip(button, buferString);
+            tooltip.SetToolTip(button, buferTextRepresentation);
             if (!string.IsNullOrWhiteSpace(buferTitle))
             {
                 tooltip.ToolTipTitle = buferTitle;
