@@ -75,9 +75,12 @@ namespace ClipboardViewerForm.ClipMenu
                 _returnTextToInitialMenuItem = new MenuItem("Return text to initial", ReturnTextToInitial) { Enabled = false };
                 contextMenu.MenuItems.Add(_returnTextToInitialMenuItem);
             }
-            contextMenu.MenuItems.Add(new MenuItem("Paste", (object sender, EventArgs ars) =>
+            contextMenu.MenuItems.Add(new MenuItem($"Paste {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
             {
                 SendKeys.Send("~");
+            }));
+            contextMenu.MenuItems.Add(new MenuItem("Paste char by char (for console)", (object sender, EventArgs args) => {
+                this._TypeText(String.Join(String.Empty, ClipMenuGenerator._ReplaceSpecialSendKeysCharacters(this._originBuferText)));
             }));
             this._markAsPersistentMenuItem = new MenuItem("Mark as persistent", this.MarkAsPersistent);
             contextMenu.MenuItems.Add(this._markAsPersistentMenuItem);
@@ -132,38 +135,27 @@ namespace ClipboardViewerForm.ClipMenu
                     SendKeys.Send("~");
                 };
 
-                this._createLoginDataMenuItem.MenuItems.Add(new MenuItem("Paste password + Enter", (object pastePasswordSender, EventArgs args) =>
+                this._createLoginDataMenuItem.MenuItems.Add(new MenuItem("Paste password with Enter", (object pastePasswordSender, EventArgs args) =>
                 {
-                    SendKeys.Flush();
-                    this._hidingHandler.HideWindow();
-                    SendKeys.SendWait(password);
+                    this._TypeText(password);
                     SendKeys.Send("~");
                 }));
-                this._createLoginDataMenuItem.MenuItems.Add(new MenuItem("Paste password w/o Enter", (object pastePasswordSender, EventArgs args) =>
+                this._createLoginDataMenuItem.MenuItems.Add(new MenuItem("Paste password", (object pastePasswordSender, EventArgs args) =>
                 {
-                    SendKeys.Flush();
-                    this._hidingHandler.HideWindow();
-                    SendKeys.Send(password);
-                }));
-                this._createLoginDataMenuItem.MenuItems.Add(new MenuItem("Enter password char by char + Enter", (object pastePasswordSender, EventArgs args) =>
-                {
-                    SendKeys.Flush();
-                    this._hidingHandler.HideWindow();
-
-                    foreach (var escapedChar in escapedPasswordChars)
-                    {
-                        SendKeys.SendWait(escapedChar);
-                    }
-
-                    SendKeys.Send("~");
+                    this._TypeText(password);
                 }));
                 this._createLoginDataMenuItem.MenuItems.Add(new MenuItem("Paste username", (object pasteUsernameSender, EventArgs args) =>
                 {
-                    SendKeys.Flush();
-                    this._hidingHandler.HideWindow();
-                    SendKeys.Send(String.Join(String.Empty, ClipMenuGenerator._ReplaceSpecialSendKeysCharacters(this._originBuferText)));
+                    this._TypeText(String.Join(String.Empty, ClipMenuGenerator._ReplaceSpecialSendKeysCharacters(this._originBuferText)));
                 }));
             }
+        }
+
+        private void _TypeText(string text)
+        {
+            SendKeys.Flush();
+            this._hidingHandler.HideWindow();
+            SendKeys.SendWait(text);
         }
 
         private static IEnumerable<string> _ReplaceSpecialSendKeysCharacters(string password)

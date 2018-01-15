@@ -6,13 +6,7 @@ Done -
 By DD/01/2018
 ***
 
-Done - Separate persistent bufer with some marker or just line
-Done - Delete all with persistent, separate persistent
-? - Just paste with saving current clipboard (exchanging)
-? - Just copy in clipboard menu
-By 13/01/2018
-
-- to enter char by char (for case in console)
+Done - to enter char by char menu item (for case in console)
 - Дизэйблить пункт меню CtrlZ и CtrlY если они недоступны. Через события!!!
 - console has the program much slowlier
 - extract nuget packages: send keys. Method with flush, Send(params strings[] args), escapint, Enter(), PressShift, UnPressShift, ... undoable, windows, 
@@ -101,6 +95,8 @@ Settings:  //Minimalize settings to ease using
 Постоянные клипы отделены от временных горизонтальной полоской.
 
 /*Check: . */
+/*Check: При копировании нескольких пробелов, буфер показывает сколько пробелов и вставляет их в правильном кол-ве. */
+/*Check: Проверить, что текстовый буфер может копировать посимвольно в консоли. */
 /*Check: Создать файл bufers.txt с двумя строками. При загрузке программы, все буферы копируются в программу (особенно обратить внимание на первый)! */
 /*Check: Создать креды с спецсимволами +^%{}[] (логин и пароль) - проверить, что пароль и логин по отдельности вставляются правильно (спецсимволы заменяются на '{special_char}'). Пример пароля: '{+}%^[{]{{' */
 /*Check: Создать креды и проверить, что буфер с логином добавляется в список буферов. */

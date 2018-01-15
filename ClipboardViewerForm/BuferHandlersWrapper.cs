@@ -20,6 +20,7 @@ namespace ClipboardViewerForm
 		private readonly Button _button;
         private readonly ToolTip _focusTooltip = new ToolTip() { OwnerDraw = false };
 		private string _tooltipText;
+        private const float IMAGE_SCALE = 0.75f;
 
         public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IRenderingHandler renderingHandler, IDataObject dataObject, Button button, Form form, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler)
         {
@@ -69,9 +70,9 @@ namespace ClipboardViewerForm
             }
 
             string buttonText = buferTitle ?? buferTextRepresentation;
-            if (buttonText == null)
+            if (string.IsNullOrWhiteSpace(buttonText))
             {
-                buttonText = "<< Not text >>";
+                buttonText = buttonText == null ? "<< Not a text >>" : $"<< {buttonText.Length}   white spaces >>";
                 button.Font = new Font(button.Font, FontStyle.Italic | FontStyle.Bold);
                 isChangeTextAvailable = false;
             }
@@ -119,7 +120,7 @@ namespace ClipboardViewerForm
 
                 //create your own custom brush to fill the background with the image
                 TextureBrush b = new TextureBrush(new Bitmap(preview));
-                b.ScaleTransform(0.5f, 0.5f);
+                b.ScaleTransform(IMAGE_SCALE, IMAGE_SCALE);
 
                 g.FillRectangle(b, e.Bounds);
                 b.Dispose();
@@ -133,7 +134,7 @@ namespace ClipboardViewerForm
 
             if (previewImage != null)
             {
-                e.ToolTipSize = new Size(previewImage.Width / 2, previewImage.Height / 2);
+                e.ToolTipSize = new Size((int) (previewImage.Width * IMAGE_SCALE), (int) (previewImage.Height * IMAGE_SCALE));
             }
         }
 

@@ -62,30 +62,31 @@ namespace ClipboardViewerForm.Window
                 {
                     //In this case we do not need to have Ctrl+Z available, so, undoable context is quite good here
                     this._clipboardBuferService.RemoveClip(bufer);
-                    continue;
-                }
-
-                Button button;
-                var equalObject = this._buttonsMap.Keys.FirstOrDefault(k => this._comparer.Equals(k, bufer));
-
-                if (equalObject != null)
-                {
-                    button = this._buttonsMap[equalObject];
                 }
                 else
                 {
-                    button = new Button() { TextAlign = ContentAlignment.MiddleLeft, Margin = new Padding(0), Width = this._buttonWidth };
+                    Button button;
+                    var equalObject = this._buttonsMap.Keys.FirstOrDefault(k => this._comparer.Equals(k, bufer));
 
-                    this._buttonsMap.Add(bufer, button);
-                    this._form.Controls.Add(button);
+                    if (equalObject != null)
+                    {
+                        button = this._buttonsMap[equalObject];
+                    }
+                    else
+                    {
+                        button = new Button() { TextAlign = ContentAlignment.MiddleLeft, Margin = new Padding(0), Width = this._buttonWidth };
 
-                    var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._hidingHandler, this._clipboardWrapper);
+                        this._buttonsMap.Add(bufer, button);
+                        this._form.Controls.Add(button);
 
-                    new BuferHandlersWrapper(this._clipboardBuferService, this, bufer, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, this, buferSelectionHandler, this._hidingHandler), buferSelectionHandler);
+                        var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._hidingHandler, this._clipboardWrapper);
+
+                        new BuferHandlersWrapper(this._clipboardBuferService, this, bufer, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, this, buferSelectionHandler, this._hidingHandler), buferSelectionHandler);
+                    }
+
+                    button.TabIndex = currentButtonIndex;
+                    button.Location = new Point(0, y);
                 }
-
-                button.TabIndex = currentButtonIndex;
-                button.Location = new Point(0, y);
 
                 currentButtonIndex -= 1;
                 y -= BUTTON_HEIGHT;
