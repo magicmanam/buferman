@@ -30,7 +30,7 @@ namespace ClipboardViewerForm
             this._button = button;
             this._buferSelectionHandler = buferSelectionHandler;
 
-            var buferTextRepresentation = dataObject.GetData(ClipboardFormats.UNICODE_STRING_FORMAT) as string;
+            var buferTextRepresentation = (dataObject.GetData(ClipboardFormats.UNICODE_STRING_FORMAT) ?? dataObject.GetData(ClipboardFormats.UNICODE_TEXT_STRING_FORMAT)) as string;
             var isChangeTextAvailable = true;
             string buferTitle = null;
             if (buferTextRepresentation == null)

@@ -43,6 +43,8 @@ By 20/01/2018
 - Log4net mastering!
 - Basket for deleted bufers (to quickly restore): restore particular and all at once
 ******************* unsorted ****************
+filename is extracted into const
+добавить проверку буфера в файле и метки того, что буфер был взят из файла
 If link is copied in browser, Enter should be clicked automatically.
 Enable/disable 'Delete All' and 'Delete All Temporary' based on availability.
 Add drag an drop for temp/persistnt bufers
