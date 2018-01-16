@@ -4,6 +4,7 @@ using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,8 @@ namespace ClipboardViewerForm.ClipMenu
         private MenuItem _returnTextToInitialMenuItem;
         private MenuItem _markAsPersistentMenuItem;
         private MenuItem _createLoginDataMenuItem;
+        private MenuItem _addToFileMenuItem;
+        private MenuItem _pasteMenuItem;
         private String _originBuferText;
         private string _tooltipText;
         private ToolTip _mouseOverTooltip;
@@ -43,6 +46,10 @@ namespace ClipboardViewerForm.ClipMenu
             this._mouseOverTooltip = mouseOverTooltip;
 
             var contextMenu = new ContextMenu();
+
+            this._markAsPersistentMenuItem = new MenuItem("Mark as persistent", this.MarkAsPersistent);
+            contextMenu.MenuItems.Add(this._markAsPersistentMenuItem);
+            
             var formats = this._dataObject.GetFormats();
             var formatsMenu = new MenuItem();
             var formatsCount = formats.Length;
@@ -69,24 +76,35 @@ namespace ClipboardViewerForm.ClipMenu
 
             contextMenu.MenuItems.Add(formatsMenu);
             contextMenu.MenuItems.Add(new MenuItem("Delete", this.DeleteBufer, Shortcut.Del));
-            if (isChangeTextAvailable)
-            {
-                contextMenu.MenuItems.Add(new MenuItem("Change text", this.ChangeText));
-                _returnTextToInitialMenuItem = new MenuItem("Return text to initial", ReturnTextToInitial) { Enabled = false };
-                contextMenu.MenuItems.Add(_returnTextToInitialMenuItem);
-            }
-            contextMenu.MenuItems.Add(new MenuItem($"Paste {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
+
+            this._pasteMenuItem = new MenuItem($"Paste {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
             {
                 SendKeys.Send("~");
-            }));
-            contextMenu.MenuItems.Add(new MenuItem("Paste char by char (for console)", (object sender, EventArgs args) => {
-                this._TypeText(String.Join(String.Empty, ClipMenuGenerator._ReplaceSpecialSendKeysCharacters(this._originBuferText)));
-            }));
-            this._markAsPersistentMenuItem = new MenuItem("Mark as persistent", this.MarkAsPersistent);
-            contextMenu.MenuItems.Add(this._markAsPersistentMenuItem);
-
+            });
+            contextMenu.MenuItems.Add(this._pasteMenuItem);
+            
             if (isChangeTextAvailable)
             {
+                contextMenu.MenuItems.Add("-");
+                contextMenu.MenuItems.Add(new MenuItem("Paste char by char (for console)", (object sender, EventArgs args) => {
+                    this._TypeText(String.Join(String.Empty, ClipMenuGenerator._ReplaceSpecialSendKeysCharacters(this._originBuferText)));
+                }));
+
+                this._returnTextToInitialMenuItem = new MenuItem("Return text to initial", ReturnTextToInitial) { Enabled = false };
+                contextMenu.MenuItems.Add(_returnTextToInitialMenuItem);
+                contextMenu.MenuItems.Add(new MenuItem("Change text", this.ChangeText));
+
+                this._addToFileMenuItem = new MenuItem("Add to bufers.txt file", (object sender, EventArgs args) =>
+                {
+                    using (var sw = new StreamWriter(new FileStream("bufers.txt", FileMode.Append, FileAccess.Write)))
+                    {
+                        sw.WriteLine(this._originBuferText);
+                    }
+                    this._addToFileMenuItem.Text = "Added to bufers.txt file";
+                    this._addToFileMenuItem.Enabled = false;
+                }, Shortcut.CtrlF);
+                contextMenu.MenuItems.Add(this._addToFileMenuItem);
+
                 this._createLoginDataMenuItem = new MenuItem("Create login credentials", this._CreateLoginCredentials);
                 contextMenu.MenuItems.Add(this._createLoginDataMenuItem);
             }
@@ -121,6 +139,7 @@ namespace ClipboardViewerForm.ClipMenu
                 var escapedPasswordChars = ClipMenuGenerator._ReplaceSpecialSendKeysCharacters(password);
                 password = String.Join(String.Empty, escapedPasswordChars);
                 this._createLoginDataMenuItem.Text = "Login credentials";
+                this._pasteMenuItem.Text = $"Login with creds {new String('\t', 2)} Enter";
                 this._dataObject.SetData(ClipboardFormats.PASSWORD_FORMAT, password);
                 this.TryChangeText($"Creds for {this._button.Text}");
 
@@ -148,6 +167,7 @@ namespace ClipboardViewerForm.ClipMenu
                 {
                     this._TypeText(String.Join(String.Empty, ClipMenuGenerator._ReplaceSpecialSendKeysCharacters(this._originBuferText)));
                 }));
+                MarkAsPersistent(sender, e);
             }
         }
 
