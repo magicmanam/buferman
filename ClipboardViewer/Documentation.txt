@@ -8,10 +8,10 @@ By DD/01/2018
 
 Done - to enter char by char menu item (for case in console)
 Done - reordered context menu
-Done - Make creds as persistent bufer or not
+Done - Make creds as persistent bufer
+Done - console has the program much slowlier - removed!
 
 - Дизэйблить пункт меню CtrlZ и CtrlY если они недоступны. Через события!!!
-- console has the program much slowlier
 - extract nuget packages: send keys. Method with flush, Send(params strings[] args), escapint, Enter(), PressShift, UnPressShift, ... undoable, windows, 
 By 20/01/2018
 
@@ -43,8 +43,12 @@ By 20/01/2018
 - Log4net mastering!
 - Basket for deleted bufers (to quickly restore): restore particular and all at once
 ******************* unsorted ****************
+Menu items - separate classes + factory
+Context.IInterface
+IStorage - to remove all System.IO - to use everywhere
 filename is extracted into const
 добавить проверку буфера в файле и метки того, что буфер был взят из файла
+многострочные буферы из файла + пароль + персистентность + alias - json format
 If link is copied in browser, Enter should be clicked automatically.
 Enable/disable 'Delete All' and 'Delete All Temporary' based on availability.
 Add drag an drop for temp/persistnt bufers
@@ -101,6 +105,7 @@ Settings:  //Minimalize settings to ease using
 Постоянные клипы отделены от временных горизонтальной полоской.
 
 /*Check: . */
+/*Check: Если есть постоянные буферы, то при удалении всех буферов, конфирмейшен всплывает. */
 /*Check: При копировании нескольких пробелов, буфер показывает сколько пробелов и вставляет их в правильном кол-ве. */
 /*Check: Проверить, что текстовый буфер может копировать посимвольно в консоли. */
 /*Check: Создать файл bufers.txt с двумя строками. При загрузке программы, все буферы копируются в программу (особенно обратить внимание на первый)! */

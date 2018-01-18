@@ -42,7 +42,23 @@ namespace ClipboardViewerForm.Menu
 
         private void OnDeleteAll(object sender, EventArgs args)
         {
-            this._clipboardBuferService.RemoveAllClips();
+            if (this._clipboardBuferService.GetPersistentClips().Any())
+            {
+                var result = MessageBox.Show("There are persistent clips exist. Do you want to delete them as well?", "Confirm persistent bufers deletion", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes)
+                {
+                    this._clipboardBuferService.RemoveAllClips();
+                } else
+                {
+                    this._clipboardBuferService.RemoveTemporaryClips();
+                }
+            }
+            else
+            {
+                this._clipboardBuferService.RemoveTemporaryClips();
+            }
+
             this._renderingHandler.Render();
         }
 

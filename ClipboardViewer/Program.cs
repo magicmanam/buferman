@@ -40,10 +40,10 @@ namespace ClipboardViewer
 
                     Task.Delay(777).ContinueWith(t =>
                     {
-                        if (File.Exists(DEFAULT_BUFERS_FILE_NAME))
+                        if (File.Exists(Program.DEFAULT_BUFERS_FILE_NAME))
                         {
                             var invoker = new _LoadBufersFromDefaultFileInvoker(form.LoadBufersFromFile);
-                            form.Invoke(invoker, DEFAULT_BUFERS_FILE_NAME);
+                            form.Invoke(invoker, Program.DEFAULT_BUFERS_FILE_NAME);
                         }
                     });
 
