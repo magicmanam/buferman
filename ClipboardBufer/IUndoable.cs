@@ -11,6 +11,8 @@ namespace ClipboardBufer
         event EventHandler<UndoableActionEventArgs> UndoableAction;
         event EventHandler<UndoableActionEventArgs> UndoAction;
         event EventHandler<UndoableActionEventArgs> CancelUndoAction;
+        event EventHandler<UndoableContextChangedEventArgs> UndoableContextChanged;
+
         void Undo();
         void CancelUndo();
     }

@@ -39,7 +39,7 @@ namespace ClipboardViewerForm.Menu
         {
             try
             {
-                using (var fileReader = new StreamReader(new FileStream(fileName, FileMode.Open, FileAccess.Read), Encoding.Default))
+                using (var fileReader = new StreamReader(new FileStream(fileName, FileMode.Open, FileAccess.Read)))
                 {
                     while (!fileReader.EndOfStream)
                     {

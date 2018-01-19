@@ -26,9 +26,10 @@ namespace ClipboardViewerForm
 
         public void DoOnCtrlC()
         {
+            //Here I need undoable context
             var currentObject = this._clipboardWrapper.GetDataObject();
 
-            if (!this._clipboardBuferService.IsLastTemporaryClip(currentObject))
+            if (currentObject.GetFormats().Any() && !this._clipboardBuferService.IsLastTemporaryClip(currentObject))
             {
 				if (this._clipboardBuferService.Contains(currentObject))
                 {

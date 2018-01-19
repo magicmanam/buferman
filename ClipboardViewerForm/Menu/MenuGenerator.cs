@@ -35,7 +35,15 @@ namespace ClipboardViewerForm.Menu
             //SendKeys.Send("{^TAB}");
             //SendKeys.Send(newText);
         }) }));
-            mainMenu.MenuItems.Add(new MenuItem("Edit", new MenuItem[] { new MenuItem("Undo", (sender, args) => { this._clipboardBuferService.Undo(); this._renderingHandler.Render(); }, Shortcut.CtrlZ), new MenuItem("Redo", (sender, args) => { this._clipboardBuferService.CancelUndo(); this._renderingHandler.Render(); }, Shortcut.CtrlY), new MenuItem("Delete All", OnDeleteAll), new MenuItem("Delete All Temporary", OnDeleteAllTemporary), new MenuItem("Bufer's Basket", (sender, args) => MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")) }));
+            var undoMenuItem = new MenuItem("Undo", (sender, args) => { this._clipboardBuferService.Undo(); this._renderingHandler.Render(); }, Shortcut.CtrlZ) { Enabled = false };
+            var redoMenuItem = new MenuItem("Redo", (sender, args) => { this._clipboardBuferService.CancelUndo(); this._renderingHandler.Render(); }, Shortcut.CtrlY) { Enabled = false };
+            mainMenu.MenuItems.Add(new MenuItem("Edit", new MenuItem[] { undoMenuItem, redoMenuItem, new MenuItem("Delete All", OnDeleteAll), new MenuItem("Delete All Temporary", OnDeleteAllTemporary), new MenuItem("Bufer's Basket", (sender, args) => MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")) }));
+
+            this._clipboardBuferService.UndoableContextChanged += (object sender, UndoableContextChangedEventArgs e) =>
+            {
+                undoMenuItem.Enabled = e.CanUndo;
+                redoMenuItem.Enabled = e.CanRedo;
+            };
 
             return mainMenu;
         }
@@ -44,14 +52,14 @@ namespace ClipboardViewerForm.Menu
         {
             if (this._clipboardBuferService.GetPersistentClips().Any())
             {
-                var result = MessageBox.Show("There are persistent clips exist. Do you want to delete them as well?", "Confirm persistent bufers deletion", MessageBoxButtons.YesNo);
+                var result = MessageBox.Show("There are persistent bufers exist. Do you want to delete only temporal bufers?", "Confirm persistent bufers deletion", MessageBoxButtons.YesNo);
 
                 if (result == DialogResult.Yes)
                 {
-                    this._clipboardBuferService.RemoveAllClips();
+                    this._clipboardBuferService.RemoveTemporaryClips();
                 } else
                 {
-                    this._clipboardBuferService.RemoveTemporaryClips();
+                    this._clipboardBuferService.RemoveAllClips();
                 }
             }
             else

@@ -24,17 +24,19 @@ namespace ClipboardBufer
         public event EventHandler<UndoableActionEventArgs> UndoableAction;
         public event EventHandler<UndoableActionEventArgs> UndoAction;
         public event EventHandler<UndoableActionEventArgs> CancelUndoAction;
+        public event EventHandler<UndoableContextChangedEventArgs> UndoableContextChanged;
 
         protected virtual void OnUndoableAction(string action)
         {
             this._undoableStates.Clear();
-            UndoableAction?.Invoke(this, new UndoableActionEventArgs(action));
+            this.UndoableAction?.Invoke(this, new UndoableActionEventArgs(action));
+            this.UndoableContextChanged.Invoke(this, new UndoableContextChangedEventArgs(true, false));
         }
 
         public IEnumerable<IDataObject> GetClips(bool persistentFirst = false)
         {
             return this._GetAllClips(persistentFirst).ToList();
-        }
+        }   
 
         public int ClipsCount { get { return this._tempObjects.Count + this._persistentObjects.Count; } }
 
@@ -152,6 +154,7 @@ namespace ClipboardBufer
                 this._tempObjects = lastState.TempObjects;
                 this._persistentObjects = lastState.PersistentObjects;
                 this.UndoAction?.Invoke(this, new UndoableActionEventArgs("Operation cancelled."));
+                this.UndoableContextChanged?.Invoke(this, new UndoableContextChangedEventArgs(this._serviceStates.Any(), true));
             } else
             {
                 //Here we can notify user, but other event should be used.
@@ -162,10 +165,13 @@ namespace ClipboardBufer
         {
             if (this._undoableStates.Count > 0)
             {
+                this._serviceStates.Push(this._GetCurrentState());
+
                 var undoState = this._undoableStates.Pop();
                 this._tempObjects = undoState.TempObjects;
                 this._persistentObjects = undoState.PersistentObjects;
                 this.CancelUndoAction?.Invoke(this, new UndoableActionEventArgs("Operation restored."));
+                this.UndoableContextChanged?.Invoke(this, new UndoableContextChangedEventArgs(true, this._undoableStates.Any()));
             } else
             {
                 //Here we can notify user, but other event should be used.
