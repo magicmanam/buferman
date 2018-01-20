@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using ClipboardBufer;
 using Logging;
 using ClipboardViewerForm.ClipMenu;
+using Windows;
 
 namespace ClipboardViewerForm.Window
 {
@@ -121,12 +122,10 @@ namespace ClipboardViewerForm.Window
 					this._hidingHandler.HideWindow();
 					break;
 				case Keys.Space:
-					SendKeys.Send("~");
+					new KeyboardEmulator().PressEnter();
 					break;
 				case Keys.C:
-					SendKeys.Send("{TAB}");
-					SendKeys.Send("{TAB}");
-					SendKeys.Send("{TAB}");
+                    new KeyboardEmulator().PressTab(3);
 					break;
 				case Keys.X:
 					var lastBufer = this._clipboardBuferService.LastTemporaryClip;

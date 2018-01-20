@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Windows.Forms;
 using Logging;
 using ClipboardBufer;
+using Windows;
 
 namespace ClipboardViewerForm
 {
@@ -28,7 +29,11 @@ namespace ClipboardViewerForm
 
             var currentLanguage = InputLanguage.CurrentInputLanguage;
             InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("en-US"));//This culture should be calculated automatically
-            SendKeys.Send("^(v)");
+
+            new KeyboardEmulator()
+                .HoldDownCtrl()
+                .SendKeyboardKeys("v", false);
+
             InputLanguage.CurrentInputLanguage = currentLanguage;
         }
     }

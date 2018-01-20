@@ -10,15 +10,14 @@ Done - to enter char by char menu item (for case in console)
 Done - reordered context menu
 Done - Make creds as persistent bufer
 Done - console has the program much slowlier - removed!
-
-- Дизэйблить пункт меню CtrlZ и CtrlY если они недоступны. Через события!!!
-- extract nuget packages: send keys. Method with flush, Send(params strings[] args), escapint, Enter(), PressShift, UnPressShift, ... undoable, windows, 
+Done - Дизэйблить пункт меню CtrlZ и CtrlY если они недоступны. Через события!!!
+Done - Keyboar emulator 
 By 20/01/2018
 
 # RC Tested and Vitaly notified by 1 February 2018
-- баг с анду/реду
 - все атомарные операции сервиса обернуть в undoablecontext вложенные
-- чистить все нулевые буферы
+- undoable, nugets with documentation
+- Help: Report an issue, Donate, About
 
 # RCN
 - file encryption to hide sensitive data (to enter master key)
@@ -70,7 +69,6 @@ Settings:  //Minimalize settings to ease using
   - Show bufers in *one column, *two columns, *three columns
   - Show preview image instead of ordinal text
 ?  - History: store current day bufers, only from program start, when amount does not preceeds 100Mb of RAM
-?  - Close app on Escape key (Esc) - это настройка ради настройки, никакого удобства она не несёт, лучше сделать другую прилагу, с полезной нагрузкой
 
 
 

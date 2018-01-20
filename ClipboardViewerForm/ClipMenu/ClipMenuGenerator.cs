@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Windows;
 
 namespace ClipboardViewerForm.ClipMenu
 {
@@ -79,7 +80,7 @@ namespace ClipboardViewerForm.ClipMenu
 
             this._pasteMenuItem = new MenuItem($"Paste {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
             {
-                SendKeys.Send("~");
+                new KeyboardEmulator().PressEnter();
             });
             contextMenu.MenuItems.Add(this._pasteMenuItem);
             
@@ -87,12 +88,8 @@ namespace ClipboardViewerForm.ClipMenu
             {
                 contextMenu.MenuItems.Add("-");
                 contextMenu.MenuItems.Add(new MenuItem("Paste char by char (for console)", (object sender, EventArgs args) => {
-                    SendKeys.Flush();
                     this._hidingHandler.HideWindow();
-                    foreach (var escapedChar in ClipMenuGenerator._ReplaceSpecialSendKeysCharacters(this._originBuferText))
-                    {
-                        SendKeys.SendWait(escapedChar);
-                    }
+                    new KeyboardEmulator().TypeText(this._originBuferText);
                 }));
 
                 this._returnTextToInitialMenuItem = new MenuItem("Return text to initial", ReturnTextToInitial) { Enabled = false };
@@ -141,8 +138,6 @@ namespace ClipboardViewerForm.ClipMenu
                 MessageBox.Show("Password can not be empty or whitespaces. Try again! Try better!");
             } else
             {
-                var escapedPasswordChars = ClipMenuGenerator._ReplaceSpecialSendKeysCharacters(password);
-                var escapedOriginalTextChars = ClipMenuGenerator._ReplaceSpecialSendKeysCharacters(this._originBuferText);
                 this._createLoginDataMenuItem.Text = "Login credentials";
                 this._pasteMenuItem.Text = $"Login with creds {new String('\t', 2)} Enter";
                 this._dataObject.SetData(ClipboardFormats.PASSWORD_FORMAT, password);
@@ -151,59 +146,38 @@ namespace ClipboardViewerForm.ClipMenu
                 this._button.Click -= this._buferSelectionHandler.DoOnClipSelection;
                 this._button.Click += (object pasteCredsSender, EventArgs args) =>
                 {
-                    SendKeys.Flush();
                     this._hidingHandler.HideWindow();
-                    foreach (var escapedChar in escapedOriginalTextChars)
-                    {
-                        SendKeys.SendWait(escapedChar);
-                    }
-                
-                    SendKeys.SendWait("{TAB}");
-                    foreach (var escapedChar in escapedPasswordChars)
-                    {
-                        SendKeys.SendWait(escapedChar);
-                    }
 
-                    SendKeys.Send("~");
+                    new KeyboardEmulator()
+                        .TypeText(this._originBuferText)
+                        .PressTab()
+                        .TypeText(password)
+                        .PressEnter();
                 };
 
                 this._createLoginDataMenuItem.MenuItems.Add(new MenuItem("Paste password with Enter", (object pastePasswordSender, EventArgs args) =>
                 {
-                    SendKeys.Flush();
                     this._hidingHandler.HideWindow();
-                    foreach (var escapedChar in escapedPasswordChars)
-                    {
-                        SendKeys.SendWait(escapedChar);
-                    }
-                    SendKeys.Send("~");
+                    new KeyboardEmulator()
+                        .TypeText(password)
+                        .PressEnter();
                 }));
                 this._createLoginDataMenuItem.MenuItems.Add(new MenuItem("Paste password", (object pastePasswordSender, EventArgs args) =>
                 {
-                    SendKeys.Flush();
                     this._hidingHandler.HideWindow();
-                    foreach (var escapedChar in escapedPasswordChars)
-                    {
-                        SendKeys.SendWait(escapedChar);
-                    }
+
+                    new KeyboardEmulator()
+                        .TypeText(password);
                 }));
                 this._createLoginDataMenuItem.MenuItems.Add(new MenuItem("Paste username", (object pasteUsernameSender, EventArgs args) =>
                 {
-                    SendKeys.Flush();
                     this._hidingHandler.HideWindow();
-                    foreach (var escapedChar in escapedOriginalTextChars)
-                    {
-                        SendKeys.SendWait(escapedChar);
-                    }
+
+                    new KeyboardEmulator()
+                        .TypeText(this._originBuferText);
                 }));
                 MarkAsPersistent(sender, e);
             }
-        }
-
-        private static IEnumerable<string> _ReplaceSpecialSendKeysCharacters(string password)
-        {
-            const string specialSendKeysChars = "+^%[]{}";
-
-            return password.ToCharArray().Select(c => specialSendKeysChars.Contains(c) ? $"{{{c}}}" : c.ToString());
         }
 
         private void ChangeText(object sender, EventArgs e)
