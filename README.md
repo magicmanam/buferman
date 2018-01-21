@@ -1,5 +1,5 @@
 # BuferMAN
-Every man has the right to manage buffers: clipboard or other...
+> Every man has the right to manage and control his clipboard buffers - magicmanam
 
 ## Description
 This tool helps you with managing Windows clipboard buffers: text, files, images. It makes your work more effective, fun and proud.
