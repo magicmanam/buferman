@@ -6,13 +6,8 @@ Done -
 By DD/01/2018
 ***
 
-Done - to enter char by char menu item (for case in console)
-Done - reordered context menu
-Done - Make creds as persistent bufer
-Done - console has the program much slowlier - removed!
-Done - Дизэйблить пункт меню CtrlZ и CtrlY если они недоступны. Через события!!!
-Done - Keyboar emulator 
-By 20/01/2018
+Menu items - separate classes + factory
+By 27/01/2018
 
 # RC Tested and Vitaly notified by 1 February 2018
 - все атомарные операции сервиса обернуть в undoablecontext вложенные
@@ -21,21 +16,18 @@ By 20/01/2018
 
 # RCN
 - file encryption to hide sensitive data (to enter master key)
-- suggest to add user / password wth separator and submit keys
-- Increase height
 - Window with hot keys + menu with applications
 - Подчистить проект: анализаторы, ссылки и т.д.
 - Save the most popular in file
 - Complete presentation!
 - Undoable nuget package
 - On scroll to show current clipboard with possibility to click
-- MAX_STATUS_LENGTH = 55
+- MAX_STATUS_LENGTH = 55 as well as other magic numbers/strings
 - Refactor: add DI
 - Different languages support
-- Add clips count into status bar
+- Add clips count into status bar (separate strip)
 - Read WinForms book!
 - Add menu with unknown file formats
-- Remove all '//Debug'-sections
 - На основе фич сделать список подсказок и показывать их на стартапе. Чаще показывать фичи, которые редко используются
 - Этот проект не должен содержать файлов с кол-вом строк больше 100 и проектов с кол-вом файлов больше 20
 - Add some AI strategies based on user behaviour (Ctrl+C - TAB - Ctrl+V - TAB - Ctrl+C)
@@ -45,7 +37,6 @@ By 20/01/2018
 - Log4net mastering!
 - Basket for deleted bufers (to quickly restore): restore particular and all at once
 ******************* unsorted ****************
-Menu items - separate classes + factory
 Context.IInterface
 IStorage - to remove all System.IO - to use everywhere
 filename is extracted into const
@@ -54,10 +45,12 @@ filename is extracted into const
 If link is copied in browser, Enter should be clicked automatically.
 Enable/disable 'Delete All' and 'Delete All Temporary' based on availability.
 Add drag an drop for temp/persistnt bufers
-Add icon into a tray.
+Add icon into a tray ? Alt + C to launch
 Corporative & personal versions with private message.
 Site with users -> from menu by unique link
 Messages on start up
+Hosting at https://sourceforge.net and other market places.
+Разобраться с лицензиями
 
 Settings:  //Minimalize settings to ease using
   - Bufer's width: 300 by default

@@ -10,16 +10,16 @@ using ClipboardViewerForm.ClipMenu;
 
 namespace ClipboardViewerForm
 {
-	class BuferHandlersWrapper
+    class BuferHandlersWrapper
     {
         private const int TOOLTIP_DURATION = 2500;
         private readonly IClipboardBuferService _clipboardBuferService;
-		private readonly IRenderingHandler _renderingHandler;
-		private readonly IDataObject _dataObject;
+        private readonly IRenderingHandler _renderingHandler;
+        private readonly IDataObject _dataObject;
         private readonly IBuferSelectionHandler _buferSelectionHandler;
-		private readonly Button _button;
+        private readonly Button _button;
         private readonly ToolTip _focusTooltip = new ToolTip() { OwnerDraw = false };
-		private string _tooltipText;
+        private string _tooltipText;
         private const float IMAGE_SCALE = 0.75f;
 
         public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IRenderingHandler renderingHandler, IDataObject dataObject, Button button, Form form, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler)
@@ -30,7 +30,16 @@ namespace ClipboardViewerForm
             this._button = button;
             this._buferSelectionHandler = buferSelectionHandler;
 
-            var buferTextRepresentation = (dataObject.GetData(ClipboardFormats.UNICODE_STRING_FORMAT) ?? dataObject.GetData(ClipboardFormats.UNICODE_TEXT_STRING_FORMAT)) as string;
+            var buferTextRepresentation = dataObject.GetData(ClipboardFormats.UNICODE_TEXT_STRING_FORMAT) as string;
+            if (string.IsNullOrEmpty(buferTextRepresentation))
+            {
+                buferTextRepresentation = dataObject.GetData(ClipboardFormats.UNICODE_STRING_FORMAT) as string;
+                if (string.IsNullOrEmpty(buferTextRepresentation))
+                {
+                    buferTextRepresentation = dataObject.GetData(ClipboardFormats.TEXT_STRING_FORMAT) as string;
+                }
+            }
+
             var isChangeTextAvailable = true;
             string buferTitle = null;
             if (buferTextRepresentation == null)
@@ -54,7 +63,9 @@ namespace ClipboardViewerForm
                     buferTextRepresentation += string.Join(Environment.NewLine, files.Select(f => Path.GetFileName(f)).ToList());
 
                     button.BackColor = Color.Brown;
-                } else {
+                }
+                else
+                {
                     var isBitmap = dataObject.GetFormats().Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT);
                     if (isBitmap)
                     {
@@ -134,18 +145,18 @@ namespace ClipboardViewerForm
 
             if (previewImage != null)
             {
-                e.ToolTipSize = new Size((int) (previewImage.Width * IMAGE_SCALE), (int) (previewImage.Height * IMAGE_SCALE));
+                e.ToolTipSize = new Size((int) (previewImage.Width * IMAGE_SCALE), (int)(previewImage.Height * IMAGE_SCALE));
             }
         }
 
         private void Bufer_GotFocus(object sender, EventArgs e)
-		{
-			this._focusTooltip.Show(this._tooltipText, this._button, TOOLTIP_DURATION);
-		}
+        {
+            this._focusTooltip.Show(this._tooltipText, this._button, TOOLTIP_DURATION);
+        }
 
-		private void Bufer_LostFocus(object sender, EventArgs e)
-		{
-			this._focusTooltip.Hide(this._button);
-		}
-	}
+        private void Bufer_LostFocus(object sender, EventArgs e)
+        {
+            this._focusTooltip.Hide(this._button);
+        }
+    }
 }

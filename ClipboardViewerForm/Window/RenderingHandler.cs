@@ -43,19 +43,17 @@ namespace ClipboardViewerForm.Window
             var persistentClips = this._clipboardBuferService.GetPersistentClips();
             this._RemoveOldButtons(temporaryClips.Union(persistentClips));
 
-            this._DrawButtonsForBufers(temporaryClips, 0);
+            this._DrawButtonsForBufers(temporaryClips, temporaryClips.Count * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryClips.Count - 1);
             this._persistentClipsDivider.Location = new Point(0, temporaryClips.Count * BUTTON_HEIGHT);
 
             if (persistentClips.Any())
             {
-                this._DrawButtonsForBufers(persistentClips.ToList(), this._persistentClipsDivider.Location.Y + this._persistentClipsDivider.Height);
+                this._DrawButtonsForBufers(persistentClips.ToList(), this._persistentClipsDivider.Location.Y + this._persistentClipsDivider.Height + 1 + persistentClips.Count(), temporaryClips.Count + persistentClips.Count() - 1);
             }
         }
 
-        private void _DrawButtonsForBufers(List<IDataObject> bufers, int startFromY)
+        private void _DrawButtonsForBufers(List<IDataObject> bufers, int y, int currentButtonIndex)
         {
-            int currentButtonIndex = bufers.Count - 1;
-            int y = currentButtonIndex * BUTTON_HEIGHT + startFromY;
 
             foreach (var bufer in bufers)
             {
