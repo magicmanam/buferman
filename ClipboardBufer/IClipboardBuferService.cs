@@ -28,7 +28,9 @@ namespace ClipboardBufer
 
 		bool IsNotPersistent(IDataObject clipObject);
 
-		IDataObject FirstClip { get; }
+		IDataObject FirstTemporaryClip { get; }
+
+        IDataObject FirstPersistentClip { get; }
 
         bool Contains(IDataObject clipDataObject);
 
@@ -39,7 +41,5 @@ namespace ClipboardBufer
         void RemovePersistentClips();
 
         void RemoveTemporaryClips();
-
-        int MaxBuferCount { get; set; }
     }
 }

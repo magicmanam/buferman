@@ -24,13 +24,13 @@ namespace ClipboardViewerForm.Window
 
         private const int BUTTON_HEIGHT = 25;
 
-        public RenderingHandler(Form form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IWindowHidingHandler hidingHandler, IClipboardWrapper clipboardWrapper)
+        public RenderingHandler(Form form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IWindowHidingHandler hidingHandler, IClipboardWrapper clipboardWrapper, IDictionary<IDataObject, Button> buttonsMap)
         {
             this._form = form;
             this._clipboardBuferService = clipboardBuferService;
 			this._comparer = comparer;
 			this._hidingHandler = hidingHandler;
-            this._buttonsMap = new Dictionary<IDataObject, Button>(clipboardBuferService.MaxBuferCount);
+            this._buttonsMap = buttonsMap;
             this._buttonWidth = this._form.ClientRectangle.Width;
             this._persistentClipsDivider = new Label() { Text = string.Empty, BorderStyle = BorderStyle.FixedSingle, AutoSize = false, Height = 3, BackColor = Color.AliceBlue, Width = this._buttonWidth };
             this._form.Controls.Add(this._persistentClipsDivider);
@@ -43,12 +43,16 @@ namespace ClipboardViewerForm.Window
             var persistentClips = this._clipboardBuferService.GetPersistentClips();
             this._RemoveOldButtons(temporaryClips.Union(persistentClips));
 
-            this._DrawButtonsForBufers(temporaryClips, temporaryClips.Count * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryClips.Count - 1);
+            if (temporaryClips.Any())
+            {
+                this._DrawButtonsForBufers(temporaryClips, temporaryClips.Count * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryClips.Count - 1);
+            }
+
             this._persistentClipsDivider.Location = new Point(0, temporaryClips.Count * BUTTON_HEIGHT);
 
             if (persistentClips.Any())
             {
-                this._DrawButtonsForBufers(persistentClips.ToList(), this._persistentClipsDivider.Location.Y + this._persistentClipsDivider.Height + 1 + persistentClips.Count(), temporaryClips.Count + persistentClips.Count() - 1);
+                this._DrawButtonsForBufers(persistentClips.ToList(), this._persistentClipsDivider.Location.Y + this._persistentClipsDivider.Height + 1 + persistentClips.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryClips.Count + persistentClips.Count() - 1);
             }
         }
 
@@ -111,37 +115,5 @@ namespace ClipboardViewerForm.Window
                 this._buttonsMap.Remove(key);
             }
         }
-
-		 public void OnKeyDown(object sender, KeyEventArgs e)
-		{
-			switch (e.KeyCode)
-			{
-				case Keys.Escape:
-					this._hidingHandler.HideWindow();
-					break;
-				case Keys.Space:
-					new KeyboardEmulator().PressEnter();
-					break;
-				case Keys.C:
-                    new KeyboardEmulator().PressTab(3);
-					break;
-				case Keys.X:
-					var lastBufer = this._clipboardBuferService.LastTemporaryClip;
-					if(lastBufer != null)
-					{
-						var button = this._buttonsMap[lastBufer];
-						button.Focus();
-					}					
-					break;
-				case Keys.V:
-					var firstBufer = this._clipboardBuferService.FirstClip;
-					if (firstBufer != null)
-					{
-						var button = this._buttonsMap[firstBufer];
-						button.Focus();
-					}
-					break;
-			}
-		}		
     }
 }

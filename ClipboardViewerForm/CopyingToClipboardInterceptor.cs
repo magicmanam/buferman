@@ -11,11 +11,11 @@ namespace ClipboardViewerForm
     {
         private readonly IClipboardBuferService _clipboardBuferService;
 		private readonly IEqualityComparer<IDataObject> _comparer;
-		private readonly Form _form;
+		private readonly BuferAMForm _form;
         private readonly IRenderingHandler _renderingHandler;
         private readonly IClipboardWrapper _clipboardWrapper;
 
-        public CopyingToClipboardInterceptor(IClipboardBuferService clipboardBuferService, Form form, IRenderingHandler renderingHandler, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper)
+        public CopyingToClipboardInterceptor(IClipboardBuferService clipboardBuferService, BuferAMForm form, IRenderingHandler renderingHandler, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._form = form;
@@ -41,8 +41,20 @@ namespace ClipboardViewerForm
 						return;
 					}
                 }
-                
-				_clipboardBuferService.AddTemporaryClip(currentObject);
+
+                if (this._clipboardBuferService.ClipsCount == BuferAMForm.MAX_BUFERS_COUNT)
+                {
+                    if (this._clipboardBuferService.GetTemporaryClips().Any())
+                    {
+                        this._clipboardBuferService.RemoveClip(this._clipboardBuferService.FirstTemporaryClip);
+                    } else
+                    {
+                        MessageBox.Show("All your bufers are persistent. Please remove some of them and then try to copy again...", "Tra-ta-ta!!!");
+                        return;
+                    }
+                }
+
+                this._clipboardBuferService.AddTemporaryClip(currentObject);
 
                 if (this._form.WindowState != FormWindowState.Minimized && this._form.Visible)
                 {

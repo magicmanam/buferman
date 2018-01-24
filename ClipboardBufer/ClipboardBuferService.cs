@@ -14,7 +14,6 @@ namespace ClipboardBufer
         private IList<IDataObject> _tempObjects = new List<IDataObject>();
 		private IList<IDataObject> _persistentObjects = new List<IDataObject>();
 		private readonly IEqualityComparer<IDataObject> _comparer;
-        private int _maxBuferCount = 30;
 
         public ClipboardBuferService(IEqualityComparer<IDataObject> comparer)
 		{
@@ -74,11 +73,19 @@ namespace ClipboardBufer
 			return !this._persistentObjects.Contains(dataObject, this._comparer);
 		}
 
-		public IDataObject FirstClip
+        public IDataObject FirstTemporaryClip
         {
             get
             {
-                return this._GetAllClips(false).FirstOrDefault();
+                return this._tempObjects.FirstOrDefault();
+            }
+        }
+
+        public IDataObject FirstPersistentClip
+        {
+            get
+            {
+                return this._persistentObjects.FirstOrDefault();
             }
         }
 
@@ -118,11 +125,6 @@ namespace ClipboardBufer
 
         public void AddTemporaryClip(IDataObject dataObject)
         {
-            if (this.GetClips().Count() == this.MaxBuferCount)
-            {
-                this.RemoveClip(this.FirstClip);
-            }
-
             this._serviceStates.Push(this._GetCurrentState());
             this._tempObjects.Add(dataObject);
             this.OnUndoableAction("New clip was added.");
@@ -141,8 +143,6 @@ namespace ClipboardBufer
                 this._serviceStates.Pop();
 			}
 		}
-        
-        public int MaxBuferCount { get { return this._maxBuferCount; } set { this._maxBuferCount = value; } }
 
         public void Undo()
         {

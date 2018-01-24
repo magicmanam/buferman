@@ -13,7 +13,7 @@ namespace ClipboardViewerForm.Menu
         private readonly ILoadingFileHandler _loadingFileHandler;
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IRenderingHandler _renderingHandler;
-
+        
         public MenuGenerator(ILoadingFileHandler loadingFileHandler, IClipboardBuferService clipboardBuferService, IRenderingHandler renderingHandler)
         {
             this._loadingFileHandler = loadingFileHandler;
@@ -29,7 +29,10 @@ namespace ClipboardViewerForm.Menu
         }) }));
             var undoMenuItem = new MenuItem("Undo", (sender, args) => { this._clipboardBuferService.Undo(); this._renderingHandler.Render(); }, Shortcut.CtrlZ) { Enabled = false };
             var redoMenuItem = new MenuItem("Redo", (sender, args) => { this._clipboardBuferService.CancelUndo(); this._renderingHandler.Render(); }, Shortcut.CtrlY) { Enabled = false };
-            mainMenu.MenuItems.Add(new MenuItem("Edit", new MenuItem[] { undoMenuItem, redoMenuItem, new MenuItem("Delete All", OnDeleteAll), new MenuItem("Delete All Temporary", OnDeleteAllTemporary), new MenuItem("Bufer's Basket", (sender, args) => MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")) }));
+            mainMenu.MenuItems.Add(new MenuItem("Edit", new MenuItem[] { undoMenuItem, redoMenuItem, new MenuItem("Delete all", OnDeleteAll), new MenuItem("Delete all temporary", OnDeleteAllTemporary), new MenuItem("Bufer's basket", (sender, args) => MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")) }));
+
+            var startTime = DateTime.Now;
+            mainMenu.MenuItems.Add(new MenuItem("Help", new MenuItem[] { new MenuItem("Send feedback"), new MenuItem("Start time", (object sender, EventArgs args) => MessageBox.Show($"Program was started at {startTime}.", "Start time")), new MenuItem("Donate", (object sender, EventArgs args) => MessageBox.Show("Hello my Friend! Thank you for interest to this program! It was created with love to help other people in their day-to-day activities. The most valuable gift for me will be your help for other people! There are many people who need your help and support around: people with disabilities, children without parents and so on... You can find any clarity organization or smthg similar and transfer there some funds - I will really appreciate your act! Thank you again and have a nice day!", "Your help is really appreciated")), new MenuItem("About") }));
 
             this._clipboardBuferService.UndoableContextChanged += (object sender, UndoableContextChangedEventArgs e) =>
             {

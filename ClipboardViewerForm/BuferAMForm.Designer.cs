@@ -26,7 +26,9 @@ namespace ClipboardViewerForm
         private readonly ICopyingToClipboardInterceptor _clipboardInterceptor;
         private readonly IMenuGenerator _menuGenerator;
         private readonly ILoadingFileHandler _loadingFileHandler;
+        private readonly IDictionary<IDataObject, Button> _buttonsMap;
         private IntPtr _nextViewer;
+        public const int MAX_BUFERS_COUNT = 30;
 
         internal StatusStrip StatusLine { get; set; }
         public ToolStripStatusLabel StatusLabel { get; set; }
@@ -35,7 +37,8 @@ namespace ClipboardViewerForm
         {
             this._clipboardBuferService = clipboardBuferService;
             this._hidingHandler = new WindowHidingHandler(this);
-            this._renderingHandler = new RenderingHandler(this, this._clipboardBuferService, comparer, this._hidingHandler, clipboardWrapper);
+            this._buttonsMap = new Dictionary<IDataObject, Button>(MAX_BUFERS_COUNT);
+            this._renderingHandler = new RenderingHandler(this, this._clipboardBuferService, comparer, this._hidingHandler, clipboardWrapper, this._buttonsMap);
             this._clipboardInterceptor = new CopyingToClipboardInterceptor(clipboardBuferService, this, this._renderingHandler, comparer, clipboardWrapper);
             this._loadingFileHandler = new LoadingFileHandler(clipboardWrapper);
             this._menuGenerator = new MenuGenerator(this._loadingFileHandler, this._clipboardBuferService, this._renderingHandler);
@@ -143,7 +146,7 @@ namespace ClipboardViewerForm
             this.Activated += new WindowActivationHandler(_clipboardBuferService, this, this._renderingHandler).OnActivated;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
-            this.KeyDown += this._renderingHandler.OnKeyDown;
+            this.KeyDown += this._onKeyDown;
             this.KeyPreview = true;
 
             this.Menu = this._menuGenerator.GenerateMenu(this);
@@ -185,6 +188,39 @@ namespace ClipboardViewerForm
             e.Cancel = true;
             var form = (Form)sender;
             form.WindowState = FormWindowState.Minimized;
+        }
+
+        private void _onKeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Escape:
+                    this._hidingHandler.HideWindow();
+                    break;
+                case Keys.Space:
+                    new KeyboardEmulator().PressEnter();
+                    break;
+                case Keys.C:
+                    new KeyboardEmulator().PressTab(3);
+                    break;
+                case Keys.X:
+                    var lastBufer = this._clipboardBuferService.LastTemporaryClip;
+                    if (lastBufer != null)
+                    {
+                        var button = this._buttonsMap[lastBufer];
+                        button.Focus();
+                    }
+                    break;
+                case Keys.V:
+                    var firstBufer = this._clipboardBuferService.FirstPersistentClip ?? this._clipboardBuferService.FirstTemporaryClip;
+
+                    if (firstBufer != null)
+                    {
+                        var button = this._buttonsMap[firstBufer];
+                        button.Focus();
+                    }
+                    break;
+            }
         }
 
         #endregion
