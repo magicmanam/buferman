@@ -44,6 +44,7 @@ namespace ClipboardViewerForm
             this._menuGenerator = new MenuGenerator(this._loadingFileHandler, this._clipboardBuferService, this._renderingHandler);
 
             InitializeComponent();
+            InitializeForm();
             this.ShowInTaskbar = false;
         }
 
@@ -131,13 +132,7 @@ namespace ClipboardViewerForm
             this.StatusLine.Update();
         }
 
-        #region Код, автоматически созданный конструктором форм Windows
-
-        /// <summary>
-        /// Требуемый метод для поддержки конструктора — не изменяйте 
-        /// содержимое этого метода с помощью редактора кода.
-        /// </summary>
-        private void InitializeComponent()
+        private void InitializeForm()
         {
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -222,8 +217,6 @@ namespace ClipboardViewerForm
                     break;
             }
         }
-
-        #endregion
     }
 }
 
