@@ -48,7 +48,7 @@ namespace ClipboardViewerForm.ClipMenu
 
             var contextMenu = new ContextMenu();
 
-            this._markAsPersistentMenuItem = new MenuItem("Mark as persistent", this.MarkAsPersistent);
+            this._markAsPersistentMenuItem = new MenuItem("M&ark as persistent", this.MarkAsPersistent);
             contextMenu.MenuItems.Add(this._markAsPersistentMenuItem);
             
             var formats = this._dataObject.GetFormats();
@@ -73,12 +73,12 @@ namespace ClipboardViewerForm.ClipMenu
                 }
             }
 
-            formatsMenu.Text = $"Formats ({formatsCount})";
+            formatsMenu.Text = $"&Formats ({formatsCount})";
 
             contextMenu.MenuItems.Add(formatsMenu);
-            contextMenu.MenuItems.Add(new MenuItem("Delete", this.DeleteBufer, Shortcut.Del));
+            contextMenu.MenuItems.Add(new MenuItem("&Delete", this.DeleteBufer, Shortcut.Del));
 
-            this._pasteMenuItem = new MenuItem($"Paste {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
+            this._pasteMenuItem = new MenuItem($"&Paste {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
             {
                 new KeyboardEmulator().PressEnter();
             });
@@ -87,27 +87,27 @@ namespace ClipboardViewerForm.ClipMenu
             if (isChangeTextAvailable)
             {
                 contextMenu.MenuItems.Add("-");
-                contextMenu.MenuItems.Add(new MenuItem("Paste char by char (for console)", (object sender, EventArgs args) => {
+                contextMenu.MenuItems.Add(new MenuItem("Paste &char by char (for console)", (object sender, EventArgs args) => {
                     this._hidingHandler.HideWindow();
                     new KeyboardEmulator().TypeText(this._originBuferText);
                 }));
 
-                this._returnTextToInitialMenuItem = new MenuItem("Return text to initial", ReturnTextToInitial) { Enabled = false };
+                this._returnTextToInitialMenuItem = new MenuItem("&Return text to initial", ReturnTextToInitial) { Enabled = false };
                 contextMenu.MenuItems.Add(_returnTextToInitialMenuItem);
-                contextMenu.MenuItems.Add(new MenuItem("Change text", this.ChangeText));
+                contextMenu.MenuItems.Add(new MenuItem("Change &text", this.ChangeText));
 
-                this._addToFileMenuItem = new MenuItem("Add to bufers.txt file", (object sender, EventArgs args) =>
+                this._addToFileMenuItem = new MenuItem("Add to &bufers.txt file", (object sender, EventArgs args) =>
                 {
                     using (var sw = new StreamWriter(new FileStream("bufers.txt", FileMode.Append, FileAccess.Write)))
                     {
                         sw.WriteLine(this._originBuferText);
                     }
-                    this._addToFileMenuItem.Text = "Added to bufers.txt file";
+                    this._addToFileMenuItem.Text = "Added to &bufers.txt file";
                     this._addToFileMenuItem.Enabled = false;
                 }, Shortcut.CtrlF);
                 contextMenu.MenuItems.Add(this._addToFileMenuItem);
 
-                this._createLoginDataMenuItem = new MenuItem("Create login credentials", this._CreateLoginCredentials);
+                this._createLoginDataMenuItem = new MenuItem("Create &login credentials", this._CreateLoginCredentials);
                 contextMenu.MenuItems.Add(this._createLoginDataMenuItem);
             }
 

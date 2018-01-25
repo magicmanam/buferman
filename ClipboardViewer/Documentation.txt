@@ -6,10 +6,12 @@ Done -
 By DD/01/2018
 ***
 
+Done - Menu items hot keys added
+
 Menu items - separate classes + factory
 By 27/01/2018
 
-# RC Tested and Vitaly notified by 1 February 2018
+# RC Tested by 1 February 2018
 - все атомарные операции сервиса обернуть в undoablecontext вложенные
 - undoable, nugets with documentation
 - Help: Report an issue, Donate, About
@@ -99,6 +101,7 @@ Settings:  //Minimalize settings to ease using
 Постоянные клипы отделены от временных горизонтальной полоской.
 
 /*Check: . */
+/*Check: Для всех пунктов меню работают горячие клавиши. */
 /*Check: Создать больше 2-ух постоянных буферов - они должны отображаться все. */
 /*Check: Если все буферы постоянные, то при попытке копирования показывается диалог, но список не обновляется пока не удалишь буфер. */
 /*Check: Несколько временных и несколько постоянных клипов. Таб на последнем временном. По нажатию на TAB фокус переходит на первый постоянный. По нажатию на Ctrl+V - на последнем персистентном. */
