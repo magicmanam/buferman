@@ -153,6 +153,15 @@
   <data name="EmptyPasswordError" xml:space="preserve">
     <value>Пароль не может быть пустым.</value>
   </data>
+  <data name="FileBufer" xml:space="preserve">
+    <value>Файл</value>
+  </data>
+  <data name="FilesBufer" xml:space="preserve">
+    <value>Файлы</value>
+  </data>
+  <data name="ImageBufer" xml:space="preserve">
+    <value>Картинка</value>
+  </data>
   <data name="LoadFileErrorPrefix" xml:space="preserve">
     <value>Произошла следующая ошибка при попытке прочитать файл</value>
   </data>
@@ -226,7 +235,7 @@
     <value>О проекте</value>
   </data>
   <data name="MenuHelpAboutText" xml:space="preserve">
-    <value>Помощник в работе с буферами обмена, в который просто нельзя не влюбиться!</value>
+    <value>Помощник в работе с буферами обмена, в который просто нельзя не влюбиться! Текущая версия</value>
   </data>
   <data name="MenuHelpAboutTitle" xml:space="preserve">
     <value>О проекте BuferMAN</value>

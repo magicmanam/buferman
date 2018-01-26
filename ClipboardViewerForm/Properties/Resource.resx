@@ -226,7 +226,7 @@
     <value>&amp;About</value>
   </data>
   <data name="MenuHelpAboutText" xml:space="preserve">
-    <value>Windows clipboard helper with love...</value>
+    <value>Windows clipboard helper with love... Version</value>
   </data>
   <data name="MenuHelpAboutTitle" xml:space="preserve">
     <value>About BuferMAN</value>
@@ -260,5 +260,17 @@
   </data>
   <data name="MenuReturn" xml:space="preserve">
     <value>&amp;Return text to initial</value>
+  </data>
+  <data name="FileBufer" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="FilesBufer" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="ImageBufer" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="NotTextBufer" xml:space="preserve">
+    <value>Not a text</value>
   </data>
 </root>

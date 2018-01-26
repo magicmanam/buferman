@@ -169,6 +169,33 @@ namespace ClipboardViewerForm.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на File.
+        /// </summary>
+        internal static string FileBufer {
+            get {
+                return ResourceManager.GetString("FileBufer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Files.
+        /// </summary>
+        internal static string FilesBufer {
+            get {
+                return ResourceManager.GetString("FilesBufer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Image.
+        /// </summary>
+        internal static string ImageBufer {
+            get {
+                return ResourceManager.GetString("ImageBufer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на There is an error during reading a file.
         /// </summary>
         internal static string LoadFileErrorPrefix {
@@ -385,7 +412,7 @@ namespace ClipboardViewerForm.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Windows clipboard helper with love....
+        ///   Ищет локализованную строку, похожую на Windows clipboard helper with love... Version.
         /// </summary>
         internal static string MenuHelpAboutText {
             get {
@@ -489,6 +516,15 @@ namespace ClipboardViewerForm.Properties {
         internal static string MenuReturn {
             get {
                 return ResourceManager.GetString("MenuReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Not a text.
+        /// </summary>
+        internal static string NotTextBufer {
+            get {
+                return ResourceManager.GetString("NotTextBufer", resourceCulture);
             }
         }
     }

@@ -8,6 +8,7 @@ By DD/01/2018
 
 Done - Menu items hot keys added
 Done - Russian localization was added
+Done - Program version was added to About info
 
 Menu items - separate classes + factory
 By 27/01/2018
@@ -64,13 +65,14 @@ Settings:  //Minimalize settings to ease using
   - Max bufers count: *16, 30
   - Show bufers in *one column, *two columns, *three columns
   - Show preview image instead of ordinal text
+  - Change language (EN, RU)
 ?  - History: store current day bufers, only from program start, when amount does not preceeds 100Mb of RAM
 
 
 
 
 	Документация:
-Если во время запуск программы выбран Русский язык, то интерфейс программы будет русский. А иначе - английский. Возможность настройки языка оболочки будет добавлена позже.
+В зависимости от дефолтной настройки языка в системе, интерфейс программы может быть русский/английский. Возможность настройки языка оболочки будет добавлена позже.
 Если в папке, где лежит программа, находится текстовый файл bufers.txt, то при загрузке программы, буферы загрузятся автоматически.
 Вы можете удалить все буферы, либо только временные.
 Вы можете создать пару имя/пароль, используя контекстное меню.
@@ -103,6 +105,7 @@ Settings:  //Minimalize settings to ease using
 Постоянные клипы отделены от временных горизонтальной полоской.
 
 /*Check: . */
+/*Check: Поставить русскую локаль и скопировать файл/файлы/скрин. << Text >> should russian. */
 /*Check: Для всех пунктов меню работают горячие клавиши. */
 /*Check: Создать больше 2-ух постоянных буферов - они должны отображаться все. */
 /*Check: Если все буферы постоянные, то при попытке копирования показывается диалог, но список не обновляется пока не удалишь буфер. */

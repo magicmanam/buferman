@@ -7,6 +7,8 @@ using Windows;
 using ClipboardBufer;
 using System.Diagnostics;
 using ClipboardViewerForm.Properties;
+using System.Deployment.Application;
+using System.Reflection;
 
 namespace ClipboardViewerForm.Menu
 {
@@ -15,7 +17,7 @@ namespace ClipboardViewerForm.Menu
         private readonly ILoadingFileHandler _loadingFileHandler;
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IRenderingHandler _renderingHandler;
-        
+
         public MenuGenerator(ILoadingFileHandler loadingFileHandler, IClipboardBuferService clipboardBuferService, IRenderingHandler renderingHandler)
         {
             this._loadingFileHandler = loadingFileHandler;
@@ -34,7 +36,10 @@ namespace ClipboardViewerForm.Menu
             mainMenu.MenuItems.Add(new MenuItem(Resource.MenuEdit, new MenuItem[] { undoMenuItem, redoMenuItem, new MenuItem(Resource.MenuEditDel, OnDeleteAll), new MenuItem(Resource.MenuEditDelTemp, OnDeleteAllTemporary) }));
 
             var startTime = DateTime.Now;
-            mainMenu.MenuItems.Add(new MenuItem(Resource.MenuHelp, new MenuItem[] { new MenuItem(Resource.MenuHelpSend, (object sender, EventArgs args) => Process.Start("https://rink.hockeyapp.net/apps/51633746a31f44999eca3bc7b7945e92/feedback/new")), new MenuItem(Resource.MenuHelpStart, (object sender, EventArgs args) => MessageBox.Show(Resource.MenuHelpStartPrefix + $" {startTime}.", Resource.MenuHelpStartTitle)), new MenuItem(Resource.MenuHelpDonate, (object sender, EventArgs args) => MessageBox.Show(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)), new MenuItem(Resource.MenuHelpAbout, (object sender, EventArgs args) => MessageBox.Show(Resource.MenuHelpAboutText, Resource.MenuHelpAboutTitle)) }));
+            mainMenu.MenuItems.Add(new MenuItem(Resource.MenuHelp, new MenuItem[] { new MenuItem(Resource.MenuHelpSend, (object sender, EventArgs args) => Process.Start("https://rink.hockeyapp.net/apps/51633746a31f44999eca3bc7b7945e92/feedback/new")), new MenuItem(Resource.MenuHelpStart, (object sender, EventArgs args) => MessageBox.Show(Resource.MenuHelpStartPrefix + $" {startTime}.", Resource.MenuHelpStartTitle)), new MenuItem(Resource.MenuHelpDonate, (object sender, EventArgs args) => MessageBox.Show(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)), new MenuItem(Resource.MenuHelpAbout, (object sender, EventArgs args) => {
+            var version = ApplicationDeployment.IsNetworkDeployed ? ApplicationDeployment.CurrentDeployment.CurrentVersion : Assembly.GetEntryAssembly().GetName().Version;
+
+            MessageBox.Show(Resource.MenuHelpAboutText + " " + version.ToString(), Resource.MenuHelpAboutTitle); }) }));
 
             this._clipboardBuferService.UndoableContextChanged += (object sender, UndoableContextChangedEventArgs e) =>
             {
@@ -54,7 +59,8 @@ namespace ClipboardViewerForm.Menu
                 if (result == DialogResult.Yes)
                 {
                     this._clipboardBuferService.RemoveTemporaryClips();
-                } else
+                }
+                else
                 {
                     this._clipboardBuferService.RemoveAllClips();
                 }

@@ -7,6 +7,7 @@ using Logging;
 using System.Linq;
 using System.IO;
 using ClipboardViewerForm.ClipMenu;
+using ClipboardViewerForm.Properties;
 
 namespace ClipboardViewerForm
 {
@@ -51,11 +52,11 @@ namespace ClipboardViewerForm
 
                     if (files.Length == 1)
                     {
-                        buferTitle = $"<< File >>";
+                        buferTitle = $"<< {Resource.FileBufer} >>";
                     }
                     else
                     {
-                        buferTitle = $"<< Files ({files.Length}) >>";
+                        buferTitle = $"<< {Resource.FilesBufer} ({files.Length}) >>";
                     }
 
                     var folder = Path.GetDirectoryName(files.First());
@@ -70,7 +71,7 @@ namespace ClipboardViewerForm
                     if (isBitmap)
                     {
                         isChangeTextAvailable = false;
-                        buferTextRepresentation = "<< Image >>";
+                        buferTextRepresentation = $"<< {Resource.ImageBufer} >>";
                         button.Font = new Font(button.Font, FontStyle.Italic | FontStyle.Bold);
                     }
                     else
@@ -83,7 +84,7 @@ namespace ClipboardViewerForm
             string buttonText = buferTitle ?? buferTextRepresentation;
             if (string.IsNullOrWhiteSpace(buttonText))
             {
-                buttonText = buttonText == null ? "<< Not a text >>" : $"<< {buttonText.Length}   white spaces >>";
+                buttonText = buttonText == null ? $"<< {Resource.NotTextBufer} >>" : $"<< {buttonText.Length}   white spaces >>";
                 button.Font = new Font(button.Font, FontStyle.Italic | FontStyle.Bold);
                 isChangeTextAvailable = false;
             }
