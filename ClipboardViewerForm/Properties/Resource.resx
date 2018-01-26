@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BuferAliasReturned" xml:space="preserve">
+    <value>Bufer alias was returned to its primary value</value>
+  </data>
+  <data name="ChangeTextPostfix" xml:space="preserve">
+    <value>If you need save login/password pair, just use 'Create login credentials menu'.</value>
+  </data>
+  <data name="ChangeTextPrefix" xml:space="preserve">
+    <value>Enter a new text for this bufer. It can be useful to hide copied passwords or alias some enourmous text. Primary button value was</value>
+  </data>
+  <data name="ChangeTextTitle" xml:space="preserve">
+    <value>Change bufer's text</value>
+  </data>
+  <data name="CreateCredsPostfix" xml:space="preserve">
+    <value>TAB between username and password will be inserted automatically as well as Enter after password.</value>
+  </data>
+  <data name="CreateCredsPrefix" xml:space="preserve">
+    <value>Enter a password for login name</value>
+  </data>
+  <data name="CreateCredsTitle" xml:space="preserve">
+    <value>Create login credentials</value>
+  </data>
+  <data name="CredsName" xml:space="preserve">
+    <value>Paste username</value>
+  </data>
+  <data name="CredsPassword" xml:space="preserve">
+    <value>Paste password</value>
+  </data>
+  <data name="CredsPasswordEnter" xml:space="preserve">
+    <value>Paste password with Enter</value>
+  </data>
+  <data name="CredsPrefix" xml:space="preserve">
+    <value>Creds for</value>
+  </data>
+  <data name="EmptyPasswordError" xml:space="preserve">
+    <value>Password can not be empty or whitespaces. Try again! Try better!</value>
+  </data>
+  <data name="LoadFileErrorPrefix" xml:space="preserve">
+    <value>There is an error during reading a file</value>
+  </data>
+  <data name="LoadFileErrorTitle" xml:space="preserve">
+    <value>Loading file error</value>
+  </data>
+  <data name="LoadFileFilter" xml:space="preserve">
+    <value>Text files (*.txt)|*.txt</value>
+  </data>
+  <data name="LoginCreds" xml:space="preserve">
+    <value>Login credentials</value>
+  </data>
+  <data name="LoginWith" xml:space="preserve">
+    <value>Login with creds</value>
+  </data>
+  <data name="MenuAddedToFile" xml:space="preserve">
+    <value>Added to &amp;bufers.txt file</value>
+  </data>
+  <data name="MenuAddToFile" xml:space="preserve">
+    <value>Add to &amp;bufers.txt file</value>
+  </data>
+  <data name="MenuChange" xml:space="preserve">
+    <value>Change &amp;text</value>
+  </data>
+  <data name="MenuCharByChar" xml:space="preserve">
+    <value>Type &amp;char by char (for console)</value>
+  </data>
+  <data name="MenuCreds" xml:space="preserve">
+    <value>Create &amp;login credentials</value>
+  </data>
+  <data name="MenuDelete" xml:space="preserve">
+    <value>&amp;Delete</value>
+  </data>
+  <data name="MenuEdit" xml:space="preserve">
+    <value>&amp;Edit</value>
+  </data>
+  <data name="MenuEditDel" xml:space="preserve">
+    <value>Delete &amp;all</value>
+  </data>
+  <data name="MenuEditDelTemp" xml:space="preserve">
+    <value>Delete all &amp;temporary</value>
+  </data>
+  <data name="MenuEditDelText" xml:space="preserve">
+    <value>There are persistent bufers exist. Do you want to delete only temporal bufers?</value>
+  </data>
+  <data name="MenuEditDelTitle" xml:space="preserve">
+    <value>Confirm persistent bufers deletion</value>
+  </data>
+  <data name="MenuEditRedo" xml:space="preserve">
+    <value>&amp;Redo</value>
+  </data>
+  <data name="MenuEditUndo" xml:space="preserve">
+    <value>&amp;Undo</value>
+  </data>
+  <data name="MenuFile" xml:space="preserve">
+    <value>&amp;File</value>
+  </data>
+  <data name="MenuFileExit" xml:space="preserve">
+    <value>E&amp;xit session</value>
+  </data>
+  <data name="MenuFileLoad" xml:space="preserve">
+    <value>Lo&amp;ad from file</value>
+  </data>
+  <data name="MenuFormats" xml:space="preserve">
+    <value>&amp;Formats</value>
+  </data>
+  <data name="MenuHelp" xml:space="preserve">
+    <value>&amp;Help</value>
+  </data>
+  <data name="MenuHelpAbout" xml:space="preserve">
+    <value>&amp;About</value>
+  </data>
+  <data name="MenuHelpAboutText" xml:space="preserve">
+    <value>Windows clipboard helper with love...</value>
+  </data>
+  <data name="MenuHelpAboutTitle" xml:space="preserve">
+    <value>About BuferMAN</value>
+  </data>
+  <data name="MenuHelpDonate" xml:space="preserve">
+    <value>&amp;Donate</value>
+  </data>
+  <data name="MenuHelpDonateText" xml:space="preserve">
+    <value>Hello my Friend! Thank you for interest to this program! It was created with love to help other people in their day-to-day activities. The most valuable gift for me will be your help for other people! There are many people who need your help and support around: people with disabilities, children without parents and so on... You can find any clarity organization or smthg similar and transfer there some funds - I will really appreciate your act! Thank you again and have a nice day!</value>
+  </data>
+  <data name="MenuHelpDonateTitle" xml:space="preserve">
+    <value>Your help is really appreciated</value>
+  </data>
+  <data name="MenuHelpSend" xml:space="preserve">
+    <value>Send &amp;feedback/issue</value>
+  </data>
+  <data name="MenuHelpStart" xml:space="preserve">
+    <value>&amp;Start time</value>
+  </data>
+  <data name="MenuHelpStartPrefix" xml:space="preserve">
+    <value>Program was started at</value>
+  </data>
+  <data name="MenuHelpStartTitle" xml:space="preserve">
+    <value>Start time</value>
+  </data>
+  <data name="MenuPaste" xml:space="preserve">
+    <value>&amp;Paste</value>
+  </data>
+  <data name="MenuPersistent" xml:space="preserve">
+    <value>M&amp;ark as persistent</value>
+  </data>
+  <data name="MenuReturn" xml:space="preserve">
+    <value>&amp;Return text to initial</value>
+  </data>
+</root>

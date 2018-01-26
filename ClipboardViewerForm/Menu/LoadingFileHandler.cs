@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClipboardBufer;
+using ClipboardViewerForm.Properties;
 
 namespace ClipboardViewerForm.Menu
 {
@@ -18,7 +19,7 @@ namespace ClipboardViewerForm.Menu
         {
             this._clipboardWrapper = clipboardWrapper;
 
-            this._dialog.Filter = "Текстовые файлы (*.txt)|*.txt";
+            this._dialog.Filter = Resource.LoadFileFilter;
             this._dialog.CheckFileExists = true;
             this._dialog.CheckPathExists = true;
             this._dialog.RestoreDirectory = true;
@@ -54,7 +55,7 @@ namespace ClipboardViewerForm.Menu
             }
             catch (IOException exc)
             {
-                MessageBox.Show($"There is an error while reading a file {this._dialog.FileName}:\n\n {exc.Message}", "Loading file error");
+                MessageBox.Show(Resource.LoadFileErrorPrefix + $" {this._dialog.FileName}:\n\n {exc.Message}", Resource.LoadFileErrorTitle);
             }
         }
     }
