@@ -205,6 +205,15 @@ namespace ClipboardViewerForm.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Clipboard last update was at .
+        /// </summary>
+        internal static string LastClipboardUpdate {
+            get {
+                return ResourceManager.GetString("LastClipboardUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на There is an error during reading a file.
         /// </summary>
         internal static string LoadFileErrorPrefix {

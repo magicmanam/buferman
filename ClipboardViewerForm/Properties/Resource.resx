@@ -282,4 +282,7 @@
   <data name="AllBufersPersistent" xml:space="preserve">
     <value>All your bufers are persistent. Please remove some of them and then try to copy again...</value>
   </data>
+  <data name="LastClipboardUpdate" xml:space="preserve">
+    <value>Clipboard last update was at </value>
+  </data>
 </root>

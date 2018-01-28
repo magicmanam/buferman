@@ -282,4 +282,7 @@
   <data name="AllBufersPersistent" xml:space="preserve">
     <value>Все буферы постоянные. Удалите любой из них и повторите попытку копирования...</value>
   </data>
+  <data name="LastClipboardUpdate" xml:space="preserve">
+    <value>Последнее обновление буфера в </value>
+  </data>
 </root>

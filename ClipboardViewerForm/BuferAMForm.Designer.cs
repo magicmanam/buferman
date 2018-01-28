@@ -8,6 +8,7 @@ using Windows;
 using ClipboardViewerForm.Menu;
 using ClipboardViewerForm.Window;
 using ClipboardBufer;
+using ClipboardViewerForm.Properties;
 
 namespace ClipboardViewerForm
 {
@@ -77,7 +78,7 @@ namespace ClipboardViewerForm
             {
                 this._clipboardInterceptor.DoOnCtrlC();
 
-                this.SetStatusBarText($"Clipboard last update was at {DateTime.Now.ToShortTimeString()}");//Should be in separate strip label
+                this.SetStatusBarText(Resource.LastClipboardUpdate + DateTime.Now.ToShortTimeString());//Should be in separate strip label
 
                 if (this._nextViewer != IntPtr.Zero)
                 {
