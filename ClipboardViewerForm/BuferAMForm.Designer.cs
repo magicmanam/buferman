@@ -34,10 +34,8 @@ namespace ClipboardViewerForm
         public BuferAMForm(IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper)
         {
             this._clipboardBuferService = clipboardBuferService;
-            var hidingHandler = new WindowHidingHandler(this);
             this._buttonsMap = new Dictionary<IDataObject, Button>(MAX_BUFERS_COUNT);
-            var renderingHandler = new RenderingHandler(this, this._clipboardBuferService, comparer, clipboardWrapper, this._buttonsMap);
-            WindowLevelContext.SetCurrent(new DefaultWindowLevelContext(renderingHandler, hidingHandler));
+            WindowLevelContext.SetCurrent(new DefaultWindowLevelContext(this, clipboardBuferService, comparer, clipboardWrapper, this._buttonsMap));
             this._clipboardInterceptor = new CopyingToClipboardInterceptor(clipboardBuferService, this, comparer, clipboardWrapper);
             this._loadingFileHandler = new LoadingFileHandler(clipboardWrapper);
             this._menuGenerator = new MenuGenerator(this._loadingFileHandler, this._clipboardBuferService);
