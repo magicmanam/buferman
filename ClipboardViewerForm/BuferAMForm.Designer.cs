@@ -21,8 +21,6 @@ namespace ClipboardViewerForm
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         public const string PROGRAM_CAPTION = "BuferMAN";
-        private readonly IRenderingHandler _renderingHandler;
-        private readonly IWindowHidingHandler _hidingHandler;
         private readonly ICopyingToClipboardInterceptor _clipboardInterceptor;
         private readonly IMenuGenerator _menuGenerator;
         private readonly ILoadingFileHandler _loadingFileHandler;
@@ -36,12 +34,13 @@ namespace ClipboardViewerForm
         public BuferAMForm(IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper)
         {
             this._clipboardBuferService = clipboardBuferService;
-            this._hidingHandler = new WindowHidingHandler(this);
+            var hidingHandler = new WindowHidingHandler(this);
             this._buttonsMap = new Dictionary<IDataObject, Button>(MAX_BUFERS_COUNT);
-            this._renderingHandler = new RenderingHandler(this, this._clipboardBuferService, comparer, this._hidingHandler, clipboardWrapper, this._buttonsMap);
-            this._clipboardInterceptor = new CopyingToClipboardInterceptor(clipboardBuferService, this, this._renderingHandler, comparer, clipboardWrapper);
+            var renderingHandler = new RenderingHandler(this, this._clipboardBuferService, comparer, clipboardWrapper, this._buttonsMap);
+            WindowLevelContext.SetCurrent(new DefaultWindowLevelContext(renderingHandler, hidingHandler));
+            this._clipboardInterceptor = new CopyingToClipboardInterceptor(clipboardBuferService, this, comparer, clipboardWrapper);
             this._loadingFileHandler = new LoadingFileHandler(clipboardWrapper);
-            this._menuGenerator = new MenuGenerator(this._loadingFileHandler, this._clipboardBuferService, this._renderingHandler);
+            this._menuGenerator = new MenuGenerator(this._loadingFileHandler, this._clipboardBuferService);
 
             InitializeComponent();
             InitializeForm();
@@ -138,7 +137,7 @@ namespace ClipboardViewerForm
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Text = PROGRAM_CAPTION;
             this.Height = 832 + 3 + 1;//+ is divider height + divider margin
-            this.Activated += new WindowActivationHandler(_clipboardBuferService, this, this._renderingHandler).OnActivated;
+            this.Activated += new WindowActivationHandler(_clipboardBuferService, this).OnActivated;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
 
             this.KeyDown += this._onKeyDown;
@@ -190,7 +189,7 @@ namespace ClipboardViewerForm
             switch (e.KeyCode)
             {
                 case Keys.Escape:
-                    this._hidingHandler.HideWindow();
+                    WindowLevelContext.Current.HideWindow();
                     break;
                 case Keys.Space:
                     new KeyboardEmulator().PressEnter();

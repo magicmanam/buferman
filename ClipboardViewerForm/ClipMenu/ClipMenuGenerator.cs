@@ -13,9 +13,7 @@ namespace ClipboardViewerForm.ClipMenu
     class ClipMenuGenerator : IClipMenuGenerator
     {
         private readonly IClipboardBuferService _clipboardBuferService;
-        private readonly IRenderingHandler _renderingHandler;
         private readonly IBuferSelectionHandler _buferSelectionHandler;
-        private readonly IWindowHidingHandler _hidingHandler;
         private IDataObject _dataObject;
         private Button _button;
         private MenuItem _returnTextToInitialMenuItem;
@@ -27,12 +25,10 @@ namespace ClipboardViewerForm.ClipMenu
         private string _tooltipText;
         private ToolTip _mouseOverTooltip;
 
-        public ClipMenuGenerator(IClipboardBuferService clipboardBuferService, IRenderingHandler renderingHandler, BuferSelectionHandler buferSelectionHandler, IWindowHidingHandler hidingHandler)
+        public ClipMenuGenerator(IClipboardBuferService clipboardBuferService, BuferSelectionHandler buferSelectionHandler)
         {
             this._clipboardBuferService = clipboardBuferService;
-            this._renderingHandler = renderingHandler;
             this._buferSelectionHandler = buferSelectionHandler;
-            this._hidingHandler = hidingHandler;
         }
 
         public ContextMenu GenerateContextMenu(IDataObject dataObject, Button button, String originBuferText, string tooltipText, ToolTip mouseOverTooltip, bool isChangeTextAvailable)
@@ -85,7 +81,7 @@ namespace ClipboardViewerForm.ClipMenu
             {
                 contextMenu.MenuItems.Add("-");
                 contextMenu.MenuItems.Add(new MenuItem(Resource.MenuCharByChar, (object sender, EventArgs args) => {
-                    this._hidingHandler.HideWindow();
+                    WindowLevelContext.Current.HideWindow();
                     new KeyboardEmulator().TypeText(this._originBuferText);
                 }));
 
@@ -114,14 +110,14 @@ namespace ClipboardViewerForm.ClipMenu
         private void DeleteBufer(object sender, EventArgs e)
         {
             this._clipboardBuferService.RemoveClip(this._dataObject);
-            this._renderingHandler.Render();
+            WindowLevelContext.Current.RerenderBufers();
         }
 
         private void MarkAsPersistent(object sender, EventArgs e)
         {
             this._clipboardBuferService.MarkClipAsPersistent(this._dataObject);
             this._markAsPersistentMenuItem.Enabled = false;
-            this._renderingHandler.Render();
+            WindowLevelContext.Current.RerenderBufers();
         }
 
         private void _CreateLoginCredentials(object sender, EventArgs e)
@@ -143,7 +139,7 @@ namespace ClipboardViewerForm.ClipMenu
                 this._button.Click -= this._buferSelectionHandler.DoOnClipSelection;
                 this._button.Click += (object pasteCredsSender, EventArgs args) =>
                 {
-                    this._hidingHandler.HideWindow();
+                    WindowLevelContext.Current.HideWindow();
 
                     new KeyboardEmulator()
                         .TypeText(this._originBuferText)
@@ -154,21 +150,21 @@ namespace ClipboardViewerForm.ClipMenu
 
                 this._createLoginDataMenuItem.MenuItems.Add(new MenuItem(Resource.CredsPasswordEnter, (object pastePasswordSender, EventArgs args) =>
                 {
-                    this._hidingHandler.HideWindow();
+                    WindowLevelContext.Current.HideWindow();
                     new KeyboardEmulator()
                         .TypeText(password)
                         .PressEnter();
                 }));
                 this._createLoginDataMenuItem.MenuItems.Add(new MenuItem(Resource.CredsPassword, (object pastePasswordSender, EventArgs args) =>
                 {
-                    this._hidingHandler.HideWindow();
+                    WindowLevelContext.Current.HideWindow();
 
                     new KeyboardEmulator()
                         .TypeText(password);
                 }));
                 this._createLoginDataMenuItem.MenuItems.Add(new MenuItem(Resource.CredsName, (object pasteUsernameSender, EventArgs args) =>
                 {
-                    this._hidingHandler.HideWindow();
+                    WindowLevelContext.Current.HideWindow();
 
                     new KeyboardEmulator()
                         .TypeText(this._originBuferText);

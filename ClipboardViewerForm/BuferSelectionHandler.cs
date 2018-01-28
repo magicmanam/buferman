@@ -10,13 +10,11 @@ namespace ClipboardViewerForm
 {
 	class BuferSelectionHandler : IBuferSelectionHandler
     {
-        private readonly IWindowHidingHandler _hidingHandler;
         private readonly IDataObject _dataObject;
         private readonly IClipboardWrapper _clipboardWrapper;
 
-        public BuferSelectionHandler(Form form, IDataObject dataObject, IWindowHidingHandler hidingHandler, IClipboardWrapper clipboardWrapper)
+        public BuferSelectionHandler(Form form, IDataObject dataObject, IClipboardWrapper clipboardWrapper)
         {
-            this._hidingHandler = hidingHandler;
             this._dataObject = dataObject;
             this._clipboardWrapper = clipboardWrapper;
         }
@@ -25,7 +23,7 @@ namespace ClipboardViewerForm
         {
 			this._clipboardWrapper.SetDataObject(this._dataObject);
 
-            this._hidingHandler.HideWindow();
+            WindowLevelContext.Current.HideWindow();
 
             var currentLanguage = InputLanguage.CurrentInputLanguage;
             InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("en-US"));//This culture should be calculated automatically

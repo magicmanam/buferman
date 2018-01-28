@@ -15,7 +15,6 @@ namespace ClipboardViewerForm.Window
     {
         private readonly Form _form;
         private readonly IClipboardBuferService _clipboardBuferService;
-		private readonly IWindowHidingHandler _hidingHandler;
 		private readonly IDictionary<IDataObject, Button> _buttonsMap;
 		private readonly IEqualityComparer<IDataObject> _comparer;
         private readonly int _buttonWidth;
@@ -24,12 +23,11 @@ namespace ClipboardViewerForm.Window
 
         private const int BUTTON_HEIGHT = 25;
 
-        public RenderingHandler(Form form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IWindowHidingHandler hidingHandler, IClipboardWrapper clipboardWrapper, IDictionary<IDataObject, Button> buttonsMap)
+        public RenderingHandler(Form form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IDictionary<IDataObject, Button> buttonsMap)
         {
             this._form = form;
             this._clipboardBuferService = clipboardBuferService;
 			this._comparer = comparer;
-			this._hidingHandler = hidingHandler;
             this._buttonsMap = buttonsMap;
             this._buttonWidth = this._form.ClientRectangle.Width;
             this._persistentClipsDivider = new Label() { Text = string.Empty, BorderStyle = BorderStyle.FixedSingle, AutoSize = false, Height = 3, BackColor = Color.AliceBlue, Width = this._buttonWidth };
@@ -82,9 +80,9 @@ namespace ClipboardViewerForm.Window
                         this._buttonsMap.Add(bufer, button);
                         this._form.Controls.Add(button);
 
-                        var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._hidingHandler, this._clipboardWrapper);
+                        var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._clipboardWrapper);
 
-                        new BuferHandlersWrapper(this._clipboardBuferService, this, bufer, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, this, buferSelectionHandler, this._hidingHandler), buferSelectionHandler);
+                        new BuferHandlersWrapper(this._clipboardBuferService, bufer, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler), buferSelectionHandler);
                     }
 
                     button.TabIndex = currentButtonIndex;

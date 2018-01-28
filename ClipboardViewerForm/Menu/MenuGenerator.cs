@@ -16,13 +16,11 @@ namespace ClipboardViewerForm.Menu
     {
         private readonly ILoadingFileHandler _loadingFileHandler;
         private readonly IClipboardBuferService _clipboardBuferService;
-        private readonly IRenderingHandler _renderingHandler;
 
-        public MenuGenerator(ILoadingFileHandler loadingFileHandler, IClipboardBuferService clipboardBuferService, IRenderingHandler renderingHandler)
+        public MenuGenerator(ILoadingFileHandler loadingFileHandler, IClipboardBuferService clipboardBuferService)
         {
             this._loadingFileHandler = loadingFileHandler;
             this._clipboardBuferService = clipboardBuferService;
-            this._renderingHandler = renderingHandler;
         }
         public MainMenu GenerateMenu(Form form)
         {
@@ -31,8 +29,8 @@ namespace ClipboardViewerForm.Menu
         {
             WindowsFunctions.SendMessage(form.Handle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);
         }) }));
-            var undoMenuItem = new MenuItem(Resource.MenuEditUndo, (sender, args) => { this._clipboardBuferService.Undo(); this._renderingHandler.Render(); }, Shortcut.CtrlZ) { Enabled = false };
-            var redoMenuItem = new MenuItem(Resource.MenuEditRedo, (sender, args) => { this._clipboardBuferService.CancelUndo(); this._renderingHandler.Render(); }, Shortcut.CtrlY) { Enabled = false };
+            var undoMenuItem = new MenuItem(Resource.MenuEditUndo, (sender, args) => { this._clipboardBuferService.Undo(); WindowLevelContext.Current.RerenderBufers(); }, Shortcut.CtrlZ) { Enabled = false };
+            var redoMenuItem = new MenuItem(Resource.MenuEditRedo, (sender, args) => { this._clipboardBuferService.CancelUndo(); WindowLevelContext.Current.RerenderBufers(); }, Shortcut.CtrlY) { Enabled = false };
             mainMenu.MenuItems.Add(new MenuItem(Resource.MenuEdit, new MenuItem[] { undoMenuItem, redoMenuItem, new MenuItem(Resource.MenuEditDel, OnDeleteAll), new MenuItem(Resource.MenuEditDelTemp, OnDeleteAllTemporary) }));
 
             var startTime = DateTime.Now;
@@ -70,13 +68,13 @@ namespace ClipboardViewerForm.Menu
                 this._clipboardBuferService.RemoveTemporaryClips();
             }
 
-            this._renderingHandler.Render();
+            WindowLevelContext.Current.RerenderBufers();
         }
 
         private void OnDeleteAllTemporary(object sender, EventArgs args)
         {
             this._clipboardBuferService.RemoveTemporaryClips();
-            this._renderingHandler.Render();
+            WindowLevelContext.Current.RerenderBufers();
         }
 
         //MessageBox.Show("Feature is not supported now. Pay money to support.", "Keep calm and copy&paste!")

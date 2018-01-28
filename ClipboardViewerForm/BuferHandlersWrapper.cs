@@ -15,7 +15,6 @@ namespace ClipboardViewerForm
     {
         private const int TOOLTIP_DURATION = 2500;
         private readonly IClipboardBuferService _clipboardBuferService;
-        private readonly IRenderingHandler _renderingHandler;
         private readonly IDataObject _dataObject;
         private readonly IBuferSelectionHandler _buferSelectionHandler;
         private readonly Button _button;
@@ -23,10 +22,9 @@ namespace ClipboardViewerForm
         private string _tooltipText;
         private const float IMAGE_SCALE = 0.75f;
 
-        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IRenderingHandler renderingHandler, IDataObject dataObject, Button button, Form form, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler)
+        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IDataObject dataObject, Button button, Form form, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler)
         {
             this._clipboardBuferService = clipboardBuferService;
-            this._renderingHandler = renderingHandler;
             this._dataObject = dataObject;
             this._button = button;
             this._buferSelectionHandler = buferSelectionHandler;

@@ -10,13 +10,10 @@ namespace ClipboardViewerForm.Window
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly Form _form;
 
-        private readonly IRenderingHandler _renderingHandler;
-
-        public WindowActivationHandler(IClipboardBuferService clipboadService, Form form, IRenderingHandler renderingHandler)
+        public WindowActivationHandler(IClipboardBuferService clipboadService, Form form)
         {
             _clipboardBuferService = clipboadService;
             _form = form;
-            _renderingHandler = renderingHandler;
 
         }
                 
@@ -25,7 +22,7 @@ namespace ClipboardViewerForm.Window
 			this._form.WindowState = FormWindowState.Normal;
             this._form.Visible = true;
 
-            this._renderingHandler.Render();
-        }        
+            WindowLevelContext.Current.RerenderBufers();
+        }
     }
 }

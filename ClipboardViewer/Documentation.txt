@@ -55,6 +55,7 @@ Site with users -> from menu by unique link
 Messages on start up
 Hosting at https://sourceforge.net and other market places.
 Разобраться с лицензиями
+Set WindowLevelContext at program level, not form level
 
 Settings:  //Minimalize settings to ease using
   - Bufer's width: 300 by default

@@ -12,14 +12,12 @@ namespace ClipboardViewerForm
         private readonly IClipboardBuferService _clipboardBuferService;
 		private readonly IEqualityComparer<IDataObject> _comparer;
 		private readonly BuferAMForm _form;
-        private readonly IRenderingHandler _renderingHandler;
         private readonly IClipboardWrapper _clipboardWrapper;
 
-        public CopyingToClipboardInterceptor(IClipboardBuferService clipboardBuferService, BuferAMForm form, IRenderingHandler renderingHandler, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper)
+        public CopyingToClipboardInterceptor(IClipboardBuferService clipboardBuferService, BuferAMForm form, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._form = form;
-            this._renderingHandler = renderingHandler;
 			this._comparer = comparer;
             this._clipboardWrapper = clipboardWrapper;
         }
@@ -58,7 +56,7 @@ namespace ClipboardViewerForm
 
                 if (this._form.WindowState != FormWindowState.Minimized && this._form.Visible)
                 {
-                    this._renderingHandler.Render();
+                    WindowLevelContext.Current.RerenderBufers();
                 }
             }
         }
