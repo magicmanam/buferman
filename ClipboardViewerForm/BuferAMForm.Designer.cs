@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,6 +17,7 @@ namespace ClipboardViewerForm
         public const string PROGRAM_CAPTION = "BuferMAN";
         private readonly ICopyingToClipboardInterceptor _clipboardInterceptor;
         private readonly IMenuGenerator _menuGenerator;
+        private readonly IEqualityComparer<IDataObject> _comparer;
         private readonly ILoadingFileHandler _loadingFileHandler;
         private readonly IDictionary<IDataObject, Button> _buttonsMap;
         private IntPtr _nextViewer;
@@ -30,6 +32,7 @@ namespace ClipboardViewerForm
             InitializeForm();
 
             this._clipboardBuferService = clipboardBuferService;
+            this._comparer = comparer;
             this._buttonsMap = new Dictionary<IDataObject, Button>(MAX_BUFERS_COUNT);
             this._clipboardInterceptor = new CopyingToClipboardInterceptor(clipboardBuferService, this, comparer, clipboardWrapper);
             this._loadingFileHandler = new LoadingFileHandler(clipboardWrapper);
@@ -187,7 +190,7 @@ namespace ClipboardViewerForm
                     var lastBufer = this._clipboardBuferService.LastTemporaryClip;
                     if (lastBufer != null)
                     {
-                        var button = this._buttonsMap[lastBufer];
+                        var button = this._buttonsMap.First(kv => this._comparer.Equals(lastBufer, kv.Key)).Value;
                         button.Focus();
                     }
                     break;
@@ -196,7 +199,7 @@ namespace ClipboardViewerForm
 
                     if (firstBufer != null)
                     {
-                        var button = this._buttonsMap[firstBufer];
+                        var button = this._buttonsMap.First(kv => this._comparer.Equals(firstBufer, kv.Key)).Value;
                         button.Focus();
                     }
                     break;

@@ -1,4 +1,4 @@
--
+***************************************
 -> Paste your nice copies!
 - Every bufer has a context menu, just try!
 - Undo/Redo an action: Ctrl + Z, Ctrl + Y

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using ClipboardBufer;
 using Logging;
+using ClipboardViewerForm.Properties;
 
 namespace ClipboardViewerForm
 {
@@ -47,7 +48,7 @@ namespace ClipboardViewerForm
                         this._clipboardBuferService.RemoveClip(this._clipboardBuferService.FirstTemporaryClip);
                     } else
                     {
-                        MessageBox.Show("All your bufers are persistent. Please remove some of them and then try to copy again...", "Tra-ta-ta!!!");
+                        MessageBox.Show(Resource.AllBufersPersistent, Resource.TratataTitle);
                         return;
                     }
                 }

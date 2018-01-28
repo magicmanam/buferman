@@ -61,6 +61,15 @@ namespace ClipboardViewerForm.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на All your bufers are persistent. Please remove some of them and then try to copy again....
+        /// </summary>
+        internal static string AllBufersPersistent {
+            get {
+                return ResourceManager.GetString("AllBufersPersistent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Bufer alias was returned to its primary value.
         /// </summary>
         internal static string BuferAliasReturned {
@@ -534,6 +543,15 @@ namespace ClipboardViewerForm.Properties {
         internal static string NotTextBufer {
             get {
                 return ResourceManager.GetString("NotTextBufer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Tra-ta-ta!!!.
+        /// </summary>
+        internal static string TratataTitle {
+            get {
+                return ResourceManager.GetString("TratataTitle", resourceCulture);
             }
         }
     }

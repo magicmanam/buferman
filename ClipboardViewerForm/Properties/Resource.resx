@@ -276,4 +276,10 @@
   <data name="NotTextBufer" xml:space="preserve">
     <value>Not a text</value>
   </data>
+  <data name="TratataTitle" xml:space="preserve">
+    <value>Tra-ta-ta!!!</value>
+  </data>
+  <data name="AllBufersPersistent" xml:space="preserve">
+    <value>All your bufers are persistent. Please remove some of them and then try to copy again...</value>
+  </data>
 </root>

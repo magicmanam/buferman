@@ -276,4 +276,10 @@
   <data name="NotTextBufer" xml:space="preserve">
     <value>Странный буфер</value>
   </data>
+  <data name="TratataTitle" xml:space="preserve">
+    <value>Тра-та-та!!!</value>
+  </data>
+  <data name="AllBufersPersistent" xml:space="preserve">
+    <value>Все буферы постоянные. Удалите любой из них и повторите попытку копирования...</value>
+  </data>
 </root>

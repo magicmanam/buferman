@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using ClipboardViewerForm;
 using System.IO;
 using System.Threading.Tasks;
+using ClipboardViewer.Properties;
 
 namespace ClipboardViewer
 {
@@ -49,22 +50,22 @@ namespace ClipboardViewer
 
                     clipboardService.UndoableAction += (object sender, UndoableActionEventArgs e) =>
                     {
-                        form.SetStatusBarText($"{e.Action} Ctrl+Z to cancel");
+                        form.SetStatusBarText(e.Action);
                     };
                     clipboardService.UndoAction += (object sender, UndoableActionEventArgs e) =>
                     {
-                        form.SetStatusBarText($"{e.Action} Ctrl+Y to restore it or Ctrl+Z to cancel one more previous operation");
+                        form.SetStatusBarText(e.Action);
                     };
                     clipboardService.CancelUndoAction += (object sender, UndoableActionEventArgs e) =>
                     {
-                        form.SetStatusBarText($"{e.Action} Ctrl+Y to restore one more or Ctrl+Z to cancel other operation");
+                        form.SetStatusBarText(e.Action);
                     };
                     Application.Run(form);
 
 				}
 				else
 				{
-					MessageBox.Show("Program is already run. Press Alt+C to view current bufers.", BuferAMForm.PROGRAM_CAPTION);
+					MessageBox.Show(Resource.ProgramLaunched, BuferAMForm.PROGRAM_CAPTION);
 				}
             }
         }

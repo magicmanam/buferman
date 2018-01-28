@@ -1,11 +1,12 @@
-﻿using System;
+﻿using ClipboardBufer.Properties;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
 namespace ClipboardBufer
 {
-	public class ClipboardBuferService : IClipboardBuferService
+    public class ClipboardBuferService : IClipboardBuferService
     {
         private readonly Stack<ClipboardBuferServiceState> _serviceStates = new Stack<ClipboardBuferServiceState>();
         private readonly Stack<ClipboardBuferServiceState> _undoableStates = new Stack<ClipboardBuferServiceState>();
@@ -44,7 +45,7 @@ namespace ClipboardBufer
                 this._serviceStates.Push(this._GetCurrentState());
                 this._tempObjects.Clear();
                 this._persistentObjects.Clear();
-                this.OnUndoableAction("All clips were deleted.");
+                this.OnUndoableAction(Resource.AllDeleted);
             }
         }
 
@@ -107,7 +108,7 @@ namespace ClipboardBufer
             {
                 this._serviceStates.Push(this._GetCurrentState());
                 list.Remove(dataObject);
-                this.OnUndoableAction("Clip was removed.");
+                this.OnUndoableAction(Resource.BuferDeleted);
                 return true;
             }
             else
@@ -125,7 +126,7 @@ namespace ClipboardBufer
         {
             this._serviceStates.Push(this._GetCurrentState());
             this._tempObjects.Add(dataObject);
-            this.OnUndoableAction("New clip was added.");
+            this.OnUndoableAction(Resource.BuferAdded);
         }
 
         public void MarkClipAsPersistent(IDataObject dataObject)
@@ -134,7 +135,7 @@ namespace ClipboardBufer
             if (this._tempObjects.Remove(dataObject))
 			{
 				this._persistentObjects.Add(dataObject);
-                this.OnUndoableAction("Clip was marked as persistent.");
+                this.OnUndoableAction(Resource.BuferPersistent);
 
             } else
 			{
@@ -151,11 +152,8 @@ namespace ClipboardBufer
                 var lastState = this._serviceStates.Pop();
                 this._tempObjects = lastState.TempObjects;
                 this._persistentObjects = lastState.PersistentObjects;
-                this.UndoAction?.Invoke(this, new UndoableActionEventArgs("Operation cancelled."));
+                this.UndoAction?.Invoke(this, new UndoableActionEventArgs(Resource.BuferOperationCancelled));
                 this.UndoableContextChanged?.Invoke(this, new UndoableContextChangedEventArgs(this._serviceStates.Any(), true));
-            } else
-            {
-                //Here we can notify user, but other event should be used.
             }
         }
 
@@ -168,11 +166,8 @@ namespace ClipboardBufer
                 var undoState = this._undoableStates.Pop();
                 this._tempObjects = undoState.TempObjects;
                 this._persistentObjects = undoState.PersistentObjects;
-                this.CancelUndoAction?.Invoke(this, new UndoableActionEventArgs("Operation restored."));
+                this.CancelUndoAction?.Invoke(this, new UndoableActionEventArgs(Resource.BuferOperationRestored));
                 this.UndoableContextChanged?.Invoke(this, new UndoableContextChangedEventArgs(true, this._undoableStates.Any()));
-            } else
-            {
-                //Here we can notify user, but other event should be used.
             }
         }
 
@@ -192,7 +187,7 @@ namespace ClipboardBufer
             {
                 this._serviceStates.Push(this._GetCurrentState());
                 this._persistentObjects.Clear();
-                this.OnUndoableAction("Persistent clips were deleted.");
+                this.OnUndoableAction(Resource.PersistentBufersDeleted);
             }
         }
 
@@ -202,7 +197,7 @@ namespace ClipboardBufer
             {
                 this._serviceStates.Push(this._GetCurrentState());
                 this._tempObjects.Clear();
-                this.OnUndoableAction("Temporary clips were deleted.");
+                this.OnUndoableAction(Resource.TemporaryBufersDeleted);
             }
         }
     }
