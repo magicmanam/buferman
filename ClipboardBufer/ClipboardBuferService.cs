@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using Logging;
-using System.Drawing;
 
 namespace ClipboardBufer
 {
@@ -29,7 +27,7 @@ namespace ClipboardBufer
         {
             this._undoableStates.Clear();
             this.UndoableAction?.Invoke(this, new UndoableActionEventArgs(action));
-            this.UndoableContextChanged.Invoke(this, new UndoableContextChangedEventArgs(true, false));
+            this.UndoableContextChanged?.Invoke(this, new UndoableContextChangedEventArgs(true, false));
         }
 
         public IEnumerable<IDataObject> GetClips(bool persistentFirst = false)

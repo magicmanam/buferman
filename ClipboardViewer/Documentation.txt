@@ -9,53 +9,49 @@ By DD/01/2018
 Done - Menu items hot keys added
 Done - Russian localization was added
 Done - Program version was added to About info
+Done - Help menu added: Report an issue, Donate, About items
+Done - Update default bufers file
 
 Menu items - separate classes + factory
-By 27/01/2018
+By 29/01/2018
 
 # RC Tested by 1 February 2018
-- все атомарные операции сервиса обернуть в undoablecontext вложенные
-- undoable, nugets with documentation
-- Help: Report an issue, Donate, About
+- Add icon into a tray ? "Alt + C to launch" hint
 
-# RCN
-- file encryption to hide sensitive data (to enter master key)
-- Window with hot keys + menu with applications
+# RCN (almost sorted)
+- все атомарные операции сервиса обернуть в undoablecontext вложенные
+- многострочные буферы из файла + пароль + персистентность + alias - json format
+- добавить проверку буфера в файле и метки того, что буфер был взят из файла
+- Window with hot keys + menu with applications (scripts tool and others)
 - Подчистить проект: анализаторы, ссылки и т.д.
-- Save the most popular in file
+- file encryption to hide sensitive data (to enter master key)
 - Complete presentation!
 - Undoable nuget package
+- Разобраться с лицензиями
 - On scroll to show current clipboard with possibility to click
 - MAX_STATUS_LENGTH = 55 as well as other magic numbers/strings
 - Refactor: add DI
+- Set WindowLevelContext at program level, not form level
+- Enable/disable 'Delete All' and 'Delete All Temporary' based on availability.
 - Different languages support
 - Add clips count into status bar (separate strip)
 - Read WinForms book!
+- Add drag an drop for temp/persistent bufers
+- Messages on start up
+- Add plugin support
+- Hosting at https://sourceforge.net and other market places.
 - Add menu with unknown file formats
+- If link is copied in browser, Enter should be clicked automatically.
 - На основе фич сделать список подсказок и показывать их на стартапе. Чаще показывать фичи, которые редко используются
-- Этот проект не должен содержать файлов с кол-вом строк больше 100 и проектов с кол-вом файлов больше 20
+- Corporative & personal versions with private message.
+- Site with users -> from menu by unique link
 - Add some AI strategies based on user behaviour (Ctrl+C - TAB - Ctrl+V - TAB - Ctrl+C)
+- IStorage - to remove all System.IO - to use everywhere
 - Make plugins for preview tooltips with settings
 - Improve Performance (try different tools)
-- Git!
-- Log4net mastering!
-- Basket for deleted bufers (to quickly restore): restore particular and all at once
 ******************* unsorted ****************
-Context.IInterface
-IStorage - to remove all System.IO - to use everywhere
-filename is extracted into const
-добавить проверку буфера в файле и метки того, что буфер был взят из файла
-многострочные буферы из файла + пароль + персистентность + alias - json format
-If link is copied in browser, Enter should be clicked automatically.
-Enable/disable 'Delete All' and 'Delete All Temporary' based on availability.
-Add drag an drop for temp/persistnt bufers
-Add icon into a tray ? Alt + C to launch
-Corporative & personal versions with private message.
-Site with users -> from menu by unique link
-Messages on start up
-Hosting at https://sourceforge.net and other market places.
-Разобраться с лицензиями
-Set WindowLevelContext at program level, not form level
+//MessageBox.Show("Feature is not supported now. Pay money to support.", "Keep calm and copy&paste!")
+//MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")
 
 Settings:  //Minimalize settings to ease using
   - Bufer's width: 300 by default
@@ -105,6 +101,7 @@ Settings:  //Minimalize settings to ease using
 По нажатию на 'x' выделится первый буфер, а по нажатию на 'v' - последний.
 Постоянные клипы отделены от временных горизонтальной полоской.
 
+*** Checked ***
 /*Check: . */
 /*Check: Поставить русскую локаль и скопировать файл/файлы/скрин. << Text >> should russian. */
 /*Check: Для всех пунктов меню работают горячие клавиши. */
@@ -130,7 +127,6 @@ Settings:  //Minimalize settings to ease using
 /*Check: Когда окно программы видно на экране и в это время буфер обновляется, список буферов в окне программы обновляется сразу же. */
 /*Check: Запустить студию в режиме админа и попробовать вставить туда текст. */
 /*Check: Если копируется несколько файлов, то на бутоне и тултипе будет "<< Files (9) >>: firstFileName ...". Если 1 файл - "<< File >>: firstFileName". */
-*** Checked ***
 /*Check: При добавлении нового буфера, тултип на первом буфере не должен всплывать (окно программы должно быть открыто) */
 /*Check: Выбрать буфер, нажав на соответствующую кнопку. Окно программы скрывается. */
 /*Check: Скопировать несколько клипов. Открыть окно программы слева. Сделать активным другое окно справа (так, чтобы окно программы всё ещё было видимо,

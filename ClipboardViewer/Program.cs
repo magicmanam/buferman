@@ -12,7 +12,6 @@ namespace ClipboardViewer
 {
 	static class Program
     {
-        private const string DEFAULT_BUFERS_FILE_NAME = "bufers.txt";
         private delegate void _LoadBufersFromDefaultFileInvoker(string fileName);
 
         /// <summary>
@@ -36,14 +35,15 @@ namespace ClipboardViewer
                     Application.SetCompatibleTextRenderingDefault(false);
 					var comparer = new DataObjectComparer(ClipboardFormats.StringFormats, ClipboardFormats.FileFormats);
                     var clipboardService = new ClipboardBuferService(comparer);
-                    var form = new BuferAMForm(clipboardService, comparer, new ClipboardWrapper());
+                    var settings = new ProgramSettings();
+                    var form = new BuferAMForm(clipboardService, comparer, new ClipboardWrapper(), settings);
 
                     Task.Delay(777).ContinueWith(t =>
                     {
-                        if (File.Exists(Program.DEFAULT_BUFERS_FILE_NAME))
+                        if (File.Exists(settings.DefaultBufersFileName))
                         {
                             var invoker = new _LoadBufersFromDefaultFileInvoker(form.LoadBufersFromFile);
-                            form.Invoke(invoker, Program.DEFAULT_BUFERS_FILE_NAME);
+                            form.Invoke(invoker, settings.DefaultBufersFileName);
                         }
                     });
 

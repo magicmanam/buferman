@@ -1,19 +1,12 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using Microsoft;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Input;
-using System.Linq;
 using Windows;
-using System.IO;
-using System.Text;
 using ClipboardViewerForm.Menu;
 using ClipboardViewerForm.Window;
 using ClipboardBufer;
-using Logging;
 
 namespace ClipboardViewerForm
 {
@@ -31,18 +24,19 @@ namespace ClipboardViewerForm
         internal StatusStrip StatusLine { get; set; }
         public ToolStripStatusLabel StatusLabel { get; set; }
 
-        public BuferAMForm(IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper)
+        public BuferAMForm(IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IProgramSettings settings)
         {
-            this._clipboardBuferService = clipboardBuferService;
-            this._buttonsMap = new Dictionary<IDataObject, Button>(MAX_BUFERS_COUNT);
-            WindowLevelContext.SetCurrent(new DefaultWindowLevelContext(this, clipboardBuferService, comparer, clipboardWrapper, this._buttonsMap));
-            this._clipboardInterceptor = new CopyingToClipboardInterceptor(clipboardBuferService, this, comparer, clipboardWrapper);
-            this._loadingFileHandler = new LoadingFileHandler(clipboardWrapper);
-            this._menuGenerator = new MenuGenerator(this._loadingFileHandler, this._clipboardBuferService);
-
             InitializeComponent();
             InitializeForm();
-            this.ShowInTaskbar = false;
+
+            this._clipboardBuferService = clipboardBuferService;
+            this._buttonsMap = new Dictionary<IDataObject, Button>(MAX_BUFERS_COUNT);
+            this._clipboardInterceptor = new CopyingToClipboardInterceptor(clipboardBuferService, this, comparer, clipboardWrapper);
+            this._loadingFileHandler = new LoadingFileHandler(clipboardWrapper);
+            this._menuGenerator = new MenuGenerator(this._loadingFileHandler, this._clipboardBuferService, settings);
+            this.Menu = this._menuGenerator.GenerateMenu();
+
+            WindowLevelContext.SetCurrent(new DefaultWindowLevelContext(this, clipboardBuferService, comparer, clipboardWrapper, this._buttonsMap, settings));
         }
 
         /// <summary>
@@ -135,21 +129,15 @@ namespace ClipboardViewerForm
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Text = PROGRAM_CAPTION;
             this.Height = 832 + 3 + 1;//+ is divider height + divider margin
-            this.Activated += new WindowActivationHandler(_clipboardBuferService, this).OnActivated;
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
-
             this.KeyDown += this._onKeyDown;
             this.KeyPreview = true;
-
-            this.Menu = this._menuGenerator.GenerateMenu(this);
-
             this.FormClosing += BuferAMForm_FormClosing;
-
             this.MaximizeBox = false;
-
             this.WindowState = FormWindowState.Minimized;
-
             this.CreateStatusBar();
+            this.Activated += new WindowActivationHandler(this._clipboardBuferService, this).OnActivated;
+            this.ShowInTaskbar = false;
         }
 
         private void CreateStatusBar()

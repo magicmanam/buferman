@@ -367,6 +367,15 @@ namespace ClipboardViewerForm.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Open/update default file.
+        /// </summary>
+        internal static string MenuFileChangeDefault {
+            get {
+                return ResourceManager.GetString("MenuFileChangeDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на E&amp;xit session.
         /// </summary>
         internal static string MenuFileExit {
@@ -412,7 +421,7 @@ namespace ClipboardViewerForm.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Windows clipboard helper with love... Version.
+        ///   Ищет локализованную строку, похожую на Windows clipboard helper with love... Current program version is.
         /// </summary>
         internal static string MenuHelpAboutText {
             get {
@@ -430,7 +439,7 @@ namespace ClipboardViewerForm.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на &amp;Donate.
+        ///   Ищет локализованную строку, похожую на Make &amp;world better.
         /// </summary>
         internal static string MenuHelpDonate {
             get {

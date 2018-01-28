@@ -1,6 +1,4 @@
-﻿using ClipboardViewerForm.Window;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Windows.Forms;
 using Windows;
@@ -16,28 +14,46 @@ namespace ClipboardViewerForm.Menu
     {
         private readonly ILoadingFileHandler _loadingFileHandler;
         private readonly IClipboardBuferService _clipboardBuferService;
+        private readonly IProgramSettings _settings;
 
-        public MenuGenerator(ILoadingFileHandler loadingFileHandler, IClipboardBuferService clipboardBuferService)
+        public MenuGenerator(ILoadingFileHandler loadingFileHandler, IClipboardBuferService clipboardBuferService, IProgramSettings settings)
         {
             this._loadingFileHandler = loadingFileHandler;
             this._clipboardBuferService = clipboardBuferService;
+            this._settings = settings;
         }
-        public MainMenu GenerateMenu(Form form)
+        public MainMenu GenerateMenu()
         {
-            var mainMenu = new MainMenu();
-            mainMenu.MenuItems.Add(new MenuItem(Resource.MenuFile, new MenuItem[] { new MenuItem(Resource.MenuFileLoad, this._loadingFileHandler.OnLoadFile), new MenuItem(Resource.MenuFileExit, (object sender, EventArgs args) =>
+            var menu = new MainMenu();
+            menu.MenuItems.Add(this._GenerateFileMenu());
+            menu.MenuItems.Add(this._GenerateEditMenu());
+            menu.MenuItems.Add(this._GenerateHelpMenu());
+
+            return menu;
+        }
+
+        private MenuItem _GenerateFileMenu()
         {
-            WindowsFunctions.SendMessage(form.Handle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);
-        }) }));
+            var fileMenu = new MenuItem(Resource.MenuFile);
+
+            fileMenu.MenuItems.Add(new MenuItem(Resource.MenuFileLoad, this._loadingFileHandler.OnLoadFile));
+            fileMenu.MenuItems.Add(new MenuItem(Resource.MenuFileChangeDefault, (object sender, EventArgs args) => Process.Start(this._settings.DefaultBufersFileName)));
+            fileMenu.MenuItems.AddSeparator();
+            fileMenu.MenuItems.Add(new MenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => WindowsFunctions.SendMessage(WindowLevelContext.Current.WindowHandle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero)));
+
+            return fileMenu;
+        }
+
+        private MenuItem _GenerateEditMenu()
+        {
+            var editMenu = new MenuItem(Resource.MenuEdit);
+
             var undoMenuItem = new MenuItem(Resource.MenuEditUndo, (sender, args) => { this._clipboardBuferService.Undo(); WindowLevelContext.Current.RerenderBufers(); }, Shortcut.CtrlZ) { Enabled = false };
+            editMenu.MenuItems.Add(undoMenuItem);
             var redoMenuItem = new MenuItem(Resource.MenuEditRedo, (sender, args) => { this._clipboardBuferService.CancelUndo(); WindowLevelContext.Current.RerenderBufers(); }, Shortcut.CtrlY) { Enabled = false };
-            mainMenu.MenuItems.Add(new MenuItem(Resource.MenuEdit, new MenuItem[] { undoMenuItem, redoMenuItem, new MenuItem(Resource.MenuEditDel, OnDeleteAll), new MenuItem(Resource.MenuEditDelTemp, OnDeleteAllTemporary) }));
-
-            var startTime = DateTime.Now;
-            mainMenu.MenuItems.Add(new MenuItem(Resource.MenuHelp, new MenuItem[] { new MenuItem(Resource.MenuHelpSend, (object sender, EventArgs args) => Process.Start("https://rink.hockeyapp.net/apps/51633746a31f44999eca3bc7b7945e92/feedback/new")), new MenuItem(Resource.MenuHelpStart, (object sender, EventArgs args) => MessageBox.Show(Resource.MenuHelpStartPrefix + $" {startTime}.", Resource.MenuHelpStartTitle)), new MenuItem(Resource.MenuHelpDonate, (object sender, EventArgs args) => MessageBox.Show(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)), new MenuItem(Resource.MenuHelpAbout, (object sender, EventArgs args) => {
-            var version = ApplicationDeployment.IsNetworkDeployed ? ApplicationDeployment.CurrentDeployment.CurrentVersion : Assembly.GetEntryAssembly().GetName().Version;
-
-            MessageBox.Show(Resource.MenuHelpAboutText + " " + version.ToString(), Resource.MenuHelpAboutTitle); }) }));
+            editMenu.MenuItems.Add(redoMenuItem);
+            editMenu.MenuItems.Add(new MenuItem(Resource.MenuEditDel, _OnDeleteAll));
+            editMenu.MenuItems.Add(new MenuItem(Resource.MenuEditDelTemp, _OnDeleteAllTemporary));
 
             this._clipboardBuferService.UndoableContextChanged += (object sender, UndoableContextChangedEventArgs e) =>
             {
@@ -45,10 +61,10 @@ namespace ClipboardViewerForm.Menu
                 redoMenuItem.Enabled = e.CanRedo;
             };
 
-            return mainMenu;
+            return editMenu;
         }
 
-        private void OnDeleteAll(object sender, EventArgs args)
+        private void _OnDeleteAll(object sender, EventArgs args)
         {
             if (this._clipboardBuferService.GetPersistentClips().Any())
             {
@@ -71,14 +87,25 @@ namespace ClipboardViewerForm.Menu
             WindowLevelContext.Current.RerenderBufers();
         }
 
-        private void OnDeleteAllTemporary(object sender, EventArgs args)
+        private void _OnDeleteAllTemporary(object sender, EventArgs args)
         {
             this._clipboardBuferService.RemoveTemporaryClips();
             WindowLevelContext.Current.RerenderBufers();
         }
 
-        //MessageBox.Show("Feature is not supported now. Pay money to support.", "Keep calm and copy&paste!")
-        //MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")
-        //To keep array of message boxes for not implemented features.
+        private MenuItem _GenerateHelpMenu()
+        {
+            var helpMenu = new MenuItem(Resource.MenuHelp);
+            var startTime = DateTime.Now;
+            helpMenu.MenuItems.Add(new MenuItem(Resource.MenuHelpSend, (object sender, EventArgs args) => Process.Start("https://rink.hockeyapp.net/apps/51633746a31f44999eca3bc7b7945e92/feedback/new")));
+            helpMenu.MenuItems.Add(new MenuItem(Resource.MenuHelpStart, (object sender, EventArgs args) => MessageBox.Show(Resource.MenuHelpStartPrefix + $" {startTime}.", Resource.MenuHelpStartTitle)));
+            helpMenu.MenuItems.Add(new MenuItem(Resource.MenuHelpDonate, (object sender, EventArgs args) => MessageBox.Show(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)));
+            helpMenu.MenuItems.Add(new MenuItem(Resource.MenuHelpAbout, (object sender, EventArgs args) => {
+                var version = ApplicationDeployment.IsNetworkDeployed ? ApplicationDeployment.CurrentDeployment.CurrentVersion : Assembly.GetEntryAssembly().GetName().Version;
+
+                MessageBox.Show(Resource.MenuHelpAboutText + " " + version.ToString(), Resource.MenuHelpAboutTitle); }));
+
+            return helpMenu;
+        }
     }
 }

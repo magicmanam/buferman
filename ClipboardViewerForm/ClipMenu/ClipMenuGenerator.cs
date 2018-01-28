@@ -1,6 +1,6 @@
 ﻿using ClipboardBufer;
+using ClipboardViewerForm.Menu;
 using ClipboardViewerForm.Properties;
-using ClipboardViewerForm.Window;
 using Microsoft.VisualBasic;
 using System;
 using System.Drawing;
@@ -14,6 +14,7 @@ namespace ClipboardViewerForm.ClipMenu
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IBuferSelectionHandler _buferSelectionHandler;
+        private readonly IProgramSettings _settings;
         private IDataObject _dataObject;
         private Button _button;
         private MenuItem _returnTextToInitialMenuItem;
@@ -25,10 +26,11 @@ namespace ClipboardViewerForm.ClipMenu
         private string _tooltipText;
         private ToolTip _mouseOverTooltip;
 
-        public ClipMenuGenerator(IClipboardBuferService clipboardBuferService, BuferSelectionHandler buferSelectionHandler)
+        public ClipMenuGenerator(IClipboardBuferService clipboardBuferService, BuferSelectionHandler buferSelectionHandler, IProgramSettings settings)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._buferSelectionHandler = buferSelectionHandler;
+            this._settings = settings;
         }
 
         public ContextMenu GenerateContextMenu(IDataObject dataObject, Button button, String originBuferText, string tooltipText, ToolTip mouseOverTooltip, bool isChangeTextAvailable)
@@ -79,7 +81,7 @@ namespace ClipboardViewerForm.ClipMenu
             
             if (isChangeTextAvailable)
             {
-                contextMenu.MenuItems.Add("-");
+                contextMenu.MenuItems.AddSeparator();
                 contextMenu.MenuItems.Add(new MenuItem(Resource.MenuCharByChar, (object sender, EventArgs args) => {
                     WindowLevelContext.Current.HideWindow();
                     new KeyboardEmulator().TypeText(this._originBuferText);
@@ -91,7 +93,7 @@ namespace ClipboardViewerForm.ClipMenu
 
                 this._addToFileMenuItem = new MenuItem(Resource.MenuAddToFile, (object sender, EventArgs args) =>
                 {
-                    using (var sw = new StreamWriter(new FileStream("bufers.txt", FileMode.Append, FileAccess.Write)))
+                    using (var sw = new StreamWriter(new FileStream(this._settings.DefaultBufersFileName, FileMode.Append, FileAccess.Write)))
                     {
                         sw.WriteLine(this._originBuferText);
                     }
