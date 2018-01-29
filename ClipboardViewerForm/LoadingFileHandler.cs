@@ -44,7 +44,7 @@ namespace ClipboardViewerForm
                         var bufer = fileReader.ReadLine();
                         if (!string.IsNullOrWhiteSpace(bufer))
                         {
-                            var dataObject = new DataObject(ClipboardFormats.UNICODE_STRING_FORMAT, bufer);
+                            var dataObject = new DataObject(DataFormats.StringFormat, bufer);
                             this._clipboardWrapper.SetDataObject(dataObject);
                         }
                     }

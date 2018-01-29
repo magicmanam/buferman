@@ -1,9 +1,7 @@
-﻿using ClipboardViewerForm.Window;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
 using ClipboardBufer;
-using Logging;
 using System.Linq;
 using System.IO;
 using ClipboardViewerForm.ClipMenu;
@@ -29,13 +27,13 @@ namespace ClipboardViewerForm
             this._button = button;
             this._buferSelectionHandler = buferSelectionHandler;
 
-            var buferTextRepresentation = dataObject.GetData(ClipboardFormats.UNICODE_TEXT_STRING_FORMAT) as string;
+            var buferTextRepresentation = dataObject.GetData(DataFormats.UnicodeText) as string;
             if (string.IsNullOrEmpty(buferTextRepresentation))
             {
-                buferTextRepresentation = dataObject.GetData(ClipboardFormats.UNICODE_STRING_FORMAT) as string;
+                buferTextRepresentation = dataObject.GetData(DataFormats.StringFormat) as string;
                 if (string.IsNullOrEmpty(buferTextRepresentation))
                 {
-                    buferTextRepresentation = dataObject.GetData(ClipboardFormats.TEXT_STRING_FORMAT) as string;
+                    buferTextRepresentation = dataObject.GetData(DataFormats.Text) as string;
                 }
             }
 
@@ -43,7 +41,7 @@ namespace ClipboardViewerForm
             string buferTitle = null;
             if (buferTextRepresentation == null)
             {
-                var files = dataObject.GetData(ClipboardFormats.FILE_FORMAT) as string[];
+                var files = dataObject.GetData(DataFormats.FileDrop) as string[];
                 if (files != null && files.Length > 0)
                 {
                     isChangeTextAvailable = false;
@@ -71,10 +69,6 @@ namespace ClipboardViewerForm
                         isChangeTextAvailable = false;
                         buferTextRepresentation = $"<< {Resource.ImageBufer} >>";
                         button.Font = new Font(button.Font, FontStyle.Italic | FontStyle.Bold);
-                    }
-                    else
-                    {
-                        buferTextRepresentation = dataObject.GetData(ClipboardFormats.TEXT_STRING_FORMAT) as string;
                     }
                 }
             }
