@@ -563,5 +563,14 @@ namespace ClipboardViewerForm.Properties {
                 return ResourceManager.GetString("TratataTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на white spaces.
+        /// </summary>
+        internal static string WhiteSpaces {
+            get {
+                return ResourceManager.GetString("WhiteSpaces", resourceCulture);
+            }
+        }
     }
 }

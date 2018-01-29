@@ -57,9 +57,9 @@ namespace ClipboardViewerForm
 
                     var folder = Path.GetDirectoryName(files.First());
                     buferTextRepresentation += folder + " " + Environment.NewLine + Environment.NewLine;
-                    buferTextRepresentation += string.Join(Environment.NewLine, files.Select(f => Path.GetFileName(f)).ToList());
+                    buferTextRepresentation += string.Join(Environment.NewLine, files.Select(f => Path.GetFileName(f) + (File.GetAttributes(f).HasFlag(FileAttributes.Directory) ? Path.DirectorySeparatorChar.ToString() : string.Empty)).ToList());
 
-                    button.BackColor = Color.Brown;
+                    button.BackColor = Color.Khaki;
                 }
                 else
                 {
@@ -76,7 +76,7 @@ namespace ClipboardViewerForm
             string buttonText = buferTitle ?? buferTextRepresentation;
             if (string.IsNullOrWhiteSpace(buttonText))
             {
-                buttonText = buttonText == null ? $"<< {Resource.NotTextBufer} >>" : $"<< {buttonText.Length}   white spaces >>";
+                buttonText = buttonText == null ? $"<< {Resource.NotTextBufer} >>" : $"<< {buttonText.Length}   {Resource.WhiteSpaces} >>";
                 button.Font = new Font(button.Font, FontStyle.Italic | FontStyle.Bold);
                 isChangeTextAvailable = false;
             }

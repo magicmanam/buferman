@@ -34,22 +34,22 @@ namespace ClipboardBufer
 
             //
             //if (ConfigurationManager.AppSettings["inspectNewFormats"] == "true")
-            {
-                var allFormats = _stringFormats.Union(_arrayFormats);
-                foreach (var f in xFormats.Where(f => !allFormats.Contains(f)))
-                {
-                    if (x.GetData(f) as string != null)
-                    {
-                        this.TrackUnknownFormat("string", f);
-                        _stringFormats.Add(f);
-                    }
-                    if (x.GetData(f) as string[] != null)
-                    {
-                        this.TrackUnknownFormat("array", f);
-                        _arrayFormats.Add(f);
-                    }
-                }
-            }
+            //{
+            //    var allFormats = _stringFormats.Union(_arrayFormats);
+            //    foreach (var f in xFormats.Where(f => !allFormats.Contains(f)))
+            //    {
+            //        if (x.GetData(f) as string != null)
+            //        {
+            //            this.TrackUnknownFormat("string", f);
+            //            _stringFormats.Add(f);
+            //        }
+            //        if (x.GetData(f) as string[] != null)
+            //        {
+            //            this.TrackUnknownFormat("array", f);
+            //            _arrayFormats.Add(f);
+            //        }
+            //    }
+            //}
             //
 
             if (xFormats.Length != yFormats.Length)

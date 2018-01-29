@@ -43,7 +43,7 @@ namespace ClipboardViewerForm.ClipMenu
 
             var contextMenu = new ContextMenu();
 
-            this._markAsPersistentMenuItem = new MenuItem(Resource.MenuPersistent, this.MarkAsPersistent);
+            this._markAsPersistentMenuItem = new MenuItem(Resource.MenuPersistent, this.MarkAsPersistent, Shortcut.CtrlS);
             contextMenu.MenuItems.Add(this._markAsPersistentMenuItem);
             
             var formats = this._dataObject.GetFormats();
@@ -87,9 +87,9 @@ namespace ClipboardViewerForm.ClipMenu
                     new KeyboardEmulator().TypeText(this._originBuferText);
                 }));
 
-                this._returnTextToInitialMenuItem = new MenuItem(Resource.MenuReturn, ReturnTextToInitial) { Enabled = false };
+                this._returnTextToInitialMenuItem = new MenuItem(Resource.MenuReturn, this._ReturnTextToInitial, Shortcut.CtrlI) { Enabled = false };
                 contextMenu.MenuItems.Add(_returnTextToInitialMenuItem);
-                contextMenu.MenuItems.Add(new MenuItem(Resource.MenuChange, this.ChangeText));
+                contextMenu.MenuItems.Add(new MenuItem(Resource.MenuChange, this._ChangeText, Shortcut.CtrlH));
 
                 this._addToFileMenuItem = new MenuItem(Resource.MenuAddToFile, (object sender, EventArgs args) =>
                 {
@@ -102,7 +102,7 @@ namespace ClipboardViewerForm.ClipMenu
                 }, Shortcut.CtrlF);
                 contextMenu.MenuItems.Add(this._addToFileMenuItem);
 
-                this._createLoginDataMenuItem = new MenuItem(Resource.MenuCreds, this._CreateLoginCredentials);
+                this._createLoginDataMenuItem = new MenuItem(Resource.MenuCreds, this._CreateLoginCredentials, Shortcut.CtrlL);
                 contextMenu.MenuItems.Add(this._createLoginDataMenuItem);
             }
 
@@ -130,13 +130,13 @@ namespace ClipboardViewerForm.ClipMenu
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                MessageBox.Show(Resource.EmptyPasswordError);
+                MessageBox.Show(Resource.EmptyPasswordError, Resource.CreateCredsTitle);
             } else
             {
                 this._createLoginDataMenuItem.Text = Resource.LoginCreds;
                 this._pasteMenuItem.Text = Resource.LoginWith + $" {new String('\t', 2)} Enter";
                 this._dataObject.SetData(ClipboardFormats.PASSWORD_FORMAT, password);
-                this.TryChangeText(Resource.CredsPrefix + $" {this._button.Text}");
+                this._TryChangeText(Resource.CredsPrefix + $" {this._button.Text}");
 
                 this._button.Click -= this._buferSelectionHandler.DoOnClipSelection;
                 this._button.Click += (object pasteCredsSender, EventArgs args) =>
@@ -175,16 +175,16 @@ namespace ClipboardViewerForm.ClipMenu
             }
         }
 
-        private void ChangeText(object sender, EventArgs e)
+        private void _ChangeText(object sender, EventArgs e)
         {
             var newText = Interaction.InputBox(Resource.ChangeTextPrefix + $" \"{this._originBuferText}\". " + Resource.ChangeTextPostfix,
                    Resource.ChangeTextTitle,
                    this._button.Text);
 
-            this.TryChangeText(newText);
+            this._TryChangeText(newText);
         }
 
-        private void TryChangeText(string newText)
+        private void _TryChangeText(string newText)
         {
             if (!string.IsNullOrWhiteSpace(newText) && newText != this._button.Text)
             {
@@ -195,7 +195,7 @@ namespace ClipboardViewerForm.ClipMenu
                 if (isOriginText)
                 {
                     this._button.Font = new Font(this._button.Font, FontStyle.Regular);
-                    MessageBox.Show(Resource.BuferAliasReturned);
+                    MessageBox.Show(Resource.BuferAliasReturned, Resource.ChangeTextTitle);
 
                 }
                 else
@@ -208,9 +208,9 @@ namespace ClipboardViewerForm.ClipMenu
             }
         }
 
-        private void ReturnTextToInitial(object sender, EventArgs e)
+        private void _ReturnTextToInitial(object sender, EventArgs e)
         {
-            this.TryChangeText(this._originBuferText);
+            this._TryChangeText(this._originBuferText);
         }
     }
 }

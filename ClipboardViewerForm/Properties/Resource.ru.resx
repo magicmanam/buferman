@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BuferAliasReturned" xml:space="preserve">
-    <value>Буфер был вернут к первоначальному виду</value>
+    <value>Буфер вернут к первоначальному виду</value>
   </data>
   <data name="ChangeTextPostfix" xml:space="preserve">
     <value>Если вам нужно сохранить имя/пароль, используйте меню 'Создать логин'.</value>
@@ -127,7 +127,7 @@
     <value>Введите новое значение для лэйблы этого буфера. К примеру если был скопирован пароль или какие-то данные, которые трудно отличить от других. Первичное значение буфера было</value>
   </data>
   <data name="ChangeTextTitle" xml:space="preserve">
-    <value>Изменение лэйблы буфера</value>
+    <value>Изменение названия буфера</value>
   </data>
   <data name="CreateCredsPostfix" xml:space="preserve">
     <value>TAB будет вставлен после логина и перед паролем. После этого будет нажата клавиша Enter.</value>
@@ -148,7 +148,7 @@
     <value>Ввести пароль и нажать Enter</value>
   </data>
   <data name="CredsPrefix" xml:space="preserve">
-    <value>Данные логина для</value>
+    <value>Логин для</value>
   </data>
   <data name="EmptyPasswordError" xml:space="preserve">
     <value>Пароль не может быть пустым.</value>
@@ -205,7 +205,7 @@
     <value>Удалить только временные буферы</value>
   </data>
   <data name="MenuEditDelText" xml:space="preserve">
-    <value>В программе сейчас есть постоянные буферы. Может вы хотели удалить только временные буферы? Либо удалятся все буферы.</value>
+    <value>В программе сейчас есть постоянные буферы. Если вы хотели удалить только временные буферы, нажмите 'Да'. 'Нет' - удалить все буферы, в том числе и постоянные.</value>
   </data>
   <data name="MenuEditDelTitle" xml:space="preserve">
     <value>Подтверждение удаления постоянных буферов</value>
@@ -284,5 +284,8 @@
   </data>
   <data name="LastClipboardUpdate" xml:space="preserve">
     <value>Последнее обновление буфера в </value>
+  </data>
+  <data name="WhiteSpaces" xml:space="preserve">
+    <value>пробел(а,ов)</value>
   </data>
 </root>
