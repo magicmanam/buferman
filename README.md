@@ -7,6 +7,9 @@ This tool helps you with managing Windows clipboard buffers: text, files, images
 ## Installation
 You can setup a program following [this link](http://bufer.somee.com/install/publish.htm).
 
+![web installation](https://github.com/magicmanam/buferman/blob/master/buferman-web-install.png)
+
+
 Portable version of program to be launched from USB-device can be downloaded [here](https://rink.hockeyapp.net/manage/apps/693832/app_versions/3).
 
 ## Usage
