@@ -132,7 +132,7 @@ namespace ClipboardViewerForm
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Text = PROGRAM_CAPTION;
-            this.Height = 832 + 3 + 1;//+ is divider height + divider margin
+            this.Height = 753 + 3 + 1;//+ is divider height + divider margin
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.KeyDown += this._onKeyDown;
             this.KeyPreview = true;

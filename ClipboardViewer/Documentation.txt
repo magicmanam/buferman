@@ -46,8 +46,8 @@ Menu items - separate classes + factory
 - Improve Performance (try different tools)
 ******************* unsorted ****************
 FtpPrivateData - ftp format - other format support can added via plugins
-SkypeMessageFragment - with an icon
 Decrease margins between buttons
+Remove all MessageBox.Show from libs
 
 
 //MessageBox.Show("Feature is not supported now. Pay money to support.", "Keep calm and copy&paste!")

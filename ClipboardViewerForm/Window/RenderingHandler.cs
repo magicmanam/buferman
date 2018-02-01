@@ -20,7 +20,7 @@ namespace ClipboardViewerForm.Window
         private readonly IProgramSettings _settings;
         private readonly IList<IBuferPresentation> _buferPresentations = new List<IBuferPresentation>() { new SkypeBuferPresentation() };
 
-        private const int BUTTON_HEIGHT = 25;
+        private const int BUTTON_HEIGHT = 23;
 
         public RenderingHandler(Form form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IDictionary<IDataObject, Button> buttonsMap, IProgramSettings settings)
         {
@@ -46,7 +46,7 @@ namespace ClipboardViewerForm.Window
                 this._DrawButtonsForBufers(temporaryClips, temporaryClips.Count * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryClips.Count - 1);
             }
 
-            this._persistentClipsDivider.Location = new Point(0, temporaryClips.Count * BUTTON_HEIGHT);
+            this._persistentClipsDivider.Location = new Point(0, temporaryClips.Count * BUTTON_HEIGHT + 1);
 
             if (persistentClips.Any())
             {
