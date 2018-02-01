@@ -1,4 +1,5 @@
 ﻿using ClipboardBufer;
+using ClipboardViewerForm.ClipMenu.Items;
 using ClipboardViewerForm.Menu;
 using ClipboardViewerForm.Properties;
 using Microsoft.VisualBasic;
@@ -69,9 +70,9 @@ namespace ClipboardViewerForm.ClipMenu
             }
 
             formatsMenu.Text = Resource.MenuFormats + $" ({formatsCount})";
-
+            
             contextMenu.MenuItems.Add(formatsMenu);
-            contextMenu.MenuItems.Add(new MenuItem(Resource.MenuDelete, this.DeleteBufer, Shortcut.Del));
+            contextMenu.MenuItems.Add(new DeleteClipMenuItem(this._clipboardBuferService, dataObject, button));
 
             this._pasteMenuItem = new MenuItem(Resource.MenuPaste + $" {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
             {
@@ -107,12 +108,6 @@ namespace ClipboardViewerForm.ClipMenu
             }
 
             return contextMenu;
-        }
-
-        private void DeleteBufer(object sender, EventArgs e)
-        {
-            this._clipboardBuferService.RemoveClip(this._dataObject);
-            WindowLevelContext.Current.RerenderBufers();
         }
 
         private void MarkAsPersistent(object sender, EventArgs e)

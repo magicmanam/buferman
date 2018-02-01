@@ -6,17 +6,12 @@ Done -
 By DD/01/2018
 ***
 
-Done - Menu items hot keys added
-Done - Russian localization was added
-Done - Program version was added to About info
-Done - Help menu added: Report an issue, Donate, About items
-Done - Update default bufers file
 
 Menu items - separate classes + factory
-By 29/01/2018
 
 # RC Tested by 1 February 2018
 - Add icon into a tray ? "Alt + C to launch" hint
+- After bufer's change its TAB-tooltip should be changed as well
 
 # RCN (almost sorted)
 - все атомарные операции сервиса обернуть в undoablecontext вложенные
@@ -50,6 +45,11 @@ By 29/01/2018
 - Make plugins for preview tooltips with settings
 - Improve Performance (try different tools)
 ******************* unsorted ****************
+FtpPrivateData - ftp format - other format support can added via plugins
+SkypeMessageFragment - with an icon
+Decrease margins between buttons
+
+
 //MessageBox.Show("Feature is not supported now. Pay money to support.", "Keep calm and copy&paste!")
 //MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")
 

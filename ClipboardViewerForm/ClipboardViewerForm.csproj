@@ -55,6 +55,9 @@
     <Compile Include="BuferSelectionHandler.cs" />
     <Compile Include="ClipMenu\ClipMenuGenerator.cs" />
     <Compile Include="ClipMenu\IClipMenuGenerator.cs" />
+    <Compile Include="ClipMenu\Items\DeleteClipMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="CopyingToClipboardInterceptor.cs" />
     <Compile Include="DefaultWindowLevelContext.cs" />
     <Compile Include="IBuferSelectionHandler.cs" />
@@ -125,8 +128,6 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ClipMenu\Items\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
