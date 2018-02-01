@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace ClipboardViewerForm.ButtonPresentations
 {
-    public class SkypeBuferPresentation : IBuferPresentation
+    class SkypeBuferPresentation : IBuferPresentation
     {
         private static Image _skypeIcon;
 

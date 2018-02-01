@@ -58,8 +58,6 @@ namespace ClipboardViewerForm
                     var folder = Path.GetDirectoryName(files.First());
                     buferTextRepresentation += folder + " " + Environment.NewLine + Environment.NewLine;
                     buferTextRepresentation += string.Join(Environment.NewLine, files.Select(f => Path.GetFileName(f) + (File.GetAttributes(f).HasFlag(FileAttributes.Directory) ? Path.DirectorySeparatorChar.ToString() : string.Empty)).ToList());
-
-                    button.BackColor = Color.Khaki;
                 }
                 else
                 {

@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="BuferHandlersWrapper.cs" />
     <Compile Include="BuferSelectionHandler.cs" />
+    <Compile Include="ButtonPresentations\FileButtonPresentation.cs" />
     <Compile Include="ButtonPresentations\IBuferPresentation.cs" />
     <Compile Include="ButtonPresentations\SkypeButtonPresentation.cs" />
     <Compile Include="ClipMenu\ClipMenuGenerator.cs" />
@@ -132,6 +133,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="folder.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="skype.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

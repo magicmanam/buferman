@@ -18,7 +18,7 @@ namespace ClipboardViewerForm.Window
         private readonly Label _persistentClipsDivider;
         private readonly IClipboardWrapper _clipboardWrapper;
         private readonly IProgramSettings _settings;
-        private readonly IList<IBuferPresentation> _buferPresentations = new List<IBuferPresentation>() { new SkypeBuferPresentation() };
+        private readonly IList<IBuferPresentation> _buferPresentations = new List<IBuferPresentation>() { new SkypeBuferPresentation(), new FileButtonPresentation() };
 
         private const int BUTTON_HEIGHT = 23;
 
