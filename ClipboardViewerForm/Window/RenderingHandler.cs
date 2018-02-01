@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using ClipboardBufer;
 using ClipboardViewerForm.ClipMenu;
+using ClipboardViewerForm.ButtonPresentations;
 
 namespace ClipboardViewerForm.Window
 {
@@ -17,6 +18,7 @@ namespace ClipboardViewerForm.Window
         private readonly Label _persistentClipsDivider;
         private readonly IClipboardWrapper _clipboardWrapper;
         private readonly IProgramSettings _settings;
+        private readonly IList<IBuferPresentation> _buferPresentations = new List<IBuferPresentation>() { new SkypeBuferPresentation() };
 
         private const int BUTTON_HEIGHT = 25;
 
@@ -81,6 +83,8 @@ namespace ClipboardViewerForm.Window
                         var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._clipboardWrapper);
 
                         new BuferHandlersWrapper(this._clipboardBuferService, bufer, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler, this._settings), buferSelectionHandler);
+
+                        this._TryApplyPresentation(bufer, button);
                     }
 
                     button.TabIndex = currentButtonIndex;
@@ -89,6 +93,18 @@ namespace ClipboardViewerForm.Window
 
                 currentButtonIndex -= 1;
                 y -= BUTTON_HEIGHT;
+            }
+        }
+
+        private void _TryApplyPresentation(IDataObject dataObject, Button button)
+        {
+            foreach (var presentation in this._buferPresentations)
+            {
+                if (presentation.IsCompatibleWithBufer(dataObject))
+                {
+                    presentation.ApplyToButton(button);
+                    return;
+                }
             }
         }
 

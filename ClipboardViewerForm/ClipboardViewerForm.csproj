@@ -54,6 +54,8 @@
     </Compile>
     <Compile Include="BuferHandlersWrapper.cs" />
     <Compile Include="BuferSelectionHandler.cs" />
+    <Compile Include="ButtonPresentations\IBuferPresentation.cs" />
+    <Compile Include="ButtonPresentations\SkypeButtonPresentation.cs" />
     <Compile Include="ClipMenu\ClipMenuGenerator.cs" />
     <Compile Include="ClipMenu\IClipMenuGenerator.cs" />
     <Compile Include="ClipMenu\Items\DeleteClipMenuItem.cs">
@@ -129,6 +131,10 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="skype.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
