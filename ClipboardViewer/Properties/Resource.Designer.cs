@@ -9,6 +9,7 @@
 //------------------------------------------------------------------------------
 
 namespace ClipboardViewer.Properties {
+    using System;
     
     
     /// <summary>
