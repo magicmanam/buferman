@@ -34,3 +34,7 @@ Space  - the same as Enter key - paste selected bufer into an active window
 
 ## License
 GNU General Public License v3.0
+
+## Thanks
+Want to say thanks to the author of the icon I use in BuferMAN:
+https://www.iconsdb.com/royal-blue-icons/copy-icon.html 
