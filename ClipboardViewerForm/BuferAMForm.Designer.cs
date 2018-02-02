@@ -142,6 +142,17 @@ namespace ClipboardViewerForm
             this.CreateStatusBar();
             this.Activated += new WindowActivationHandler(this._clipboardBuferService, this).OnActivated;
             this.ShowInTaskbar = false;
+            this.CreateUserManualLabel();
+        }
+
+        private void CreateUserManualLabel()
+        {
+            var label = new Label() { ForeColor = Color.DarkGray, TabIndex = 1000, Height = 300, Width = 300 };
+            label.Text = Resource.UserManual;
+            label.Location = new Point(0, 500);
+            label.Padding = new Padding(10);
+
+            this.Controls.Add(label);
         }
 
         private void CreateStatusBar()

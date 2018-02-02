@@ -288,4 +288,18 @@
   <data name="WhiteSpaces" xml:space="preserve">
     <value>white spaces</value>
   </data>
+  <data name="UserManual" xml:space="preserve">
+    <value>Click bufer to paste it into active window
+Every bufer has a context menu
+
+
+Hot keys:
+  - Launch a program: Alt + C
+  - Go to the last bufer: V
+  - Go to the first bufer: X
+  - Tabify through 3 bufers: C
+  - Undo/Redo an action: Ctrl + Z, Ctrl + Y
+
+-&gt; Paste your nice copies!</value>
+  </data>
 </root>

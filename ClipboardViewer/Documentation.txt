@@ -46,7 +46,6 @@ Menu items - separate classes + factory
 - Improve Performance (try different tools)
 ******************* unsorted ****************
 FtpPrivateData - ftp format - other format support can added via plugins
-Decrease margins between buttons
 Remove all MessageBox.Show from libs
 
 
@@ -103,6 +102,8 @@ Settings:  //Minimalize settings to ease using
 
 *** Checked ***
 /*Check: . */
+/*Check: When there is no bufers, manual in light gray color is shown. */
+/*Check: Paste or load > 30 bufers. All bufers and persistent divider is visible. */
 /*Check: > 7 буферов в программе. При удалении первого, фокус остаётся на первом, при удалении 2-ого - на 2-ом. При удалении последнего - на последнем и с табуляцией с конца. Тоже самое для предпоследнего. */
 /*Check: В программе 2 текстовых буфера. Вставить в любое место второй буфер (они поменяются местами). А потом вставить в любое место второй буфер (тоже 2-о по счёту будет). После этого горячие клавиши X и V продолжат работать. */
 /*Check: Поставить русскую локаль и скопировать файл/файлы/скрин. << Text >> should russian. */

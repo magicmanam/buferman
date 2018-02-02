@@ -31,6 +31,7 @@ namespace ClipboardViewerForm.Window
             this._buttonWidth = this._form.ClientRectangle.Width;
             this._persistentClipsDivider = new Label() { Text = string.Empty, BorderStyle = BorderStyle.FixedSingle, AutoSize = false, Height = 3, BackColor = Color.AliceBlue, Width = this._buttonWidth };
             this._form.Controls.Add(this._persistentClipsDivider);
+            this._persistentClipsDivider.BringToFront();
             this._clipboardWrapper = clipboardWrapper;
             this._settings = settings;
         }
@@ -79,7 +80,7 @@ namespace ClipboardViewerForm.Window
 
                         this._buttonsMap.Add(bufer, button);
                         this._form.Controls.Add(button);
-
+                        button.BringToFront();
                         var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._clipboardWrapper);
 
                         new BuferHandlersWrapper(this._clipboardBuferService, bufer, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler, this._settings), buferSelectionHandler);

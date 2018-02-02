@@ -565,6 +565,26 @@ namespace ClipboardViewerForm.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Click bufer to paste it into active window
+        ///Every bufer has a context menu
+        ///
+        ///
+        ///Hot keys:
+        ///  - Launch a program: Alt + C
+        ///  - Go to the last bufer: V
+        ///  - Go to the first bufer: X
+        ///  - Tabify through 3 bufers: C
+        ///  - Undo/Redo an action: Ctrl + Z, Ctrl + Y
+        ///
+        ///-&gt; Paste your nice copies!.
+        /// </summary>
+        internal static string UserManual {
+            get {
+                return ResourceManager.GetString("UserManual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на white spaces.
         /// </summary>
         internal static string WhiteSpaces {
