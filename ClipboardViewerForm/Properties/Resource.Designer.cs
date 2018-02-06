@@ -570,9 +570,9 @@ namespace ClipboardViewerForm.Properties {
         ///
         ///
         ///Hot keys:
-        ///  - Launch a program: Alt + C
-        ///  - Go to the last bufer: V
+        ///  - Launch the program: Alt + C
         ///  - Go to the first bufer: X
+        ///  - Go to the last bufer: V
         ///  - Tabify through 3 bufers: C
         ///  - Undo/Redo an action: Ctrl + Z, Ctrl + Y
         ///

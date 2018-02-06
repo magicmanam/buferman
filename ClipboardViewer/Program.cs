@@ -8,6 +8,8 @@ using ClipboardViewerForm;
 using System.IO;
 using System.Threading.Tasks;
 using ClipboardViewer.Properties;
+using System.Security.Principal;
+using System.Diagnostics;
 
 namespace ClipboardViewer
 {
@@ -26,7 +28,19 @@ namespace ClipboardViewer
             {
                 if (isNew)
                 {
-					XmlConfigurator.Configure();//Note
+                    WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+                    if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
+                    {
+                        var result = MessageBox.Show(Resource.AdminModeConfirmation, Resource.AdminModeConfirmationTitle, MessageBoxButtons.OKCancel);
+                        if (result == DialogResult.Cancel)
+                        {
+                            string arguments = "/select, \"" + Application.ExecutablePath + "\"";
+                            Process.Start("explorer.exe", arguments).WaitForInputIdle();
+                            return;
+                        }
+                    }
+
+                    XmlConfigurator.Configure();//Note
 					Logger.Current = new Log4netLogger();
 					//Logger.Logger.Current = new ConsoleLogger();
 
@@ -61,7 +75,6 @@ namespace ClipboardViewer
                         form.SetStatusBarText(e.Action);
                     };
                     Application.Run(form);
-
 				}
 				else
 				{
