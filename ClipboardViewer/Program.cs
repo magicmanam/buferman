@@ -40,41 +40,7 @@ namespace ClipboardViewer
                         }
                     }
 
-                    XmlConfigurator.Configure();//Note
-					Logger.Current = new Log4netLogger();
-					//Logger.Logger.Current = new ConsoleLogger();
-
-					Application.ThreadException += Application_ThreadException;//Must be run before Application.Run() //Note
-
-                    Application.EnableVisualStyles();
-                    Application.SetCompatibleTextRenderingDefault(false);
-					var comparer = new DataObjectComparer(ClipboardFormats.StringFormats, ClipboardFormats.FileFormats);
-                    var clipboardService = new ClipboardBuferService(comparer);
-                    var settings = new ProgramSettings();
-                    var form = new BuferAMForm(clipboardService, comparer, new ClipboardWrapper(), settings);
-
-                    Task.Delay(777).ContinueWith(t =>
-                    {
-                        if (File.Exists(settings.DefaultBufersFileName))
-                        {
-                            var invoker = new _LoadBufersFromDefaultFileInvoker(form.LoadBufersFromFile);
-                            form.Invoke(invoker, settings.DefaultBufersFileName);
-                        }
-                    });
-
-                    clipboardService.UndoableAction += (object sender, UndoableActionEventArgs e) =>
-                    {
-                        form.SetStatusBarText(e.Action);
-                    };
-                    clipboardService.UndoAction += (object sender, UndoableActionEventArgs e) =>
-                    {
-                        form.SetStatusBarText(e.Action);
-                    };
-                    clipboardService.CancelUndoAction += (object sender, UndoableActionEventArgs e) =>
-                    {
-                        form.SetStatusBarText(e.Action);
-                    };
-                    Application.Run(form);
+                    Program._RunWindow();
 				}
 				else
 				{
@@ -83,7 +49,46 @@ namespace ClipboardViewer
             }
         }
 
-        private static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
+        private static void _RunWindow()
+        {
+            XmlConfigurator.Configure();//Note
+            Logger.Current = new Log4netLogger();
+            //Logger.Logger.Current = new ConsoleLogger();
+
+            Application.ThreadException += Program._Application_ThreadException;//Must be run before Application.Run() //Note
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            var comparer = new DataObjectComparer(ClipboardFormats.StringFormats, ClipboardFormats.FileFormats);
+            var clipboardService = new ClipboardBuferService(comparer);
+            var settings = new ProgramSettings();
+            var form = new BuferAMForm(clipboardService, comparer, new ClipboardWrapper(), settings);
+
+            Task.Delay(777).ContinueWith(t =>
+            {
+                if (File.Exists(settings.DefaultBufersFileName))
+                {
+                    var invoker = new _LoadBufersFromDefaultFileInvoker(form.LoadBufersFromFile);
+                    form.Invoke(invoker, settings.DefaultBufersFileName);
+                }
+            });
+
+            clipboardService.UndoableAction += (object sender, UndoableActionEventArgs e) =>
+            {
+                form.SetStatusBarText(e.Action);
+            };
+            clipboardService.UndoAction += (object sender, UndoableActionEventArgs e) =>
+            {
+                form.SetStatusBarText(e.Action);
+            };
+            clipboardService.CancelUndoAction += (object sender, UndoableActionEventArgs e) =>
+            {
+                form.SetStatusBarText(e.Action);
+            };
+            Application.Run(form);
+        }
+
+        private static void _Application_ThreadException(object sender, ThreadExceptionEventArgs e)
 		{
 			Logger.WriteError("Exception " + e.Exception.Message, e.Exception);
 		}

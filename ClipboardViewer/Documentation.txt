@@ -9,30 +9,31 @@ By DD/01/2018
 
 Menu items - separate classes + factory
 
-# RC Tested by 1 February 2018
-- Add icon into a tray ? "Alt + C to launch" hint
+# Release by 1 April 2018
 - After bufer's change its TAB-tooltip should be changed as well
+- Add icon into a tray with "Alt + C to launch" hint
+- Fix issue with unicode/not unicode symbols in button's title
+- If in load file characters in English and Russing languages, trash is shown for russian
+- Keyboard Emulator: ^ as : in russian keyboard
+- Add http://klopat.by link
 
-# RCN (almost sorted)
+# Ultimate version (almost sorted)
 - все атомарные операции сервиса обернуть в undoablecontext вложенные
 - многострочные буферы из файла + пароль + персистентность + alias - json format
 - добавить проверку буфера в файле и метки того, что буфер был взят из файла
 - Window with hot keys + menu with applications (scripts tool and others)
 - Подчистить проект: анализаторы, ссылки и т.д.
-- file encryption to hide sensitive data (to enter master key)
 - Complete presentation!
 - Undoable nuget package
 - Разобраться с лицензиями
 - On scroll to show current clipboard with possibility to click
 - MAX_STATUS_LENGTH = 55 as well as other magic numbers/strings
 - Refactor: add DI
-- Set WindowLevelContext at program level, not form level
+- Set WindowLevelContext at program level, not form level ?
 - Enable/disable 'Delete All' and 'Delete All Temporary' based on availability.
-- Different languages support
 - Add clips count into status bar (separate strip)
 - Read WinForms book!
 - Add drag an drop for temp/persistent bufers
-- Messages on start up
 - Add plugin support
 - Hosting at https://sourceforge.net and other market places.
 - Add menu with unknown file formats
@@ -47,12 +48,15 @@ Menu items - separate classes + factory
 ******************* unsorted ****************
 FtpPrivateData - ftp format - other format support can added via plugins
 Remove all MessageBox.Show from libs
+If program in classic mode and you foreground window is admin - show warning smwhere. If try to paste from user mode into admin mode - show alert window with reason and solution.
+Show status line on every action
+Automatic tests: create python git repo
 
 
 //MessageBox.Show("Feature is not supported now. Pay money to support.", "Keep calm and copy&paste!")
 //MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")
 
-Settings:  //Minimalize settings to ease using
+Settings:  //Minimalize settings for easy using
   - Bufer's width: 300 by default
   - Toolip duration (2500 by default)
   - Show tooltip when bufer gets focus (arrows keys or Tab). Set up time of tooltip
