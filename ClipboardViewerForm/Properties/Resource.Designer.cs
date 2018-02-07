@@ -277,7 +277,7 @@ namespace ClipboardViewerForm.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Change &amp;text.
+        ///   Ищет локализованную строку, похожую на Hide bufer &amp;text with alias.
         /// </summary>
         internal static string MenuChange {
             get {
@@ -466,7 +466,7 @@ namespace ClipboardViewerForm.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Hello my Friend! Thank you for interest to this program! It was created with love to help other people in their day-to-day activities. The most valuable gift for me will be your help for other people! There are many people who need your help and support around: people with disabilities, children without parents and so on... You can find any clarity organization or smthg similar and transfer there some funds - I will really appreciate your act! Thank you again and have a nice day!.
+        ///   Ищет локализованную строку, похожую на Hello my Friend! Thank you for interest to this program! It was created with love to help other people in their day-to-day activities. The most valuable gift for me will be your help for other people! There are many people who need your help and support around: people with disabilities, children without parents and so on... You can find any charity organization or smthg similar and transfer there some funds - I will really appreciate your act! Thank you again and have a nice day!.
         /// </summary>
         internal static string MenuHelpDonateText {
             get {

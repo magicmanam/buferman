@@ -19,12 +19,12 @@ namespace ClipboardViewerForm.ClipMenu
         private IDataObject _dataObject;
         private Button _button;
         private MenuItem _returnTextToInitialMenuItem;
+        private MenuItem _changeTextMenuItem;
         private MenuItem _markAsPersistentMenuItem;
         private MenuItem _createLoginDataMenuItem;
         private MenuItem _addToFileMenuItem;
         private MenuItem _pasteMenuItem;
         private String _originBuferText;
-        private string _tooltipText;
         private ToolTip _mouseOverTooltip;
 
         public ClipMenuGenerator(IClipboardBuferService clipboardBuferService, BuferSelectionHandler buferSelectionHandler, IProgramSettings settings)
@@ -34,17 +34,16 @@ namespace ClipboardViewerForm.ClipMenu
             this._settings = settings;
         }
 
-        public ContextMenu GenerateContextMenu(IDataObject dataObject, Button button, String originBuferText, string tooltipText, ToolTip mouseOverTooltip, bool isChangeTextAvailable)
+        public ContextMenu GenerateContextMenu(IDataObject dataObject, Button button, String originBuferText, ToolTip mouseOverTooltip, bool isChangeTextAvailable)
         {
             this._dataObject = dataObject;
             this._button = button;
             this._originBuferText = originBuferText;
-            this._tooltipText = tooltipText;
             this._mouseOverTooltip = mouseOverTooltip;
 
             var contextMenu = new ContextMenu();
 
-            this._markAsPersistentMenuItem = new MenuItem(Resource.MenuPersistent, this.MarkAsPersistent, Shortcut.CtrlS);
+            this._markAsPersistentMenuItem = new MenuItem(Resource.MenuPersistent, this._MarkAsPersistent, Shortcut.CtrlS);
             contextMenu.MenuItems.Add(this._markAsPersistentMenuItem);
             
             var formats = this._dataObject.GetFormats();
@@ -87,10 +86,13 @@ namespace ClipboardViewerForm.ClipMenu
                     WindowLevelContext.Current.HideWindow();
                     new KeyboardEmulator().TypeText(this._originBuferText);
                 }));
-
-                this._returnTextToInitialMenuItem = new MenuItem(Resource.MenuReturn, this._ReturnTextToInitial, Shortcut.CtrlI) { Enabled = false };
-                contextMenu.MenuItems.Add(_returnTextToInitialMenuItem);
-                contextMenu.MenuItems.Add(new MenuItem(Resource.MenuChange, this._ChangeText, Shortcut.CtrlH));
+                
+                this._returnTextToInitialMenuItem = new ReturnToInitialTextMenuItem(this._button, this._originBuferText, this._mouseOverTooltip);
+                contextMenu.MenuItems.Add(this._returnTextToInitialMenuItem);
+                var changeTextMenuItem = new ChangeTextMenuItem(this._button, this._originBuferText, this._mouseOverTooltip);
+                changeTextMenuItem.TextChanged += this._ChangeTextMenuItem_TextChanged;
+                this._changeTextMenuItem = changeTextMenuItem;
+                contextMenu.MenuItems.Add(this._changeTextMenuItem);
 
                 this._addToFileMenuItem = new MenuItem(Resource.MenuAddToFile, (object sender, EventArgs args) =>
                 {
@@ -103,109 +105,36 @@ namespace ClipboardViewerForm.ClipMenu
                 }, Shortcut.CtrlF);
                 contextMenu.MenuItems.Add(this._addToFileMenuItem);
 
-                this._createLoginDataMenuItem = new MenuItem(Resource.MenuCreds, this._CreateLoginCredentials, Shortcut.CtrlL);
+                var loginCredentialsMenuItem = new CreateLoginCredentialsMenuItem(this._button, this._originBuferText, this._mouseOverTooltip);
+                loginCredentialsMenuItem.LoginCreated += this._LoginCredentialsMenuItem_LoginCreated;
+                this._createLoginDataMenuItem = loginCredentialsMenuItem;
                 contextMenu.MenuItems.Add(this._createLoginDataMenuItem);
             }
 
             return contextMenu;
         }
 
-        private void MarkAsPersistent(object sender, EventArgs e)
+        private void _LoginCredentialsMenuItem_LoginCreated(object sender, CreateLoginCredentialsEventArgs e)
+        {
+            this._pasteMenuItem.Text = Resource.LoginWith + $" {new String('\t', 2)} Enter";
+
+            this._returnTextToInitialMenuItem.Enabled = false;
+            this._changeTextMenuItem.Enabled = false;
+            this._dataObject.SetData(ClipboardFormats.PASSWORD_FORMAT, e.Password);
+            this._MarkAsPersistent(sender, e);
+            this._button.Click -= this._buferSelectionHandler.DoOnClipSelection;
+        }
+
+        private void _ChangeTextMenuItem_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            this._returnTextToInitialMenuItem.Enabled = !e.IsOriginText;
+        }
+
+        private void _MarkAsPersistent(object sender, EventArgs e)
         {
             this._clipboardBuferService.MarkClipAsPersistent(this._dataObject);
             this._markAsPersistentMenuItem.Enabled = false;
             WindowLevelContext.Current.RerenderBufers();
-        }
-
-        private void _CreateLoginCredentials(object sender, EventArgs e)
-        {
-            var password = Interaction.InputBox(Resource.CreateCredsPrefix + $" \"{this._originBuferText}\". " + Resource.CreateCredsPostfix,
-                  Resource.CreateCredsTitle,
-                   null);
-
-            if (string.IsNullOrWhiteSpace(password))
-            {
-                MessageBox.Show(Resource.EmptyPasswordError, Resource.CreateCredsTitle);
-            } else
-            {
-                this._createLoginDataMenuItem.Text = Resource.LoginCreds;
-                this._pasteMenuItem.Text = Resource.LoginWith + $" {new String('\t', 2)} Enter";
-                this._dataObject.SetData(ClipboardFormats.PASSWORD_FORMAT, password);
-                this._TryChangeText(Resource.CredsPrefix + $" {this._button.Text}");
-
-                this._button.Click -= this._buferSelectionHandler.DoOnClipSelection;
-                this._button.Click += (object pasteCredsSender, EventArgs args) =>
-                {
-                    WindowLevelContext.Current.HideWindow();
-
-                    new KeyboardEmulator()
-                        .TypeText(this._originBuferText)
-                        .PressTab()
-                        .TypeText(password)
-                        .PressEnter();
-                };
-
-                this._createLoginDataMenuItem.MenuItems.Add(new MenuItem(Resource.CredsPasswordEnter, (object pastePasswordSender, EventArgs args) =>
-                {
-                    WindowLevelContext.Current.HideWindow();
-                    new KeyboardEmulator()
-                        .TypeText(password)
-                        .PressEnter();
-                }));
-                this._createLoginDataMenuItem.MenuItems.Add(new MenuItem(Resource.CredsPassword, (object pastePasswordSender, EventArgs args) =>
-                {
-                    WindowLevelContext.Current.HideWindow();
-
-                    new KeyboardEmulator()
-                        .TypeText(password);
-                }));
-                this._createLoginDataMenuItem.MenuItems.Add(new MenuItem(Resource.CredsName, (object pasteUsernameSender, EventArgs args) =>
-                {
-                    WindowLevelContext.Current.HideWindow();
-
-                    new KeyboardEmulator()
-                        .TypeText(this._originBuferText);
-                }));
-                MarkAsPersistent(sender, e);
-            }
-        }
-
-        private void _ChangeText(object sender, EventArgs e)
-        {
-            var newText = Interaction.InputBox(Resource.ChangeTextPrefix + $" \"{this._originBuferText}\". " + Resource.ChangeTextPostfix,
-                   Resource.ChangeTextTitle,
-                   this._button.Text);
-
-            this._TryChangeText(newText);
-        }
-
-        private void _TryChangeText(string newText)
-        {
-            if (!string.IsNullOrWhiteSpace(newText) && newText != this._button.Text)
-            {
-                this._button.Text = newText;
-                this._tooltipText = newText;
-                bool isOriginText = newText == this._originBuferText;
-
-                if (isOriginText)
-                {
-                    this._button.Font = new Font(this._button.Font, FontStyle.Regular);
-                    MessageBox.Show(Resource.BuferAliasReturned, Resource.ChangeTextTitle);
-
-                }
-                else
-                {
-                    this._button.Font = new Font(this._button.Font, FontStyle.Bold);
-                }
-
-                this._returnTextToInitialMenuItem.Enabled = !isOriginText;
-                this._mouseOverTooltip.SetToolTip(this._button, newText);
-            }
-        }
-
-        private void _ReturnTextToInitial(object sender, EventArgs e)
-        {
-            this._TryChangeText(this._originBuferText);
         }
     }
 }

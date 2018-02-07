@@ -59,9 +59,23 @@
     <Compile Include="ButtonPresentations\SkypeButtonPresentation.cs" />
     <Compile Include="ClipMenu\ClipMenuGenerator.cs" />
     <Compile Include="ClipMenu\IClipMenuGenerator.cs" />
+    <Compile Include="ClipMenu\Items\ChangeTextMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ClipMenu\Items\ChangingTextMenuItemBase.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ClipMenu\Items\CreateLoginCredentialsEventArgs.cs" />
+    <Compile Include="ClipMenu\Items\CreateLoginCredentialsMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ClipMenu\Items\DeleteClipMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="ClipMenu\Items\ReturnToInitialTextMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ClipMenu\Items\TextChangedEventArgs.cs" />
     <Compile Include="CopyingToClipboardInterceptor.cs" />
     <Compile Include="DefaultWindowLevelContext.cs" />
     <Compile Include="IBuferSelectionHandler.cs" />

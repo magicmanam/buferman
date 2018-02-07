@@ -17,14 +17,12 @@ namespace ClipboardViewerForm.ClipMenu.Items
             this._clipboardBuferService = clipboardBuferService;
             this._dataObject = dataObject;
             this._button = button;
-
-
             this.Text = Resource.MenuDelete;
             this.Shortcut = Shortcut.Del;
-            this.Click += DeleteBufer;
+            this.Click += this._DeleteBufer;
         }
 
-        private void DeleteBufer(object sender, EventArgs e)
+        private void _DeleteBufer(object sender, EventArgs e)
         {
             var tabIndex = this._button.TabIndex;
             this._clipboardBuferService.RemoveClip(this._dataObject);
@@ -39,7 +37,8 @@ namespace ClipboardViewerForm.ClipMenu.Items
                 if (tabIndex < this._clipboardBuferService.ClipsCount - tabIndex)
                 {
                     new KeyboardEmulator().PressTab((uint)tabIndex);
-                } else
+                }
+                else
                 {
                     new KeyboardEmulator().HoldDownShift().PressTab((uint)(this._clipboardBuferService.ClipsCount - tabIndex));
                 }

@@ -10,7 +10,6 @@ By DD/01/2018
 Menu items - separate classes + factory
 
 # Release by 1 April 2018
-- After bufer's change its TAB-tooltip should be changed as well
 - Track that clipboard listener is not disposed
 - Fix issue with unicode/not unicode symbols in button's title
 - If in load file characters in English and Russing languages, trash is shown for russian
@@ -112,6 +111,7 @@ Settings:  //Minimalize settings for easy using
 
 *** Checked ***
 /*Check: . */
+/*Check: Update bufer alias. After that check tooltip on focus and on mouse over - it should be a new alias. */
 /*Check: When there is no bufers, manual in light gray color is shown. */
 /*Check: Paste or load > 30 bufers. All bufers and persistent divider is visible. */
 /*Check: > 7 буферов в программе. При удалении первого, фокус остаётся на первом, при удалении 2-ого - на 2-ом. При удалении последнего - на последнем и с табуляцией с конца. Тоже самое для предпоследнего. */

@@ -9,6 +9,6 @@ namespace ClipboardViewerForm.ClipMenu
 {
     interface IClipMenuGenerator
     {
-        ContextMenu GenerateContextMenu(IDataObject dataObject, Button button, String originBuferText, string tooltipText, ToolTip mouseOverTooltip, bool isChangeTextAvailable);
+        ContextMenu GenerateContextMenu(IDataObject dataObject, Button button, String originBuferText, ToolTip mouseOverTooltip, bool isChangeTextAvailable);
     }
 }

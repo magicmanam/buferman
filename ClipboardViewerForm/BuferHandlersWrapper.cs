@@ -17,7 +17,6 @@ namespace ClipboardViewerForm
         private readonly IBuferSelectionHandler _buferSelectionHandler;
         private readonly Button _button;
         private readonly ToolTip _focusTooltip = new ToolTip() { OwnerDraw = false };
-        private string _tooltipText;
         private const float IMAGE_SCALE = 0.75f;
 
         public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IDataObject dataObject, Button button, Form form, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler)
@@ -79,7 +78,7 @@ namespace ClipboardViewerForm
                 isChangeTextAvailable = false;
             }
 
-            this._tooltipText = buferTextRepresentation;
+            button.Tag = buferTextRepresentation;
             button.Text = buttonText.Trim();
 
             string originBuferText = button.Text;
@@ -107,7 +106,7 @@ namespace ClipboardViewerForm
 
             button.Click += this._buferSelectionHandler.DoOnClipSelection;
 
-            button.ContextMenu = clipMenuGenerator.GenerateContextMenu(this._dataObject, button, originBuferText, this._tooltipText, tooltip, isChangeTextAvailable);
+            button.ContextMenu = clipMenuGenerator.GenerateContextMenu(this._dataObject, button, originBuferText, tooltip, isChangeTextAvailable);
         }
 
         private void Tooltip_Draw(object sender, DrawToolTipEventArgs e)
@@ -142,7 +141,7 @@ namespace ClipboardViewerForm
 
         private void Bufer_GotFocus(object sender, EventArgs e)
         {
-            this._focusTooltip.Show(this._tooltipText, this._button, TOOLTIP_DURATION);
+            this._focusTooltip.Show(this._button.Tag as string, this._button, TOOLTIP_DURATION);
         }
 
         private void Bufer_LostFocus(object sender, EventArgs e)

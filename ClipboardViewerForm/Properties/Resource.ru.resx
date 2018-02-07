@@ -184,7 +184,7 @@
     <value>Добавить в файл с буферами по умолчанию</value>
   </data>
   <data name="MenuChange" xml:space="preserve">
-    <value>Изменить лэйбл буфера</value>
+    <value>Скрыть текст буфера новым лэйблом</value>
   </data>
   <data name="MenuCharByChar" xml:space="preserve">
     <value>Ввести текст посимвольно (в консоли и др.)</value>
