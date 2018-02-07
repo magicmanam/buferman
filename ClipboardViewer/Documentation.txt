@@ -11,11 +11,15 @@ Menu items - separate classes + factory
 
 # Release by 1 April 2018
 - After bufer's change its TAB-tooltip should be changed as well
-- Add icon into a tray with "Alt + C to launch" hint
+- Track that clipboard listener is not disposed
 - Fix issue with unicode/not unicode symbols in button's title
 - If in load file characters in English and Russing languages, trash is shown for russian
 - Keyboard Emulator: ^ as : in russian keyboard
-- Add http://klopat.by link
+- Add http://klopat.by link with cross reference.
+- Add icon into a tray with "Alt + C to launch" hint
+- Program launched in not admin mode. You can not paste bufers into windows launched in admin mode - to hints
+- Save deleted bufers in memory
+- If link in bufer - open in browser if Shift pressed (or other key)
 
 # Ultimate version (almost sorted)
 - все атомарные операции сервиса обернуть в undoablecontext вложенные
@@ -46,6 +50,8 @@ Menu items - separate classes + factory
 - Make plugins for preview tooltips with settings
 - Improve Performance (try different tools)
 ******************* unsorted ****************
+Lingvo: Ctrl-C + C
+Alt-C + P - Opens Paint + other shortcuts
 FtpPrivateData - ftp format - other format support can added via plugins
 Remove all MessageBox.Show from libs
 If program in classic mode and you foreground window is admin - show warning smwhere. If try to paste from user mode into admin mode - show alert window with reason and solution.
