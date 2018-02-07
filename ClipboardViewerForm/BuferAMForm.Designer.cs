@@ -9,6 +9,7 @@ using ClipboardViewerForm.Menu;
 using ClipboardViewerForm.Window;
 using ClipboardBufer;
 using ClipboardViewerForm.Properties;
+using System.Security.Principal;
 
 namespace ClipboardViewerForm
 {
@@ -149,7 +150,13 @@ namespace ClipboardViewerForm
         {
             var label = new Label() { ForeColor = Color.DarkGray, TabIndex = 1000, Height = 300, Width = 300 };
             label.Text = Resource.UserManual;
-            label.Location = new Point(0, 500);
+            WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+            if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
+            {
+                label.Text = Resource.NotAdminWarning + Resource.UserManual;
+            }
+
+            label.Location = new Point(0, 430);
             label.Padding = new Padding(10);
 
             this.Controls.Add(label);

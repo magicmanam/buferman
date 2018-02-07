@@ -547,6 +547,17 @@ namespace ClipboardViewerForm.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Program is launched in not administrator mode. You can not paste bufers into windows launched in admin mode!
+        ///
+        ///.
+        /// </summary>
+        internal static string NotAdminWarning {
+            get {
+                return ResourceManager.GetString("NotAdminWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Not a text.
         /// </summary>
         internal static string NotTextBufer {

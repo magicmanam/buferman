@@ -16,11 +16,10 @@ Menu items - separate classes + factory
 - Keyboard Emulator: ^ as : in russian keyboard
 - Add http://klopat.by link with cross reference.
 - Add icon into a tray with "Alt + C to launch" hint
-- Program launched in not admin mode. You can not paste bufers into windows launched in admin mode - to hints
-- Save deleted bufers in memory
 - If link in bufer - open in browser if Shift pressed (or other key)
 
 # Ultimate version (almost sorted)
+- Save deleted bufers in memory
 - все атомарные операции сервиса обернуть в undoablecontext вложенные
 - многострочные буферы из файла + пароль + персистентность + alias - json format
 - добавить проверку буфера в файле и метки того, что буфер был взят из файла
