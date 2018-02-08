@@ -61,7 +61,7 @@ namespace ClipboardViewer.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Program is being launched in standard mode. For correct work with programs launched in Admin mode, you need to launch the program in Admin mode as well (select &quot;Run As Administrator&quot; from context menu). Click OK to continue in standard mode or Cancel to open file explorer with program file selected, which you need to run as Administrator.
+        ///   Ищет локализованную строку, похожую на For correct work with programs launched in Admin mode, you need to launch the program in the same mode (&quot;Run as administrator&quot; in context menu). Click OK to continue in user mode or Cancel to run as administrator (file explorer with program selected will be opened).
         /// </summary>
         internal static string AdminModeConfirmation {
             get {
@@ -70,7 +70,7 @@ namespace ClipboardViewer.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Launch as usual user.
+        ///   Ищет локализованную строку, похожую на User mode startup.
         /// </summary>
         internal static string AdminModeConfirmationTitle {
             get {

@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AdminModeConfirmation" xml:space="preserve">
-    <value>Program is being launched in standard mode. For correct work with programs launched in Admin mode, you need to launch the program in Admin mode as well (select "Run As Administrator" from context menu). Click OK to continue in standard mode or Cancel to open file explorer with program file selected, which you need to run as Administrator</value>
+    <value>For correct work with programs launched in Admin mode, you need to launch the program in the same mode ("Run as administrator" in context menu). Click OK to continue in user mode or Cancel to run as administrator (file explorer with program selected will be opened)</value>
   </data>
   <data name="AdminModeConfirmationTitle" xml:space="preserve">
-    <value>Launch as usual user</value>
+    <value>User mode startup</value>
   </data>
   <data name="ProgramLaunched" xml:space="preserve">
     <value>Program is already run. Press Alt + C to view current bufers.</value>

@@ -16,6 +16,9 @@ Menu items - separate classes + factory
 - Keyboard Emulator: ^ as : in russian keyboard
 - Add http://klopat.by link with cross reference.
 - If link in bufer - open in browser if Shift pressed (or other key)
+- Change text - Tab -> Shift Tab
+- 2 Ballons on start
+- Change alert message boxes on NotifyIcon
 
 # Ultimate version (almost sorted)
 - Save deleted bufers in memory
