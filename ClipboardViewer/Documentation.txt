@@ -15,7 +15,6 @@ Menu items - separate classes + factory
 - If in load file characters in English and Russing languages, trash is shown for russian
 - Keyboard Emulator: ^ as : in russian keyboard
 - Add http://klopat.by link with cross reference.
-- Add icon into a tray with "Alt + C to launch" hint
 - If link in bufer - open in browser if Shift pressed (or other key)
 
 # Ultimate version (almost sorted)
@@ -107,6 +106,7 @@ Settings:  //Minimalize settings for easy using
 Программа позволяет сохранять постоянные буферы (через пункт контекстного меню "Mark as persistent"), они не будут перезаписываться и всегда будут находиться внизу списка.
 По нажатию на 'x' выделится первый буфер, а по нажатию на 'v' - последний.
 Постоянные клипы отделены от временных горизонтальной полоской.
+Для программы имеется иконка в трэе.
 
 *** Checked ***
 /*Check: . */

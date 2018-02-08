@@ -24,6 +24,7 @@ namespace ClipboardViewerForm
         private readonly IDictionary<IDataObject, Button> _buttonsMap;
         private IntPtr _nextViewer;
         public const int MAX_BUFERS_COUNT = 30;
+        private NotifyIcon TrayIcon;
 
         internal StatusStrip StatusLine { get; set; }
         public ToolStripStatusLabel StatusLabel { get; set; }
@@ -132,7 +133,7 @@ namespace ClipboardViewerForm
         {
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = PROGRAM_CAPTION;
+            this.Text = BuferAMForm.PROGRAM_CAPTION;
             this.Height = 753 + 3 + 1;//+ is divider height + divider margin
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.KeyDown += this._onKeyDown;
@@ -144,6 +145,19 @@ namespace ClipboardViewerForm
             this.Activated += new WindowActivationHandler(this._clipboardBuferService, this).OnActivated;
             this.ShowInTaskbar = false;
             this.CreateUserManualLabel();
+            this.TrayIcon = new NotifyIcon() { Text = BuferAMForm.PROGRAM_CAPTION + ": Alt+C to open or double click", Icon = new Icon("copy-multi-size.ico") };
+            this.TrayIcon.DoubleClick += this._TrayIcon_DoubleClick;
+            this.TrayIcon.Visible = true;
+
+            this.TrayIcon.BalloonTipIcon = ToolTipIcon.Info;
+            this.TrayIcon.BalloonTipTitle = BuferAMForm.PROGRAM_CAPTION;
+            this.TrayIcon.BalloonTipText = "Program started. Use Alt + C to open";
+            this.TrayIcon.ShowBalloonTip(1500);
+        }
+
+        private void _TrayIcon_DoubleClick(object sender, EventArgs e)
+        {
+            this.Activate();
         }
 
         private void CreateUserManualLabel()
