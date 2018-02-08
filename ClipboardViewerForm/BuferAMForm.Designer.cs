@@ -168,7 +168,8 @@ namespace ClipboardViewerForm
         {
             this.TrayIcon = new NotifyIcon() { Text = Resource.NotifyIconStartupText, Icon = new Icon("copy-multi-size.ico") };
             this.TrayIcon.DoubleClick += this._TrayIcon_DoubleClick;
-
+            this.TrayIcon.ContextMenu = new ContextMenu();
+            this.TrayIcon.ContextMenu.MenuItems.Add(new MenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => WindowsFunctions.SendMessage(WindowLevelContext.Current.WindowHandle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero)));
             this.TrayIcon.Visible = true;
             this._ShowTrayIconInfo(1500, Resource.NotifyIconStartupText);
         }
