@@ -175,7 +175,7 @@
     <value>Данные для логина</value>
   </data>
   <data name="LoginWith" xml:space="preserve">
-    <value>Зайти как</value>
+    <value>Войти как</value>
   </data>
   <data name="MenuAddedToFile" xml:space="preserve">
     <value>Добавлен в файл с буферами</value>

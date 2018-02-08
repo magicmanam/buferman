@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Windows;
 
 namespace ClipboardViewerForm.ClipMenu.Items
 {
@@ -26,6 +27,8 @@ namespace ClipboardViewerForm.ClipMenu.Items
             {
                 this.Button.Text = newText;
                 this.Button.Tag = newText;
+                ChangingTextMenuItemBase._UpdateFocusTooltip();
+
                 bool isOriginText = newText == this.OriginBuferText;
 
                 if (isOriginText)
@@ -41,6 +44,11 @@ namespace ClipboardViewerForm.ClipMenu.Items
                 this.TextChanged?.Invoke(this, new TextChangedEventArgs(isOriginText));
                 this.MouseOverTooltip.SetToolTip(this.Button, newText);
             }
+        }
+
+        private static void _UpdateFocusTooltip()
+        {
+            new KeyboardEmulator().PressTab().HoldDownShift().PressTab();
         }
     }
 }
