@@ -16,7 +16,7 @@ namespace ClipboardViewerForm
     partial class BuferAMForm
     {
         private readonly IClipboardBuferService _clipboardBuferService;
-        public const string PROGRAM_CAPTION = "BuferMAN";
+        private long _copiesCount = 0;
         private readonly ICopyingToClipboardInterceptor _clipboardInterceptor;
         private readonly IMenuGenerator _menuGenerator;
         private readonly IEqualityComparer<IDataObject> _comparer;
@@ -78,7 +78,17 @@ namespace ClipboardViewerForm
 
             if (m.Msg == Messages.WM_DRAWCLIPBOARD)
             {
+                this._copiesCount++;
                 this._clipboardInterceptor.DoOnCtrlC();
+
+                if (this._copiesCount == 100)
+                {
+                    this._ShowTrayIconInfo(2500, Resource.NotifyIcon100Congrats);
+                }
+                else if (this._copiesCount == 1000)
+                {
+                    this._ShowTrayIconInfo(2500, Resource.NotifyIcon1000Congrats);
+                }
 
                 this.SetStatusBarText(Resource.LastClipboardUpdate + DateTime.Now.ToShortTimeString());//Should be in separate strip label
 
@@ -101,6 +111,7 @@ namespace ClipboardViewerForm
 
             if (m.Msg == Messages.WM_DESTROY)
             {
+                this.TrayIcon.Visible = false;
                 WindowsFunctions.ChangeClipboardChain(this.Handle, this._nextViewer);
                 WindowsFunctions.UnregisterHotKey(this.Handle, 0);
                 Application.Exit();//Note
@@ -121,6 +132,11 @@ namespace ClipboardViewerForm
             base.WndProc(ref m);
         }
 
+        private void _ShowTrayIconInfo(int delay, string text)
+        {
+            this.TrayIcon.ShowBalloonTip(delay, Resource.WindowTitle, text, ToolTipIcon.Info);
+        }
+
         public void SetStatusBarText(string newText)
         {
             //this.StatusLabel.ToolTipText = newText;
@@ -133,7 +149,7 @@ namespace ClipboardViewerForm
         {
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = BuferAMForm.PROGRAM_CAPTION;
+            this.Text = Resource.WindowTitle;
             this.Height = 753 + 3 + 1;//+ is divider height + divider margin
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.KeyDown += this._onKeyDown;
@@ -144,15 +160,17 @@ namespace ClipboardViewerForm
             this.CreateStatusBar();
             this.Activated += new WindowActivationHandler(this._clipboardBuferService, this).OnActivated;
             this.ShowInTaskbar = false;
-            this.CreateUserManualLabel();
-            this.TrayIcon = new NotifyIcon() { Text = BuferAMForm.PROGRAM_CAPTION + ": Alt+C to open or double click", Icon = new Icon("copy-multi-size.ico") };
-            this.TrayIcon.DoubleClick += this._TrayIcon_DoubleClick;
-            this.TrayIcon.Visible = true;
+            this._CreateUserManualLabel();
+            this._SetupTrayIcon();
+        }
 
-            this.TrayIcon.BalloonTipIcon = ToolTipIcon.Info;
-            this.TrayIcon.BalloonTipTitle = BuferAMForm.PROGRAM_CAPTION;
-            this.TrayIcon.BalloonTipText = "Program started. Use Alt + C to open";
-            this.TrayIcon.ShowBalloonTip(1500);
+        private void _SetupTrayIcon()
+        {
+            this.TrayIcon = new NotifyIcon() { Text = Resource.NotifyIconStartupText, Icon = new Icon("copy-multi-size.ico") };
+            this.TrayIcon.DoubleClick += this._TrayIcon_DoubleClick;
+
+            this.TrayIcon.Visible = true;
+            this._ShowTrayIconInfo(1500, Resource.NotifyIconStartupText);
         }
 
         private void _TrayIcon_DoubleClick(object sender, EventArgs e)
@@ -160,7 +178,7 @@ namespace ClipboardViewerForm
             this.Activate();
         }
 
-        private void CreateUserManualLabel()
+        private void _CreateUserManualLabel()
         {
             var label = new Label() { ForeColor = Color.DarkGray, TabIndex = 1000, Height = 300, Width = 300 };
             label.Text = Resource.UserManual;

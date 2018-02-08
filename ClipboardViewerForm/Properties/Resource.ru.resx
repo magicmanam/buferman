@@ -306,4 +306,13 @@
 
 </value>
   </data>
+  <data name="NotifyIcon1000Congrats" xml:space="preserve">
+    <value>Вы скопировали 1000 раз! Из вас получился отличный копипастер!</value>
+  </data>
+  <data name="NotifyIcon100Congrats" xml:space="preserve">
+    <value>Вы скопировали 100 раз! Поздравляем!</value>
+  </data>
+  <data name="NotifyIconStartupText" xml:space="preserve">
+    <value>BuferMAN: Alt+C чтобы открыть</value>
+  </data>
 </root>

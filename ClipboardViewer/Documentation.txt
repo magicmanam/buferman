@@ -57,7 +57,9 @@ Remove all MessageBox.Show from libs
 If program in classic mode and you foreground window is admin - show warning smwhere. If try to paste from user mode into admin mode - show alert window with reason and solution.
 Show status line on every action
 Automatic tests: create python git repo
-
+Alt + C can be overwritten in some programs (like Notepad++)
+There is a new bufers.txt file on every program update.
+Add program to autostart (there is a well-known problem with ClickOnce applications: it will have several programs at once)
 
 //MessageBox.Show("Feature is not supported now. Pay money to support.", "Keep calm and copy&paste!")
 //MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")
@@ -113,6 +115,9 @@ Settings:  //Minimalize settings for easy using
 
 *** Checked ***
 /*Check: . */
+/*Check: Скопировать 100 и 1000 раз. Нотификация в трее появится. */
+/*Check: При закрытии программы пиктограмм из трея исчезает. */
+/*Check: Если программа запущена, то показывается алерт с заголовком BuferMAN (берется из Product name сборки). */
 /*Check: Update bufer alias. After that check tooltip on focus and on mouse over - it should be a new alias. */
 /*Check: When there is no bufers, manual in light gray color is shown. */
 /*Check: Paste or load > 30 bufers. All bufers and persistent divider is visible. */

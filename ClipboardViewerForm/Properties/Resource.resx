@@ -307,4 +307,16 @@ Hot keys:
 
 </value>
   </data>
+  <data name="NotifyIcon1000Congrats" xml:space="preserve">
+    <value>You copied 1000 times! You are great copypaster ever!</value>
+  </data>
+  <data name="NotifyIcon100Congrats" xml:space="preserve">
+    <value>You copied 100 times! Congrats!</value>
+  </data>
+  <data name="NotifyIconStartupText" xml:space="preserve">
+    <value>BuferMAN: Alt+C to open</value>
+  </data>
+  <data name="WindowTitle" xml:space="preserve">
+    <value>BuferMAN</value>
+  </data>
 </root>

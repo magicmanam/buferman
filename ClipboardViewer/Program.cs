@@ -44,7 +44,7 @@ namespace ClipboardViewer
 				}
 				else
 				{
-					MessageBox.Show(Resource.ProgramLaunched, BuferAMForm.PROGRAM_CAPTION);
+					MessageBox.Show(Resource.ProgramLaunched, Application.ProductName);
 				}
             }
         }

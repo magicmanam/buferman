@@ -558,6 +558,33 @@ namespace ClipboardViewerForm.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на You copied 1000 times! You are great copypaster ever!.
+        /// </summary>
+        internal static string NotifyIcon1000Congrats {
+            get {
+                return ResourceManager.GetString("NotifyIcon1000Congrats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на You copied 100 times! Congrats!.
+        /// </summary>
+        internal static string NotifyIcon100Congrats {
+            get {
+                return ResourceManager.GetString("NotifyIcon100Congrats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на BuferMAN: Alt+C to open.
+        /// </summary>
+        internal static string NotifyIconStartupText {
+            get {
+                return ResourceManager.GetString("NotifyIconStartupText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Not a text.
         /// </summary>
         internal static string NotTextBufer {
@@ -601,6 +628,15 @@ namespace ClipboardViewerForm.Properties {
         internal static string WhiteSpaces {
             get {
                 return ResourceManager.GetString("WhiteSpaces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на BuferMAN.
+        /// </summary>
+        internal static string WindowTitle {
+            get {
+                return ResourceManager.GetString("WindowTitle", resourceCulture);
             }
         }
     }
