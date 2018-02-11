@@ -1,4 +1,5 @@
 ﻿using ClipboardBufer.Properties;
+using magicmanam.UndoableOperations;
 using System;
 using System.Collections.Generic;
 using System.Linq;

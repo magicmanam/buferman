@@ -6,16 +6,12 @@ Done -
 By DD/01/2018
 ***
 
-
-Menu items - separate classes
-
 # Release by 1 April 2018
 - Fix issue with unicode/not unicode symbols in button's title
 - If in load file characters in English and Russing languages, trash is shown for russian
 - Keyboard Emulator: ^ as : in russian keyboard
 - Add http://klopat.by link with cross reference.
 - If link in bufer - open in browser if Shift pressed (or other key)
-- Change alert message boxes on NotifyIcon
 
 # Ultimate version (almost sorted)
 - Save deleted bufers in memory
@@ -25,7 +21,6 @@ Menu items - separate classes
 - Window with hot keys + menu with applications (scripts tool and others)
 - Подчистить проект: анализаторы, ссылки и т.д.
 - Complete presentation!
-- Undoable nuget package
 - Разобраться с лицензиями
 - On scroll to show current clipboard with possibility to click
 - MAX_STATUS_LENGTH = 55 as well as other magic numbers/strings

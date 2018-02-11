@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using ClipboardViewer.Properties;
 using System.Security.Principal;
 using System.Diagnostics;
+using magicmanam.UndoableOperations;
 
 namespace ClipboardViewer
 {

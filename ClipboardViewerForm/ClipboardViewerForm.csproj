@@ -125,6 +125,10 @@
       <Project>{0deecdc2-cf30-4625-a465-671f851f937e}</Project>
       <Name>Logging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\magicmanam.UndoableOperations\magicmanam.UndoableOperations.csproj">
+      <Project>{2A0EA8A3-5E8C-411F-BF3D-B2D67AD5E956}</Project>
+      <Name>magicmanam.UndoableOperations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\magicmanam.Windows.ClipboardViewer\magicmanam.Windows.ClipboardViewer.csproj">
       <Project>{3dd7b207-5743-457f-a530-7669d0d2ced7}</Project>
       <Name>magicmanam.Windows.ClipboardViewer</Name>

@@ -8,6 +8,7 @@ using ClipboardViewerForm.Properties;
 using System.Deployment.Application;
 using System.Reflection;
 using BuferMAN.Menu.Help;
+using magicmanam.UndoableOperations;
 
 namespace ClipboardViewerForm.Menu
 {

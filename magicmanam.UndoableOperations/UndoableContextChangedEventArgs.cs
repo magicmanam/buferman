@@ -1,4 +1,4 @@
-﻿namespace ClipboardBufer
+﻿namespace magicmanam.UndoableOperations
 {
     public class UndoableContextChangedEventArgs
     {
