@@ -10,6 +10,7 @@ using ClipboardViewerForm.Window;
 using ClipboardBufer;
 using ClipboardViewerForm.Properties;
 using System.Security.Principal;
+using magicmanam.Windows.ClipboardViewer;
 
 namespace ClipboardViewerForm
 {
@@ -22,7 +23,7 @@ namespace ClipboardViewerForm
         private readonly IEqualityComparer<IDataObject> _comparer;
         private readonly ILoadingFileHandler _loadingFileHandler;
         private readonly IDictionary<IDataObject, Button> _buttonsMap;
-        private IntPtr _nextViewer;
+        private ClipboardViewer _clipboardViewer;
         public const int MAX_BUFERS_COUNT = 30;
         private NotifyIcon TrayIcon;
 
@@ -58,8 +59,7 @@ namespace ClipboardViewerForm
 
         private void _TrickTimer_Tick(object sender, EventArgs e)
         {
-            WindowsFunctions.ChangeClipboardChain(this.Handle, this._nextViewer);
-            this._nextViewer = WindowsFunctions.SetClipboardViewer(this.Handle);
+            this._clipboardViewer.RefreshViewer();
         }
 
         /// <summary>
@@ -89,8 +89,11 @@ namespace ClipboardViewerForm
         {
             if (m.Msg == Messages.WM_CREATE)
             {
-                this._nextViewer = WindowsFunctions.SetClipboardViewer(this.Handle);
+                this._clipboardViewer = new ClipboardViewer(this.Handle);
                 WindowsFunctions.RegisterHotKey(this.Handle, 0, 1, (int)Keys.C);
+            } else if(this._clipboardViewer != null)
+            {
+                this._clipboardViewer.HandleWindowsMessage(m.Msg, m.WParam, m.LParam);
             }
 
             if (m.Msg == Messages.WM_DRAWCLIPBOARD)
@@ -108,11 +111,6 @@ namespace ClipboardViewerForm
                 }
 
                 this.SetStatusBarText(Resource.LastClipboardUpdate + DateTime.Now.ToShortTimeString());//Should be in separate strip label
-
-                if (this._nextViewer != IntPtr.Zero)
-                {
-                    WindowsFunctions.SendMessage(this._nextViewer, m.Msg, IntPtr.Zero, IntPtr.Zero);
-                }
             }
 
             if (m.Msg == Messages.WM_HOTKEY)
@@ -129,21 +127,8 @@ namespace ClipboardViewerForm
             if (m.Msg == Messages.WM_DESTROY)
             {
                 this.TrayIcon.Visible = false;
-                WindowsFunctions.ChangeClipboardChain(this.Handle, this._nextViewer);
                 WindowsFunctions.UnregisterHotKey(this.Handle, 0);
                 Application.Exit();//Note
-            }
-
-            if (m.Msg == Messages.WM_CHANGECBCHAIN)
-            {
-                if (this._nextViewer == m.WParam)
-                {
-                    this._nextViewer = m.LParam;
-                }
-                else
-                {
-                    WindowsFunctions.SendMessage(this._nextViewer, m.Msg, m.WParam, m.LParam);
-                }
             }
 
             base.WndProc(ref m);
