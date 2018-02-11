@@ -43,6 +43,23 @@ namespace ClipboardViewerForm
             this.Menu = this._menuGenerator.GenerateMenu();
 
             WindowLevelContext.SetCurrent(new DefaultWindowLevelContext(this, clipboardBuferService, comparer, clipboardWrapper, this._buttonsMap, settings));
+
+            this._StartTrickTimer(23);
+        }
+
+        //TODO Find better solution
+        private void _StartTrickTimer(int intervalSeconds)
+        {
+            var trickTimer = new Timer();
+            trickTimer.Interval = intervalSeconds * 1000;
+            trickTimer.Tick += this._TrickTimer_Tick;
+            trickTimer.Start();
+        }
+
+        private void _TrickTimer_Tick(object sender, EventArgs e)
+        {
+            WindowsFunctions.ChangeClipboardChain(this.Handle, this._nextViewer);
+            this._nextViewer = WindowsFunctions.SetClipboardViewer(this.Handle);
         }
 
         /// <summary>

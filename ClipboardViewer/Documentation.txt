@@ -10,13 +10,11 @@ By DD/01/2018
 Menu items - separate classes
 
 # Release by 1 April 2018
-- Track that clipboard listener is not disposed
 - Fix issue with unicode/not unicode symbols in button's title
 - If in load file characters in English and Russing languages, trash is shown for russian
 - Keyboard Emulator: ^ as : in russian keyboard
 - Add http://klopat.by link with cross reference.
 - If link in bufer - open in browser if Shift pressed (or other key)
-- 1 bufer. Change text - old tooltip still shown
 - Change alert message boxes on NotifyIcon
 
 # Ultimate version (almost sorted)
