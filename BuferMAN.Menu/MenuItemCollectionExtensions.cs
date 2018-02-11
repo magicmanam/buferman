@@ -1,9 +1,9 @@
 ﻿using System;
 using static System.Windows.Forms.Menu;
 
-namespace ClipboardViewerForm.Menu
+namespace BuferMAN.Menu
 {
-    static class MenuItemCollectionExtensions
+    public static class MenuItemCollectionExtensions
     {
         public static void AddSeparator(this MenuItemCollection menuItems)
         {

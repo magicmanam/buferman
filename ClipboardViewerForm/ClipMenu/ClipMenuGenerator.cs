@@ -1,11 +1,9 @@
 ﻿using BuferMAN.ContextMenu;
+using BuferMAN.Menu;
 using ClipboardBufer;
 using ClipboardViewerForm.ClipMenu.Items;
-using ClipboardViewerForm.Menu;
 using ClipboardViewerForm.Properties;
-using Microsoft.VisualBasic;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using Windows;

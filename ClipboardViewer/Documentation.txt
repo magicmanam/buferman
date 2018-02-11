@@ -8,7 +8,7 @@ By DD/01/2018
 
 # Release by 1 April 2018
 - Fix issue with unicode/not unicode symbols in button's title
-- If in load file characters in English and Russing languages, trash is shown for russian
+- If in load file characters in English and Russian languages, trash is shown for russian
 - Keyboard Emulator: ^ as : in russian keyboard
 - Add http://klopat.by link with cross reference.
 - If link in bufer - open in browser if Shift pressed (or other key)
