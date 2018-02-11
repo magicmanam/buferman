@@ -59,12 +59,6 @@
     <Compile Include="ButtonPresentations\SkypeButtonPresentation.cs" />
     <Compile Include="ClipMenu\ClipMenuGenerator.cs" />
     <Compile Include="ClipMenu\IClipMenuGenerator.cs" />
-    <Compile Include="ClipMenu\Items\ChangeTextMenuItem.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ClipMenu\Items\ChangingTextMenuItemBase.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="ClipMenu\Items\CreateLoginCredentialsEventArgs.cs" />
     <Compile Include="ClipMenu\Items\CreateLoginCredentialsMenuItem.cs">
       <SubType>Component</SubType>
@@ -72,10 +66,6 @@
     <Compile Include="ClipMenu\Items\DeleteClipMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ClipMenu\Items\ReturnToInitialTextMenuItem.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ClipMenu\Items\TextChangedEventArgs.cs" />
     <Compile Include="CopyingToClipboardInterceptor.cs" />
     <Compile Include="DefaultWindowLevelContext.cs" />
     <Compile Include="IBuferSelectionHandler.cs" />
@@ -119,6 +109,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuferMAN.ContextMenu\BuferMAN.ContextMenu.csproj">
+      <Project>{4AB9774F-2BF8-4F4C-9653-610C5C76F8B3}</Project>
+      <Name>BuferMAN.ContextMenu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.Menu\BuferMAN.Menu.csproj">
+      <Project>{08184414-67EA-419E-B71B-B764F0F2E578}</Project>
+      <Name>BuferMAN.Menu</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ClipboardBufer\ClipboardBufer.csproj">
       <Project>{77a59517-cced-4778-8ce4-e106ef61b8d0}</Project>
       <Name>ClipboardBufer</Name>

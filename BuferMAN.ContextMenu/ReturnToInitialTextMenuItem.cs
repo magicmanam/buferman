@@ -1,14 +1,10 @@
-﻿using ClipboardViewerForm.Properties;
+﻿using BuferMAN.ContextMenu.Properties;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ClipboardViewerForm.ClipMenu.Items
+namespace BuferMAN.ContextMenu
 {
-    class ReturnToInitialTextMenuItem : ChangingTextMenuItemBase
+    public class ReturnToInitialTextMenuItem : ChangingTextMenuItemBase
     {
         public ReturnToInitialTextMenuItem(Button button, string originBuferText, ToolTip mouseOverTooltip) : base(button, originBuferText, mouseOverTooltip)
         {

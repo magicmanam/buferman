@@ -117,18 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BuferAliasReturned" xml:space="preserve">
-    <value>Bufer alias was returned to its primary value</value>
-  </data>
-  <data name="ChangeTextPostfix" xml:space="preserve">
-    <value>If you need save login/password pair, just use 'Create login credentials menu'.</value>
-  </data>
-  <data name="ChangeTextPrefix" xml:space="preserve">
-    <value>Enter a new text for this bufer. It can be useful to hide copied passwords or alias some enourmous text. Primary button value was</value>
-  </data>
-  <data name="ChangeTextTitle" xml:space="preserve">
-    <value>Change bufer's text</value>
-  </data>
   <data name="CreateCredsPostfix" xml:space="preserve">
     <value>TAB between username and password will be inserted automatically as well as Enter after password.</value>
   </data>
@@ -173,9 +161,6 @@
   </data>
   <data name="MenuAddToFile" xml:space="preserve">
     <value>Add to &amp;bufers.txt file</value>
-  </data>
-  <data name="MenuChange" xml:space="preserve">
-    <value>Hide bufer &amp;text with alias</value>
   </data>
   <data name="MenuCharByChar" xml:space="preserve">
     <value>Type &amp;char by char (for console)</value>
@@ -257,9 +242,6 @@
   </data>
   <data name="MenuPersistent" xml:space="preserve">
     <value>M&amp;ark as persistent</value>
-  </data>
-  <data name="MenuReturn" xml:space="preserve">
-    <value>&amp;Return text to initial</value>
   </data>
   <data name="FileBufer" xml:space="preserve">
     <value>File</value>

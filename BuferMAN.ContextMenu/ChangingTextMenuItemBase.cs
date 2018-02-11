@@ -1,12 +1,12 @@
-﻿using ClipboardViewerForm.Properties;
+﻿using BuferMAN.ContextMenu.Properties;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
 using Windows;
 
-namespace ClipboardViewerForm.ClipMenu.Items
+namespace BuferMAN.ContextMenu
 {
-    abstract class ChangingTextMenuItemBase: MenuItem
+    public abstract class ChangingTextMenuItemBase : MenuItem
     {
         protected string OriginBuferText { get; private set; }
         protected Button Button { get; private set; }

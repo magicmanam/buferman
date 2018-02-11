@@ -1,4 +1,5 @@
-﻿using ClipboardBufer;
+﻿using BuferMAN.ContextMenu;
+using ClipboardBufer;
 using ClipboardViewerForm.ClipMenu.Items;
 using ClipboardViewerForm.Menu;
 using ClipboardViewerForm.Properties;

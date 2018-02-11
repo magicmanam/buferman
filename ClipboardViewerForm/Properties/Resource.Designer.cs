@@ -70,42 +70,6 @@ namespace ClipboardViewerForm.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Bufer alias was returned to its primary value.
-        /// </summary>
-        internal static string BuferAliasReturned {
-            get {
-                return ResourceManager.GetString("BuferAliasReturned", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на If you need save login/password pair, just use &apos;Create login credentials menu&apos;..
-        /// </summary>
-        internal static string ChangeTextPostfix {
-            get {
-                return ResourceManager.GetString("ChangeTextPostfix", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Enter a new text for this bufer. It can be useful to hide copied passwords or alias some enourmous text. Primary button value was.
-        /// </summary>
-        internal static string ChangeTextPrefix {
-            get {
-                return ResourceManager.GetString("ChangeTextPrefix", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Change bufer&apos;s text.
-        /// </summary>
-        internal static string ChangeTextTitle {
-            get {
-                return ResourceManager.GetString("ChangeTextTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на TAB between username and password will be inserted automatically as well as Enter after password..
         /// </summary>
         internal static string CreateCredsPostfix {
@@ -273,15 +237,6 @@ namespace ClipboardViewerForm.Properties {
         internal static string MenuAddToFile {
             get {
                 return ResourceManager.GetString("MenuAddToFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Hide bufer &amp;text with alias.
-        /// </summary>
-        internal static string MenuChange {
-            get {
-                return ResourceManager.GetString("MenuChange", resourceCulture);
             }
         }
         
@@ -534,15 +489,6 @@ namespace ClipboardViewerForm.Properties {
         internal static string MenuPersistent {
             get {
                 return ResourceManager.GetString("MenuPersistent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на &amp;Return text to initial.
-        /// </summary>
-        internal static string MenuReturn {
-            get {
-                return ResourceManager.GetString("MenuReturn", resourceCulture);
             }
         }
         

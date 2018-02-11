@@ -117,18 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BuferAliasReturned" xml:space="preserve">
-    <value>Буфер вернут к первоначальному виду</value>
-  </data>
-  <data name="ChangeTextPostfix" xml:space="preserve">
-    <value>Если вам нужно сохранить имя/пароль, используйте меню 'Создать логин'.</value>
-  </data>
-  <data name="ChangeTextPrefix" xml:space="preserve">
-    <value>Введите новое значение для лэйблы этого буфера. К примеру если был скопирован пароль или какие-то данные, которые трудно отличить от других. Первичное значение буфера было</value>
-  </data>
-  <data name="ChangeTextTitle" xml:space="preserve">
-    <value>Изменение названия буфера</value>
-  </data>
   <data name="CreateCredsPostfix" xml:space="preserve">
     <value>TAB будет вставлен после логина и перед паролем. После этого будет нажата клавиша Enter.</value>
   </data>
@@ -182,9 +170,6 @@
   </data>
   <data name="MenuAddToFile" xml:space="preserve">
     <value>Добавить в файл с буферами по умолчанию</value>
-  </data>
-  <data name="MenuChange" xml:space="preserve">
-    <value>Скрыть текст буфера новым лэйблом</value>
   </data>
   <data name="MenuCharByChar" xml:space="preserve">
     <value>Ввести текст посимвольно (в консоли и др.)</value>
@@ -269,9 +254,6 @@
   </data>
   <data name="MenuPersistent" xml:space="preserve">
     <value>Сделать буфер постоянным</value>
-  </data>
-  <data name="MenuReturn" xml:space="preserve">
-    <value>Вернуть текст к первоначальному</value>
   </data>
   <data name="NotTextBufer" xml:space="preserve">
     <value>Странный буфер</value>

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using ClipboardViewerForm.Properties;
 using System.Deployment.Application;
 using System.Reflection;
+using BuferMAN.Menu.Help;
 
 namespace ClipboardViewerForm.Menu
 {
@@ -100,6 +101,7 @@ namespace ClipboardViewerForm.Menu
             helpMenu.MenuItems.Add(new MenuItem(Resource.MenuHelpSend, (object sender, EventArgs args) => Process.Start("https://rink.hockeyapp.net/apps/51633746a31f44999eca3bc7b7945e92/feedback/new")));
             helpMenu.MenuItems.Add(new MenuItem(Resource.MenuHelpStart, (object sender, EventArgs args) => MessageBox.Show(Resource.MenuHelpStartPrefix + $" {startTime}.", Resource.MenuHelpStartTitle)));
             helpMenu.MenuItems.Add(new MenuItem(Resource.MenuHelpDonate, (object sender, EventArgs args) => MessageBox.Show(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)));
+            helpMenu.MenuItems.Add(new DocumentationMenuItem());
             helpMenu.MenuItems.Add(new MenuItem(Resource.MenuHelpAbout, (object sender, EventArgs args) => {
                 var version = ApplicationDeployment.IsNetworkDeployed ? ApplicationDeployment.CurrentDeployment.CurrentVersion : Assembly.GetEntryAssembly().GetName().Version;
 
