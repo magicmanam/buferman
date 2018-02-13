@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using ClipboardBufer;
-using Logging;
+using BuferMAN.Infrastructure;
 
 namespace ClipboardViewerForm.Window
 {

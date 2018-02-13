@@ -44,6 +44,13 @@
     <Compile Include="ChangingTextMenuItemBase.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="CreateLoginCredentialsEventArgs.cs" />
+    <Compile Include="CreateLoginCredentialsMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DeleteClipMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resource.ru.Designer.cs">
       <DependentUpon>Resource.ru.resx</DependentUpon>
@@ -71,6 +78,18 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuferMAN.Infrastructure\BuferMAN.Infrastructure.csproj">
+      <Project>{F14888DE-E3DE-4225-80AA-F836DCBA8E2E}</Project>
+      <Name>BuferMAN.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ClipboardBufer\ClipboardBufer.csproj">
+      <Project>{77a59517-cced-4778-8ce4-e106ef61b8d0}</Project>
+      <Name>ClipboardBufer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\magicmanam.UndoableOperations\magicmanam.UndoableOperations.csproj">
+      <Project>{2A0EA8A3-5E8C-411F-BF3D-B2D67AD5E956}</Project>
+      <Name>magicmanam.UndoableOperations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Windows\Windows.csproj">
       <Project>{5A51C93A-8FD0-4A47-8802-05B36CF7242E}</Project>
       <Name>Windows</Name>

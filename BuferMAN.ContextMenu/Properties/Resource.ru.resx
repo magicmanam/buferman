@@ -129,6 +129,39 @@
   <data name="ChangeTextTitle" xml:space="preserve">
     <value>Изменение названия буфера</value>
   </data>
+  <data name="CreateCredsMenuItem" xml:space="preserve">
+    <value>Создать логин</value>
+  </data>
+  <data name="CreateCredsPostfix" xml:space="preserve">
+    <value>TAB будет вставлен после логина и перед паролем. После этого будет нажата клавиша Enter.</value>
+  </data>
+  <data name="CreateCredsPrefix" xml:space="preserve">
+    <value>Введите пароль для логина</value>
+  </data>
+  <data name="CreateCredsTitle" xml:space="preserve">
+    <value>Создать данные для логина</value>
+  </data>
+  <data name="CredsName" xml:space="preserve">
+    <value>Ввести только логин</value>
+  </data>
+  <data name="CredsPassword" xml:space="preserve">
+    <value>Ввести пароль</value>
+  </data>
+  <data name="CredsPasswordEnter" xml:space="preserve">
+    <value>Ввести пароль и нажать Enter</value>
+  </data>
+  <data name="CredsPrefix" xml:space="preserve">
+    <value>Логин для</value>
+  </data>
+  <data name="DeleteClipMenuItem" xml:space="preserve">
+    <value>Удалить буфер</value>
+  </data>
+  <data name="EmptyPasswordError" xml:space="preserve">
+    <value>Пароль не может быть пустым.</value>
+  </data>
+  <data name="LoginCreds" xml:space="preserve">
+    <value>Данные для логина</value>
+  </data>
   <data name="MenuChange" xml:space="preserve">
     <value>Скрыть текст буфера новым лэйблом</value>
   </data>

@@ -1,10 +1,9 @@
-﻿using ClipboardViewerForm.Window;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using ClipboardBufer;
-using Logging;
 using ClipboardViewerForm.Properties;
+using BuferMAN.Infrastructure;
 
 namespace ClipboardViewerForm
 {

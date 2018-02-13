@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ClipboardViewerForm
+namespace BuferMAN.Infrastructure
 {
-    interface IWindowLevelContext
+    public interface IWindowLevelContext
     {
         void HideWindow();
         void RerenderBufers();

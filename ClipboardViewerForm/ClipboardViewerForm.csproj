@@ -58,20 +58,11 @@
     <Compile Include="ButtonPresentations\IBuferPresentation.cs" />
     <Compile Include="ButtonPresentations\SkypeButtonPresentation.cs" />
     <Compile Include="ClipMenu\ClipMenuGenerator.cs" />
-    <Compile Include="ClipMenu\IClipMenuGenerator.cs" />
-    <Compile Include="ClipMenu\Items\CreateLoginCredentialsEventArgs.cs" />
-    <Compile Include="ClipMenu\Items\CreateLoginCredentialsMenuItem.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ClipMenu\Items\DeleteClipMenuItem.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="CopyingToClipboardInterceptor.cs" />
     <Compile Include="DefaultWindowLevelContext.cs" />
     <Compile Include="IBuferSelectionHandler.cs" />
     <Compile Include="ICopyingToClipboardInterceptor.cs" />
     <Compile Include="IProgramSettings.cs" />
-    <Compile Include="IWindowLevelContext.cs" />
     <Compile Include="ILoadingFileHandler.cs" />
     <Compile Include="Menu\IMenuGenerator.cs" />
     <Compile Include="LoadingFileHandler.cs" />
@@ -93,7 +84,6 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="WindowLevelContext.cs" />
     <Compile Include="Window\IRenderingHandler.cs" />
     <Compile Include="Window\IWindowActivationHandler.cs" />
     <Compile Include="Window\IWindowHidingHandler.cs" />
@@ -111,6 +101,10 @@
     <ProjectReference Include="..\BuferMAN.ContextMenu\BuferMAN.ContextMenu.csproj">
       <Project>{4AB9774F-2BF8-4F4C-9653-610C5C76F8B3}</Project>
       <Name>BuferMAN.ContextMenu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.Infrastructure\BuferMAN.Infrastructure.csproj">
+      <Project>{F14888DE-E3DE-4225-80AA-F836DCBA8E2E}</Project>
+      <Name>BuferMAN.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\BuferMAN.Menu\BuferMAN.Menu.csproj">
       <Project>{08184414-67EA-419E-B71B-B764F0F2E578}</Project>
@@ -159,5 +153,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

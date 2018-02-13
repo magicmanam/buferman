@@ -117,30 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CreateCredsPostfix" xml:space="preserve">
-    <value>TAB будет вставлен после логина и перед паролем. После этого будет нажата клавиша Enter.</value>
-  </data>
-  <data name="CreateCredsPrefix" xml:space="preserve">
-    <value>Введите пароль для логина</value>
-  </data>
-  <data name="CreateCredsTitle" xml:space="preserve">
-    <value>Создать данные для логина</value>
-  </data>
-  <data name="CredsName" xml:space="preserve">
-    <value>Ввести только логин</value>
-  </data>
-  <data name="CredsPassword" xml:space="preserve">
-    <value>Ввести пароль</value>
-  </data>
-  <data name="CredsPasswordEnter" xml:space="preserve">
-    <value>Ввести пароль и нажать Enter</value>
-  </data>
-  <data name="CredsPrefix" xml:space="preserve">
-    <value>Логин для</value>
-  </data>
-  <data name="EmptyPasswordError" xml:space="preserve">
-    <value>Пароль не может быть пустым.</value>
-  </data>
   <data name="FileBufer" xml:space="preserve">
     <value>Файл</value>
   </data>
@@ -159,9 +135,6 @@
   <data name="LoadFileFilter" xml:space="preserve">
     <value>Текстовые файлы (*.txt)|*.txt</value>
   </data>
-  <data name="LoginCreds" xml:space="preserve">
-    <value>Данные для логина</value>
-  </data>
   <data name="LoginWith" xml:space="preserve">
     <value>Войти как</value>
   </data>
@@ -173,12 +146,6 @@
   </data>
   <data name="MenuCharByChar" xml:space="preserve">
     <value>Ввести текст посимвольно (в консоли и др.)</value>
-  </data>
-  <data name="MenuCreds" xml:space="preserve">
-    <value>Создать логин</value>
-  </data>
-  <data name="MenuDelete" xml:space="preserve">
-    <value>Удалить буфер</value>
   </data>
   <data name="MenuEdit" xml:space="preserve">
     <value>Правка</value>

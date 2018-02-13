@@ -1,12 +1,13 @@
-﻿using ClipboardBufer;
-using ClipboardViewerForm.Properties;
+﻿using BuferMAN.ContextMenu.Properties;
+using BuferMAN.Infrastructure;
+using ClipboardBufer;
 using System;
 using System.Windows.Forms;
 using Windows;
 
-namespace ClipboardViewerForm.ClipMenu.Items
+namespace BuferMAN.ContextMenu
 {
-    class DeleteClipMenuItem : MenuItem
+    public class DeleteClipMenuItem : MenuItem
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private IDataObject _dataObject;
@@ -17,7 +18,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
             this._clipboardBuferService = clipboardBuferService;
             this._dataObject = dataObject;
             this._button = button;
-            this.Text = Resource.MenuDelete;
+            this.Text = Resource.DeleteClipMenuItem;
             this.Shortcut = Shortcut.Del;
             this.Click += this._DeleteBufer;
         }

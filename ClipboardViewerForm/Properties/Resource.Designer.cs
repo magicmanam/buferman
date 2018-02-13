@@ -70,78 +70,6 @@ namespace ClipboardViewerForm.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на TAB between username and password will be inserted automatically as well as Enter after password..
-        /// </summary>
-        internal static string CreateCredsPostfix {
-            get {
-                return ResourceManager.GetString("CreateCredsPostfix", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Enter a password for login name.
-        /// </summary>
-        internal static string CreateCredsPrefix {
-            get {
-                return ResourceManager.GetString("CreateCredsPrefix", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Create login credentials.
-        /// </summary>
-        internal static string CreateCredsTitle {
-            get {
-                return ResourceManager.GetString("CreateCredsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Paste username.
-        /// </summary>
-        internal static string CredsName {
-            get {
-                return ResourceManager.GetString("CredsName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Paste password.
-        /// </summary>
-        internal static string CredsPassword {
-            get {
-                return ResourceManager.GetString("CredsPassword", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Paste password with Enter.
-        /// </summary>
-        internal static string CredsPasswordEnter {
-            get {
-                return ResourceManager.GetString("CredsPasswordEnter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Creds for.
-        /// </summary>
-        internal static string CredsPrefix {
-            get {
-                return ResourceManager.GetString("CredsPrefix", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Password can not be empty or whitespaces. Try again! Try better!.
-        /// </summary>
-        internal static string EmptyPasswordError {
-            get {
-                return ResourceManager.GetString("EmptyPasswordError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на File.
         /// </summary>
         internal static string FileBufer {
@@ -205,15 +133,6 @@ namespace ClipboardViewerForm.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Login credentials.
-        /// </summary>
-        internal static string LoginCreds {
-            get {
-                return ResourceManager.GetString("LoginCreds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Login with creds.
         /// </summary>
         internal static string LoginWith {
@@ -246,24 +165,6 @@ namespace ClipboardViewerForm.Properties {
         internal static string MenuCharByChar {
             get {
                 return ResourceManager.GetString("MenuCharByChar", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Create &amp;login credentials.
-        /// </summary>
-        internal static string MenuCreds {
-            get {
-                return ResourceManager.GetString("MenuCreds", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на &amp;Delete.
-        /// </summary>
-        internal static string MenuDelete {
-            get {
-                return ResourceManager.GetString("MenuDelete", resourceCulture);
             }
         }
         

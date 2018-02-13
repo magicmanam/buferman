@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ClipboardViewerForm.ClipMenu.Items
+namespace BuferMAN.ContextMenu
 {
-    class CreateLoginCredentialsEventArgs : EventArgs
+    public class CreateLoginCredentialsEventArgs : EventArgs
     {
         public string Password { get; private set; }
 

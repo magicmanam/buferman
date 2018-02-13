@@ -10,6 +10,7 @@ using System.Reflection;
 using BuferMAN.Menu.Help;
 using magicmanam.UndoableOperations;
 using BuferMAN.Menu;
+using BuferMAN.Infrastructure;
 
 namespace ClipboardViewerForm.Menu
 {

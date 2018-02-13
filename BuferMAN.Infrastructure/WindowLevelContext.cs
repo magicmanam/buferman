@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ClipboardViewerForm
+﻿namespace BuferMAN.Infrastructure
 {
-    class WindowLevelContext
+    public class WindowLevelContext
     {
         private static IWindowLevelContext _context;
 

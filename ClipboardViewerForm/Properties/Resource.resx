@@ -117,30 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CreateCredsPostfix" xml:space="preserve">
-    <value>TAB between username and password will be inserted automatically as well as Enter after password.</value>
-  </data>
-  <data name="CreateCredsPrefix" xml:space="preserve">
-    <value>Enter a password for login name</value>
-  </data>
-  <data name="CreateCredsTitle" xml:space="preserve">
-    <value>Create login credentials</value>
-  </data>
-  <data name="CredsName" xml:space="preserve">
-    <value>Paste username</value>
-  </data>
-  <data name="CredsPassword" xml:space="preserve">
-    <value>Paste password</value>
-  </data>
-  <data name="CredsPasswordEnter" xml:space="preserve">
-    <value>Paste password with Enter</value>
-  </data>
-  <data name="CredsPrefix" xml:space="preserve">
-    <value>Creds for</value>
-  </data>
-  <data name="EmptyPasswordError" xml:space="preserve">
-    <value>Password can not be empty or whitespaces. Try again! Try better!</value>
-  </data>
   <data name="LoadFileErrorPrefix" xml:space="preserve">
     <value>There is an error during reading a file</value>
   </data>
@@ -149,9 +125,6 @@
   </data>
   <data name="LoadFileFilter" xml:space="preserve">
     <value>Text files (*.txt)|*.txt</value>
-  </data>
-  <data name="LoginCreds" xml:space="preserve">
-    <value>Login credentials</value>
   </data>
   <data name="LoginWith" xml:space="preserve">
     <value>Login with creds</value>
@@ -164,12 +137,6 @@
   </data>
   <data name="MenuCharByChar" xml:space="preserve">
     <value>Type &amp;char by char (for console)</value>
-  </data>
-  <data name="MenuCreds" xml:space="preserve">
-    <value>Create &amp;login credentials</value>
-  </data>
-  <data name="MenuDelete" xml:space="preserve">
-    <value>&amp;Delete</value>
   </data>
   <data name="MenuEdit" xml:space="preserve">
     <value>&amp;Edit</value>

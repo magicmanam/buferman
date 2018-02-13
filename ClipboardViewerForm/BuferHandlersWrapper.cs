@@ -4,8 +4,8 @@ using System.Windows.Forms;
 using ClipboardBufer;
 using System.Linq;
 using System.IO;
-using ClipboardViewerForm.ClipMenu;
 using ClipboardViewerForm.Properties;
+using BuferMAN.Infrastructure.ContextMenu;
 
 namespace ClipboardViewerForm
 {

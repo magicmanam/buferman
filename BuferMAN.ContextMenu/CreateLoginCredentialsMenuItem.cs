@@ -1,5 +1,6 @@
 ﻿using BuferMAN.ContextMenu;
-using ClipboardViewerForm.Properties;
+using BuferMAN.ContextMenu.Properties;
+using BuferMAN.Infrastructure;
 using Microsoft.VisualBasic;
 using System;
 using System.Windows.Forms;
@@ -7,11 +8,11 @@ using Windows;
 
 namespace ClipboardViewerForm.ClipMenu.Items
 {
-    class CreateLoginCredentialsMenuItem : ChangingTextMenuItemBase
+    public class CreateLoginCredentialsMenuItem : ChangingTextMenuItemBase
     {
         public CreateLoginCredentialsMenuItem(Button button, string originBuferText, ToolTip mouseOverTooltip) : base(button, originBuferText, mouseOverTooltip)
         {
-            this.Text = Resource.MenuCreds;
+            this.Text = Resource.CreateCredsMenuItem;
             this.Click += this._CreateLoginCredentials;
             this.Shortcut = Shortcut.CtrlL;
         }
