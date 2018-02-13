@@ -14,7 +14,7 @@ namespace BuferMAN.Menu.Help
 
         private void _DocumentationMenuItem_Click(object sender, System.EventArgs e)
         {
-            Process.Start("Documentation.html");
+            Process.Start("Assets\\Menu\\Documentation.html");
         }
     }
 }
