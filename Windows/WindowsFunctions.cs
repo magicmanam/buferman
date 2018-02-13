@@ -5,7 +5,10 @@ namespace Windows
 {
 	public static class WindowsFunctions
 	{
-		[DllImport("user32.dll")]
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetClipboardViewer();
+
+        [DllImport("user32.dll")]
 		public static extern bool ChangeClipboardChain(IntPtr hWndRemove, IntPtr hWndNewNext);
 
 		[DllImport("user32.dll")]

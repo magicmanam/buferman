@@ -70,6 +70,8 @@ Settings:  //Minimalize settings for easy using
 
 *** Checked ***
 /*Check: . */
+/*Check: Make screenshot. Make sure after 23 seconds new screenshot is not added. */
+/*Check: Help -> Documentation - browser with page is opened. */
 /*Check: Изменить буфер текст. Фокус-тултип сразу же поменялся. */
 /*Check: Программу можно закрыть из контекстного меню иконки в трее. */
 /*Check: Скопировать 100 и 1000 раз. Нотификация в трее появится. */

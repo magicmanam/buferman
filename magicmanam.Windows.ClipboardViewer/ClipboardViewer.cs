@@ -46,8 +46,13 @@ namespace magicmanam.Windows.ClipboardViewer
         /// </summary>
         public void RefreshViewer()
         {
-            WindowsFunctions.ChangeClipboardChain(this._handle, this._nextViewer);
-            this._nextViewer = WindowsFunctions.SetClipboardViewer(this._handle);
+            var currentViewer = WindowsFunctions.GetClipboardViewer();
+            
+            if (currentViewer != this._handle)
+            {
+                WindowsFunctions.ChangeClipboardChain(this._handle, this._nextViewer);
+                this._nextViewer = WindowsFunctions.SetClipboardViewer(this._handle);
+            }
         }
     }
 }
