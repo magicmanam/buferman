@@ -8,7 +8,6 @@ By DD/01/2018
 
 # Release by 1 April 2018
 - Fix issue with unicode/not unicode symbols in button's title
-- If in load file characters in English and Russian languages, trash is shown for russian
 - Keyboard Emulator: ^ as : in russian keyboard
 - Add http://klopat.by link with cross reference.
 - If link in bufer - open in browser if Shift pressed (or other key)
@@ -70,6 +69,7 @@ Settings:  //Minimalize settings for easy using
 
 *** Checked ***
 /*Check: . */
+/*Check: Load bufers file with multi languages words - all words should be loaded correctly. */
 /*Check: Make screenshot. Make sure after 23 seconds new screenshot is not added. */
 /*Check: Help -> Documentation - browser with page is opened. */
 /*Check: Изменить буфер текст. Фокус-тултип сразу же поменялся. */

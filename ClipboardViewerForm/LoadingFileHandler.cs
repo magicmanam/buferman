@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using ClipboardBufer;
 using ClipboardViewerForm.Properties;
+using System.Text;
 
 namespace ClipboardViewerForm
 {
@@ -37,7 +38,7 @@ namespace ClipboardViewerForm
         {
             try
             {
-                using (var fileReader = new StreamReader(new FileStream(fileName, FileMode.Open, FileAccess.Read)))
+                using (var fileReader = LoadingFileHandler.GetMultiLanguageFileReader(fileName))
                 {
                     while (!fileReader.EndOfStream)
                     {
@@ -54,6 +55,11 @@ namespace ClipboardViewerForm
             {
                 MessageBox.Show(Resource.LoadFileErrorPrefix + $" {this._dialog.FileName}:\n\n {exc.Message}", Resource.LoadFileErrorTitle);
             }
+        }
+
+        private static StreamReader GetMultiLanguageFileReader(string fileName)
+        {
+            return new StreamReader(new FileStream(fileName, FileMode.Open, FileAccess.Read), Encoding.Default);
         }
     }
 }
