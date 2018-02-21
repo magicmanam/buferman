@@ -36,7 +36,13 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Help\KlopatMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Help\DocumentationMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Help\SendFeedbackMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="MenuItemCollectionExtensions.cs" />

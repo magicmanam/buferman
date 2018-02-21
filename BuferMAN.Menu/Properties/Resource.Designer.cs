@@ -68,5 +68,14 @@ namespace BuferMAN.Menu.Properties {
                 return ResourceManager.GetString("DocumentationMenuItem", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Send &amp;feedback/issue.
+        /// </summary>
+        internal static string MenuHelpSend {
+            get {
+                return ResourceManager.GetString("MenuHelpSend", resourceCulture);
+            }
+        }
     }
 }

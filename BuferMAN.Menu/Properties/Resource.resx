@@ -120,4 +120,7 @@
   <data name="DocumentationMenuItem" xml:space="preserve">
     <value>&amp;Documentation</value>
   </data>
+  <data name="MenuHelpSend" xml:space="preserve">
+    <value>Send &amp;feedback/issue</value>
+  </data>
 </root>

@@ -340,15 +340,6 @@ namespace ClipboardViewerForm.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на Send &amp;feedback/issue.
-        /// </summary>
-        internal static string MenuHelpSend {
-            get {
-                return ResourceManager.GetString("MenuHelpSend", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на &amp;Start time.
         /// </summary>
         internal static string MenuHelpStart {

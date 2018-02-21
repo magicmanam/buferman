@@ -192,9 +192,6 @@
   <data name="MenuHelpDonateTitle" xml:space="preserve">
     <value>Your help is really appreciated</value>
   </data>
-  <data name="MenuHelpSend" xml:space="preserve">
-    <value>Send &amp;feedback/issue</value>
-  </data>
   <data name="MenuHelpStart" xml:space="preserve">
     <value>&amp;Start time</value>
   </data>

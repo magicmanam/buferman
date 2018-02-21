@@ -204,9 +204,6 @@
   <data name="MenuHelpDonateTitle" xml:space="preserve">
     <value>Помоги ближнему и когда-то помогут тебе!</value>
   </data>
-  <data name="MenuHelpSend" xml:space="preserve">
-    <value>Открыть форму обратной связи</value>
-  </data>
   <data name="MenuHelpStart" xml:space="preserve">
     <value>Время запуска</value>
   </data>
