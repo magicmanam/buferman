@@ -7,7 +7,7 @@ using System.Windows.Input;
 using Windows;
 using ClipboardViewerForm.Menu;
 using ClipboardViewerForm.Window;
-using ClipboardBufer;
+using BuferMAN.Clipboard;
 using ClipboardViewerForm.Properties;
 using System.Security.Principal;
 using magicmanam.Windows.ClipboardViewer;

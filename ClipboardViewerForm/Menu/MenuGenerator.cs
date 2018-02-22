@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Windows.Forms;
 using Windows;
-using ClipboardBufer;
+using BuferMAN.Clipboard;
 using System.Diagnostics;
 using ClipboardViewerForm.Properties;
 using System.Deployment.Application;

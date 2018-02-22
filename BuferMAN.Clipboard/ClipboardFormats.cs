@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace ClipboardBufer
+namespace BuferMAN.Clipboard
 {
     public static class ClipboardFormats
     {

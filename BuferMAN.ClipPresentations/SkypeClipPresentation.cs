@@ -1,4 +1,4 @@
-﻿using ClipboardBufer;
+﻿using BuferMAN.Clipboard;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;

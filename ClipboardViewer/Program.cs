@@ -2,7 +2,6 @@
 using Logging;
 using System;
 using System.Threading;
-using ClipboardBufer;
 using System.Windows.Forms;
 using ClipboardViewerForm;
 using System.IO;
@@ -11,6 +10,7 @@ using ClipboardViewer.Properties;
 using System.Security.Principal;
 using System.Diagnostics;
 using magicmanam.UndoableOperations;
+using BuferMAN.Clipboard;
 
 namespace ClipboardViewer
 {
@@ -92,6 +92,11 @@ namespace ClipboardViewer
         private static void _Application_ThreadException(object sender, ThreadExceptionEventArgs e)
 		{
 			Logger.WriteError("Exception " + e.Exception.Message, e.Exception);
+
+            if (e.Exception is ClipboardMessageException)
+            {
+                MessageBox.Show(e.Exception.Message);
+            }
 		}
 	}
 }

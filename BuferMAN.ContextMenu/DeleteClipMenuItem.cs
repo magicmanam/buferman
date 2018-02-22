@@ -1,6 +1,6 @@
-﻿using BuferMAN.ContextMenu.Properties;
+﻿using BuferMAN.Clipboard;
+using BuferMAN.ContextMenu.Properties;
 using BuferMAN.Infrastructure;
-using ClipboardBufer;
 using System;
 using System.Windows.Forms;
 using Windows;

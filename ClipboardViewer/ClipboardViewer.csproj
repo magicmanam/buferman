@@ -147,9 +147,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClipboardBufer\ClipboardBufer.csproj">
-      <Project>{77a59517-cced-4778-8ce4-e106ef61b8d0}</Project>
-      <Name>ClipboardBufer</Name>
+    <ProjectReference Include="..\BuferMAN.Clipboard\BuferMAN.Clipboard.csproj">
+      <Project>{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}</Project>
+      <Name>BuferMAN.Clipboard</Name>
     </ProjectReference>
     <ProjectReference Include="..\ClipboardViewerForm\ClipboardViewerForm.csproj">
       <Project>{362d3ace-2118-43dc-a221-e4ab53a12c7d}</Project>

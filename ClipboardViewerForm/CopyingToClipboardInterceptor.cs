@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using ClipboardBufer;
 using ClipboardViewerForm.Properties;
 using BuferMAN.Infrastructure;
+using BuferMAN.Clipboard;
 
 namespace ClipboardViewerForm
 {

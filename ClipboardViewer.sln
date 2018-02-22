@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Windows", "Windows\Windows.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logger\Logging.csproj", "{0DEECDC2-CF30-4625-A465-671F851F937E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipboardBufer", "ClipboardBufer\ClipboardBufer.csproj", "{77A59517-CCED-4778-8CE4-E106EF61B8D0}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipboardViewerForm", "ClipboardViewerForm\ClipboardViewerForm.csproj", "{362D3ACE-2118-43DC-A221-E4AB53A12C7D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "magicmanam.Windows.ClipboardViewer", "magicmanam.Windows.ClipboardViewer\magicmanam.Windows.ClipboardViewer.csproj", "{3DD7B207-5743-457F-A530-7669D0D2CED7}"
@@ -24,6 +22,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.Infrastructure", "BuferMAN.Infrastructure\BuferMAN.Infrastructure.csproj", "{F14888DE-E3DE-4225-80AA-F836DCBA8E2E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.ClipPresentations", "BuferMAN.ClipPresentations\BuferMAN.ClipPresentations.csproj", "{ED29E767-AD51-4508-9C1E-3C2446D504D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.Clipboard", "BuferMAN.Clipboard\BuferMAN.Clipboard.csproj", "{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,10 +43,6 @@ Global
 		{0DEECDC2-CF30-4625-A465-671F851F937E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DEECDC2-CF30-4625-A465-671F851F937E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DEECDC2-CF30-4625-A465-671F851F937E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{77A59517-CCED-4778-8CE4-E106EF61B8D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{77A59517-CCED-4778-8CE4-E106EF61B8D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{77A59517-CCED-4778-8CE4-E106EF61B8D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{77A59517-CCED-4778-8CE4-E106EF61B8D0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{362D3ACE-2118-43DC-A221-E4AB53A12C7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{362D3ACE-2118-43DC-A221-E4AB53A12C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{362D3ACE-2118-43DC-A221-E4AB53A12C7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -75,6 +71,10 @@ Global
 		{ED29E767-AD51-4508-9C1E-3C2446D504D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED29E767-AD51-4508-9C1E-3C2446D504D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED29E767-AD51-4508-9C1E-3C2446D504D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using ClipboardBufer;
 using System.Linq;
 using System.IO;
 using ClipboardViewerForm.Properties;
 using BuferMAN.Infrastructure.ContextMenu;
+using BuferMAN.Clipboard;
 
 namespace ClipboardViewerForm
 {

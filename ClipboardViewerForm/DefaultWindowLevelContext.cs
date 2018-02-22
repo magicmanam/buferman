@@ -1,5 +1,5 @@
-﻿using BuferMAN.Infrastructure;
-using ClipboardBufer;
+﻿using BuferMAN.Clipboard;
+using BuferMAN.Infrastructure;
 using ClipboardViewerForm.Window;
 using System;
 using System.Collections.Generic;

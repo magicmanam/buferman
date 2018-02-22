@@ -95,6 +95,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuferMAN.Clipboard\BuferMAN.Clipboard.csproj">
+      <Project>{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}</Project>
+      <Name>BuferMAN.Clipboard</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BuferMAN.ClipPresentations\BuferMAN.ClipPresentations.csproj">
       <Project>{ED29E767-AD51-4508-9C1E-3C2446D504D9}</Project>
       <Name>BuferMAN.ClipPresentations</Name>
@@ -110,10 +114,6 @@
     <ProjectReference Include="..\BuferMAN.Menu\BuferMAN.Menu.csproj">
       <Project>{08184414-67EA-419E-B71B-B764F0F2E578}</Project>
       <Name>BuferMAN.Menu</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\ClipboardBufer\ClipboardBufer.csproj">
-      <Project>{77a59517-cced-4778-8ce4-e106ef61b8d0}</Project>
-      <Name>ClipboardBufer</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logger\Logging.csproj">
       <Project>{0deecdc2-cf30-4625-a465-671f851f937e}</Project>

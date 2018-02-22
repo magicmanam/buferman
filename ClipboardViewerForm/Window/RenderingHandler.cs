@@ -2,9 +2,9 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using ClipboardBufer;
 using ClipboardViewerForm.ClipMenu;
 using BuferMAN.ClipPresentations;
+using BuferMAN.Clipboard;
 
 namespace ClipboardViewerForm.Window
 {

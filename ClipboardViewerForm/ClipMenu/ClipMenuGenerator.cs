@@ -1,8 +1,8 @@
-﻿using BuferMAN.ContextMenu;
+﻿using BuferMAN.Clipboard;
+using BuferMAN.ContextMenu;
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.ContextMenu;
 using BuferMAN.Menu;
-using ClipboardBufer;
 using ClipboardViewerForm.ClipMenu.Items;
 using ClipboardViewerForm.Properties;
 using System;

@@ -1,11 +1,11 @@
-﻿using ClipboardBufer.Properties;
+﻿using BuferMAN.Clipboard.Properties;
 using magicmanam.UndoableOperations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ClipboardBufer
+namespace BuferMAN.Clipboard
 {
     public class ClipboardBuferService : IClipboardBuferService
     {

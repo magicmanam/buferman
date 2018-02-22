@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
-using ClipboardBufer;
+using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure;
 
 namespace ClipboardViewerForm.Window

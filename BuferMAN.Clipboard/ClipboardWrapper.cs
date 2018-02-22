@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using Logging;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Drawing;
 
-namespace ClipboardBufer
+namespace BuferMAN.Clipboard
 {
     public class ClipboardWrapper : IClipboardWrapper
     {
@@ -16,7 +10,7 @@ namespace ClipboardBufer
         {
             try
             {
-                IDataObject dataObject = Clipboard.GetDataObject();
+                IDataObject dataObject = System.Windows.Forms.Clipboard.GetDataObject();
 
                 var copy = new DataObject();
                 foreach (var format in dataObject.GetFormats())
@@ -38,9 +32,9 @@ namespace ClipboardBufer
                     }
                 }
 
-                if (Clipboard.ContainsImage())
+                if (System.Windows.Forms.Clipboard.ContainsImage())
                 {
-                    copy.SetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT, Clipboard.GetImage());
+                    copy.SetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT, System.Windows.Forms.Clipboard.GetImage());
                 }
 
                 return copy;
@@ -48,14 +42,13 @@ namespace ClipboardBufer
             catch (ExternalException exc)
             {
                 Logger.WriteError("An error during get clipboard operation", exc);
-                MessageBox.Show("An error occurred. See logs for more details.");
-                throw;
+                throw new ClipboardMessageException("An error occurred. See logs for more details.", exc);
             }
         }
 
         public void SetDataObject(IDataObject dataObject)
         {
-            Clipboard.SetDataObject(dataObject);
+            System.Windows.Forms.Clipboard.SetDataObject(dataObject);
         }
     }
 }

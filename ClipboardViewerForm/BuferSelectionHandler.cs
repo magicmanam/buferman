@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Forms;
-using ClipboardBufer;
 using Windows;
 using BuferMAN.Infrastructure;
+using BuferMAN.Clipboard;
 
 namespace ClipboardViewerForm
 {

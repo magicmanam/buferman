@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ClipboardBufer
+namespace BuferMAN.Clipboard
 {
 	public class DataObjectComparer : IEqualityComparer<IDataObject>
     {
