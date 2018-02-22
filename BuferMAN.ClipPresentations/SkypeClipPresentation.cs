@@ -1,26 +1,22 @@
 ﻿using ClipboardBufer;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ClipboardViewerForm.ButtonPresentations
+namespace BuferMAN.ClipPresentations
 {
-    class SkypeBuferPresentation : IBuferPresentation
+    public class SkypeClipPresentation : IClipPresentation
     {
         private static Image _skypeIcon;
 
         private static Image SkypeIcon { get
             {
-                if (SkypeBuferPresentation._skypeIcon == null)
+                if (SkypeClipPresentation._skypeIcon == null)
                 {
-                    SkypeBuferPresentation._skypeIcon = Image.FromFile("skype.ico");
+                    SkypeClipPresentation._skypeIcon = Image.FromFile("skype.ico");
                 }
 
-                return SkypeBuferPresentation._skypeIcon;
+                return SkypeClipPresentation._skypeIcon;
             } }
         public bool IsCompatibleWithBufer(IDataObject data)
         {
@@ -29,7 +25,7 @@ namespace ClipboardViewerForm.ButtonPresentations
 
         public void ApplyToButton(Button button)
         {
-            button.Image = SkypeBuferPresentation.SkypeIcon;
+            button.Image = SkypeClipPresentation.SkypeIcon;
             button.ImageAlign = ContentAlignment.MiddleRight;
             button.TextAlign = ContentAlignment.MiddleLeft;
         }

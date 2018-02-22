@@ -54,9 +54,6 @@
     </Compile>
     <Compile Include="BuferHandlersWrapper.cs" />
     <Compile Include="BuferSelectionHandler.cs" />
-    <Compile Include="ButtonPresentations\FileButtonPresentation.cs" />
-    <Compile Include="ButtonPresentations\IBuferPresentation.cs" />
-    <Compile Include="ButtonPresentations\SkypeButtonPresentation.cs" />
     <Compile Include="ClipMenu\ClipMenuGenerator.cs" />
     <Compile Include="CopyingToClipboardInterceptor.cs" />
     <Compile Include="DefaultWindowLevelContext.cs" />
@@ -98,6 +95,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuferMAN.ClipPresentations\BuferMAN.ClipPresentations.csproj">
+      <Project>{ED29E767-AD51-4508-9C1E-3C2446D504D9}</Project>
+      <Name>BuferMAN.ClipPresentations</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BuferMAN.ContextMenu\BuferMAN.ContextMenu.csproj">
       <Project>{4AB9774F-2BF8-4F4C-9653-610C5C76F8B3}</Project>
       <Name>BuferMAN.ContextMenu</Name>

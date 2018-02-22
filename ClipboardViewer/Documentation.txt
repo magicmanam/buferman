@@ -7,12 +7,12 @@ By DD/01/2018
 ***
 
 # Release by 1 April 2018
+- relocate tooltips to presentation classes and extract base class
 - Fix issue with unicode/not unicode symbols in button's title
 - Keyboard Emulator: ^ as : in russian keyboard
-- Add http://klopat.by link with cross reference.
-- If link in bufer - open in browser if Shift pressed (or other key)
 
 # Ultimate version (almost sorted)
+- If link in bufer - open in browser if Shift pressed (or other key)
 - Save deleted bufers in memory
 - все атомарные операции сервиса обернуть в undoablecontext вложенные
 - многострочные буферы из файла + пароль + персистентность + alias - json format

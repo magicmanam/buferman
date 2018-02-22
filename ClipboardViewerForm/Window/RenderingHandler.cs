@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using ClipboardBufer;
 using ClipboardViewerForm.ClipMenu;
-using ClipboardViewerForm.ButtonPresentations;
+using BuferMAN.ClipPresentations;
 
 namespace ClipboardViewerForm.Window
 {
@@ -18,7 +18,7 @@ namespace ClipboardViewerForm.Window
         private readonly Label _persistentClipsDivider;
         private readonly IClipboardWrapper _clipboardWrapper;
         private readonly IProgramSettings _settings;
-        private readonly IList<IBuferPresentation> _buferPresentations = new List<IBuferPresentation>() { new SkypeBuferPresentation(), new FileButtonPresentation() };
+        private readonly IList<IClipPresentation> _clipPresentations = new List<IClipPresentation>() { new SkypeClipPresentation(), new FileClipPresentation() };
 
         private const int BUTTON_HEIGHT = 23;
 
@@ -99,7 +99,7 @@ namespace ClipboardViewerForm.Window
 
         private void _TryApplyPresentation(IDataObject dataObject, Button button)
         {
-            foreach (var presentation in this._buferPresentations)
+            foreach (var presentation in this._clipPresentations)
             {
                 if (presentation.IsCompatibleWithBufer(dataObject))
                 {

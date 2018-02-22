@@ -1,8 +1,8 @@
 ﻿using System.Windows.Forms;
 
-namespace ClipboardViewerForm.ButtonPresentations
+namespace BuferMAN.ClipPresentations
 {
-    public interface IBuferPresentation
+    public interface IClipPresentation
     {
         void ApplyToButton(Button button);
         bool IsCompatibleWithBufer(IDataObject data);

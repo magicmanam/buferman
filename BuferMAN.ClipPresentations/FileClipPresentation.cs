@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace ClipboardViewerForm.ButtonPresentations
+namespace BuferMAN.ClipPresentations
 {
-    class FileButtonPresentation : IBuferPresentation
+    public class FileClipPresentation : IClipPresentation
     {
         private static Image _fileIcon;
 
@@ -16,17 +12,17 @@ namespace ClipboardViewerForm.ButtonPresentations
         {
             get
             {
-                if (FileButtonPresentation._fileIcon == null)
+                if (FileClipPresentation._fileIcon == null)
                 {
-                    FileButtonPresentation._fileIcon = Image.FromFile("folder.ico");
+                    FileClipPresentation._fileIcon = Image.FromFile("folder.ico");
                 }
 
-                return FileButtonPresentation._fileIcon;
+                return FileClipPresentation._fileIcon;
             }
         }
         public void ApplyToButton(Button button)
         {
-            button.Image = FileButtonPresentation.FileIcon;
+            button.Image = FileClipPresentation.FileIcon;
             button.ImageAlign = ContentAlignment.MiddleRight;
             button.TextAlign = ContentAlignment.MiddleLeft;
             //button.BackColor = Color.Khaki;
