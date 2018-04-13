@@ -15,6 +15,7 @@ By DD/01/2018
 - Enable/disable 'Delete All' and 'Delete All Temporary' based on availability.
 - Alt + C can be overwritten in some programs (like Notepad++)
 - FtpPrivateData - ftp format - other format support can added via plugins
+- Search from keyboard (by text or aliases)
 
 # Ultimate version (almost sorted)
 - If link in bufer - open in browser if Shift pressed (or other key)
@@ -66,6 +67,7 @@ Settings:  //Minimalize settings for easy using
 
 *** Checked ***
 /*Check: . */
+/*Check: Запустить программу и нажать Alt+Z - программа должна прекратить перехватывать события копирования до повторного нажатия Alt+Z. */
 /*Check: Load bufers file with multi languages words - all words should be loaded correctly. */
 /*Check: Make screenshot. Make sure after 23 seconds new screenshot is not added. */
 /*Check: Help -> Documentation - browser with page is opened. */

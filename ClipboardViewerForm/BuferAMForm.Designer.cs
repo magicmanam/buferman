@@ -27,6 +27,7 @@ namespace ClipboardViewerForm
         private ClipboardViewer _clipboardViewer;
         public const int MAX_BUFERS_COUNT = 30;
         private NotifyIcon TrayIcon;
+        private bool _shouldCatchCopies = true;
 
         internal StatusStrip StatusLine { get; set; }
         public ToolStripStatusLabel StatusLabel { get; set; }
@@ -97,7 +98,7 @@ namespace ClipboardViewerForm
                 this._clipboardViewer.HandleWindowsMessage(m.Msg, m.WParam, m.LParam);
             }
 
-            if (m.Msg == Messages.WM_DRAWCLIPBOARD)
+            if (m.Msg == Messages.WM_DRAWCLIPBOARD && this._shouldCatchCopies)
             {
                 this._copiesCount++;
                 this._clipboardInterceptor.DoOnCtrlC();
@@ -256,6 +257,12 @@ namespace ClipboardViewerForm
                     {
                         var button = this._buttonsMap.First(kv => this._comparer.Equals(firstBufer, kv.Key)).Value;
                         button.Focus();
+                    }
+                    break;
+                case Keys.Z:
+                    if (e.Alt)
+                    {
+                        this._shouldCatchCopies = !this._shouldCatchCopies;
                     }
                     break;
             }
