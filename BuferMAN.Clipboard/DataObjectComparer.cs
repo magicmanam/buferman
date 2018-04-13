@@ -64,7 +64,7 @@ namespace BuferMAN.Clipboard
 
                 if(xContains ^ yContains)
                 {
-                    return false;
+                    return false;//not tested
                 } else
                 {
                     if (xContains)
@@ -95,7 +95,7 @@ namespace BuferMAN.Clipboard
 
                 if (xContains ^ yContains)
                 {
-                    return false;
+                    return false;//not tested
                 } else
                 {
                     if (xContains)

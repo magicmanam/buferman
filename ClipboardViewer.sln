@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.ClipPresentations"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.Clipboard", "BuferMAN.Clipboard\BuferMAN.Clipboard.csproj", "{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.Clipboard.Tests", "BuferMAN.Clipboard.Tests\BuferMAN.Clipboard.Tests.csproj", "{C9DECD23-6935-4610-A884-CDDE7D0E7499}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,10 @@ Global
 		{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9DECD23-6935-4610-A884-CDDE7D0E7499}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9DECD23-6935-4610-A884-CDDE7D0E7499}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9DECD23-6935-4610-A884-CDDE7D0E7499}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9DECD23-6935-4610-A884-CDDE7D0E7499}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
