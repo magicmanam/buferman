@@ -27,12 +27,14 @@ namespace ClipboardViewerForm.ClipMenu
         private MenuItem _pasteMenuItem;
         private String _originBuferText;
         private ToolTip _mouseOverTooltip;
+        private IClipboardWrapper _clipboardWrapper;
 
-        public ClipMenuGenerator(IClipboardBuferService clipboardBuferService, BuferSelectionHandler buferSelectionHandler, IProgramSettings settings)
+        public ClipMenuGenerator(IClipboardBuferService clipboardBuferService, BuferSelectionHandler buferSelectionHandler, IProgramSettings settings, IClipboardWrapper clipboardWrapper)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._buferSelectionHandler = buferSelectionHandler;
             this._settings = settings;
+            this._clipboardWrapper = clipboardWrapper;
         }
 
         public ContextMenu GenerateContextMenu(IDataObject dataObject, Button button, String originBuferText, ToolTip mouseOverTooltip, bool isChangeTextAvailable)
@@ -46,7 +48,8 @@ namespace ClipboardViewerForm.ClipMenu
 
             this._markAsPersistentMenuItem = new MenuItem(Resource.MenuPersistent, this._MarkAsPersistent, Shortcut.CtrlS);
             contextMenu.MenuItems.Add(this._markAsPersistentMenuItem);
-            
+            contextMenu.MenuItems.Add(new PlaceInBuferMenuItem(this._clipboardWrapper, this._dataObject));
+
             var formats = this._dataObject.GetFormats();
             var formatsMenu = new MenuItem();
             var formatsCount = formats.Length;
@@ -133,9 +136,14 @@ namespace ClipboardViewerForm.ClipMenu
 
         private void _MarkAsPersistent(object sender, EventArgs e)
         {
-            this._clipboardBuferService.MarkClipAsPersistent(this._dataObject);
-            this._markAsPersistentMenuItem.Enabled = false;
-            WindowLevelContext.Current.RerenderBufers();
+            if (this._clipboardBuferService.MarkClipAsPersistent(this._dataObject))
+            {
+                this._markAsPersistentMenuItem.Enabled = false;
+                WindowLevelContext.Current.RerenderBufers();
+            } else
+            {
+                MessageBox.Show("This bufer cannot be marked as persistent.");
+            }
         }
     }
 }

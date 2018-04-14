@@ -20,7 +20,7 @@ namespace BuferMAN.Clipboard
 
         void AddTemporaryClip(IDataObject clipDataObject);
 
-		void MarkClipAsPersistent(IDataObject dataObject);
+		bool MarkClipAsPersistent(IDataObject dataObject);
 
         IDataObject LastTemporaryClip { get; }
 

@@ -165,6 +165,9 @@
   <data name="MenuChange" xml:space="preserve">
     <value>Скрыть текст буфера новым лэйблом</value>
   </data>
+  <data name="MenuPlaceInBufer" xml:space="preserve">
+    <value>Поместить в буфер без вставки</value>
+  </data>
   <data name="MenuReturn" xml:space="preserve">
     <value>Вернуть текст к первоначальному</value>
   </data>

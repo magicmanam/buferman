@@ -165,6 +165,9 @@
   <data name="MenuChange" xml:space="preserve">
     <value>Hide bufer &amp;text with alias</value>
   </data>
+  <data name="MenuPlaceInBufer" xml:space="preserve">
+    <value>Place in bufer without paste</value>
+  </data>
   <data name="MenuReturn" xml:space="preserve">
     <value>&amp;Return text to initial</value>
   </data>

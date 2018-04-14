@@ -16,6 +16,8 @@ By DD/01/2018
 - Alt + C can be overwritten in some programs (like Notepad++)
 - FtpPrivateData - ftp format - other format support can added via plugins
 - Search from keyboard (by text or aliases)
+- Помечать клип в буфере отдельным цветом
+- Показывать, что программа не ловит копирования (в паузе) - поместить это действие в меню
 
 # Ultimate version (almost sorted)
 - If link in bufer - open in browser if Shift pressed (or other key)
@@ -67,6 +69,8 @@ Settings:  //Minimalize settings for easy using
 
 *** Checked ***
 /*Check: . */
+/*Check: . */
+/*Check: Поместить клип в буфер (при выделенном буфере нажать Ctrl+C), а затем сделать его постоянным - он должен сместиться в постоянные буферы. */
 /*Check: Запустить программу и нажать Alt+Z - программа должна прекратить перехватывать события копирования до повторного нажатия Alt+Z. */
 /*Check: Load bufers file with multi languages words - all words should be loaded correctly. */
 /*Check: Make screenshot. Make sure after 23 seconds new screenshot is not added. */

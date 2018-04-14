@@ -48,6 +48,9 @@
     <Compile Include="CreateLoginCredentialsMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="PlaceInBuferMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DeleteClipMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>

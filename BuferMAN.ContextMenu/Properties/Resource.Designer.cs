@@ -205,6 +205,15 @@ namespace BuferMAN.ContextMenu.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Place in bufer without paste.
+        /// </summary>
+        internal static string MenuPlaceInBufer {
+            get {
+                return ResourceManager.GetString("MenuPlaceInBufer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на &amp;Return text to initial.
         /// </summary>
         internal static string MenuReturn {
