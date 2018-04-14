@@ -1,30 +1,25 @@
 ﻿Always keep documentation and check list up to date!!!
-Done section is deleted with updating documentation and check list
 
 ******************* sorted ****************
-Done - 
-By DD/01/2018
-***
 
 # Release by 1 April 2018
-- relocate tooltips to presentation classes and extract base class
 - Fix issue with unicode/not unicode symbols in button's title
-- Keyboard Emulator: ^ as : in russian keyboard
-- Complete presentation - залить на гитхаб и возможно на slides.net
-- MAX_STATUS_LENGTH = 55 as well as other magic numbers/strings
-- Enable/disable 'Delete All' and 'Delete All Temporary' based on availability.
-- Alt + C can be overwritten in some programs (like Notepad++)
+- Search from keyboard (by text or aliases). Ctrl + F - search mode on visible time
 - FtpPrivateData - ftp format - other format support can added via plugins
-- Search from keyboard (by text or aliases)
-- Показывать, что программа не ловит копирования (в паузе) - поместить это действие в меню
+- Enable/disable 'Delete All' and 'Delete All Temporary' based on availability.
+
 
 # Ultimate version (almost sorted)
+- Alt + C can be overwritten in some programs (like Notepad++)
+- MAX_STATUS_LENGTH = 55 as well as other magic numbers/strings
+- Complete presentation - залить на гитхаб и возможно на slides.net
+- Показывать, что программа не ловит копирования (в паузе) - поместить это действие в меню
+- relocate tooltips to presentation classes and extract base class. Make plugins for preview tooltips with settings
 - If link in bufer - open in browser if Shift pressed (or other key)
 - все атомарные операции сервиса обернуть в undoablecontext вложенные
 - многострочные буферы из файла + пароль + персистентность + alias - json format
 - добавить проверку буфера в файле и метки того, что буфер был взят из файла
 - Window with hot keys + menu with applications (scripts tool and others)
-- Hot keys section in documentation.html
 - Разобраться с лицензиями
 - On scroll to show current clipboard with possibility to click
 - Refactor: add DI
@@ -35,23 +30,19 @@ By DD/01/2018
 - Add plugin support
 - Hosting at https://sourceforge.net and other market places.
 - Add menu with unknown file formats
-- If link is copied in browser, Enter should be clicked automatically.
 - На основе фич сделать список подсказок и показывать их на стартапе. Чаще показывать фичи, которые редко используются
 - Corporative & personal versions with private message.
 - Site with users -> from menu by unique link
 - Add some AI strategies based on user behaviour (Ctrl+C - TAB - Ctrl+V - TAB - Ctrl+C)
 - IStorage - to remove all System.IO - to use everywhere
-- Make plugins for preview tooltips with settings
 - Improve Performance (try different tools)
 - Помечать клип в буфере отдельным цветом
+- Alt-C + P - Opens Paint + other shortcuts
+- Show status line on every action
+- There is a new bufers.txt file on every program update.
+- Automatic tests: create python git repo
+- Add program to autostart (only for portable version. There is a well-known problem with ClickOnce applications: it will have several programs at once)
 ******************* unsorted ****************
-Lingvo: Ctrl-C + C
-Alt-C + P - Opens Paint + other shortcuts
-If program in classic mode and you foreground window is admin - show warning smwhere. If try to paste from user mode into admin mode - show alert window with reason and solution.
-Show status line on every action
-Automatic tests: create python git repo
-There is a new bufers.txt file on every program update.
-Add program to autostart (only for portable version. There is a well-known problem with ClickOnce applications: it will have several programs at once)
 
 //MessageBox.Show("Feature is not supported now. Pay money to support.", "Keep calm and copy&paste!")
 //MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")

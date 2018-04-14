@@ -259,7 +259,7 @@ namespace ClipboardViewerForm
                         button.Focus();
                     }
                     break;
-                case Keys.Z:
+                case Keys.P:
                     if (e.Alt)
                     {
                         this._shouldCatchCopies = !this._shouldCatchCopies;
