@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -48,10 +49,15 @@ namespace Windows
         {
             this.Wait();
 
+            var currentLanguage = InputLanguage.CurrentInputLanguage;
+            InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("en-US"));//This culture should be calculated automatically here and in other place.
+
             foreach (var escapedChar in KeyboardEmulator._ReplaceSpecialSendKeysCharacters(keysCombination))
             {
                 this.SendKeyboardKeys(escapedChar);
             }
+
+            InputLanguage.CurrentInputLanguage = currentLanguage;
 
             return this;
         }

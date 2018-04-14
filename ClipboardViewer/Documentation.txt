@@ -16,7 +16,6 @@ By DD/01/2018
 - Alt + C can be overwritten in some programs (like Notepad++)
 - FtpPrivateData - ftp format - other format support can added via plugins
 - Search from keyboard (by text or aliases)
-- Помечать клип в буфере отдельным цветом
 - Показывать, что программа не ловит копирования (в паузе) - поместить это действие в меню
 
 # Ultimate version (almost sorted)
@@ -25,11 +24,12 @@ By DD/01/2018
 - многострочные буферы из файла + пароль + персистентность + alias - json format
 - добавить проверку буфера в файле и метки того, что буфер был взят из файла
 - Window with hot keys + menu with applications (scripts tool and others)
+- Hot keys section in documentation.html
 - Разобраться с лицензиями
 - On scroll to show current clipboard with possibility to click
 - Refactor: add DI
 - Set WindowLevelContext at program level, not form level ?
-- Add clips count into status bar (separate strip)
+- Add clips count into status bar (separate strip) <100 100+, 200
 - Read WinForms book!
 - Add drag an drop for temp/persistent bufers
 - Add plugin support
@@ -43,6 +43,7 @@ By DD/01/2018
 - IStorage - to remove all System.IO - to use everywhere
 - Make plugins for preview tooltips with settings
 - Improve Performance (try different tools)
+- Помечать клип в буфере отдельным цветом
 ******************* unsorted ****************
 Lingvo: Ctrl-C + C
 Alt-C + P - Opens Paint + other shortcuts
