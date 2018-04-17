@@ -8,7 +8,6 @@
 - Search from keyboard (by text or aliases). Ctrl + F - search mode on visible time
 - FtpPrivateData - ftp format - other format support can added via plugins
 - Enable/disable 'Delete All' and 'Delete All Temporary' based on availability.
-- создавать буфер с логином
 - Android Studio Strings -> 0 whitespaces - but HTML text is not null as well as Rich Text
 - running line in button text - as new presentation
 - GetCurrentViewer - на форум
@@ -67,6 +66,7 @@ Settings:  //Minimalize settings for easy using
 
 *** Checked ***
 /*Check: . */
+/*Check: Create login for 'username'. Copy 'username' again - it should appear in program. */
 /*Check: Скопировать тескт в браузере. Сделать ему алиас. Вставить этот текст куда-нибудь -> буфер не должен продублироваться. */
 /*Check: Поместить клип в буфер (при выделенном буфере нажать Ctrl+C), а затем сделать его постоянным - он должен сместиться в постоянные буферы. */
 /*Check: Запустить программу и нажать Alt+Z - программа должна прекратить перехватывать события копирования до повторного нажатия Alt+Z. */

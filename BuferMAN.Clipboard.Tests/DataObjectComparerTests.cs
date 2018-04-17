@@ -128,5 +128,31 @@ namespace BuferMAN.Clipboard.Tests
 
             Assert.IsFalse(result);
         }
+
+        [TestMethod]
+        public void On_custom_password_string_format_Equals_returns_False()
+        {
+            var obj1 = new DataObject(ClipboardFormats.StringFormats[0], "str1");
+            obj1.SetData(ClipboardFormats.PASSWORD_FORMAT, "password");
+            var obj2 = new DataObject(ClipboardFormats.StringFormats[0], "str1");
+            obj2.SetData(ClipboardFormats.PASSWORD_FORMAT, "password");
+
+            var result = this._comparer.Equals(obj1, obj2);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void On_custom_image_format_Equals_returns_False()
+        {
+            var obj1 = new DataObject(ClipboardFormats.StringFormats[0], "str1");
+            obj1.SetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT, "password");
+            var obj2 = new DataObject(ClipboardFormats.StringFormats[0], "str1");
+            obj2.SetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT, "password");
+
+            var result = this._comparer.Equals(obj1, obj2);
+
+            Assert.IsFalse(result);
+        }
     }
 }

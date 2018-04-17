@@ -57,6 +57,12 @@ namespace BuferMAN.Clipboard
                 return false;
             }
 
+            if (xFormats.Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT) || xFormats.Contains(ClipboardFormats.PASSWORD_FORMAT)
+                || yFormats.Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT) || yFormats.Contains(ClipboardFormats.PASSWORD_FORMAT))
+            {
+                return false;
+            }
+
             bool equals = false;
             foreach (var stringFormat in _stringFormats)
             {
