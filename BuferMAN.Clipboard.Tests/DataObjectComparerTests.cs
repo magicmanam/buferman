@@ -106,5 +106,27 @@ namespace BuferMAN.Clipboard.Tests
 
             Assert.IsFalse(result);
         }
+
+        [TestMethod]
+        public void On_html_string_format_if_difference_in_trailing_null_characters_Equals_returns_true()
+        {
+            var obj1 = new DataObject(DataFormats.Html, "as\0dfsdf0\0\0\0");
+            var obj2 = new DataObject(DataFormats.Html, "as\0dfsdf0\0" );
+
+            var result = this._comparer.Equals(obj1, obj2);
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void On_html_string_format_if_difference_not_only_in_trailing_null_line_characters_Equals_returns_true()
+        {
+            var obj1 = new DataObject(DataFormats.Html, "asdf\0sdf\0\0\0");
+            var obj2 = new DataObject(DataFormats.Html, "asdf\0sdf\\0");
+
+            var result = this._comparer.Equals(obj1, obj2);
+
+            Assert.IsFalse(result);
+        }
     }
 }

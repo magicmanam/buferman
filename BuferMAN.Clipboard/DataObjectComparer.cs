@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace BuferMAN.Clipboard
@@ -74,7 +75,21 @@ namespace BuferMAN.Clipboard
 
                         if (xValueString != yValueString)
                         {
-                            return false;
+                            if (stringFormat == DataFormats.Html)
+                            {
+                                xValueString = Regex.Replace(xValueString, "(\\0)*$", string.Empty);
+                                yValueString = Regex.Replace(yValueString, "(\\0)*$", string.Empty);
+                                if (xValueString != yValueString)
+                                {
+                                    return false;
+                                } else
+                                {
+                                    equals = true;
+                                }
+                            } else
+                            {
+                                return false;
+                            }
                         }
                         else
                         {
