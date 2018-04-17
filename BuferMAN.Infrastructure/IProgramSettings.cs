@@ -1,4 +1,4 @@
-﻿namespace ClipboardViewerForm
+﻿namespace BuferMAN.Infrastructure
 {
     public interface IProgramSettings
     {

@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.Clipboard.Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.Files", "BuferMAN.Files\BuferMAN.Files.csproj", "{A7DA5919-18BB-4D6F-B492-2D241B3FEF1C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.Settings", "BuferMAN.Settings\BuferMAN.Settings.csproj", "{EF659B53-6244-4053-975C-F807859F84D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{A7DA5919-18BB-4D6F-B492-2D241B3FEF1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7DA5919-18BB-4D6F-B492-2D241B3FEF1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7DA5919-18BB-4D6F-B492-2D241B3FEF1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF659B53-6244-4053-975C-F807859F84D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF659B53-6244-4053-975C-F807859F84D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF659B53-6244-4053-975C-F807859F84D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF659B53-6244-4053-975C-F807859F84D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

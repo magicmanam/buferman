@@ -11,6 +11,7 @@ using System.Security.Principal;
 using System.Diagnostics;
 using magicmanam.UndoableOperations;
 using BuferMAN.Clipboard;
+using BuferMAN.Settings;
 
 namespace ClipboardViewer
 {

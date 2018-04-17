@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using ClipboardViewerForm.ClipMenu;
 using BuferMAN.ClipPresentations;
 using BuferMAN.Clipboard;
+using BuferMAN.Infrastructure;
 
 namespace ClipboardViewerForm.Window
 {
