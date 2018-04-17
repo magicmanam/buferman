@@ -60,9 +60,7 @@
     <Compile Include="IBuferSelectionHandler.cs" />
     <Compile Include="ICopyingToClipboardInterceptor.cs" />
     <Compile Include="IProgramSettings.cs" />
-    <Compile Include="ILoadingFileHandler.cs" />
     <Compile Include="Menu\IMenuGenerator.cs" />
-    <Compile Include="LoadingFileHandler.cs" />
     <Compile Include="Menu\MenuGenerator.cs" />
     <Compile Include="ProgramSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -106,6 +104,10 @@
     <ProjectReference Include="..\BuferMAN.ContextMenu\BuferMAN.ContextMenu.csproj">
       <Project>{4AB9774F-2BF8-4F4C-9653-610C5C76F8B3}</Project>
       <Name>BuferMAN.ContextMenu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.Files\BuferMAN.Files.csproj">
+      <Project>{a7da5919-18bb-4d6f-b492-2d241b3fef1c}</Project>
+      <Name>BuferMAN.Files</Name>
     </ProjectReference>
     <ProjectReference Include="..\BuferMAN.Infrastructure\BuferMAN.Infrastructure.csproj">
       <Project>{F14888DE-E3DE-4225-80AA-F836DCBA8E2E}</Project>

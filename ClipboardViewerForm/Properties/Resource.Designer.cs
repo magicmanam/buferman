@@ -106,33 +106,6 @@ namespace ClipboardViewerForm.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на There is an error during reading a file.
-        /// </summary>
-        internal static string LoadFileErrorPrefix {
-            get {
-                return ResourceManager.GetString("LoadFileErrorPrefix", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Loading file error.
-        /// </summary>
-        internal static string LoadFileErrorTitle {
-            get {
-                return ResourceManager.GetString("LoadFileErrorTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Text files (*.txt)|*.txt.
-        /// </summary>
-        internal static string LoadFileFilter {
-            get {
-                return ResourceManager.GetString("LoadFileFilter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Ищет локализованную строку, похожую на Login with creds.
         /// </summary>
         internal static string LoginWith {

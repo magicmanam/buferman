@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ClipboardViewerForm
+namespace BuferMAN.Infrastructure
 {
-    interface ILoadingFileHandler
+    public interface ILoadingFileHandler
     {
         void OnLoadFile(object sender, EventArgs args);
         void LoadBufersFromFile(string fileName);

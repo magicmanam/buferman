@@ -66,6 +66,7 @@ Settings:  //Minimalize settings for easy using
 
 *** Checked ***
 /*Check: . */
+/*Check: Create login. 'Place in bufer' menu item is disabled for it. */
 /*Check: Create login for 'username'. Copy 'username' again - it should appear in program. */
 /*Check: Скопировать тескт в браузере. Сделать ему алиас. Вставить этот текст куда-нибудь -> буфер не должен продублироваться. */
 /*Check: Поместить клип в буфер (при выделенном буфере нажать Ctrl+C), а затем сделать его постоянным - он должен сместиться в постоянные буферы. */

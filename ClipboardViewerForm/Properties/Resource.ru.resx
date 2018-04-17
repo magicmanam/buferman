@@ -126,15 +126,6 @@
   <data name="ImageBufer" xml:space="preserve">
     <value>Картинка</value>
   </data>
-  <data name="LoadFileErrorPrefix" xml:space="preserve">
-    <value>Произошла следующая ошибка при попытке прочитать файл</value>
-  </data>
-  <data name="LoadFileErrorTitle" xml:space="preserve">
-    <value>Ошибка при загрузке файла</value>
-  </data>
-  <data name="LoadFileFilter" xml:space="preserve">
-    <value>Текстовые файлы (*.txt)|*.txt</value>
-  </data>
   <data name="LoginWith" xml:space="preserve">
     <value>Войти как</value>
   </data>

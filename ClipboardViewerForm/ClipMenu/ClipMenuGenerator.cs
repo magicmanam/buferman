@@ -25,6 +25,7 @@ namespace ClipboardViewerForm.ClipMenu
         private MenuItem _createLoginDataMenuItem;
         private MenuItem _addToFileMenuItem;
         private MenuItem _pasteMenuItem;
+        private MenuItem _placeInBuferMenuItem;
         private String _originBuferText;
         private ToolTip _mouseOverTooltip;
         private IClipboardWrapper _clipboardWrapper;
@@ -48,7 +49,8 @@ namespace ClipboardViewerForm.ClipMenu
 
             this._markAsPersistentMenuItem = new MenuItem(Resource.MenuPersistent, this._MarkAsPersistent, Shortcut.CtrlS);
             contextMenu.MenuItems.Add(this._markAsPersistentMenuItem);
-            contextMenu.MenuItems.Add(new PlaceInBuferMenuItem(this._clipboardWrapper, this._dataObject));
+            this._placeInBuferMenuItem = new PlaceInBuferMenuItem(this._clipboardWrapper, this._dataObject);
+            contextMenu.MenuItems.Add(this._placeInBuferMenuItem);
 
             var formats = this._dataObject.GetFormats();
             var formatsMenu = new MenuItem();
@@ -123,6 +125,7 @@ namespace ClipboardViewerForm.ClipMenu
             this._pasteMenuItem.Text = Resource.LoginWith + $" {new String('\t', 2)} Enter";
 
             this._returnTextToInitialMenuItem.Enabled = false;
+            this._placeInBuferMenuItem.Enabled = false;
             this._changeTextMenuItem.Enabled = false;
             this._dataObject.SetData(ClipboardFormats.PASSWORD_FORMAT, e.Password);
             this._MarkAsPersistent(sender, e);

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.IO;
-using System.Windows.Forms;
-using ClipboardViewerForm.Properties;
 using System.Text;
+using BuferMAN.Infrastructure;
+using System.Windows.Forms;
 using BuferMAN.Clipboard;
+using BuferMAN.Files.Properties;
 
-namespace ClipboardViewerForm
+namespace BuferMAN.Files
 {
-    class LoadingFileHandler : ILoadingFileHandler
+    public class LoadingFileHandler : ILoadingFileHandler
     {
         private readonly OpenFileDialog _dialog = new OpenFileDialog();
         private readonly IClipboardWrapper _clipboardWrapper;

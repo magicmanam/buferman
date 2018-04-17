@@ -12,6 +12,7 @@ using ClipboardViewerForm.Properties;
 using System.Security.Principal;
 using magicmanam.Windows.ClipboardViewer;
 using BuferMAN.Infrastructure;
+using BuferMAN.Files;
 
 namespace ClipboardViewerForm
 {
