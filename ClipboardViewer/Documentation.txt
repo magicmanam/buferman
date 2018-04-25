@@ -7,13 +7,14 @@
 - Fix issue with unicode/not unicode symbols in button's title
 - Search from keyboard (by text or aliases). Ctrl + F - search mode on visible time
 - FtpPrivateData - ftp format - other format support can added via plugins
-- Enable/disable 'Delete All' and 'Delete All Temporary' based on availability.
+- Enable/disable 'Delete All' and 'Delete All Temporary' based on availability - on menu opening.
 - Android Studio Strings -> 0 whitespaces - but HTML text is not null as well as Rich Text
 - running line in button text - as new presentation
-- GetCurrentViewer - на форум
+- Bug: Type char by char works only when English language is selected
 
 
 # Ultimate version (almost sorted)
+- Update Readme with screenshots
 - if bufer selected 3 and more time - ask to save as persistent
 - Alt + C can be overwritten in some programs (like Notepad++)
 - MAX_STATUS_LENGTH = 55 as well as other magic numbers/strings

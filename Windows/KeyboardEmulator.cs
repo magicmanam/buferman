@@ -50,7 +50,7 @@ namespace Windows
             this.Wait();
 
             var currentLanguage = InputLanguage.CurrentInputLanguage;
-            InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("en-US"));//This culture should be calculated automatically here and in other place.
+            InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("en"));//This culture should be calculated automatically here and in other place.
 
             foreach (var escapedChar in KeyboardEmulator._ReplaceSpecialSendKeysCharacters(keysCombination))
             {

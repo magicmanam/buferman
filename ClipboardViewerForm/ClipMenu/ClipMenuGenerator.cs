@@ -88,11 +88,12 @@ namespace ClipboardViewerForm.ClipMenu
             if (isChangeTextAvailable)
             {
                 contextMenu.MenuItems.AddSeparator();
-                contextMenu.MenuItems.Add(new MenuItem(Resource.MenuCharByChar, (object sender, EventArgs args) => {
+                contextMenu.MenuItems.Add(new MenuItem(Resource.MenuCharByChar, (object sender, EventArgs args) =>
+                {
                     WindowLevelContext.Current.HideWindow();
                     new KeyboardEmulator().TypeText(this._originBuferText);
                 }));
-                
+
                 this._returnTextToInitialMenuItem = new ReturnToInitialTextMenuItem(this._button, this._originBuferText, this._mouseOverTooltip);
                 contextMenu.MenuItems.Add(this._returnTextToInitialMenuItem);
                 var changeTextMenuItem = new ChangeTextMenuItem(this._button, this._originBuferText, this._mouseOverTooltip);
