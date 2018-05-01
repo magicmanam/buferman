@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Windows.Forms;
+using SystemWindowsForm = System.Windows.Forms.Form;
 using Windows;
 
-namespace ClipboardViewerForm
+namespace BuferMAN.Form
 {
-	public partial class BuferAMForm : Form
+	public partial class BuferAMForm : SystemWindowsForm
     {
         protected override void OnClosed(EventArgs e)
         {

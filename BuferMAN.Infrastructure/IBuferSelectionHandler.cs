@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ClipboardViewerForm
+namespace BuferMAN.Infrastructure
 {
-    interface IBuferSelectionHandler
+    public interface IBuferSelectionHandler
     {
         void DoOnClipSelection(object sender, EventArgs e);
     }

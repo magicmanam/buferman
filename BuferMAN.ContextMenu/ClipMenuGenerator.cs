@@ -1,18 +1,19 @@
 ﻿using BuferMAN.Clipboard;
-using BuferMAN.ContextMenu;
+using BuferMAN.Form;
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.ContextMenu;
-using BuferMAN.Menu;
 using ClipboardViewerForm.ClipMenu.Items;
-using ClipboardViewerForm.Properties;
 using System;
 using System.IO;
 using System.Windows.Forms;
+using SystemWindowsFormsContextMenu = System.Windows.Forms.ContextMenu;
 using Windows;
+using BuferMAN.Menu;
+using BuferMAN.ContextMenu.Properties;
 
-namespace ClipboardViewerForm.ClipMenu
+namespace BuferMAN.ContextMenu
 {
-    class ClipMenuGenerator : IClipMenuGenerator
+    public class ClipMenuGenerator : IClipMenuGenerator
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IBuferSelectionHandler _buferSelectionHandler;
@@ -38,14 +39,14 @@ namespace ClipboardViewerForm.ClipMenu
             this._clipboardWrapper = clipboardWrapper;
         }
 
-        public ContextMenu GenerateContextMenu(IDataObject dataObject, Button button, String originBuferText, ToolTip mouseOverTooltip, bool isChangeTextAvailable)
+        public SystemWindowsFormsContextMenu GenerateContextMenu(IDataObject dataObject, Button button, String originBuferText, ToolTip mouseOverTooltip, bool isChangeTextAvailable)
         {
             this._dataObject = dataObject;
             this._button = button;
             this._originBuferText = originBuferText;
             this._mouseOverTooltip = mouseOverTooltip;
 
-            var contextMenu = new ContextMenu();
+            var contextMenu = new SystemWindowsFormsContextMenu();
 
             this._markAsPersistentMenuItem = new MenuItem(Resource.MenuPersistent, this._MarkAsPersistent, Shortcut.CtrlS);
             contextMenu.MenuItems.Add(this._markAsPersistentMenuItem);
@@ -123,7 +124,7 @@ namespace ClipboardViewerForm.ClipMenu
 
         private void _LoginCredentialsMenuItem_LoginCreated(object sender, CreateLoginCredentialsEventArgs e)
         {
-            this._pasteMenuItem.Text = Resource.LoginWith + $" {new String('\t', 2)} Enter";
+            this._pasteMenuItem.Text = $"{Resource.LoginWith} {new String('\t', 2)} Enter";
 
             this._returnTextToInitialMenuItem.Enabled = false;
             this._placeInBuferMenuItem.Enabled = false;

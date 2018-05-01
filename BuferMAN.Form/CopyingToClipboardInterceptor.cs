@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using ClipboardViewerForm.Properties;
 using BuferMAN.Infrastructure;
 using BuferMAN.Clipboard;
+using BuferMAN.Form.Properties;
 
-namespace ClipboardViewerForm
+namespace BuferMAN.Form
 {
 	class CopyingToClipboardInterceptor : ICopyingToClipboardInterceptor
     {

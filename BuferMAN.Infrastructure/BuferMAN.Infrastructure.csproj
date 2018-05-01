@@ -37,11 +37,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContextMenu\IClipMenuGenerator.cs" />
+    <Compile Include="IBuferSelectionHandler.cs" />
+    <Compile Include="ICopyingToClipboardInterceptor.cs" />
     <Compile Include="ILoadingFileHandler.cs" />
     <Compile Include="IProgramSettings.cs" />
     <Compile Include="IWindowLevelContext.cs" />
+    <Compile Include="Menu\IMenuGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WindowLevelContext.cs" />
+    <Compile Include="Window\IRenderingHandler.cs" />
+    <Compile Include="Window\IWindowActivationHandler.cs" />
+    <Compile Include="Window\IWindowHidingHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

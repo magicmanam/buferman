@@ -196,11 +196,74 @@ namespace BuferMAN.ContextMenu.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Login with creds.
+        /// </summary>
+        internal static string LoginWith {
+            get {
+                return ResourceManager.GetString("LoginWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Added to &amp;bufers.txt file.
+        /// </summary>
+        internal static string MenuAddedToFile {
+            get {
+                return ResourceManager.GetString("MenuAddedToFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Add to &amp;bufers.txt file.
+        /// </summary>
+        internal static string MenuAddToFile {
+            get {
+                return ResourceManager.GetString("MenuAddToFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Hide bufer &amp;text with alias.
         /// </summary>
         internal static string MenuChange {
             get {
                 return ResourceManager.GetString("MenuChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Type &amp;char by char (for console).
+        /// </summary>
+        internal static string MenuCharByChar {
+            get {
+                return ResourceManager.GetString("MenuCharByChar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &amp;Formats.
+        /// </summary>
+        internal static string MenuFormats {
+            get {
+                return ResourceManager.GetString("MenuFormats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &amp;Paste.
+        /// </summary>
+        internal static string MenuPaste {
+            get {
+                return ResourceManager.GetString("MenuPaste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на M&amp;ark as persistent.
+        /// </summary>
+        internal static string MenuPersistent {
+            get {
+                return ResourceManager.GetString("MenuPersistent", resourceCulture);
             }
         }
         

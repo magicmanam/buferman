@@ -4,17 +4,16 @@ using System.Windows.Forms;
 using Windows;
 using BuferMAN.Clipboard;
 using System.Diagnostics;
-using ClipboardViewerForm.Properties;
 using System.Deployment.Application;
 using System.Reflection;
 using BuferMAN.Menu.Help;
 using magicmanam.UndoableOperations;
-using BuferMAN.Menu;
 using BuferMAN.Infrastructure;
+using BuferMAN.Menu.Properties;
 
-namespace ClipboardViewerForm.Menu
+namespace BuferMAN.Menu
 {
-    class MenuGenerator : IMenuGenerator
+    public class MenuGenerator : IMenuGenerator
     {
         private readonly ILoadingFileHandler _loadingFileHandler;
         private readonly IClipboardBuferService _clipboardBuferService;

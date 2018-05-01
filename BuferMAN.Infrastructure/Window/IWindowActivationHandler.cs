@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace ClipboardViewerForm.Window
+namespace BuferMAN.Infrastructure.Window
 {
-    interface IWindowActivationHandler
+    public interface IWindowActivationHandler
     {
         void OnActivated(object sender, EventArgs e);
     }

@@ -162,8 +162,29 @@
   <data name="LoginCreds" xml:space="preserve">
     <value>Login credentials</value>
   </data>
+  <data name="LoginWith" xml:space="preserve">
+    <value>Login with creds</value>
+  </data>
+  <data name="MenuAddedToFile" xml:space="preserve">
+    <value>Added to &amp;bufers.txt file</value>
+  </data>
+  <data name="MenuAddToFile" xml:space="preserve">
+    <value>Add to &amp;bufers.txt file</value>
+  </data>
   <data name="MenuChange" xml:space="preserve">
     <value>Hide bufer &amp;text with alias</value>
+  </data>
+  <data name="MenuCharByChar" xml:space="preserve">
+    <value>Type &amp;char by char (for console)</value>
+  </data>
+  <data name="MenuFormats" xml:space="preserve">
+    <value>&amp;Formats</value>
+  </data>
+  <data name="MenuPaste" xml:space="preserve">
+    <value>&amp;Paste</value>
+  </data>
+  <data name="MenuPersistent" xml:space="preserve">
+    <value>M&amp;ark as persistent</value>
   </data>
   <data name="MenuPlaceInBufer" xml:space="preserve">
     <value>Place in bufer without paste</value>

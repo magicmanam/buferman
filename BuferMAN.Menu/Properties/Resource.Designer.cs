@@ -70,11 +70,200 @@ namespace BuferMAN.Menu.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на &amp;Edit.
+        /// </summary>
+        internal static string MenuEdit {
+            get {
+                return ResourceManager.GetString("MenuEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete &amp;all.
+        /// </summary>
+        internal static string MenuEditDel {
+            get {
+                return ResourceManager.GetString("MenuEditDel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Delete all &amp;temporary.
+        /// </summary>
+        internal static string MenuEditDelTemp {
+            get {
+                return ResourceManager.GetString("MenuEditDelTemp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на There are persistent bufers exist. Do you want to delete only temporal bufers?.
+        /// </summary>
+        internal static string MenuEditDelText {
+            get {
+                return ResourceManager.GetString("MenuEditDelText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Confirm persistent bufers deletion.
+        /// </summary>
+        internal static string MenuEditDelTitle {
+            get {
+                return ResourceManager.GetString("MenuEditDelTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &amp;Redo.
+        /// </summary>
+        internal static string MenuEditRedo {
+            get {
+                return ResourceManager.GetString("MenuEditRedo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &amp;Undo.
+        /// </summary>
+        internal static string MenuEditUndo {
+            get {
+                return ResourceManager.GetString("MenuEditUndo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &amp;File.
+        /// </summary>
+        internal static string MenuFile {
+            get {
+                return ResourceManager.GetString("MenuFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Open/update default file.
+        /// </summary>
+        internal static string MenuFileChangeDefault {
+            get {
+                return ResourceManager.GetString("MenuFileChangeDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на E&amp;xit session.
+        /// </summary>
+        internal static string MenuFileExit {
+            get {
+                return ResourceManager.GetString("MenuFileExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Lo&amp;ad from file.
+        /// </summary>
+        internal static string MenuFileLoad {
+            get {
+                return ResourceManager.GetString("MenuFileLoad", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &amp;Help.
+        /// </summary>
+        internal static string MenuHelp {
+            get {
+                return ResourceManager.GetString("MenuHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &amp;About.
+        /// </summary>
+        internal static string MenuHelpAbout {
+            get {
+                return ResourceManager.GetString("MenuHelpAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Windows clipboard helper with love... Current program version is.
+        /// </summary>
+        internal static string MenuHelpAboutText {
+            get {
+                return ResourceManager.GetString("MenuHelpAboutText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на About BuferMAN.
+        /// </summary>
+        internal static string MenuHelpAboutTitle {
+            get {
+                return ResourceManager.GetString("MenuHelpAboutTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Make &amp;world better.
+        /// </summary>
+        internal static string MenuHelpDonate {
+            get {
+                return ResourceManager.GetString("MenuHelpDonate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Hello my Friend! Thank you for interest to this program! It was created with love to help other people in their day-to-day activities. The most valuable gift for me will be your help for other people! There are many people who need your help and support around: people with disabilities, children without parents and so on... You can find any charity organization or smthg similar and transfer there some funds - I will really appreciate your act! Thank you again and have a nice day!.
+        /// </summary>
+        internal static string MenuHelpDonateText {
+            get {
+                return ResourceManager.GetString("MenuHelpDonateText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Your help is really appreciated.
+        /// </summary>
+        internal static string MenuHelpDonateTitle {
+            get {
+                return ResourceManager.GetString("MenuHelpDonateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Send &amp;feedback/issue.
         /// </summary>
         internal static string MenuHelpSend {
             get {
                 return ResourceManager.GetString("MenuHelpSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на &amp;Start time.
+        /// </summary>
+        internal static string MenuHelpStart {
+            get {
+                return ResourceManager.GetString("MenuHelpStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Program was started at.
+        /// </summary>
+        internal static string MenuHelpStartPrefix {
+            get {
+                return ResourceManager.GetString("MenuHelpStartPrefix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на Start time.
+        /// </summary>
+        internal static string MenuHelpStartTitle {
+            get {
+                return ResourceManager.GetString("MenuHelpStartTitle", resourceCulture);
             }
         }
     }

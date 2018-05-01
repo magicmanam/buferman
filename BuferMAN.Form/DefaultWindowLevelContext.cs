@@ -1,18 +1,20 @@
 ﻿using BuferMAN.Clipboard;
+using BuferMAN.Form.Window;
 using BuferMAN.Infrastructure;
-using ClipboardViewerForm.Window;
+using BuferMAN.Infrastructure.Window;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using SystemWindowsForm = System.Windows.Forms.Form;
 
-namespace ClipboardViewerForm
+namespace BuferMAN.Form
 {
     public class DefaultWindowLevelContext : IWindowLevelContext
     {
         private readonly IRenderingHandler _renderingHandler;
         private readonly IWindowHidingHandler _hidingHandler;
 
-        public DefaultWindowLevelContext(Form form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IDictionary<IDataObject, Button> buttonsMap, IProgramSettings settings)
+        public DefaultWindowLevelContext(SystemWindowsForm form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IDictionary<IDataObject, Button> buttonsMap, IProgramSettings settings)
         {
             this._renderingHandler = new RenderingHandler(form, clipboardBuferService, comparer, clipboardWrapper, buttonsMap, settings);
             this._hidingHandler = new WindowHidingHandler(form);

@@ -3,11 +3,13 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Linq;
 using System.IO;
-using ClipboardViewerForm.Properties;
 using BuferMAN.Infrastructure.ContextMenu;
 using BuferMAN.Clipboard;
+using BuferMAN.Form.Properties;
+using SystemWindowsForm = System.Windows.Forms.Form;
+using BuferMAN.Infrastructure;
 
-namespace ClipboardViewerForm
+namespace BuferMAN.Form
 {
     class BuferHandlersWrapper
     {
@@ -19,7 +21,7 @@ namespace ClipboardViewerForm
         private readonly ToolTip _focusTooltip = new ToolTip() { OwnerDraw = false };
         private const float IMAGE_SCALE = 0.75f;
 
-        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IDataObject dataObject, Button button, Form form, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler)
+        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IDataObject dataObject, Button button, SystemWindowsForm form, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._dataObject = dataObject;

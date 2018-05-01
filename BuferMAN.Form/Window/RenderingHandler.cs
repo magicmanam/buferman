@@ -2,16 +2,18 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using ClipboardViewerForm.ClipMenu;
 using BuferMAN.ClipPresentations;
 using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure;
+using SystemWindowsForm = System.Windows.Forms.Form;
+using BuferMAN.Infrastructure.Window;
+using BuferMAN.ContextMenu;
 
-namespace ClipboardViewerForm.Window
+namespace BuferMAN.Form.Window
 {
 	class RenderingHandler : IRenderingHandler
     {
-        private readonly Form _form;
+        private readonly SystemWindowsForm _form;
         private readonly IClipboardBuferService _clipboardBuferService;
 		private readonly IDictionary<IDataObject, Button> _buttonsMap;
 		private readonly IEqualityComparer<IDataObject> _comparer;
@@ -23,7 +25,7 @@ namespace ClipboardViewerForm.Window
 
         private const int BUTTON_HEIGHT = 23;
 
-        public RenderingHandler(Form form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IDictionary<IDataObject, Button> buttonsMap, IProgramSettings settings)
+        public RenderingHandler(SystemWindowsForm form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IDictionary<IDataObject, Button> buttonsMap, IProgramSettings settings)
         {
             this._form = form;
             this._clipboardBuferService = clipboardBuferService;

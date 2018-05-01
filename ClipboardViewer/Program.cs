@@ -3,7 +3,7 @@ using Logging;
 using System;
 using System.Threading;
 using System.Windows.Forms;
-using ClipboardViewerForm;
+using BuferMAN.Form;
 using System.IO;
 using System.Threading.Tasks;
 using ClipboardViewer.Properties;

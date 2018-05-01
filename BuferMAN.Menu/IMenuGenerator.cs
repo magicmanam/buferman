@@ -1,8 +1,8 @@
 ﻿using System.Windows.Forms;
 
-namespace ClipboardViewerForm.Menu
+namespace BuferMAN.Menu
 {
-    interface IMenuGenerator
+    public interface IMenuGenerator
     {
         MainMenu GenerateMenu();
     }

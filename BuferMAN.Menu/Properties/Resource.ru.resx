@@ -120,7 +120,70 @@
   <data name="DocumentationMenuItem" xml:space="preserve">
     <value>&amp;Документация</value>
   </data>
+  <data name="MenuEdit" xml:space="preserve">
+    <value>Правка</value>
+  </data>
+  <data name="MenuEditDel" xml:space="preserve">
+    <value>Удалить все буферы</value>
+  </data>
+  <data name="MenuEditDelTemp" xml:space="preserve">
+    <value>Удалить только временные буферы</value>
+  </data>
+  <data name="MenuEditDelText" xml:space="preserve">
+    <value>В программе сейчас есть постоянные буферы. Если вы хотели удалить только временные буферы, нажмите 'Да'. 'Нет' - удалить все буферы, в том числе и постоянные.</value>
+  </data>
+  <data name="MenuEditDelTitle" xml:space="preserve">
+    <value>Подтверждение удаления постоянных буферов</value>
+  </data>
+  <data name="MenuEditRedo" xml:space="preserve">
+    <value>Вернуть</value>
+  </data>
+  <data name="MenuEditUndo" xml:space="preserve">
+    <value>Отменить</value>
+  </data>
+  <data name="MenuFile" xml:space="preserve">
+    <value>&amp;Файл</value>
+  </data>
+  <data name="MenuFileChangeDefault" xml:space="preserve">
+    <value>Открыть/изменить файл по умолчанию</value>
+  </data>
+  <data name="MenuFileExit" xml:space="preserve">
+    <value>Выход из программы</value>
+  </data>
+  <data name="MenuFileLoad" xml:space="preserve">
+    <value>Загрузить буферы из файла</value>
+  </data>
+  <data name="MenuHelp" xml:space="preserve">
+    <value>Помощь</value>
+  </data>
+  <data name="MenuHelpAbout" xml:space="preserve">
+    <value>О проекте</value>
+  </data>
+  <data name="MenuHelpAboutText" xml:space="preserve">
+    <value>Помощник в работе с буферами обмена, в который просто нельзя не влюбиться! Текущая версия программы</value>
+  </data>
+  <data name="MenuHelpAboutTitle" xml:space="preserve">
+    <value>О проекте BuferMAN</value>
+  </data>
+  <data name="MenuHelpDonate" xml:space="preserve">
+    <value>Сделать мир лучше</value>
+  </data>
+  <data name="MenuHelpDonateText" xml:space="preserve">
+    <value>Здравствуй, пользователь! Спасибо за проявленный интерес к этой программе! Она призвана помочь людям в их рутинной работе. Самым ценным подарком для меня будет ваша помощь другим людям, нуждающимся в помощи: дети-сироты, инвалиды и другие незащищённые люди. Есть мн-во благотворительных организаций и счетов, через которые им можно помочь, нужно их только найти и желание это сделать! Я буду очень признателен за этот поступок! Ещё раз спасибо и отличного дня!</value>
+  </data>
+  <data name="MenuHelpDonateTitle" xml:space="preserve">
+    <value>Помоги ближнему и когда-то помогут тебе!</value>
+  </data>
   <data name="MenuHelpSend" xml:space="preserve">
     <value>Открыть форму обратной связи</value>
+  </data>
+  <data name="MenuHelpStart" xml:space="preserve">
+    <value>Время запуска</value>
+  </data>
+  <data name="MenuHelpStartPrefix" xml:space="preserve">
+    <value>Программа была запущена в</value>
+  </data>
+  <data name="MenuHelpStartTitle" xml:space="preserve">
+    <value>Время запуска</value>
   </data>
 </root>

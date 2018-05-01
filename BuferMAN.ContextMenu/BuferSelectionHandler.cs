@@ -4,15 +4,16 @@ using System.Windows.Forms;
 using Windows;
 using BuferMAN.Infrastructure;
 using BuferMAN.Clipboard;
+using SystemWindowsForm = System.Windows.Forms.Form;
 
-namespace ClipboardViewerForm
+namespace BuferMAN.ContextMenu
 {
-	class BuferSelectionHandler : IBuferSelectionHandler
+	public class BuferSelectionHandler : IBuferSelectionHandler
     {
         private readonly IDataObject _dataObject;
         private readonly IClipboardWrapper _clipboardWrapper;
 
-        public BuferSelectionHandler(Form form, IDataObject dataObject, IClipboardWrapper clipboardWrapper)
+        public BuferSelectionHandler(SystemWindowsForm form, IDataObject dataObject, IClipboardWrapper clipboardWrapper)
         {
             this._dataObject = dataObject;
             this._clipboardWrapper = clipboardWrapper;

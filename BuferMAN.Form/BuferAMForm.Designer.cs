@@ -3,18 +3,20 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Windows.Input;
+using SystemWindowsFormsContextMenu = System.Windows.Forms.ContextMenu;
 using Windows;
-using ClipboardViewerForm.Menu;
-using ClipboardViewerForm.Window;
 using BuferMAN.Clipboard;
-using ClipboardViewerForm.Properties;
 using System.Security.Principal;
 using magicmanam.Windows.ClipboardViewer;
 using BuferMAN.Infrastructure;
 using BuferMAN.Files;
+using SystemWindowsForm = System.Windows.Forms.Form;
+using BuferMAN.Menu;
+using BuferMAN.Form.Window;
+using BuferMAN.Form.Properties;
+using System.Windows.Input;
 
-namespace ClipboardViewerForm
+namespace BuferMAN.Form
 {
     partial class BuferAMForm
     {
@@ -94,7 +96,8 @@ namespace ClipboardViewerForm
             {
                 this._clipboardViewer = new ClipboardViewer(this.Handle);
                 WindowsFunctions.RegisterHotKey(this.Handle, 0, 1, (int)Keys.C);
-            } else if(this._clipboardViewer != null)
+            }
+            else if (this._clipboardViewer != null)
             {
                 this._clipboardViewer.HandleWindowsMessage(m.Msg, m.WParam, m.LParam);
             }
@@ -173,7 +176,7 @@ namespace ClipboardViewerForm
         {
             this.TrayIcon = new NotifyIcon() { Text = Resource.NotifyIconStartupText, Icon = new Icon("copy-multi-size.ico") };
             this.TrayIcon.DoubleClick += this._TrayIcon_DoubleClick;
-            this.TrayIcon.ContextMenu = new ContextMenu();
+            this.TrayIcon.ContextMenu = new SystemWindowsFormsContextMenu();
             this.TrayIcon.ContextMenu.MenuItems.Add(new MenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => WindowsFunctions.SendMessage(WindowLevelContext.Current.WindowHandle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero)));
             this.TrayIcon.Visible = true;
             this._ShowTrayIconInfo(1500, Resource.NotifyIconStartupText);
@@ -226,7 +229,7 @@ namespace ClipboardViewerForm
         private void BuferAMForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = true;
-            var form = (Form)sender;
+            var form = (SystemWindowsForm)sender;
             form.WindowState = FormWindowState.Minimized;
         }
 

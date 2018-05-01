@@ -2,15 +2,17 @@
 using System.Windows.Forms;
 using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure;
+using BuferMAN.Infrastructure.Window;
+using SystemWindowsForm = System.Windows.Forms.Form;
 
-namespace ClipboardViewerForm.Window
+namespace BuferMAN.Form.Window
 {
 	class WindowActivationHandler : IWindowActivationHandler
     {
         private readonly IClipboardBuferService _clipboardBuferService;
-        private readonly Form _form;
+        private readonly SystemWindowsForm _form;
 
-        public WindowActivationHandler(IClipboardBuferService clipboadService, Form form)
+        public WindowActivationHandler(IClipboardBuferService clipboadService, SystemWindowsForm form)
         {
             _clipboardBuferService = clipboadService;
             _form = form;
