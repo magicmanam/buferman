@@ -171,4 +171,10 @@
   <data name="MenuFileExit" xml:space="preserve">
     <value>Выход из программы</value>
   </data>
+  <data name="PausedStatus" xml:space="preserve">
+    <value>BuferMAN на отдыхе. Alt+P - продолжить</value>
+  </data>
+  <data name="ResumedStatus" xml:space="preserve">
+    <value>BuferMAN возобновил работу</value>
+  </data>
 </root>

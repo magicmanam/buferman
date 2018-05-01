@@ -162,6 +162,24 @@ namespace BuferMAN.Form.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на BuferMAN is paused. Alt+P to continue.
+        /// </summary>
+        internal static string PausedStatus {
+            get {
+                return ResourceManager.GetString("PausedStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Ищет локализованную строку, похожую на BuferMAN is resumed. Enjoy copies!.
+        /// </summary>
+        internal static string ResumedStatus {
+            get {
+                return ResourceManager.GetString("ResumedStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Tra-ta-ta!!!.
         /// </summary>
         internal static string TratataTitle {

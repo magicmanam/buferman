@@ -267,6 +267,7 @@ namespace BuferMAN.Form
                     if (e.Alt)
                     {
                         this._shouldCatchCopies = !this._shouldCatchCopies;
+                        this.SetStatusBarText(this._shouldCatchCopies ? Resource.ResumedStatus : Resource.PausedStatus);
                     }
                     break;
             }

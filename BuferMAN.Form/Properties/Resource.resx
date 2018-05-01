@@ -175,4 +175,10 @@ Hot keys:
   <data name="MenuFileExit" xml:space="preserve">
     <value>E&amp;xit session</value>
   </data>
+  <data name="PausedStatus" xml:space="preserve">
+    <value>BuferMAN is paused. Alt+P to continue</value>
+  </data>
+  <data name="ResumedStatus" xml:space="preserve">
+    <value>BuferMAN is resumed. Enjoy copies!</value>
+  </data>
 </root>
