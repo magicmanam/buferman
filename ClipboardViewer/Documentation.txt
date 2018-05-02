@@ -4,7 +4,6 @@
 
 # Release by 1 April 2018
 - скопировать 3 файла по удалёнке -> « Not a text » label - make a dump and debug via WinDBG
-- FtpPrivateData - ftp format - other format support can added via plugins
 - Enable/disable 'Delete All' and 'Delete All Temporary' based on availability - on menu opening.
 - Update Readme with screenshots
 - все атомарные операции сервиса обернуть в undoablecontext вложенные

@@ -5,15 +5,14 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("BuferMAN.Form")]
+[assembly: AssemblyTitle("BuferMAN.Form.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("magicmanam")]
-[assembly: AssemblyProduct("BuferMAN.Form")]
+[assembly: AssemblyProduct("BuferMAN.Form.Tests")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
-[assembly: AssemblyTrademark("magicmanam")]
-[assembly: AssemblyCulture("")]
-[assembly: InternalsVisibleTo("BuferMAN.Form.Tests")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("magicmanam")]
 
 // Установка значения False для параметра ComVisible делает типы в этой сборке невидимыми
 // для компонентов COM. Если необходимо обратиться к типу в этой сборке через
@@ -21,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // Следующий GUID служит для идентификации библиотеки типов, если этот проект будет видимым для COM
-[assembly: Guid("d8c168b4-607d-4fc6-b602-8c744f697ca6")]
+[assembly: Guid("aff44c47-6123-49cc-b211-d341328a2eeb")]
 
 // Сведения о версии сборки состоят из следующих четырех значений:
 //

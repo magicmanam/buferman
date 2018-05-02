@@ -11,7 +11,7 @@ using BuferMAN.Infrastructure;
 
 namespace BuferMAN.Form
 {
-    class BuferHandlersWrapper
+    public class BuferHandlersWrapper
     {
         private const int TOOLTIP_DURATION = 2500;
         private readonly IClipboardBuferService _clipboardBuferService;
@@ -37,7 +37,7 @@ namespace BuferMAN.Form
                     buferTextRepresentation = dataObject.GetData(DataFormats.Text) as string;
                 }
             }
-
+            
             var isChangeTextAvailable = true;
             string buferTitle = null;
             if (buferTextRepresentation == null)
@@ -71,7 +71,7 @@ namespace BuferMAN.Form
                     }
                 }
             }
-
+            
             string buttonText = buferTitle ?? buferTextRepresentation;
             if (string.IsNullOrWhiteSpace(buttonText))
             {
