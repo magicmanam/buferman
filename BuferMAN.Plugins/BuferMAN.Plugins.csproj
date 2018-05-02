@@ -7,8 +7,8 @@
     <ProjectGuid>{2822F743-087D-403A-A8E9-92FBEAC0A3EF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuferMAN.Plugins.Infrastructure</RootNamespace>
-    <AssemblyName>BuferMAN.Plugins.Infrastructure</AssemblyName>
+    <RootNamespace>BuferMAN.Plugins</RootNamespace>
+    <AssemblyName>BuferMAN.Plugins</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

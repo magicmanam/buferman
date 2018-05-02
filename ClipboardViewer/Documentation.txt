@@ -7,9 +7,15 @@
 - Update Readme with screenshots
 - все атомарные операции сервиса обернуть в undoablecontext вложенные
 - Formats menu - cache representation and/or show as tooltip
+- MAX_STATUS_LENGTH = 55 as well as other magic numbers/strings
+- IStorage - to remove all System.IO - to use everywhere and in unit tests
+- многострочные буферы из файла + пароль + персистентность + alias - json format
+- добавить проверку буфера в файле и метки того, что буфер был взят из файла
+- Set WindowLevelContext at program level, not form level ?
 
 Book:
 - Search from keyboard (by text or aliases). Ctrl + F - search mode on visible time. Many keys are handled, so only Ctrl + F and a separate input - this will handle a case with different languages
+- Помечать клип в буфере отдельным цветом - для случая, если он persistent - может он просто полусерым будет?
 - running line in button text - as new presentation
 - Show status line on every action
 - Add clips count into status bar (separate strip) <100 100+, 200
@@ -23,28 +29,22 @@ Hard:
 
 
 # Ultimate version (almost sorted)
+- Window with hot keys + menu with applications (scripts tool and others)
+- Refactor: add DI
+- Add plugin support
 - if bufer selected 3 and more time - ask to save as persistent
 - Alt + C can be overwritten in some programs (like Notepad++)
-- MAX_STATUS_LENGTH = 55 as well as other magic numbers/strings
 - Complete presentation - залить на гитхаб и возможно на slides.net
-- relocate tooltips to presentation classes and extract base class. Make plugins for preview tooltips with settings
+- relocate tooltips to presentation classes. Make plugins for preview tooltips with settings
 - If link in bufer - open in browser if Shift pressed (or other key)
-- многострочные буферы из файла + пароль + персистентность + alias - json format
-- добавить проверку буфера в файле и метки того, что буфер был взят из файла
-- Window with hot keys + menu with applications (scripts tool and others)
 - Разобраться с лицензиями
 - On scroll to show current clipboard with possibility to click
-- Refactor: add DI
-- Set WindowLevelContext at program level, not form level ?
-- Add plugin support
 - Hosting at https://sourceforge.net and other market places.
 - Add menu with unknown file formats
 - Corporative & personal versions with private message.
 - Site with users -> from menu by unique link
 - Add some AI strategies based on user behaviour (Ctrl+C - TAB - Ctrl+V - TAB - Ctrl+C)
-- IStorage - to remove all System.IO - to use everywhere
 - Improve Performance (try different tools)
-- Помечать клип в буфере отдельным цветом
 - Alt-C + P - Opens Paint + other shortcuts
 - There is a new bufers.txt file on every program update.
 - Automatic tests: create python git repo
