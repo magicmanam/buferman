@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using BuferMAN.Clipboard;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -30,7 +31,7 @@ namespace BuferMAN.ClipPresentations
 
         public bool IsCompatibleWithBufer(IDataObject data)
         {
-            return data.GetFormats().Any(format => format == DataFormats.FileDrop);
+            return data.GetFormats().Any(format => format == DataFormats.FileDrop || format == ClipboardFormats.FTP_FILE_FORMAT);
         }
     }
 }

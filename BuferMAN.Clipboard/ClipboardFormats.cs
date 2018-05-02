@@ -12,6 +12,7 @@ namespace BuferMAN.Clipboard
         public const string CUSTOM_IMAGE_FORMAT = "Buferman.Image";
         public const string PASSWORD_FORMAT = "Buferman.Password";
         public const string SKYPE_FORMAT = "SkypeMessageFragment";
+        public const string FTP_FILE_FORMAT = "FtpPrivateData";
 
     }
 }

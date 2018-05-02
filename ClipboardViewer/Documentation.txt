@@ -8,6 +8,7 @@
 - Enable/disable 'Delete All' and 'Delete All Temporary' based on availability - on menu opening.
 - Update Readme with screenshots
 - все атомарные операции сервиса обернуть в undoablecontext вложенные
+- Formats menu - cache representation and/or show as tooltip
 
 Book:
 - Search from keyboard (by text or aliases). Ctrl + F - search mode on visible time. Many keys are handled, so only Ctrl + F and a separate input - this will handle a case with different languages
