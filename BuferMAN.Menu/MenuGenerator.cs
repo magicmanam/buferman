@@ -55,8 +55,16 @@ namespace BuferMAN.Menu
             editMenu.MenuItems.Add(undoMenuItem);
             var redoMenuItem = new MenuItem(Resource.MenuEditRedo, (sender, args) => { this._clipboardBuferService.CancelUndo(); WindowLevelContext.Current.RerenderBufers(); }, Shortcut.CtrlY) { Enabled = false };
             editMenu.MenuItems.Add(redoMenuItem);
-            editMenu.MenuItems.Add(new MenuItem(Resource.MenuEditDel, _OnDeleteAll));
-            editMenu.MenuItems.Add(new MenuItem(Resource.MenuEditDelTemp, _OnDeleteAllTemporary));
+            var deleteAllMenuItem = new MenuItem(Resource.MenuEditDel, _OnDeleteAll);
+            editMenu.MenuItems.Add(deleteAllMenuItem);
+            var deleteTemporaryMenuItem = new MenuItem(Resource.MenuEditDelTemp, _OnDeleteAllTemporary);
+            editMenu.MenuItems.Add(deleteTemporaryMenuItem);
+
+            editMenu.Popup += (object sender, EventArgs args) =>
+            {
+                deleteTemporaryMenuItem.Enabled = this._clipboardBuferService.GetTemporaryClips().Count() > 0;
+                deleteAllMenuItem.Enabled = deleteTemporaryMenuItem.Enabled || this._clipboardBuferService.GetPersistentClips().Count() > 0;
+            };
 
             this._clipboardBuferService.UndoableContextChanged += (object sender, UndoableContextChangedEventArgs e) =>
             {

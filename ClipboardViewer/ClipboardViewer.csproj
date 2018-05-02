@@ -133,7 +133,7 @@
     <Content Include="skype.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TextFile1 - Копировать %2810%29.txt">
+    <Content Include="CheckList.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TextFile1 - Копировать %2811%29.txt">
