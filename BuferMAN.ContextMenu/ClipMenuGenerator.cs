@@ -39,11 +39,11 @@ namespace BuferMAN.ContextMenu
             this._clipboardWrapper = clipboardWrapper;
         }
 
-        public SystemWindowsFormsContextMenu GenerateContextMenu(IDataObject dataObject, Button button, String originBuferText, ToolTip mouseOverTooltip, bool isChangeTextAvailable)
+        public SystemWindowsFormsContextMenu GenerateContextMenu(IDataObject dataObject, Button button, ToolTip mouseOverTooltip, bool isChangeTextAvailable)
         {
             this._dataObject = dataObject;
             this._button = button;
-            this._originBuferText = originBuferText;
+            this._originBuferText = button.Text;
             this._mouseOverTooltip = mouseOverTooltip;
 
             var contextMenu = new SystemWindowsFormsContextMenu();

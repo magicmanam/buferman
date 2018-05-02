@@ -108,7 +108,7 @@ namespace BuferMAN.Form
 
             button.Click += this._buferSelectionHandler.DoOnClipSelection;
 
-            button.ContextMenu = clipMenuGenerator.GenerateContextMenu(this._dataObject, button, originBuferText, tooltip, isChangeTextAvailable);
+            button.ContextMenu = clipMenuGenerator.GenerateContextMenu(this._dataObject, button, tooltip, isChangeTextAvailable);
         }
 
         private void Tooltip_Draw(object sender, DrawToolTipEventArgs e)
