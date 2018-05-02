@@ -1,8 +1,8 @@
 ﻿using System.Windows.Forms;
 
-namespace BuferMAN.ClipPresentations
+namespace BuferMAN.Plugins.BuferPresentations
 {
-    public interface IClipPresentation
+    public interface IBuferPresentation
     {
         void ApplyToButton(Button button);
         bool IsCompatibleWithBufer(IDataObject data);

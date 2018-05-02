@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("BuferMAN.ClipPresentations")]
+[assembly: AssemblyTitle("BuferMAN.BuferPresentations")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("magicmanam")]
-[assembly: AssemblyProduct("BuferMAN.ClipPresentations")]
+[assembly: AssemblyProduct("BuferMAN.BuferPresentations")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("magicmanam")]
 [assembly: AssemblyCulture("")]

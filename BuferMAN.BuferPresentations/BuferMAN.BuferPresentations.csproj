@@ -37,15 +37,19 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FileClipPresentation.cs" />
-    <Compile Include="IClipPresentation.cs" />
+    <Compile Include="FtpFileBuferPresentation.cs" />
+    <Compile Include="FileBuferPresentation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SkypeClipPresentation.cs" />
+    <Compile Include="SkypeBuferPresentation.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuferMAN.Clipboard\BuferMAN.Clipboard.csproj">
       <Project>{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}</Project>
       <Name>BuferMAN.Clipboard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.Plugins\BuferMAN.Plugins.csproj">
+      <Project>{2822f743-087d-403a-a8e9-92fbeac0a3ef}</Project>
+      <Name>BuferMAN.Plugins</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

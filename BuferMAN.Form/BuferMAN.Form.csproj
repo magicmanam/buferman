@@ -69,9 +69,9 @@
       <Project>{de6fe4d1-5c5a-4069-8d7f-f72c03d6b18a}</Project>
       <Name>BuferMAN.Clipboard</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BuferMAN.ClipPresentations\BuferMAN.ClipPresentations.csproj">
+    <ProjectReference Include="..\BuferMAN.BuferPresentations\BuferMAN.BuferPresentations.csproj">
       <Project>{ed29e767-ad51-4508-9c1e-3c2446d504d9}</Project>
-      <Name>BuferMAN.ClipPresentations</Name>
+      <Name>BuferMAN.BuferPresentations</Name>
     </ProjectReference>
     <ProjectReference Include="..\BuferMAN.ContextMenu\BuferMAN.ContextMenu.csproj">
       <Project>{4ab9774f-2bf8-4f4c-9653-610c5c76f8b3}</Project>
@@ -88,6 +88,10 @@
     <ProjectReference Include="..\BuferMAN.Menu\BuferMAN.Menu.csproj">
       <Project>{08184414-67ea-419e-b71b-b764f0f2e578}</Project>
       <Name>BuferMAN.Menu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.Plugins\BuferMAN.Plugins.csproj">
+      <Project>{2822F743-087D-403A-A8E9-92FBEAC0A3EF}</Project>
+      <Name>BuferMAN.Plugins</Name>
     </ProjectReference>
     <ProjectReference Include="..\magicmanam.UndoableOperations\magicmanam.UndoableOperations.csproj">
       <Project>{2a0ea8a3-5e8c-411f-bf3d-b2d67ad5e956}</Project>

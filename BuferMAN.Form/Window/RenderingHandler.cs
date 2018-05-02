@@ -2,12 +2,13 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using BuferMAN.ClipPresentations;
 using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure;
 using SystemWindowsForm = System.Windows.Forms.Form;
 using BuferMAN.Infrastructure.Window;
 using BuferMAN.ContextMenu;
+using BuferMAN.Plugins.BuferPresentations;
+using BuferMAN.BuferPresentations;
 
 namespace BuferMAN.Form.Window
 {
@@ -21,7 +22,7 @@ namespace BuferMAN.Form.Window
         private readonly Label _persistentClipsDivider;
         private readonly IClipboardWrapper _clipboardWrapper;
         private readonly IProgramSettings _settings;
-        private readonly IList<IClipPresentation> _clipPresentations = new List<IClipPresentation>() { new SkypeClipPresentation(), new FileClipPresentation() };
+        private readonly IList<IBuferPresentation> _clipPresentations = new List<IBuferPresentation>() { new SkypeBuferPresentation(), new FileBuferPresentation(), new FtpFileBuferPresentation() };
 
         private const int BUTTON_HEIGHT = 23;
 
