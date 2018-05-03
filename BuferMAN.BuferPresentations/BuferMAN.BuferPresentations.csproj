@@ -37,6 +37,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileContentsBuferPresentation.cs" />
     <Compile Include="FtpFileBuferPresentation.cs" />
     <Compile Include="FileBuferPresentation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

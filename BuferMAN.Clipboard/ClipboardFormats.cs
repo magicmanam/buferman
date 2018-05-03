@@ -13,6 +13,7 @@ namespace BuferMAN.Clipboard
         public const string PASSWORD_FORMAT = "Buferman.Password";
         public const string SKYPE_FORMAT = "SkypeMessageFragment";
         public const string FTP_FILE_FORMAT = "FtpPrivateData";
+        public const string FILE_CONTENTS_FORMAT = "FileContents";
 
     }
 }
