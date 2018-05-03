@@ -49,12 +49,12 @@ namespace BuferMAN.Form
 
                     if (files.Length == 1)
                     {
-                        buferTitle = $"<< {Resource.FileBufer} >>";
+                        buferTitle = this._MakeSpecialBuferText(Resource.FileBufer);
                     }
                     else
                     {
-                        buferTitle = $"<< {Resource.FilesBufer} ({files.Length}) >>";
-                    }
+                        buferTitle = this._MakeSpecialBuferText($"{Resource.FilesBufer} ({files.Length})");
+                }
 
                     var folder = Path.GetDirectoryName(files.First());
                     buferTextRepresentation += folder + " " + Environment.NewLine + Environment.NewLine;
@@ -66,8 +66,17 @@ namespace BuferMAN.Form
                     if (isBitmap)
                     {
                         isChangeTextAvailable = false;
-                        buferTextRepresentation = $"<< {Resource.ImageBufer} >>";
-                        button.Font = new Font(button.Font, FontStyle.Italic | FontStyle.Bold);
+                        buferTextRepresentation = this._MakeSpecialBuferText(Resource.ImageBufer);
+                        this._MakeItalicBoldFont(button);
+                    }
+                    else
+                    {
+                        if (dataObject.GetFormats().Contains(ClipboardFormats.FILE_CONTENTS_FORMAT))
+                        {
+                            isChangeTextAvailable = false;
+                            buferTextRepresentation = this._MakeSpecialBuferText(Resource.FileContentsBufer);
+                            this._MakeItalicBoldFont(button);
+                        }
                     }
                 }
             }
@@ -75,8 +84,8 @@ namespace BuferMAN.Form
             string buttonText = buferTitle ?? buferTextRepresentation;
             if (string.IsNullOrWhiteSpace(buttonText))
             {
-                buttonText = buttonText == null ? $"<< {Resource.NotTextBufer} >>" : $"<< {buttonText.Length}   {Resource.WhiteSpaces} >>";
-                button.Font = new Font(button.Font, FontStyle.Italic | FontStyle.Bold);
+                buttonText = this._MakeSpecialBuferText(buttonText == null ? Resource.NotTextBufer : $"{buttonText.Length}   {Resource.WhiteSpaces}");
+                this._MakeItalicBoldFont(button);
                 isChangeTextAvailable = false;
             }
 
@@ -109,6 +118,16 @@ namespace BuferMAN.Form
             button.Click += this._buferSelectionHandler.DoOnClipSelection;
 
             button.ContextMenu = clipMenuGenerator.GenerateContextMenu(this._dataObject, button, tooltip, isChangeTextAvailable);
+        }
+
+        private void _MakeItalicBoldFont(Button button)
+        {
+            button.Font = new Font(button.Font, FontStyle.Italic | FontStyle.Bold);
+        }
+
+        private string _MakeSpecialBuferText(string baseString)
+        {
+            return $"<< {baseString} >>";
         }
 
         private void Tooltip_Draw(object sender, DrawToolTipEventArgs e)

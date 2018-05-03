@@ -177,4 +177,7 @@
   <data name="ResumedStatus" xml:space="preserve">
     <value>BuferMAN возобновил работу</value>
   </data>
+  <data name="FileContentsBufer" xml:space="preserve">
+    <value>В буфере файлы</value>
+  </data>
 </root>

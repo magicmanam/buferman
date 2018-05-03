@@ -79,6 +79,15 @@ namespace BuferMAN.Form.Properties {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на File Content.
+        /// </summary>
+        internal static string FileContentsBufer {
+            get {
+                return ResourceManager.GetString("FileContentsBufer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Files.
         /// </summary>
         internal static string FilesBufer {

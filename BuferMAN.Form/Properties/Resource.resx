@@ -181,4 +181,7 @@ Hot keys:
   <data name="ResumedStatus" xml:space="preserve">
     <value>BuferMAN is resumed. Enjoy copies!</value>
   </data>
+  <data name="FileContentsBufer" xml:space="preserve">
+    <value>File Content</value>
+  </data>
 </root>
