@@ -10,7 +10,6 @@
 - IStorage - to remove all System.IO - to use everywhere and in unit tests
 - многострочные буферы из файла + пароль + персистентность + alias - json format
 - добавить проверку буфера в файле и метки того, что буфер был взят из файла
-- Set WindowLevelContext at program level, not form level ?
 
 Book:
 - Search from keyboard (by text or aliases). Ctrl + F - search mode on visible time. Many keys are handled, so only Ctrl + F and a separate input - this will handle a case with different languages

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Windows.Forms;
 using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure;
-using SystemWindowsForm = System.Windows.Forms.Form;
 using BuferMAN.Infrastructure.Window;
 using BuferMAN.ContextMenu;
 using BuferMAN.Plugins.BuferPresentations;
@@ -14,9 +13,8 @@ namespace BuferMAN.Form.Window
 {
 	class RenderingHandler : IRenderingHandler
     {
-        private readonly SystemWindowsForm _form;
+        private readonly BuferAMForm _form;
         private readonly IClipboardBuferService _clipboardBuferService;
-		private readonly IDictionary<IDataObject, Button> _buttonsMap;
 		private readonly IEqualityComparer<IDataObject> _comparer;
         private readonly int _buttonWidth;
         private readonly Label _persistentClipsDivider;
@@ -26,12 +24,11 @@ namespace BuferMAN.Form.Window
 
         private const int BUTTON_HEIGHT = 23;
 
-        public RenderingHandler(SystemWindowsForm form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IDictionary<IDataObject, Button> buttonsMap, IProgramSettings settings)
+        public RenderingHandler(BuferAMForm form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IProgramSettings settings)
         {
             this._form = form;
             this._clipboardBuferService = clipboardBuferService;
 			this._comparer = comparer;
-            this._buttonsMap = buttonsMap;
             this._buttonWidth = this._form.ClientRectangle.Width;
             this._persistentClipsDivider = new Label() { Text = string.Empty, BorderStyle = BorderStyle.FixedSingle, AutoSize = false, Height = 3, BackColor = Color.AliceBlue, Width = this._buttonWidth };
             this._form.Controls.Add(this._persistentClipsDivider);
@@ -72,17 +69,17 @@ namespace BuferMAN.Form.Window
                 else
                 {
                     Button button;
-                    var equalObject = this._buttonsMap.Keys.FirstOrDefault(k => this._comparer.Equals(k, bufer));
+                    var equalObject = this._form.ButtonsMap.Keys.FirstOrDefault(k => this._comparer.Equals(k, bufer));
 
                     if (equalObject != null)
                     {
-                        button = this._buttonsMap[equalObject];
+                        button = this._form.ButtonsMap[equalObject];
                     }
                     else
                     {
                         button = new Button() { TextAlign = ContentAlignment.MiddleLeft, Margin = new Padding(0), Width = this._buttonWidth };
 
-                        this._buttonsMap.Add(bufer, button);
+                        this._form.ButtonsMap.Add(bufer, button);
                         this._form.Controls.Add(button);
                         button.BringToFront();
                         var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._clipboardWrapper);
@@ -117,19 +114,19 @@ namespace BuferMAN.Form.Window
         {
 			var deletedKeys = new List<IDataObject>();
 
-            foreach (var key in this._buttonsMap.Keys.ToList())
+            foreach (var key in this._form.ButtonsMap.Keys.ToList())
             {
 				var equalKey = bufers.FirstOrDefault(b => this._comparer.Equals(key, b));
                 if (equalKey == null)
                 {
-                    this._form.Controls.Remove(this._buttonsMap[key]);
+                    this._form.Controls.Remove(this._form.ButtonsMap[key]);
                     deletedKeys.Add(key);
                 }
             }
 
             foreach (var key in deletedKeys)
             {
-                this._buttonsMap.Remove(key);
+                this._form.ButtonsMap.Remove(key);
             }
         }
     }

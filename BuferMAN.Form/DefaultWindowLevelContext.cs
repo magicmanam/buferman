@@ -14,9 +14,9 @@ namespace BuferMAN.Form
         private readonly IRenderingHandler _renderingHandler;
         private readonly IWindowHidingHandler _hidingHandler;
 
-        public DefaultWindowLevelContext(SystemWindowsForm form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IDictionary<IDataObject, Button> buttonsMap, IProgramSettings settings)
+        public DefaultWindowLevelContext(BuferAMForm form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IProgramSettings settings)
         {
-            this._renderingHandler = new RenderingHandler(form, clipboardBuferService, comparer, clipboardWrapper, buttonsMap, settings);
+            this._renderingHandler = new RenderingHandler(form, clipboardBuferService, comparer, clipboardWrapper, settings);
             this._hidingHandler = new WindowHidingHandler(form);
             this.WindowHandle = form.Handle;
         }

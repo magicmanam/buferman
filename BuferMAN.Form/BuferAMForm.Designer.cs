@@ -32,6 +32,7 @@ namespace BuferMAN.Form
         private NotifyIcon TrayIcon;
         private bool _shouldCatchCopies = true;
 
+        public IDictionary<IDataObject, Button> ButtonsMap { get { return this._buttonsMap; } }
         internal StatusStrip StatusLine { get; set; }
         public ToolStripStatusLabel StatusLabel { get; set; }
 
@@ -47,8 +48,6 @@ namespace BuferMAN.Form
             this._loadingFileHandler = new LoadingFileHandler(clipboardWrapper);
             this._menuGenerator = new MenuGenerator(this._loadingFileHandler, this._clipboardBuferService, settings);
             this.Menu = this._menuGenerator.GenerateMenu();
-
-            WindowLevelContext.SetCurrent(new DefaultWindowLevelContext(this, clipboardBuferService, comparer, clipboardWrapper, this._buttonsMap, settings));
 
             this._StartTrickTimer(23);
         }

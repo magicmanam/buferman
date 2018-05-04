@@ -12,6 +12,7 @@ using System.Diagnostics;
 using magicmanam.UndoableOperations;
 using BuferMAN.Clipboard;
 using BuferMAN.Settings;
+using BuferMAN.Infrastructure;
 
 namespace ClipboardViewer
 {
@@ -64,7 +65,9 @@ namespace ClipboardViewer
             var comparer = new DataObjectComparer(ClipboardFormats.StringFormats, ClipboardFormats.FileFormats);
             var clipboardService = new ClipboardBuferService(comparer);
             var settings = new ProgramSettings();
-            var form = new BuferAMForm(clipboardService, comparer, new ClipboardWrapper(), settings);
+            var clipboardWrapper = new ClipboardWrapper();
+            var form = new BuferAMForm(clipboardService, comparer, clipboardWrapper, settings);
+            WindowLevelContext.SetCurrent(new DefaultWindowLevelContext(form, clipboardService, comparer, clipboardWrapper, settings));
 
             Task.Delay(777).ContinueWith(t =>
             {
