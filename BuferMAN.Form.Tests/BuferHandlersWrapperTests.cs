@@ -98,6 +98,19 @@ namespace BuferMAN.Form.Tests
         }
 
         [TestMethod]
+        public void On_FILE_CONTENTS_FORMAT_button_has_file_contents_in_text()
+        {
+            var button = new Button();
+            var buferService = A.Fake<IClipboardBuferService>();
+            var oldFont = button.Font;
+            var data = new DataObject(ClipboardFormats.FILE_CONTENTS_FORMAT, new object());
+            var wrapper = new BuferHandlersWrapper(buferService, data, button, new System.Windows.Forms.Form(), A.Fake<IClipMenuGenerator>(), A.Fake<IBuferSelectionHandler>());
+
+            Assert.AreEqual($"<< {Resource.FileContentsBufer} >>", button.Text);
+            Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), button.Font);
+        }
+
+        [TestMethod]
         public void On_null_button_has_text_with_whitespaces_count()
         {
             var button = new Button();

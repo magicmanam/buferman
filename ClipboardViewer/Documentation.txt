@@ -3,7 +3,6 @@
 ******************* sorted ****************
 
 # Release by 1 April 2018
-- скопировать 3 файла по удалёнке -> « Not a text » label - make a dump and debug via WinDBG
 - Update Readme with screenshots
 - все атомарные операции сервиса обернуть в undoablecontext вложенные
 - Formats menu - cache representation and/or show as tooltip
