@@ -2,10 +2,10 @@
 > Every man has the right to manage and control his clipboard buffers - magicmanam
 
 ## Description
-This tool helps you with managing Windows clipboard buffers: text, files, images. It makes your work more effective, fun and proud:
+This tool helps you with managing Windows clipboard buffers: text, files, images. It makes your work more effective, fun and proud. Russian and English languages are supported
 
 
-![Alt text](Buferman.jpg "How it looks")
+![BuferMAN screenshot](Buferman.jpg)
 
 ## Installation
 You can download a program [here](http://bufer.somee.com/install/BuferMAN.application).
@@ -35,9 +35,9 @@ Space  - the same as Enter key - pastes selected bufer into an active window
 ...
 
 ### Terms
-Persistent bufer - bufer which is stored all time you work with **BuferMAN** and cannot be rewritten by any copy operation. To make bufer persistent use *Ctrl + S (Save)* hot key.
+*Persistent bufer* - bufer which is stored all time you work with **BuferMAN** and cannot be rewritten by any copy operation. To make bufer persistent use *Ctrl + S (Save)* hot key.
 
-Credentials bufer - a bufer which minimize your interaction with login forms. Initial bufer's value is used as username, password you can set using *Ctrl + L (Login)* hot key. After that just place a cursor at username field in login form, activate a program using *Alt + C* hot key and select credentials bufer. The program will type your username, press TAB, type a password and Enter key while you just enjoy you life.
+*Credentials bufer* - a bufer which minimize your interaction with login forms. Initial bufer's value is used as username, password you can set using *Ctrl + L (Login)* hot key. After that just place a cursor at username field in login form, activate a program using *Alt + C* hot key and select credentials bufer. The program will type your username, press TAB, type a password and Enter key while you just enjoy you life.
 
 ## License
 GNU General Public License v3.0
