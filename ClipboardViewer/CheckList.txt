@@ -7,14 +7,12 @@
 /*Check: Create login for 'username'. Copy 'username' again - it should appear in program. */
 /*Check: Скопировать тескт в браузере. Сделать ему алиас. Вставить этот текст куда-нибудь -> буфер не должен продублироваться. */
 /*Check: Поместить клип в буфер (при выделенном буфере нажать Ctrl+C), а затем сделать его постоянным - он должен сместиться в постоянные буферы. */
-/*Check: Запустить программу и нажать Alt+Z - программа должна прекратить перехватывать события копирования до повторного нажатия Alt+Z. */
+/*Check: Запустить программу и нажать Alt+P - программа должна прекратить перехватывать события копирования до повторного нажатия Alt+P. */
 /*Check: Load bufers file with multi languages words - all words should be loaded correctly. */
 /*Check: Make screenshot. Make sure after 23 seconds new screenshot is not added. */
 /*Check: Help -> Documentation - browser with page is opened. */
 /*Check: Изменить буфер текст. Фокус-тултип сразу же поменялся. */
-/*Check: Программу можно закрыть из контекстного меню иконки в трее. */
 /*Check: Скопировать 100 и 1000 раз. Нотификация в трее появится. */
-/*Check: При закрытии программы пиктограмм из трея исчезает. */
 /*Check: Если программа запущена, то показывается алерт с заголовком BuferMAN (берется из Product name сборки). */
 /*Check: Update bufer alias. After that check tooltip on focus and on mouse over - it should be a new alias. */
 /*Check: When there is no bufers, manual in light gray color is shown. */
@@ -56,3 +54,6 @@
 /*Check: При изменении текста кнопки буфера, тултипы GotFocus- и MouseOver- тоже изменяются */
 /*Check: Изменить второй клип. Затем вставить его кудато. Он должен оказаться вверху, с тултипами и текстом измененными. */
 /*Check: Открыть файл, занятый другим приложением. Диалог с ошибкой должен показаться. */
+
+/*Check: Программу можно закрыть из контекстного меню иконки в трее. */
+/*Check: При закрытии программы пиктограмм из трея исчезает. */

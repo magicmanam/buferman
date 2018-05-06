@@ -130,7 +130,10 @@ namespace BuferMAN.ContextMenu
             this._placeInBuferMenuItem.Enabled = false;
             this._changeTextMenuItem.Enabled = false;
             this._dataObject.SetData(ClipboardFormats.PASSWORD_FORMAT, e.Password);
-            this._MarkAsPersistent(sender, e);
+            if (this._markAsPersistentMenuItem.Enabled)
+            {
+                this._MarkAsPersistent(sender, e);
+            }
             this._button.Click -= this._buferSelectionHandler.DoOnClipSelection;
         }
 
@@ -145,9 +148,6 @@ namespace BuferMAN.ContextMenu
             {
                 this._markAsPersistentMenuItem.Enabled = false;
                 WindowLevelContext.Current.RerenderBufers();
-            } else
-            {
-                MessageBox.Show("This bufer cannot be marked as persistent.");
             }
         }
     }
