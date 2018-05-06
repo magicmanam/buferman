@@ -28,8 +28,7 @@ Hard:
 
 # Ultimate version (almost sorted)
 - Window with hot keys + menu with applications (scripts tool and others)
-- Refactor: add DI
-- Add plugin support
+- Refactor: add DI with plugin support
 - if bufer selected 3 and more time - ask to save as persistent
 - Alt + C can be overwritten in some programs (like Notepad++)
 - Complete presentation - залить на гитхаб и возможно на slides.net

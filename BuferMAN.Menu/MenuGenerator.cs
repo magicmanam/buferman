@@ -55,9 +55,9 @@ namespace BuferMAN.Menu
             editMenu.MenuItems.Add(undoMenuItem);
             var redoMenuItem = new MenuItem(Resource.MenuEditRedo, (sender, args) => { this._clipboardBuferService.CancelUndo(); WindowLevelContext.Current.RerenderBufers(); }, Shortcut.CtrlY) { Enabled = false };
             editMenu.MenuItems.Add(redoMenuItem);
-            var deleteAllMenuItem = new MenuItem(Resource.MenuEditDel, _OnDeleteAll);
+            var deleteAllMenuItem = new MenuItem(Resource.MenuEditDel, this._OnDeleteAll);
             editMenu.MenuItems.Add(deleteAllMenuItem);
-            var deleteTemporaryMenuItem = new MenuItem(Resource.MenuEditDelTemp, _OnDeleteAllTemporary);
+            var deleteTemporaryMenuItem = new MenuItem(Resource.MenuEditDelTemp, this._OnDeleteAllTemporary);
             editMenu.MenuItems.Add(deleteTemporaryMenuItem);
 
             editMenu.Popup += (object sender, EventArgs args) =>
@@ -79,13 +79,13 @@ namespace BuferMAN.Menu
         {
             if (this._clipboardBuferService.GetPersistentClips().Any())
             {
-                var result = MessageBox.Show(Resource.MenuEditDelText, Resource.MenuEditDelTitle, MessageBoxButtons.YesNo);
+                var result = MessageBox.Show(Resource.MenuEditDelText, Resource.MenuEditDelTitle, MessageBoxButtons.YesNoCancel);
 
                 if (result == DialogResult.Yes)
                 {
                     this._clipboardBuferService.RemoveTemporaryClips();
                 }
-                else
+                else if (result == DialogResult.No)
                 {
                     this._clipboardBuferService.RemoveAllClips();
                 }
