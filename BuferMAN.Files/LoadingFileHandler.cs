@@ -45,7 +45,9 @@ namespace BuferMAN.Files
                         var bufer = fileReader.ReadLine();
                         if (!string.IsNullOrWhiteSpace(bufer))
                         {
-                            var dataObject = new DataObject(DataFormats.StringFormat, bufer);
+                            var dataObject = new DataObject();
+                            dataObject.SetText(bufer);
+                            dataObject.SetData(ClipboardFormats.FROM_FILE_FORMAT, null);
                             this._clipboardWrapper.SetDataObject(dataObject);
                         }
                     }

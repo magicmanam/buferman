@@ -3,14 +3,13 @@
 ******************* sorted ****************
 
 # Release by 1 April 2018
-- добавить проверку буфера в файле и метки того, что буфер был взят из файла
 - Update Readme with screenshots
+- многострочные буферы из файла + пароль + персистентность + alias - json format
 - все атомарные операции сервиса обернуть в undoablecontext вложенные
 - IStorage - to remove all System.IO - to use everywhere and in unit tests
-- многострочные буферы из файла + пароль + персистентность + alias - json format
-- MAX_STATUS_LENGTH = 55 as well as other magic numbers/strings
 
 Book:
+- MAX_STATUS_LENGTH = 55 as well as other magic numbers/strings - in scope of StatusStrip
 - Search from keyboard (by text or aliases). Ctrl + F - search mode on visible time. Many keys are handled, so only Ctrl + F and a separate input - this will handle a case with different languages
 - Помечать клип в буфере отдельным цветом - для случая, если он persistent - может он просто полусерым будет?
 - running line in button text - as new presentation

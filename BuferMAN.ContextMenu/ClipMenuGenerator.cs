@@ -4,6 +4,7 @@ using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.ContextMenu;
 using ClipboardViewerForm.ClipMenu.Items;
 using System;
+using System.Linq;
 using System.IO;
 using System.Windows.Forms;
 using SystemWindowsFormsContextMenu = System.Windows.Forms.ContextMenu;
@@ -60,7 +61,7 @@ namespace BuferMAN.ContextMenu
             formatsMenu.Shortcut = Shortcut.AltDownArrow;
             foreach (var format in this._dataObject.GetFormats())
             {
-                if (format != ClipboardFormats.CUSTOM_IMAGE_FORMAT)
+                if (format != ClipboardFormats.CUSTOM_IMAGE_FORMAT && format != ClipboardFormats.FROM_FILE_FORMAT)
                 {
                     var particularFormatMenu = new MenuItem(format);
                     var formatData = this._dataObject.GetData(format);
@@ -112,15 +113,24 @@ namespace BuferMAN.ContextMenu
                 this._changeTextMenuItem = changeTextMenuItem;
                 contextMenu.MenuItems.Add(this._changeTextMenuItem);
 
-                this._addToFileMenuItem = new MenuItem(Resource.MenuAddToFile, (object sender, EventArgs args) =>
+                this._addToFileMenuItem = new MenuItem(Resource.MenuAddToFile);
+                this._addToFileMenuItem.Shortcut = Shortcut.CtrlF;
+
+                if (dataObject.GetFormats().Contains(ClipboardFormats.FROM_FILE_FORMAT))
                 {
-                    using (var sw = new StreamWriter(new FileStream(this._settings.DefaultBufersFileName, FileMode.Append, FileAccess.Write)))
+                    this._MarkMenuItemAsAddedToFile();
+                } else
+                {
+                    this._addToFileMenuItem.Click += (object sender, EventArgs args) =>
                     {
-                        sw.WriteLine(this._originBuferText);
-                    }
-                    this._addToFileMenuItem.Text = Resource.MenuAddedToFile;
-                    this._addToFileMenuItem.Enabled = false;
-                }, Shortcut.CtrlF);
+                        using (var sw = new StreamWriter(new FileStream(this._settings.DefaultBufersFileName, FileMode.Append, FileAccess.Write)))
+                        {
+                            sw.WriteLine();
+                            sw.WriteLine(this._originBuferText);
+                        }
+                        this._MarkMenuItemAsAddedToFile();
+                    };
+                }
                 contextMenu.MenuItems.Add(this._addToFileMenuItem);
 
                 var loginCredentialsMenuItem = new CreateLoginCredentialsMenuItem(this._button, this._originBuferText, this._mouseOverTooltip);
@@ -130,6 +140,12 @@ namespace BuferMAN.ContextMenu
             }
 
             return contextMenu;
+        }
+
+        private void _MarkMenuItemAsAddedToFile()
+        {
+            this._addToFileMenuItem.Text = Resource.MenuAddedToFile;
+            this._addToFileMenuItem.Enabled = false;
         }
 
         private void _LoginCredentialsMenuItem_LoginCreated(object sender, CreateLoginCredentialsEventArgs e)
