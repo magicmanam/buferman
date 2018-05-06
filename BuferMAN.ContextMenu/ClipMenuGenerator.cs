@@ -63,9 +63,19 @@ namespace BuferMAN.ContextMenu
                 if (format != ClipboardFormats.CUSTOM_IMAGE_FORMAT)
                 {
                     var particularFormatMenu = new MenuItem(format);
+                    var formatData = this._dataObject.GetData(format);
+
+                    if (formatData is Stream)
+                    {
+                        particularFormatMenu.Text += " (Stream)";
+                    } else if (formatData is string)
+                    {
+                        particularFormatMenu.Text += " (Text)";
+                    }
+
                     particularFormatMenu.Click += (object sender, EventArgs args) =>
                     {
-                        MessageBox.Show(this._dataObject.GetData(format).ToString(), format);
+                        MessageBox.Show(formatData.ToString(), format);
                     };
                     formatsMenu.MenuItems.Add(particularFormatMenu);
                 }
