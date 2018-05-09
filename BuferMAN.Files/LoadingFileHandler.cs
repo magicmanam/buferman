@@ -11,11 +11,11 @@ namespace BuferMAN.Files
     public class LoadingFileHandler : ILoadingFileHandler
     {
         private readonly OpenFileDialog _dialog = new OpenFileDialog();
-        private readonly IClipboardWrapper _clipboardWrapper;
+        private readonly IIDataObjectHandler _dataObjectHandler;
 
-        public LoadingFileHandler(IClipboardWrapper clipboardWrapper)
+        public LoadingFileHandler(IIDataObjectHandler dataObjectHandler)
         {
-            this._clipboardWrapper = clipboardWrapper;
+            this._dataObjectHandler = dataObjectHandler;
 
             this._dialog.Filter = Resource.LoadFileFilter;
             this._dialog.CheckFileExists = true;
@@ -48,7 +48,7 @@ namespace BuferMAN.Files
                             var dataObject = new DataObject();
                             dataObject.SetText(bufer);
                             dataObject.SetData(ClipboardFormats.FROM_FILE_FORMAT, null);
-                            this._clipboardWrapper.SetDataObject(dataObject);
+                            this._dataObjectHandler.HandleDataObject(dataObject);
                         }
                     }
                 }

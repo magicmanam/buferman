@@ -8,34 +8,30 @@ using magicmanam.UndoRedo;
 
 namespace BuferMAN.Form
 {
-	class CopyingToClipboardInterceptor : ICopyingToClipboardInterceptor
+	class DataObjectHandler : IIDataObjectHandler
     {
         private readonly IClipboardBuferService _clipboardBuferService;
 		private readonly IEqualityComparer<IDataObject> _comparer;
 		private readonly BuferAMForm _form;
-        private readonly IClipboardWrapper _clipboardWrapper;
 
-        public CopyingToClipboardInterceptor(IClipboardBuferService clipboardBuferService, BuferAMForm form, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper)
+        public DataObjectHandler(IClipboardBuferService clipboardBuferService, BuferAMForm form, IEqualityComparer<IDataObject> comparer)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._form = form;
 			this._comparer = comparer;
-            this._clipboardWrapper = clipboardWrapper;
         }
 
-        public void DoOnCtrlC()
+        public void HandleDataObject(IDataObject dataObject)
         {
-            var currentObject = this._clipboardWrapper.GetDataObject();
-
-            if (currentObject.GetFormats().Any() && !this._clipboardBuferService.IsLastTemporaryClip(currentObject))
+            if (dataObject.GetFormats().Any() && !this._clipboardBuferService.IsLastTemporaryClip(dataObject))
             {
                 using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction())
                 {
-                    if (this._clipboardBuferService.Contains(currentObject))
+                    if (this._clipboardBuferService.Contains(dataObject))
                     {
-                        if (this._clipboardBuferService.IsNotPersistent(currentObject))
+                        if (this._clipboardBuferService.IsNotPersistent(dataObject))
                         {
-                            this._clipboardBuferService.RemoveClip(currentObject);
+                            this._clipboardBuferService.RemoveClip(dataObject);
                         }
                         else
                         {
@@ -56,7 +52,7 @@ namespace BuferMAN.Form
                         }
                     }
 
-                    this._clipboardBuferService.AddTemporaryClip(currentObject);
+                    this._clipboardBuferService.AddTemporaryClip(dataObject);
                 }
 
                 if (this._form.WindowState != FormWindowState.Minimized && this._form.Visible)

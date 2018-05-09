@@ -22,11 +22,12 @@ namespace BuferMAN.Form
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private long _copiesCount = 0;
-        private readonly ICopyingToClipboardInterceptor _clipboardInterceptor;
+        private readonly IIDataObjectHandler _dataObjectHandler;
         private readonly IMenuGenerator _menuGenerator;
         private readonly IEqualityComparer<IDataObject> _comparer;
         private readonly ILoadingFileHandler _loadingFileHandler;
         private readonly IDictionary<IDataObject, Button> _buttonsMap;
+        private readonly IClipboardWrapper _clipboardWrapper;
         private ClipboardViewer _clipboardViewer;
         public const int MAX_BUFERS_COUNT = 30;
         private NotifyIcon TrayIcon;
@@ -44,8 +45,9 @@ namespace BuferMAN.Form
             this._clipboardBuferService = clipboardBuferService;
             this._comparer = comparer;
             this._buttonsMap = new Dictionary<IDataObject, Button>(MAX_BUFERS_COUNT);
-            this._clipboardInterceptor = new CopyingToClipboardInterceptor(clipboardBuferService, this, comparer, clipboardWrapper);
-            this._loadingFileHandler = new LoadingFileHandler(clipboardWrapper);
+            this._dataObjectHandler = new DataObjectHandler(clipboardBuferService, this, comparer);
+            this._clipboardWrapper = clipboardWrapper;
+            this._loadingFileHandler = new LoadingFileHandler(this._dataObjectHandler);
             this._menuGenerator = new MenuGenerator(this._loadingFileHandler, this._clipboardBuferService, settings);
             this.Menu = this._menuGenerator.GenerateMenu();
 
@@ -104,7 +106,8 @@ namespace BuferMAN.Form
             if (m.Msg == Messages.WM_DRAWCLIPBOARD && this._shouldCatchCopies)
             {
                 this._copiesCount++;
-                this._clipboardInterceptor.DoOnCtrlC();
+                var dataObject = this._clipboardWrapper.GetDataObject();
+                this._dataObjectHandler.HandleDataObject(dataObject);
 
                 if (this._copiesCount == 100)
                 {

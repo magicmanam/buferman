@@ -38,7 +38,7 @@
   <ItemGroup>
     <Compile Include="ContextMenu\IClipMenuGenerator.cs" />
     <Compile Include="IBuferSelectionHandler.cs" />
-    <Compile Include="ICopyingToClipboardInterceptor.cs" />
+    <Compile Include="IIDataObjectHandler.cs" />
     <Compile Include="ILoadingFileHandler.cs" />
     <Compile Include="IProgramSettings.cs" />
     <Compile Include="IWindowLevelContext.cs" />

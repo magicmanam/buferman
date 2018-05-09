@@ -4,7 +4,6 @@
 
 # Release by 1 April 2018
 - Undoable for buttons too
-- на загрузку из файла записывать сразу в сервис
 - 1000 - 500
 - многострочные буферы из файла + пароль + персистентность + alias - json format
 - IStorage - to remove all System.IO - to use everywhere and in unit tests

@@ -13,7 +13,8 @@
 /*Check: Make screenshot. Make sure after 23 seconds new screenshot is not added. */
 /*Check: Help -> Documentation - browser with page is opened. */
 /*Check: When format is text -> Formats context menu has '(Text)' postfix. When any Stream - '(Stream)' postfix. */
-/*Check: Load file from file. Its context menu tells that it was taken from file and disabled. */
+/*Check: Load bufer from file. Its context menu tells that it was taken from file and disabled. */
+/*Check: After loading bufers from file current clipboard is not changed. */
 /*Check: Изменить буфер текст. Фокус-тултип сразу же поменялся. */
 /*Check: Скопировать 100 и 1000 раз. Нотификация в трее появится. */
 /*Check: Если программа запущена, то показывается алерт с заголовком BuferMAN (берется из Product name сборки). */
