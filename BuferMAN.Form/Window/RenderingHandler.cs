@@ -8,6 +8,7 @@ using BuferMAN.Infrastructure.Window;
 using BuferMAN.ContextMenu;
 using BuferMAN.Plugins.BuferPresentations;
 using BuferMAN.BuferPresentations;
+using magicmanam.UndoRedo;
 
 namespace BuferMAN.Form.Window
 {
@@ -20,6 +21,7 @@ namespace BuferMAN.Form.Window
         private readonly Label _persistentClipsDivider;
         private readonly IClipboardWrapper _clipboardWrapper;
         private readonly IProgramSettings _settings;
+        private readonly IDictionary<IDataObject, Button> _removedButtons = new Dictionary<IDataObject, Button>();
         private readonly IList<IBuferPresentation> _clipPresentations = new List<IBuferPresentation>() { new SkypeBuferPresentation(), new FileContentsBuferPresentation() };
 
         private const int BUTTON_HEIGHT = 23;
@@ -63,8 +65,7 @@ namespace BuferMAN.Form.Window
             {
                 if (bufer.GetFormats().Length == 0)
                 {
-                    //In this case we do not need to have Ctrl+Z available, so, undoable context is quite good here
-                    this._clipboardBuferService.RemoveClip(bufer);
+                    this._RemoveEmptyBuferWithoutTrackingInUndoableContext(bufer);
                 }
                 else
                 {
@@ -77,16 +78,26 @@ namespace BuferMAN.Form.Window
                     }
                     else
                     {
-                        button = new Button() { TextAlign = ContentAlignment.MiddleLeft, Margin = new Padding(0), Width = this._buttonWidth };
+                        var equalObjectFromDeleted = this._removedButtons.Keys.FirstOrDefault(k => this._comparer.Equals(k, bufer));
 
+                        if (equalObjectFromDeleted != null)
+                        {
+                            button = this._removedButtons[equalObjectFromDeleted];
+                            this._removedButtons.Remove(equalObjectFromDeleted);
+                        }
+                        else
+                        {
+                            button = new Button() { TextAlign = ContentAlignment.MiddleLeft, Margin = new Padding(0), Width = this._buttonWidth };
+
+                            var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._clipboardWrapper);
+
+                            new BuferHandlersWrapper(this._clipboardBuferService, bufer, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler, this._settings, this._clipboardWrapper), buferSelectionHandler);
+
+                            this._TryApplyPresentation(bufer, button);
+                        }
                         this._form.ButtonsMap.Add(bufer, button);
                         this._form.Controls.Add(button);
                         button.BringToFront();
-                        var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._clipboardWrapper);
-
-                        new BuferHandlersWrapper(this._clipboardBuferService, bufer, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler, this._settings, this._clipboardWrapper), buferSelectionHandler);
-
-                        this._TryApplyPresentation(bufer, button);
                     }
 
                     button.TabIndex = currentButtonIndex;
@@ -95,6 +106,15 @@ namespace BuferMAN.Form.Window
 
                 currentButtonIndex -= 1;
                 y -= BUTTON_HEIGHT;
+            }
+        }
+
+        private void _RemoveEmptyBuferWithoutTrackingInUndoableContext(IDataObject bufer)
+        {
+            using (var action = UndoableContext<ClipboardBuferServiceState>.Current.StartAction())
+            {
+                this._clipboardBuferService.RemoveClip(bufer);
+                action.Cancel();
             }
         }
 
@@ -119,8 +139,16 @@ namespace BuferMAN.Form.Window
 				var equalKey = bufers.FirstOrDefault(b => this._comparer.Equals(key, b));
                 if (equalKey == null)
                 {
-                    this._form.Controls.Remove(this._form.ButtonsMap[key]);
+                    var button = this._form.ButtonsMap[key];
+                    this._form.Controls.Remove(button);
                     deletedKeys.Add(key);
+
+                    if (this._removedButtons.ContainsKey(key))
+                    {
+                        this._removedButtons.Remove(key);
+                    }
+
+                    this._removedButtons.Add(key, button);
                 }
             }
 

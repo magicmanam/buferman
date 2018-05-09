@@ -1,5 +1,6 @@
 ﻿*** Checked ***
 /*Check: . */
+/*Check: [Make bufer alias | make login | save in file], delete it, Ctrl+Z - it should be restored as was before delete. */
 /*Check: Copy bufer that is already in program but not first. After Ctrl+Z state is returned to initial (no intermediate states). */
 /*Check: When there is no temporary bufers - Delete All Temporary bufers menu item is disabled. */
 /*Check: When there is no bufers at all - Delete All bufers menu item is disabled as well as Delete Temporary bufers menu item. */
