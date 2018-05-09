@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BuferMAN.Clipboard.Properties {
+namespace magicmanam.UndoRedo.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace BuferMAN.Clipboard.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BuferMAN.Clipboard.Properties.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("magicmanam.UndoRedo.Properties.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,56 +61,20 @@ namespace BuferMAN.Clipboard.Properties {
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на All bufers were deleted.
+        ///   Ищет локализованную строку, похожую на Operation cancelled.
         /// </summary>
-        internal static string AllDeleted {
+        internal static string BuferOperationCancelled {
             get {
-                return ResourceManager.GetString("AllDeleted", resourceCulture);
+                return ResourceManager.GetString("BuferOperationCancelled", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Ищет локализованную строку, похожую на New bufer was added.
+        ///   Ищет локализованную строку, похожую на Operation restored.
         /// </summary>
-        internal static string BuferAdded {
+        internal static string BuferOperationRestored {
             get {
-                return ResourceManager.GetString("BuferAdded", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Bufer was deleted.
-        /// </summary>
-        internal static string BuferDeleted {
-            get {
-                return ResourceManager.GetString("BuferDeleted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Bufer was marked as persistent.
-        /// </summary>
-        internal static string BuferPersistent {
-            get {
-                return ResourceManager.GetString("BuferPersistent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Persistent bufers were deleted.
-        /// </summary>
-        internal static string PersistentBufersDeleted {
-            get {
-                return ResourceManager.GetString("PersistentBufersDeleted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Ищет локализованную строку, похожую на Temporary bufers were deleted.
-        /// </summary>
-        internal static string TemporaryBufersDeleted {
-            get {
-                return ResourceManager.GetString("TemporaryBufersDeleted", resourceCulture);
+                return ResourceManager.GetString("BuferOperationRestored", resourceCulture);
             }
         }
     }

@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Deployment.Application;
 using System.Reflection;
 using BuferMAN.Menu.Help;
-using magicmanam.UndoableOperations;
+using magicmanam.UndoRedo;
 using BuferMAN.Infrastructure;
 using BuferMAN.Menu.Properties;
 
@@ -51,9 +51,9 @@ namespace BuferMAN.Menu
         {
             var editMenu = new MenuItem(Resource.MenuEdit);
 
-            var undoMenuItem = new MenuItem(Resource.MenuEditUndo, (sender, args) => { this._clipboardBuferService.Undo(); WindowLevelContext.Current.RerenderBufers(); }, Shortcut.CtrlZ) { Enabled = false };
+            var undoMenuItem = new MenuItem(Resource.MenuEditUndo, (sender, args) => { UndoableContext<ClipboardBuferServiceState>.Current.Undo(); WindowLevelContext.Current.RerenderBufers(); }, Shortcut.CtrlZ) { Enabled = false };
             editMenu.MenuItems.Add(undoMenuItem);
-            var redoMenuItem = new MenuItem(Resource.MenuEditRedo, (sender, args) => { this._clipboardBuferService.CancelUndo(); WindowLevelContext.Current.RerenderBufers(); }, Shortcut.CtrlY) { Enabled = false };
+            var redoMenuItem = new MenuItem(Resource.MenuEditRedo, (sender, args) => { UndoableContext<ClipboardBuferServiceState>.Current.Redo(); WindowLevelContext.Current.RerenderBufers(); }, Shortcut.CtrlY) { Enabled = false };
             editMenu.MenuItems.Add(redoMenuItem);
             var deleteAllMenuItem = new MenuItem(Resource.MenuEditDel, this._OnDeleteAll);
             editMenu.MenuItems.Add(deleteAllMenuItem);
@@ -66,7 +66,7 @@ namespace BuferMAN.Menu
                 deleteAllMenuItem.Enabled = deleteTemporaryMenuItem.Enabled || this._clipboardBuferService.GetPersistentClips().Count() > 0;
             };
 
-            this._clipboardBuferService.UndoableContextChanged += (object sender, UndoableContextChangedEventArgs e) =>
+            UndoableContext<ClipboardBuferServiceState>.Current.StateChanged += (object sender, UndoableContextChangedEventArgs e) =>
             {
                 undoMenuItem.Enabled = e.CanUndo;
                 redoMenuItem.Enabled = e.CanRedo;

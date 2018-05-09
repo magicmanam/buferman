@@ -126,12 +126,6 @@
   <data name="BuferDeleted" xml:space="preserve">
     <value>Bufer was deleted</value>
   </data>
-  <data name="BuferOperationCancelled" xml:space="preserve">
-    <value>Operation cancelled</value>
-  </data>
-  <data name="BuferOperationRestored" xml:space="preserve">
-    <value>Operation restored</value>
-  </data>
   <data name="BuferPersistent" xml:space="preserve">
     <value>Bufer was marked as persistent</value>
   </data>

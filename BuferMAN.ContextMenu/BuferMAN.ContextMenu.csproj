@@ -95,9 +95,9 @@
       <Project>{08184414-67ea-419e-b71b-b764f0f2e578}</Project>
       <Name>BuferMAN.Menu</Name>
     </ProjectReference>
-    <ProjectReference Include="..\magicmanam.UndoableOperations\magicmanam.UndoableOperations.csproj">
+    <ProjectReference Include="..\magicmanam.UndoRedo\magicmanam.UndoRedo.csproj">
       <Project>{2A0EA8A3-5E8C-411F-BF3D-B2D67AD5E956}</Project>
-      <Name>magicmanam.UndoableOperations</Name>
+      <Name>magicmanam.UndoRedo</Name>
     </ProjectReference>
     <ProjectReference Include="..\Windows\Windows.csproj">
       <Project>{5A51C93A-8FD0-4A47-8802-05B36CF7242E}</Project>

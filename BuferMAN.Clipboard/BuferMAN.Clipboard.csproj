@@ -63,9 +63,9 @@
       <Project>{0deecdc2-cf30-4625-a465-671f851f937e}</Project>
       <Name>Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\magicmanam.UndoableOperations\magicmanam.UndoableOperations.csproj">
+    <ProjectReference Include="..\magicmanam.UndoRedo\magicmanam.UndoRedo.csproj">
       <Project>{2a0ea8a3-5e8c-411f-bf3d-b2d67ad5e956}</Project>
-      <Name>magicmanam.UndoableOperations</Name>
+      <Name>magicmanam.UndoRedo</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

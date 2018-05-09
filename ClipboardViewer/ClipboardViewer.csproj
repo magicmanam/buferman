@@ -27,7 +27,7 @@
     <InstallUrl>http://bufer.somee.com/install/</InstallUrl>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>18</ApplicationRevision>
+    <ApplicationRevision>19</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -132,12 +132,6 @@
     <Content Include="TextFile1 - Копировать %2811%29.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="TextFile1 - Копировать %2812%29.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TextFile1 - Копировать %2813%29.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="TextFile1 - Копировать %2814%29.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -229,9 +223,9 @@
       <Project>{0deecdc2-cf30-4625-a465-671f851f937e}</Project>
       <Name>Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\magicmanam.UndoableOperations\magicmanam.UndoableOperations.csproj">
+    <ProjectReference Include="..\magicmanam.UndoRedo\magicmanam.UndoRedo.csproj">
       <Project>{2A0EA8A3-5E8C-411F-BF3D-B2D67AD5E956}</Project>
-      <Name>magicmanam.UndoableOperations</Name>
+      <Name>magicmanam.UndoRedo</Name>
     </ProjectReference>
     <ProjectReference Include="..\Windows\Windows.csproj">
       <Project>{5a51c93a-8fd0-4a47-8802-05b36cf7242e}</Project>

@@ -1,5 +1,6 @@
 ﻿*** Checked ***
 /*Check: . */
+/*Check: Copy bufer that is already in program but not first. After Ctrl+Z state is returned to initial (no intermediate states). */
 /*Check: When there is no temporary bufers - Delete All Temporary bufers menu item is disabled. */
 /*Check: When there is no bufers at all - Delete All bufers menu item is disabled as well as Delete Temporary bufers menu item. */
 /*Check: Press Alt+P - status bar changed. Press again - status bar changed again. */
@@ -56,6 +57,7 @@
 /*Check: При изменении текста кнопки буфера, тултипы GotFocus- и MouseOver- тоже изменяются */
 /*Check: Изменить второй клип. Затем вставить его кудато. Он должен оказаться вверху, с тултипами и текстом измененными. */
 /*Check: Открыть файл, занятый другим приложением. Диалог с ошибкой должен показаться. */
+/*Check: . */
 
 /*Check: Программу можно закрыть из контекстного меню иконки в трее. */
 /*Check: При закрытии программы пиктограмм из трея исчезает. */

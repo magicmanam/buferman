@@ -1,4 +1,4 @@
-﻿namespace magicmanam.UndoableOperations
+﻿namespace magicmanam.UndoRedo
 {
     public class UndoableContextChangedEventArgs
     {

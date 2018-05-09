@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using ClipboardViewer.Properties;
 using System.Security.Principal;
 using System.Diagnostics;
-using magicmanam.UndoableOperations;
+using magicmanam.UndoRedo;
 using BuferMAN.Clipboard;
 using BuferMAN.Settings;
 using BuferMAN.Infrastructure;
@@ -66,6 +66,7 @@ namespace ClipboardViewer
             var clipboardService = new ClipboardBuferService(comparer);
             var settings = new ProgramSettings();
             var clipboardWrapper = new ClipboardWrapper();
+            UndoableContext<ClipboardBuferServiceState>.Current = new UndoableContext<ClipboardBuferServiceState>(clipboardService);
             var form = new BuferAMForm(clipboardService, comparer, clipboardWrapper, settings);
             WindowLevelContext.SetCurrent(new DefaultWindowLevelContext(form, clipboardService, comparer, clipboardWrapper, settings));
 
@@ -78,15 +79,15 @@ namespace ClipboardViewer
                 }
             });
 
-            clipboardService.UndoableAction += (object sender, UndoableActionEventArgs e) =>
+            UndoableContext<ClipboardBuferServiceState>.Current.UndoableAction += (object sender, UndoableActionEventArgs e) =>
             {
                 form.SetStatusBarText(e.Action);
             };
-            clipboardService.UndoAction += (object sender, UndoableActionEventArgs e) =>
+            UndoableContext<ClipboardBuferServiceState>.Current.UndoAction += (object sender, UndoableActionEventArgs e) =>
             {
                 form.SetStatusBarText(e.Action);
             };
-            clipboardService.CancelUndoAction += (object sender, UndoableActionEventArgs e) =>
+            UndoableContext<ClipboardBuferServiceState>.Current.RedoAction += (object sender, UndoableActionEventArgs e) =>
             {
                 form.SetStatusBarText(e.Action);
             };

@@ -93,9 +93,9 @@
       <Project>{2822F743-087D-403A-A8E9-92FBEAC0A3EF}</Project>
       <Name>BuferMAN.Plugins</Name>
     </ProjectReference>
-    <ProjectReference Include="..\magicmanam.UndoableOperations\magicmanam.UndoableOperations.csproj">
+    <ProjectReference Include="..\magicmanam.UndoRedo\magicmanam.UndoRedo.csproj">
       <Project>{2a0ea8a3-5e8c-411f-bf3d-b2d67ad5e956}</Project>
-      <Name>magicmanam.UndoableOperations</Name>
+      <Name>magicmanam.UndoRedo</Name>
     </ProjectReference>
     <ProjectReference Include="..\magicmanam.Windows.ClipboardViewer\magicmanam.Windows.ClipboardViewer.csproj">
       <Project>{3dd7b207-5743-457f-a530-7669d0d2ced7}</Project>

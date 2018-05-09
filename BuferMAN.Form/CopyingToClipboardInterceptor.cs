@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using BuferMAN.Infrastructure;
 using BuferMAN.Clipboard;
 using BuferMAN.Form.Properties;
+using magicmanam.UndoRedo;
 
 namespace BuferMAN.Form
 {
@@ -24,35 +25,39 @@ namespace BuferMAN.Form
 
         public void DoOnCtrlC()
         {
-            //Here I need undoable context
             var currentObject = this._clipboardWrapper.GetDataObject();
 
             if (currentObject.GetFormats().Any() && !this._clipboardBuferService.IsLastTemporaryClip(currentObject))
             {
-				if (this._clipboardBuferService.Contains(currentObject))
+                using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction())
                 {
-					if (this._clipboardBuferService.IsNotPersistent(currentObject))
-					{
-						_clipboardBuferService.RemoveClip(currentObject);
-					} else
-					{
-						return;
-					}
-                }
-
-                if (this._clipboardBuferService.ClipsCount == BuferAMForm.MAX_BUFERS_COUNT)
-                {
-                    if (this._clipboardBuferService.GetTemporaryClips().Any())
+                    if (this._clipboardBuferService.Contains(currentObject))
                     {
-                        this._clipboardBuferService.RemoveClip(this._clipboardBuferService.FirstTemporaryClip);
-                    } else
-                    {
-                        MessageBox.Show(Resource.AllBufersPersistent, Resource.TratataTitle);
-                        return;
+                        if (this._clipboardBuferService.IsNotPersistent(currentObject))
+                        {
+                            this._clipboardBuferService.RemoveClip(currentObject);
+                        }
+                        else
+                        {
+                            return;
+                        }
                     }
-                }
 
-                this._clipboardBuferService.AddTemporaryClip(currentObject);
+                    if (this._clipboardBuferService.ClipsCount == BuferAMForm.MAX_BUFERS_COUNT)
+                    {
+                        if (this._clipboardBuferService.GetTemporaryClips().Any())
+                        {
+                            this._clipboardBuferService.RemoveClip(this._clipboardBuferService.FirstTemporaryClip);
+                        }
+                        else
+                        {
+                            MessageBox.Show(Resource.AllBufersPersistent, Resource.TratataTitle);
+                            return;
+                        }
+                    }
+
+                    this._clipboardBuferService.AddTemporaryClip(currentObject);
+                }
 
                 if (this._form.WindowState != FormWindowState.Minimized && this._form.Visible)
                 {

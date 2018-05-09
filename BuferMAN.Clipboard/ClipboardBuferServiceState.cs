@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace BuferMAN.Clipboard
 {
-    internal class ClipboardBuferServiceState
+    public class ClipboardBuferServiceState
     {
         private IList<IDataObject> _tempObjects;
         private IList<IDataObject> _persistentObjects;

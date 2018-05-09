@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // Общие сведения об этой сборке предоставляются следующим набором
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
-[assembly: AssemblyTitle("magicmanam.UndoableOperations")]
+[assembly: AssemblyTitle("magicmanam.UndoRedo")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("magicmanam")]
-[assembly: AssemblyProduct("magicmanam.UndoableOperations")]
+[assembly: AssemblyProduct("magicmanam.UndoRedo")]
 [assembly: AssemblyCopyright("Copyright ©  2018")]
 [assembly: AssemblyTrademark("magicmanam")]
 [assembly: AssemblyCulture("")]

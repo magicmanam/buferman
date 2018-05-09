@@ -3,9 +3,10 @@
 ******************* sorted ****************
 
 # Release by 1 April 2018
-- Update Readme with screenshots
+- Undoable for buttons too
+- на загрузку из файла записывать сразу в сервис
+- 1000 - 500
 - многострочные буферы из файла + пароль + персистентность + alias - json format
-- все атомарные операции сервиса обернуть в undoablecontext вложенные
 - IStorage - to remove all System.IO - to use everywhere and in unit tests
 
 Book:
@@ -25,8 +26,9 @@ Hard:
 
 
 # Ultimate version (almost sorted)
+- Write youtube clip
 - Window with hot keys + menu with applications (scripts tool and others)
-- Refactor: add DI with plugin support
+- Refactor: add DI with plugin support. reminders as plugin
 - if bufer selected 3 and more time - ask to save as persistent
 - Alt + C can be overwritten in some programs (like Notepad++)
 - Complete presentation - залить на гитхаб и возможно на slides.net
@@ -60,3 +62,8 @@ Settings:  //Minimalize settings for easy using
   - Show preview image instead of ordinal text
   - Change language (EN, RU)
 ?  - History: store current day bufers, only from program start, when amount does not preceeds 100Mb of RAM
+
+Undoable nuget:
+Description: Simple and easy to use framework for Undo/Redo functionality integration into your .NET application. Just include & use it!
+
+documentation unit testing

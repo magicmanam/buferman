@@ -1,10 +1,9 @@
-﻿using magicmanam.UndoableOperations;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace BuferMAN.Clipboard
 {
-	public interface IClipboardBuferService : IUndoable
+	public interface IClipboardBuferService
     {
 		/// <summary>
 		/// Returns persistent + temporary clips.

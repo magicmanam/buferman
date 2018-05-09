@@ -117,22 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AllDeleted" xml:space="preserve">
-    <value>Все буферы удалены</value>
+  <data name="BuferOperationCancelled" xml:space="preserve">
+    <value>Operation cancelled</value>
   </data>
-  <data name="BuferAdded" xml:space="preserve">
-    <value>Новый буфер добавлен</value>
-  </data>
-  <data name="BuferDeleted" xml:space="preserve">
-    <value>Буфер удалён</value>
-  </data>
-  <data name="BuferPersistent" xml:space="preserve">
-    <value>Буфер помечен как постоянный</value>
-  </data>
-  <data name="PersistentBufersDeleted" xml:space="preserve">
-    <value>Постоянные буферы удалены</value>
-  </data>
-  <data name="TemporaryBufersDeleted" xml:space="preserve">
-    <value>Временные буферы удалены</value>
+  <data name="BuferOperationRestored" xml:space="preserve">
+    <value>Operation restored</value>
   </data>
 </root>

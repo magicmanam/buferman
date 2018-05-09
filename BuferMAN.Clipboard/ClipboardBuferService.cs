@@ -1,5 +1,5 @@
 ﻿using BuferMAN.Clipboard.Properties;
-using magicmanam.UndoableOperations;
+using magicmanam.UndoRedo;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,10 +7,8 @@ using System.Windows.Forms;
 
 namespace BuferMAN.Clipboard
 {
-    public class ClipboardBuferService : IClipboardBuferService
+    public class ClipboardBuferService : IClipboardBuferService, IStatefulComponent<ClipboardBuferServiceState>
     {
-        private readonly Stack<ClipboardBuferServiceState> _serviceStates = new Stack<ClipboardBuferServiceState>();
-        private readonly Stack<ClipboardBuferServiceState> _undoableStates = new Stack<ClipboardBuferServiceState>();
         private IList<IDataObject> _tempObjects = new List<IDataObject>();
 		private IList<IDataObject> _persistentObjects = new List<IDataObject>();
 		private readonly IEqualityComparer<IDataObject> _comparer;
@@ -19,18 +17,6 @@ namespace BuferMAN.Clipboard
 		{
 			this._comparer = comparer;
 		}
-
-        public event EventHandler<UndoableActionEventArgs> UndoableAction;
-        public event EventHandler<UndoableActionEventArgs> UndoAction;
-        public event EventHandler<UndoableActionEventArgs> CancelUndoAction;
-        public event EventHandler<UndoableContextChangedEventArgs> UndoableContextChanged;
-
-        protected virtual void OnUndoableAction(string action)
-        {
-            this._undoableStates.Clear();
-            this.UndoableAction?.Invoke(this, new UndoableActionEventArgs(action));
-            this.UndoableContextChanged?.Invoke(this, new UndoableContextChangedEventArgs(true, false));
-        }
 
         public IEnumerable<IDataObject> GetClips(bool persistentFirst = false)
         {
@@ -43,10 +29,11 @@ namespace BuferMAN.Clipboard
         {
             if (this._tempObjects.Count + this._persistentObjects.Count > 0)
             {
-                this._serviceStates.Push(this._GetCurrentState());
-                this._tempObjects.Clear();
-                this._persistentObjects.Clear();
-                this.OnUndoableAction(Resource.AllDeleted);
+                using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction(Resource.AllDeleted))
+                {
+                    this._tempObjects.Clear();
+                    this._persistentObjects.Clear();
+                }
             }
         }
 
@@ -107,9 +94,10 @@ namespace BuferMAN.Clipboard
             var dataObject = list.FirstOrDefault(d => this._comparer.Equals(d, clip));
             if (dataObject != null)
             {
-                this._serviceStates.Push(this._GetCurrentState());
-                list.Remove(dataObject);
-                this.OnUndoableAction(Resource.BuferDeleted);
+                using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction(Resource.BuferDeleted))
+                {
+                    list.Remove(dataObject);
+                }
                 return true;
             }
             else
@@ -118,62 +106,43 @@ namespace BuferMAN.Clipboard
             }
         }
 
-        private ClipboardBuferServiceState _GetCurrentState()
+        public ClipboardBuferServiceState UndoableState
         {
-            return new ClipboardBuferServiceState(this._tempObjects.ToList(), this._persistentObjects.ToList());
+            get
+            {
+                return new ClipboardBuferServiceState(this._tempObjects.ToList(), this._persistentObjects.ToList());
+            }
+            set
+            {
+                this._tempObjects = value.TempObjects;
+                this._persistentObjects = value.PersistentObjects;
+            }
         }
 
         public void AddTemporaryClip(IDataObject dataObject)
         {
-            this._serviceStates.Push(this._GetCurrentState());
-            this._tempObjects.Add(dataObject);
-            this.OnUndoableAction(Resource.BuferAdded);
+            using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction(Resource.BuferAdded))
+            {
+                this._tempObjects.Add(dataObject);
+            }
         }
 
         public bool MarkClipAsPersistent(IDataObject clip)
 		{
-            this._serviceStates.Push(this._GetCurrentState());
-            var dataObject = this._tempObjects.FirstOrDefault(d => this._comparer.Equals(d, clip));
-            if (dataObject != null && this._tempObjects.Remove(dataObject))
-			{
-				this._persistentObjects.Add(dataObject);
-                this.OnUndoableAction(Resource.BuferPersistent);
-                return true;
+            using (var operation = UndoableContext<ClipboardBuferServiceState>.Current.StartAction(Resource.BuferPersistent)) {
+                var dataObject = this._tempObjects.FirstOrDefault(d => this._comparer.Equals(d, clip));
+                if (dataObject != null && this._tempObjects.Remove(dataObject))
+                {
+                    this._persistentObjects.Add(dataObject);
+                    return true;
 
-            } else
-			{
-                this._serviceStates.Pop();
-                return false;
-			}
+                } else
+                {
+                    operation.Cancel();
+                    return false;
+                }
+            }
 		}
-
-        public void Undo()
-        {
-            if (this._serviceStates.Count > 0)
-            {
-                this._undoableStates.Push(this._GetCurrentState());
-
-                var lastState = this._serviceStates.Pop();
-                this._tempObjects = lastState.TempObjects;
-                this._persistentObjects = lastState.PersistentObjects;
-                this.UndoAction?.Invoke(this, new UndoableActionEventArgs(Resource.BuferOperationCancelled));
-                this.UndoableContextChanged?.Invoke(this, new UndoableContextChangedEventArgs(this._serviceStates.Any(), true));
-            }
-        }
-
-        public void CancelUndo()
-        {
-            if (this._undoableStates.Count > 0)
-            {
-                this._serviceStates.Push(this._GetCurrentState());
-
-                var undoState = this._undoableStates.Pop();
-                this._tempObjects = undoState.TempObjects;
-                this._persistentObjects = undoState.PersistentObjects;
-                this.CancelUndoAction?.Invoke(this, new UndoableActionEventArgs(Resource.BuferOperationRestored));
-                this.UndoableContextChanged?.Invoke(this, new UndoableContextChangedEventArgs(true, this._undoableStates.Any()));
-            }
-        }
 
         public IEnumerable<IDataObject> GetTemporaryClips()
         {
@@ -189,9 +158,10 @@ namespace BuferMAN.Clipboard
         {
             if (this._persistentObjects.Count > 0)
             {
-                this._serviceStates.Push(this._GetCurrentState());
-                this._persistentObjects.Clear();
-                this.OnUndoableAction(Resource.PersistentBufersDeleted);
+                using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction(Resource.PersistentBufersDeleted))
+                {
+                    this._persistentObjects.Clear();
+                }
             }
         }
 
@@ -199,9 +169,10 @@ namespace BuferMAN.Clipboard
         {
             if (this._tempObjects.Count > 0)
             {
-                this._serviceStates.Push(this._GetCurrentState());
-                this._tempObjects.Clear();
-                this.OnUndoableAction(Resource.TemporaryBufersDeleted);
+                using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction(Resource.TemporaryBufersDeleted))
+                {
+                    this._tempObjects.Clear();
+                }
             }
         }
     }
