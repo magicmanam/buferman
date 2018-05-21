@@ -22,9 +22,9 @@ Hard:
 
 
 # Ultimate version (almost sorted)
-- Write youtube clip
 - Window with hot keys + menu with applications (scripts tool and others)
 - Refactor: add DI with plugin support. reminders as plugin
+- Write youtube clip
 - if bufer selected 3 and more time - ask to save as persistent
 - Alt + C can be overwritten in some programs (like Notepad++)
 - Complete presentation - залить на гитхаб и возможно на slides.net
