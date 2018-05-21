@@ -21,12 +21,13 @@ namespace BuferMAN.Form.Window
         private readonly Label _persistentClipsDivider;
         private readonly IClipboardWrapper _clipboardWrapper;
         private readonly IProgramSettings _settings;
+        private readonly IFileStorage _fileStorage;
         private readonly IDictionary<IDataObject, Button> _removedButtons = new Dictionary<IDataObject, Button>();
         private readonly IList<IBuferPresentation> _clipPresentations = new List<IBuferPresentation>() { new SkypeBuferPresentation(), new FileContentsBuferPresentation() };
 
         private const int BUTTON_HEIGHT = 23;
 
-        public RenderingHandler(BuferAMForm form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IProgramSettings settings)
+        public RenderingHandler(BuferAMForm form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IProgramSettings settings, IFileStorage fileStorage)
         {
             this._form = form;
             this._clipboardBuferService = clipboardBuferService;
@@ -37,6 +38,7 @@ namespace BuferMAN.Form.Window
             this._persistentClipsDivider.BringToFront();
             this._clipboardWrapper = clipboardWrapper;
             this._settings = settings;
+            this._fileStorage = fileStorage;
         }
 
         public void Render()
@@ -91,7 +93,7 @@ namespace BuferMAN.Form.Window
 
                             var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._clipboardWrapper);
 
-                            new BuferHandlersWrapper(this._clipboardBuferService, bufer, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler, this._settings, this._clipboardWrapper), buferSelectionHandler);
+                            new BuferHandlersWrapper(this._clipboardBuferService, bufer, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler, this._settings, this._clipboardWrapper), buferSelectionHandler, this._fileStorage);
 
                             this._TryApplyPresentation(bufer, button);
                         }

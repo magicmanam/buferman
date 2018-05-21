@@ -17,16 +17,18 @@ namespace BuferMAN.Form
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IDataObject _dataObject;
         private readonly IBuferSelectionHandler _buferSelectionHandler;
+        private readonly IFileStorage _fileStorage;
         private readonly Button _button;
         private readonly ToolTip _focusTooltip = new ToolTip() { OwnerDraw = false };
         private const float IMAGE_SCALE = 0.75f;
 
-        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IDataObject dataObject, Button button, SystemWindowsForm form, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler)
+        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IDataObject dataObject, Button button, SystemWindowsForm form, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler, IFileStorage fileStorage)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._dataObject = dataObject;
             this._button = button;
             this._buferSelectionHandler = buferSelectionHandler;
+            this._fileStorage = fileStorage;
 
             var buferTextRepresentation = dataObject.GetData(DataFormats.UnicodeText) as string;
             if (string.IsNullOrEmpty(buferTextRepresentation))
@@ -54,11 +56,11 @@ namespace BuferMAN.Form
                     else
                     {
                         buferTitle = this._MakeSpecialBuferText($"{Resource.FilesBufer} ({files.Length})");
-                }
+                    }
 
-                    var folder = Path.GetDirectoryName(files.First());
-                    buferTextRepresentation += folder + " " + Environment.NewLine + Environment.NewLine;
-                    buferTextRepresentation += string.Join(Environment.NewLine, files.Select(f => Path.GetFileName(f) + (File.GetAttributes(f).HasFlag(FileAttributes.Directory) ? Path.DirectorySeparatorChar.ToString() : string.Empty)).ToList());
+                    var folder = this._fileStorage.GetFileDirectory(files.First());
+                    buferTextRepresentation += folder + Environment.NewLine + Environment.NewLine;
+                    buferTextRepresentation += string.Join(Environment.NewLine, files.Select(f => this._fileStorage.GetFileName(f) + (this._fileStorage.GetFileAttributes(f).HasFlag(FileAttributes.Directory) ? Path.DirectorySeparatorChar.ToString() : string.Empty)).ToList());
                 }
                 else
                 {

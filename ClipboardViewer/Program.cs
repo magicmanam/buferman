@@ -13,6 +13,7 @@ using magicmanam.UndoRedo;
 using BuferMAN.Clipboard;
 using BuferMAN.Settings;
 using BuferMAN.Infrastructure;
+using BuferMAN.Files;
 
 namespace ClipboardViewer
 {
@@ -68,7 +69,7 @@ namespace ClipboardViewer
             var clipboardWrapper = new ClipboardWrapper();
             UndoableContext<ClipboardBuferServiceState>.Current = new UndoableContext<ClipboardBuferServiceState>(clipboardService);
             var form = new BuferAMForm(clipboardService, comparer, clipboardWrapper, settings);
-            WindowLevelContext.SetCurrent(new DefaultWindowLevelContext(form, clipboardService, comparer, clipboardWrapper, settings));
+            WindowLevelContext.SetCurrent(new DefaultWindowLevelContext(form, clipboardService, comparer, clipboardWrapper, settings, new FileStorage()));
 
             Task.Delay(777).ContinueWith(t =>
             {
