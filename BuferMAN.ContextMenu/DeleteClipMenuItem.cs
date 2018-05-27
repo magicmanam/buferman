@@ -3,7 +3,7 @@ using BuferMAN.ContextMenu.Properties;
 using BuferMAN.Infrastructure;
 using System;
 using System.Windows.Forms;
-using Windows;
+using magicmanam.Windows;
 
 namespace BuferMAN.ContextMenu
 {

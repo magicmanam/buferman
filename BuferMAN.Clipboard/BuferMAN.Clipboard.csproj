@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="magicmanam.UndoRedo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\magicmanam.UndoRedo.1.0.0\lib\net45\magicmanam.UndoRedo.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -63,10 +66,6 @@
       <Project>{0deecdc2-cf30-4625-a465-671f851f937e}</Project>
       <Name>Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\magicmanam.UndoRedo\magicmanam.UndoRedo.csproj">
-      <Project>{2a0ea8a3-5e8c-411f-bf3d-b2d67ad5e956}</Project>
-      <Name>magicmanam.UndoRedo</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resource.resx">
@@ -77,6 +76,11 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

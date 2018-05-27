@@ -30,6 +30,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="magicmanam.UndoRedo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\magicmanam.UndoRedo.1.0.0\lib\net45\magicmanam.UndoRedo.dll</HintPath>
+    </Reference>
+    <Reference Include="magicmanam.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\magicmanam.Windows.1.0.1\lib\net45\magicmanam.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="magicmanam.Windows.ClipboardViewer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\magicmanam.Windows.ClipboardViewer.1.0.1\lib\net45\magicmanam.Windows.ClipboardViewer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -93,18 +102,6 @@
       <Project>{2822F743-087D-403A-A8E9-92FBEAC0A3EF}</Project>
       <Name>BuferMAN.Plugins</Name>
     </ProjectReference>
-    <ProjectReference Include="..\magicmanam.UndoRedo\magicmanam.UndoRedo.csproj">
-      <Project>{2a0ea8a3-5e8c-411f-bf3d-b2d67ad5e956}</Project>
-      <Name>magicmanam.UndoRedo</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\magicmanam.Windows.ClipboardViewer\magicmanam.Windows.ClipboardViewer.csproj">
-      <Project>{3dd7b207-5743-457f-a530-7669d0d2ced7}</Project>
-      <Name>magicmanam.Windows.ClipboardViewer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Windows\Windows.csproj">
-      <Project>{5a51c93a-8fd0-4a47-8802-05b36cf7242e}</Project>
-      <Name>Windows</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="BuferAMForm.resx">
@@ -119,6 +116,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

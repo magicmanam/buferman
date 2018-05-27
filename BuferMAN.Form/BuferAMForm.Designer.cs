@@ -4,7 +4,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Drawing;
 using SystemWindowsFormsContextMenu = System.Windows.Forms.ContextMenu;
-using Windows;
+using magicmanam.Windows;
 using BuferMAN.Clipboard;
 using System.Security.Principal;
 using magicmanam.Windows.ClipboardViewer;

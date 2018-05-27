@@ -8,7 +8,7 @@ using System.Linq;
 using System.IO;
 using System.Windows.Forms;
 using SystemWindowsFormsContextMenu = System.Windows.Forms.ContextMenu;
-using Windows;
+using magicmanam.Windows;
 using BuferMAN.Menu;
 using BuferMAN.ContextMenu.Properties;
 

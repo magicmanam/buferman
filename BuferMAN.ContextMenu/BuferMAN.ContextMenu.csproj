@@ -30,6 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="magicmanam.UndoRedo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\magicmanam.UndoRedo.1.0.0\lib\net45\magicmanam.UndoRedo.dll</HintPath>
+    </Reference>
+    <Reference Include="magicmanam.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\magicmanam.Windows.1.0.1\lib\net45\magicmanam.Windows.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -95,14 +101,9 @@
       <Project>{08184414-67ea-419e-b71b-b764f0f2e578}</Project>
       <Name>BuferMAN.Menu</Name>
     </ProjectReference>
-    <ProjectReference Include="..\magicmanam.UndoRedo\magicmanam.UndoRedo.csproj">
-      <Project>{2A0EA8A3-5E8C-411F-BF3D-B2D67AD5E956}</Project>
-      <Name>magicmanam.UndoRedo</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Windows\Windows.csproj">
-      <Project>{5A51C93A-8FD0-4A47-8802-05B36CF7242E}</Project>
-      <Name>Windows</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

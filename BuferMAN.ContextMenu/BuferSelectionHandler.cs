@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Forms;
-using Windows;
+using magicmanam.Windows;
 using BuferMAN.Infrastructure;
 using BuferMAN.Clipboard;
 using SystemWindowsForm = System.Windows.Forms.Form;

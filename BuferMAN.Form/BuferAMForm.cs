@@ -1,6 +1,6 @@
 ﻿using System;
 using SystemWindowsForm = System.Windows.Forms.Form;
-using Windows;
+using magicmanam.Windows;
 
 namespace BuferMAN.Form
 {

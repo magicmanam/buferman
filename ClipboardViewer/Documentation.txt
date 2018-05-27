@@ -58,8 +58,3 @@ Settings:  //Minimalize settings for easy using
   - Show preview image instead of ordinal text
   - Change language (EN, RU)
 ?  - History: store current day bufers, only from program start, when amount does not preceeds 100Mb of RAM
-
-Undoable nuget:
-Description: Simple and easy to use framework for Undo/Redo functionality integration into your .NET application. Just include & use it!
-
-documentation unit testing

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-using Windows;
+using magicmanam.Windows;
 using BuferMAN.Clipboard;
 using System.Diagnostics;
 using System.Deployment.Application;

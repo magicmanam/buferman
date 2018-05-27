@@ -4,7 +4,7 @@ using BuferMAN.Infrastructure;
 using Microsoft.VisualBasic;
 using System;
 using System.Windows.Forms;
-using Windows;
+using magicmanam.Windows;
 
 namespace ClipboardViewerForm.ClipMenu.Items
 {
