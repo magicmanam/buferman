@@ -1,6 +1,5 @@
 ﻿using System.Windows.Forms;
 using BuferMAN.Clipboard;
-using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Window;
 using SystemWindowsForm = System.Windows.Forms.Form;
 
@@ -22,8 +21,6 @@ namespace BuferMAN.Form.Window
         {
             this._form.WindowState = FormWindowState.Normal;
             this._form.Visible = true;
-
-            WindowLevelContext.Current.RerenderBufers();
         }
     }
 }

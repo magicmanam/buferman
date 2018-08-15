@@ -177,6 +177,7 @@ namespace BuferMAN.Form
         private void _onFormActivated(object sender, EventArgs e)
         {
             WindowLevelContext.Current.ActivateWindow();
+            WindowLevelContext.Current.RerenderBufers();
         }
 
         private void _SetupTrayIcon()
