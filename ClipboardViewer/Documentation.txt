@@ -41,6 +41,7 @@ Hard:
 - Alt-C + P - Opens Paint + other shortcuts
 - There is a new bufers.txt file on every program update.
 - Automatic tests: create python git repo
+- https://alperguc.blogspot.com/2008/11/c-system-tray-minimize-to-tray-with.html
 - Add program to autostart (only for portable version. There is a well-known problem with ClickOnce applications: it will have several programs at once)
 ******************* unsorted ****************
 

@@ -168,10 +168,15 @@ namespace BuferMAN.Form
             this.MaximizeBox = false;
             this.WindowState = FormWindowState.Minimized;
             this.CreateStatusBar();
-            this.Activated += new WindowActivationHandler(this._clipboardBuferService, this).OnActivated;
+            this.Activated += this._onFormActivated;
             this.ShowInTaskbar = false;
             this._CreateUserManualLabel();
             this._SetupTrayIcon();
+        }
+
+        private void _onFormActivated(object sender, EventArgs e)
+        {
+            WindowLevelContext.Current.ActivateWindow();
         }
 
         private void _SetupTrayIcon()

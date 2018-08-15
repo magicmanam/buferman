@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Window;
@@ -18,10 +17,10 @@ namespace BuferMAN.Form.Window
             _form = form;
 
         }
-                
-        public void OnActivated(object sender, EventArgs e)
+
+        public void Activate()
         {
-			this._form.WindowState = FormWindowState.Normal;
+            this._form.WindowState = FormWindowState.Normal;
             this._form.Visible = true;
 
             WindowLevelContext.Current.RerenderBufers();
