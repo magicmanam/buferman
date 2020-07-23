@@ -37,7 +37,7 @@ Space  - the same as Enter key - pastes selected bufer into an active window
 ### Terms
 *Persistent bufer* - bufer which is stored all time you work with **BuferMAN** and cannot be rewritten by any copy operation. To make bufer persistent use *Ctrl + S (Save)* hot key.
 
-*Credentials bufer* - a bufer which minimize your interaction with login forms. Initial bufer's value is used as username, password you can set using *Ctrl + L (Login)* hot key. After that just place a cursor at username field in login form, activate a program using *Alt + C* hot key and select credentials bufer. The program will type your username, press TAB, type a password and Enter key while you just enjoy you life.
+*Credentials bufer* - a bufer which minimize your interaction with login forms. Initial bufer's value is used as username, password you can set using *Ctrl + L (Login)* hot key. After that just place a cursor at username field in login form, activate a program using *Alt + C* hot key and select credentials bufer. The program will type your username, press TAB, type a password and Enter key while you just enjoy you life. **Warning:** Passwords are stored in-memory as-is and w/o encryption, so please do not use this feature for real credentials.
 
 ## License
 GNU General Public License v3.0
