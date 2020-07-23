@@ -25,7 +25,7 @@ namespace BuferMAN.Clipboard
 
         bool IsLastTemporaryClip(IDataObject clipObject);
 
-		bool IsNotPersistent(IDataObject clipObject);
+		bool IsPersistent(IDataObject clipObject);
 
 		IDataObject FirstTemporaryClip { get; }
 

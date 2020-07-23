@@ -55,9 +55,9 @@ namespace BuferMAN.Clipboard
             return dataObject.GetFormats().Any() && this._comparer.Equals(this.LastTemporaryClip, dataObject);
         }
 
-		public bool IsNotPersistent(IDataObject dataObject)
+		public bool IsPersistent(IDataObject dataObject)
 		{
-			return !this._persistentObjects.Contains(dataObject, this._comparer);
+			return this._persistentObjects.Contains(dataObject, this._comparer);
 		}
 
         public IDataObject FirstTemporaryClip
@@ -81,11 +81,15 @@ namespace BuferMAN.Clipboard
             return this._GetAllClips(false).Contains(clip, this._comparer);
         }
 
+        // Maybe add two methods for temp and persistent clips?
         public void RemoveClip(IDataObject clipDataObject)
         {
             if (this._RemoveClipObject(this._tempObjects, clipDataObject) == false)
             {
-                this._RemoveClipObject(this._persistentObjects, clipDataObject);
+                if (this._RemoveClipObject(this._persistentObjects, clipDataObject) == false)
+                {
+                    throw new Exception("The clip was not found in temp and persistent collections - unknown situation.");
+                }
             }
         }
 

@@ -12,8 +12,8 @@ namespace BuferMAN.Form.Window
 
         public WindowActivationHandler(IClipboardBuferService clipboadService, SystemWindowsForm form)
         {
-            _clipboardBuferService = clipboadService;
-            _form = form;
+            this._clipboardBuferService = clipboadService;
+            this._form = form;
 
         }
 

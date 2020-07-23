@@ -29,30 +29,36 @@ namespace BuferMAN.Form
                 {
                     if (this._clipboardBuferService.Contains(dataObject))
                     {
-                        if (this._clipboardBuferService.IsNotPersistent(dataObject))
+                        if (this._clipboardBuferService.IsPersistent(dataObject))
+                        {
+                            return;                           
+                        }
+                        else
                         {
                             this._clipboardBuferService.RemoveClip(dataObject);
-                        }
-                        else
-                        {
-                            return;
+                            this._clipboardBuferService.AddTemporaryClip(dataObject);// Maybe just swap these clips? But they can be different.
                         }
                     }
-
-                    if (this._clipboardBuferService.ClipsCount == BuferAMForm.MAX_BUFERS_COUNT)
+                    else
                     {
-                        if (this._clipboardBuferService.GetTemporaryClips().Any())
+                        if (this._clipboardBuferService.ClipsCount == BuferAMForm.MAX_BUFERS_COUNT)
                         {
-                            this._clipboardBuferService.RemoveClip(this._clipboardBuferService.FirstTemporaryClip);
+                            if (this._clipboardBuferService.GetTemporaryClips().Any())
+                            {
+                                this._clipboardBuferService.RemoveClip(this._clipboardBuferService.FirstTemporaryClip);
+                                this._clipboardBuferService.AddTemporaryClip(dataObject);
+                            }
+                            else
+                            {
+                                MessageBox.Show(Resource.AllBufersPersistent, Resource.TratataTitle);
+                                return;
+                            }
                         }
                         else
                         {
-                            MessageBox.Show(Resource.AllBufersPersistent, Resource.TratataTitle);
-                            return;
+                            this._clipboardBuferService.AddTemporaryClip(dataObject);
                         }
                     }
-
-                    this._clipboardBuferService.AddTemporaryClip(dataObject);
                 }
 
                 if (this._form.WindowState != FormWindowState.Minimized && this._form.Visible)
