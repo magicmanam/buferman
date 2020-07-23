@@ -8,6 +8,7 @@ using BuferMAN.Clipboard;
 using BuferMAN.Form.Properties;
 using SystemWindowsForm = System.Windows.Forms.Form;
 using BuferMAN.Infrastructure;
+using BuferMAN.ContextMenu;
 
 namespace BuferMAN.Form
 {
@@ -91,7 +92,12 @@ namespace BuferMAN.Form
                 isChangeTextAvailable = false;
             }
 
-            button.Tag = buferTextRepresentation;
+            var buttonData = new ButtonData
+            {
+                Representation = buferTextRepresentation,
+                DefaultBackColor = button.BackColor
+            };
+            button.Tag = buttonData;
             button.Text = buttonText.Trim();
 
             string originBuferText = button.Text;
@@ -107,7 +113,7 @@ namespace BuferMAN.Form
 
             if (this._dataObject.GetFormats().Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT))
             {
-                button.Tag = this._dataObject.GetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT) as Image;
+                buttonData.Representation = this._dataObject.GetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT) as Image;
                 tooltip.IsBalloon = false;
                 tooltip.OwnerDraw = true;
                 tooltip.Popup += Tooltip_Popup;
@@ -136,7 +142,7 @@ namespace BuferMAN.Form
         {
             // to set the tag for each button or object
             Control parent = e.AssociatedControl;
-            Image preview = parent.Tag as Image;
+            var preview = (parent.Tag as ButtonData).Representation as Image;
 
             if (preview != null)
             {
@@ -154,7 +160,7 @@ namespace BuferMAN.Form
         private void Tooltip_Popup(object sender, PopupEventArgs e)
         {
             Control parent = e.AssociatedControl;
-            var previewImage = parent.Tag as Image;
+            var previewImage = (parent.Tag as ButtonData).Representation as Image;
 
             if (previewImage != null)
             {
@@ -164,7 +170,7 @@ namespace BuferMAN.Form
 
         private void Bufer_GotFocus(object sender, EventArgs e)
         {
-            this._focusTooltip.Show(this._button.Tag as string, this._button, TOOLTIP_DURATION);
+            this._focusTooltip.Show((this._button.Tag as ButtonData).Representation as string, this._button, TOOLTIP_DURATION);
         }
 
         private void Bufer_LostFocus(object sender, EventArgs e)

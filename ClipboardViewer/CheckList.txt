@@ -1,5 +1,8 @@
 ﻿*** Checked ***
 /*Check: . */
+/*Check: Persistent clips have another color. */
+/*Check: Persistent clips after losing focus have persistent clip color. */
+/*Check: Focused/unfocused clip changes its color. */
 /*Check: [Make bufer alias | make login | save in file], delete it, Ctrl+Z - it should be restored as was before delete. */
 /*Check: Copy bufer that is already in program but not first. After Ctrl+Z state is returned to initial (no intermediate states). */
 /*Check: When there is no temporary bufers - Delete All Temporary bufers menu item is disabled. */

@@ -11,6 +11,7 @@ using SystemWindowsFormsContextMenu = System.Windows.Forms.ContextMenu;
 using magicmanam.Windows;
 using BuferMAN.Menu;
 using BuferMAN.ContextMenu.Properties;
+using System.Drawing;
 
 namespace BuferMAN.ContextMenu
 {
@@ -49,7 +50,7 @@ namespace BuferMAN.ContextMenu
 
             var contextMenu = new SystemWindowsFormsContextMenu();
 
-            this._markAsPersistentMenuItem = new MenuItem(Resource.MenuPersistent, this._MarkAsPersistent, Shortcut.CtrlS);
+            this._markAsPersistentMenuItem = new MenuItem(Resource.MenuPersistent, this._TryMarkClipAsPersistent, Shortcut.CtrlS);
             contextMenu.MenuItems.Add(this._markAsPersistentMenuItem);
             this._placeInBuferMenuItem = new PlaceInBuferMenuItem(this._clipboardWrapper, this._dataObject);
             contextMenu.MenuItems.Add(this._placeInBuferMenuItem);
@@ -158,7 +159,7 @@ namespace BuferMAN.ContextMenu
             this._dataObject.SetData(ClipboardFormats.PASSWORD_FORMAT, e.Password);
             if (this._markAsPersistentMenuItem.Enabled)
             {
-                this._MarkAsPersistent(sender, e);
+                this._TryMarkClipAsPersistent(sender, e);
             }
             this._button.Click -= this._buferSelectionHandler.DoOnClipSelection;
         }
@@ -168,11 +169,13 @@ namespace BuferMAN.ContextMenu
             this._returnTextToInitialMenuItem.Enabled = !e.IsOriginText;
         }
 
-        private void _MarkAsPersistent(object sender, EventArgs e)
+        private void _TryMarkClipAsPersistent(object sender, EventArgs e)
         {
             if (this._clipboardBuferService.MarkClipAsPersistent(this._dataObject))
             {
                 this._markAsPersistentMenuItem.Enabled = false;
+                this._button.BackColor = Color.LightSlateGray;
+                (this._button.Tag as ButtonData).DefaultBackColor = this._button.BackColor;
                 WindowLevelContext.Current.RerenderBufers();
             }
         }

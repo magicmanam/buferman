@@ -26,7 +26,8 @@ namespace BuferMAN.ContextMenu
             if (!string.IsNullOrWhiteSpace(newText) && newText != this.Button.Text)
             {
                 this.Button.Text = newText;
-                this.Button.Tag = newText;
+                var buttonData = this.Button.Tag as ButtonData;
+                buttonData.Representation = newText;
                 ChangingTextMenuItemBase._UpdateFocusTooltip();
 
                 bool isOriginText = newText == this.OriginBuferText;

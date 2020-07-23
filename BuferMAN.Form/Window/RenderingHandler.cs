@@ -24,6 +24,8 @@ namespace BuferMAN.Form.Window
         private readonly IFileStorage _fileStorage;
         private readonly IDictionary<IDataObject, Button> _removedButtons = new Dictionary<IDataObject, Button>();
         private readonly IList<IBuferPresentation> _clipPresentations = new List<IBuferPresentation>() { new SkypeBuferPresentation(), new FileContentsBuferPresentation() };
+        private readonly Color FOCUSED_CLIP_BACK_COLOR = Color.LightSteelBlue;
+        private readonly Color DEFAULT_CLIP_BACK_COLOR = Color.Silver;
 
         private const int BUTTON_HEIGHT = 23;
 
@@ -62,12 +64,11 @@ namespace BuferMAN.Form.Window
 
         private void _DrawButtonsForBufers(List<IDataObject> bufers, int y, int currentButtonIndex)
         {
-
             foreach (var bufer in bufers)
             {
                 if (bufer.GetFormats().Length == 0)
                 {
-                    this._RemoveEmptyBuferWithoutTrackingInUndoableContext(bufer);
+                    this._RemoveBuferWithoutTrackingInUndoableContext(bufer);
                 }
                 else
                 {
@@ -89,7 +90,9 @@ namespace BuferMAN.Form.Window
                         }
                         else
                         {
-                            button = new Button() { TextAlign = ContentAlignment.MiddleLeft, Margin = new Padding(0), Width = this._buttonWidth };
+                            button = new Button() { TextAlign = ContentAlignment.MiddleLeft, Margin = new Padding(0), Width = this._buttonWidth, BackColor = DEFAULT_CLIP_BACK_COLOR };
+                            button.GotFocus += Clip_GotFocus;
+                            button.LostFocus += Clip_LostFocus;
 
                             var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._clipboardWrapper);
 
@@ -110,8 +113,20 @@ namespace BuferMAN.Form.Window
                 y -= BUTTON_HEIGHT;
             }
         }
+                
+        private void Clip_GotFocus(object sender, System.EventArgs e)
+        {
+            var button = sender as Button;
+            button.BackColor = FOCUSED_CLIP_BACK_COLOR;
+        }
 
-        private void _RemoveEmptyBuferWithoutTrackingInUndoableContext(IDataObject bufer)
+        private void Clip_LostFocus(object sender, System.EventArgs e)
+        {
+            var button = sender as Button;
+            button.BackColor = (button.Tag as ButtonData).DefaultBackColor;
+        }
+
+        private void _RemoveBuferWithoutTrackingInUndoableContext(IDataObject bufer)
         {
             using (var action = UndoableContext<ClipboardBuferServiceState>.Current.StartAction())
             {
