@@ -55,6 +55,9 @@
     <Compile Include="IMenuGenerator.cs" />
     <Compile Include="MenuGenerator.cs" />
     <Compile Include="MenuItemCollectionExtensions.cs" />
+    <Compile Include="Plugins\BatterySaverMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resource.ru.Designer.cs">
       <DependentUpon>Resource.ru.resx</DependentUpon>

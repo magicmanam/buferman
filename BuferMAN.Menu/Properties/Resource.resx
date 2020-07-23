@@ -186,4 +186,10 @@
   <data name="MenuHelpStartTitle" xml:space="preserve">
     <value>Start time</value>
   </data>
+  <data name="MenuPlugins" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="MenuPluginsBattery" xml:space="preserve">
+    <value>Battery saver mode</value>
+  </data>
 </root>

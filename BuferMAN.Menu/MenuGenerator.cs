@@ -10,6 +10,7 @@ using BuferMAN.Menu.Help;
 using magicmanam.UndoRedo;
 using BuferMAN.Infrastructure;
 using BuferMAN.Menu.Properties;
+using BuferMAN.Menu.Plugins;
 
 namespace BuferMAN.Menu
 {
@@ -18,18 +19,21 @@ namespace BuferMAN.Menu
         private readonly ILoadingFileHandler _loadingFileHandler;
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IProgramSettings _settings;
+        private readonly INotificationEmitter _notificationEmitter;
 
-        public MenuGenerator(ILoadingFileHandler loadingFileHandler, IClipboardBuferService clipboardBuferService, IProgramSettings settings)
+        public MenuGenerator(ILoadingFileHandler loadingFileHandler, IClipboardBuferService clipboardBuferService, IProgramSettings settings, INotificationEmitter notificationEmitter)
         {
             this._loadingFileHandler = loadingFileHandler;
             this._clipboardBuferService = clipboardBuferService;
             this._settings = settings;
+            this._notificationEmitter = notificationEmitter;
         }
         public MainMenu GenerateMenu()
         {
             var menu = new MainMenu();
             menu.MenuItems.Add(this._GenerateFileMenu());
             menu.MenuItems.Add(this._GenerateEditMenu());
+            menu.MenuItems.Add(this._GeneratePluginsMenu());
             menu.MenuItems.Add(this._GenerateHelpMenu());
 
             return menu;
@@ -102,6 +106,19 @@ namespace BuferMAN.Menu
         {
             this._clipboardBuferService.RemoveTemporaryClips();
             WindowLevelContext.Current.RerenderBufers();
+        }
+
+        private MenuItem _GeneratePluginsMenu()
+        {
+            var pluginsMenu = new MenuItem(Resource.MenuPlugins);
+            
+            var status = SystemInformation.PowerStatus;
+            if ((status.BatteryChargeStatus & (BatteryChargeStatus.NoSystemBattery | BatteryChargeStatus.Unknown)) != 0)
+            {
+                pluginsMenu.MenuItems.Add(new BatterySaverMenuItem(this._notificationEmitter));
+            }
+
+            return pluginsMenu;
         }
 
         private MenuItem _GenerateHelpMenu()

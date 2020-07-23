@@ -12,7 +12,6 @@ using BuferMAN.Infrastructure;
 using BuferMAN.Files;
 using SystemWindowsForm = System.Windows.Forms.Form;
 using BuferMAN.Menu;
-using BuferMAN.Form.Window;
 using BuferMAN.Form.Properties;
 using System.Windows.Input;
 
@@ -28,6 +27,7 @@ namespace BuferMAN.Form
         private readonly ILoadingFileHandler _loadingFileHandler;
         private readonly IDictionary<IDataObject, Button> _buttonsMap;
         private readonly IClipboardWrapper _clipboardWrapper;
+        private readonly INotificationEmitter _notificationEmitter;
         private ClipboardViewer _clipboardViewer;
         public const int MAX_BUFERS_COUNT = 30;
         private NotifyIcon TrayIcon;
@@ -42,16 +42,18 @@ namespace BuferMAN.Form
             InitializeComponent();
             InitializeForm();
 
+            this._notificationEmitter = new NotificationEmitter(this.TrayIcon, Resource.WindowTitle);
             this._clipboardBuferService = clipboardBuferService;
             this._comparer = comparer;
             this._buttonsMap = new Dictionary<IDataObject, Button>(MAX_BUFERS_COUNT);
             this._dataObjectHandler = new DataObjectHandler(clipboardBuferService, this, comparer);
             this._clipboardWrapper = clipboardWrapper;
             this._loadingFileHandler = new LoadingFileHandler(this._dataObjectHandler);
-            this._menuGenerator = new MenuGenerator(this._loadingFileHandler, this._clipboardBuferService, settings);
+            this._menuGenerator = new MenuGenerator(this._loadingFileHandler, this._clipboardBuferService, settings, this._notificationEmitter);
             this.Menu = this._menuGenerator.GenerateMenu();
 
             this._StartTrickTimer(23);
+            this._notificationEmitter.ShowInfoNotification(Resource.NotifyIconStartupText, 1500);
         }
 
         //TODO Find better solution
@@ -111,11 +113,11 @@ namespace BuferMAN.Form
 
                 if (this._copiesCount == 100)
                 {
-                    this._ShowTrayIconInfo(2500, Resource.NotifyIcon100Congrats);
+                    this._notificationEmitter.ShowInfoNotification(Resource.NotifyIcon100Congrats, 2500);
                 }
                 else if (this._copiesCount == 1000)
                 {
-                    this._ShowTrayIconInfo(2500, Resource.NotifyIcon1000Congrats);
+                    this._notificationEmitter.ShowInfoNotification(Resource.NotifyIcon1000Congrats, 2500);
                 }
 
                 this.SetStatusBarText(Resource.LastClipboardUpdate + DateTime.Now.ToShortTimeString());//Should be in separate strip label
@@ -141,12 +143,7 @@ namespace BuferMAN.Form
 
             base.WndProc(ref m);
         }
-
-        private void _ShowTrayIconInfo(int delay, string text)
-        {
-            this.TrayIcon.ShowBalloonTip(delay, Resource.WindowTitle, text, ToolTipIcon.Info);
-        }
-
+        
         public void SetStatusBarText(string newText)
         {
             //this.StatusLabel.ToolTipText = newText;
@@ -186,8 +183,7 @@ namespace BuferMAN.Form
             this.TrayIcon.DoubleClick += this._TrayIcon_DoubleClick;
             this.TrayIcon.ContextMenu = new SystemWindowsFormsContextMenu();
             this.TrayIcon.ContextMenu.MenuItems.Add(new MenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => WindowsFunctions.SendMessage(WindowLevelContext.Current.WindowHandle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero)));
-            this.TrayIcon.Visible = true;
-            this._ShowTrayIconInfo(1500, Resource.NotifyIconStartupText);
+            this.TrayIcon.Visible = true;            
         }
 
         private void _TrayIcon_DoubleClick(object sender, EventArgs e)

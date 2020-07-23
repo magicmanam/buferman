@@ -41,6 +41,7 @@
     <Compile Include="IFileStorage.cs" />
     <Compile Include="IIDataObjectHandler.cs" />
     <Compile Include="ILoadingFileHandler.cs" />
+    <Compile Include="INotificationEmitter.cs" />
     <Compile Include="IProgramSettings.cs" />
     <Compile Include="IWindowLevelContext.cs" />
     <Compile Include="Menu\IMenuGenerator.cs" />
