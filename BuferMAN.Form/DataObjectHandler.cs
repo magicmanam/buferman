@@ -23,7 +23,7 @@ namespace BuferMAN.Form
 
         public void HandleDataObject(IDataObject dataObject)
         {
-            if (dataObject.GetFormats().Any() && !this._clipboardBuferService.IsLastTemporaryClip(dataObject))
+            if (dataObject.GetFormats().Any() && !this._clipboardBuferService.IsLastTemporaryClip(dataObject)) // Repeated Ctrl + C operation on the save object
             {
                 using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction())
                 {
@@ -41,21 +41,20 @@ namespace BuferMAN.Form
                     }
                     else
                     {
-                        if (this._clipboardBuferService.ClipsCount == BuferAMForm.MAX_BUFERS_COUNT)
+                        if (this._clipboardBuferService.GetPersistentClips().Count() == BuferAMForm.MAX_BUFERS_COUNT)
                         {
-                            if (this._clipboardBuferService.GetTemporaryClips().Any())
-                            {
-                                this._clipboardBuferService.RemoveClip(this._clipboardBuferService.FirstTemporaryClip);
-                                this._clipboardBuferService.AddTemporaryClip(dataObject);
-                            }
-                            else
-                            {
-                                MessageBox.Show(Resource.AllBufersPersistent, Resource.TratataTitle);
-                                return;
-                            }
+                            MessageBox.Show(Resource.AllBufersPersistent, Resource.TratataTitle);
+                            // Maybe display a program window if not ?
+                            // Maybe all visible bufers can not be persistent (create a limit of persistent bufers)?
+                            return;
                         }
                         else
                         {
+                            if (this._clipboardBuferService.ClipsCount == BuferAMForm.MAX_BUFERS_COUNT + BuferAMForm.EXTRA_BUFERS_COUNT)
+                            {
+                                this._clipboardBuferService.RemoveClip(this._clipboardBuferService.FirstTemporaryClip);
+                            }
+
                             this._clipboardBuferService.AddTemporaryClip(dataObject);
                         }
                     }

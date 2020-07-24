@@ -1,5 +1,7 @@
 ﻿*** Checked ***
 /*Check: . */
+/*Check: Если 30 буферов на экране и один удаляется, то появляется последний временный буфер, который исчез недавно с экрана (если такой был). */
+/*Check: Если 30 буферов на экране и все персистент, то покажется сообщение при добавлении нового буфера. Иначе просто исчезнет самый нижний временный буфер и появится новый сверху. */
 /*Check: Persistent clips have another color. */
 /*Check: Persistent clips after losing focus have persistent clip color. */
 /*Check: Focused/unfocused clip changes its color. */

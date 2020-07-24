@@ -30,6 +30,7 @@ namespace BuferMAN.Form
         private readonly INotificationEmitter _notificationEmitter;
         private ClipboardViewer _clipboardViewer;
         public const int MAX_BUFERS_COUNT = 30;
+        public const int EXTRA_BUFERS_COUNT = 25;// Into a settings. Can not be big, because rendering is too slow cause of auto keyboard emulation.
         private NotifyIcon TrayIcon;
         private bool _shouldCatchCopies = true;
 

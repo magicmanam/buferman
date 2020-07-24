@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -47,6 +48,10 @@ namespace BuferMAN.Form.Window
         {
             var temporaryClips = this._clipboardBuferService.GetTemporaryClips().ToList();
             var persistentClips = this._clipboardBuferService.GetPersistentClips();
+
+            var extraTemporaryClipsCount = Math.Max(this._clipboardBuferService.ClipsCount - BuferAMForm.MAX_BUFERS_COUNT, 0);
+            temporaryClips = temporaryClips.Skip(extraTemporaryClipsCount).ToList();
+
             this._RemoveOldButtons(temporaryClips.Union(persistentClips));
 
             if (temporaryClips.Any())
