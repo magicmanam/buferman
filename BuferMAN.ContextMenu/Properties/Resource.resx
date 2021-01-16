@@ -192,4 +192,7 @@
   <data name="MenuReturn" xml:space="preserve">
     <value>&amp;Return text to initial</value>
   </data>
+  <data name="MenuCreatedTime" xml:space="preserve">
+    <value>Created at {0}</value>
+  </data>
 </root>

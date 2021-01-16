@@ -192,4 +192,7 @@
   <data name="MenuReturn" xml:space="preserve">
     <value>Вернуть текст к первоначальному</value>
   </data>
+  <data name="MenuCreatedTime" xml:space="preserve">
+    <value>Создано в {0}</value>
+  </data>
 </root>

@@ -140,6 +140,9 @@ namespace BuferMAN.ContextMenu
                 contextMenu.MenuItems.Add(this._createLoginDataMenuItem);
             }
 
+            contextMenu.MenuItems.AddSeparator();
+            contextMenu.MenuItems.Add(new MenuItem(string.Format(Resource.MenuCreatedTime, this._ButtonData.CreatedAt)));
+
             return contextMenu;
         }
 
@@ -175,8 +178,14 @@ namespace BuferMAN.ContextMenu
             {
                 this._markAsPersistentMenuItem.Enabled = false;
                 this._button.BackColor = Color.LightSlateGray;
-                (this._button.Tag as ButtonData).DefaultBackColor = this._button.BackColor;
+                this._ButtonData.DefaultBackColor = this._button.BackColor;
                 WindowLevelContext.Current.RerenderBufers();
+            }
+        }
+
+        private ButtonData _ButtonData { get
+            {
+                return this._button.Tag as ButtonData;
             }
         }
     }
