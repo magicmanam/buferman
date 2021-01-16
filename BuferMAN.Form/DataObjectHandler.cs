@@ -31,7 +31,7 @@ namespace BuferMAN.Form
                     {
                         if (this._clipboardBuferService.IsPersistent(dataObject))
                         {
-                            return;                           
+                            return;
                         }
                         else
                         {

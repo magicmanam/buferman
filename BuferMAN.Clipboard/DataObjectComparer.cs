@@ -83,6 +83,10 @@ namespace BuferMAN.Clipboard
                         {
                             if (stringFormat == DataFormats.Html)
                             {
+                                if (xValueString == null || yValueString == null)
+                                {
+                                    return false;
+                                }
                                 xValueString = Regex.Replace(xValueString, "(\\0)*$", string.Empty);
                                 yValueString = Regex.Replace(yValueString, "(\\0)*$", string.Empty);
                                 if (xValueString != yValueString)
