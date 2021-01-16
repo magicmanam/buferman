@@ -33,7 +33,7 @@ namespace BuferMAN.Menu
             var menu = new MainMenu();
             menu.MenuItems.Add(this._GenerateFileMenu());
             menu.MenuItems.Add(this._GenerateEditMenu());
-            menu.MenuItems.Add(this._GeneratePluginsMenu());
+            menu.MenuItems.Add(this._GenerateToolsMenu());
             menu.MenuItems.Add(this._GenerateHelpMenu());
 
             return menu;
@@ -108,9 +108,19 @@ namespace BuferMAN.Menu
             WindowLevelContext.Current.RerenderBufers();
         }
 
+        private MenuItem _GenerateToolsMenu()
+        {
+            var toolsMenu = new MenuItem(Resource.MenuTools);
+
+            toolsMenu.MenuItems.Add(new MenuItem(Resource.MenuToolsMemory) { });// 1) Show taken memory; 2) Clear old bufers when memory taken is too much; 3) Number of all bufers (with deleted and not visible)
+            toolsMenu.MenuItems.Add(this._GeneratePluginsMenu());
+
+            return toolsMenu;
+        }
+
         private MenuItem _GeneratePluginsMenu()
         {
-            var pluginsMenu = new MenuItem(Resource.MenuPlugins);
+            var pluginsMenu = new MenuItem(Resource.MenuToolsPlugins);
             
             var status = SystemInformation.PowerStatus;
             if ((status.BatteryChargeStatus & (BatteryChargeStatus.NoSystemBattery | BatteryChargeStatus.Unknown)) != 0)

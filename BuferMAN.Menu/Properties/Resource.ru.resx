@@ -186,10 +186,16 @@
   <data name="MenuHelpStartTitle" xml:space="preserve">
     <value>Время запуска</value>
   </data>
-  <data name="MenuPlugins" xml:space="preserve">
-    <value>Плагины</value>
-  </data>
   <data name="MenuPluginsBattery" xml:space="preserve">
     <value>Режим экономии батареи</value>
+  </data>
+  <data name="MenuTools" xml:space="preserve">
+    <value>&amp;Средства</value>
+  </data>
+  <data name="MenuToolsMemory" xml:space="preserve">
+    <value>Оперативная память</value>
+  </data>
+  <data name="MenuToolsPlugins" xml:space="preserve">
+    <value>Плагины</value>
   </data>
 </root>
