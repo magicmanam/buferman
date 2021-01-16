@@ -184,7 +184,7 @@ namespace BuferMAN.Form
             this.TrayIcon.DoubleClick += this._TrayIcon_DoubleClick;
             this.TrayIcon.ContextMenu = new SystemWindowsFormsContextMenu();
             this.TrayIcon.ContextMenu.MenuItems.Add(new MenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => WindowsFunctions.SendMessage(WindowLevelContext.Current.WindowHandle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero)));
-            this.TrayIcon.Visible = true;            
+            this.TrayIcon.Visible = true;
         }
 
         private void _TrayIcon_DoubleClick(object sender, EventArgs e)
@@ -252,6 +252,7 @@ namespace BuferMAN.Form
                     new KeyboardEmulator().PressTab(3);
                     break;
                 case Keys.X:
+                case Keys.Home:
                     var lastBufer = this._clipboardBuferService.LastTemporaryClip;
                     if (lastBufer != null)
                     {
@@ -260,6 +261,7 @@ namespace BuferMAN.Form
                     }
                     break;
                 case Keys.V:
+                case Keys.End:
                     var firstBufer = this._clipboardBuferService.FirstPersistentClip ?? this._clipboardBuferService.FirstTemporaryClip;
 
                     if (firstBufer != null)
