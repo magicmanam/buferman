@@ -189,6 +189,12 @@
   <data name="MenuPluginsBattery" xml:space="preserve">
     <value>Battery saver mode</value>
   </data>
+  <data name="MenuPluginsPCCleaner" xml:space="preserve">
+    <value>PC cleaner</value>
+  </data>
+  <data name="MenuPluginsScripts" xml:space="preserve">
+    <value>Scripts</value>
+  </data>
   <data name="MenuTools" xml:space="preserve">
     <value>&amp;Tools</value>
   </data>

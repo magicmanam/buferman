@@ -121,7 +121,10 @@ namespace BuferMAN.Menu
         private MenuItem _GeneratePluginsMenu()
         {
             var pluginsMenu = new MenuItem(Resource.MenuToolsPlugins);
-            
+
+            pluginsMenu.MenuItems.Add(new MenuItem(Resource.MenuPluginsScripts));
+            pluginsMenu.MenuItems.Add(new MenuItem(Resource.MenuPluginsPCCleaner));
+
             var status = SystemInformation.PowerStatus;
             if ((status.BatteryChargeStatus & (BatteryChargeStatus.NoSystemBattery | BatteryChargeStatus.Unknown)) != 0)
             {
