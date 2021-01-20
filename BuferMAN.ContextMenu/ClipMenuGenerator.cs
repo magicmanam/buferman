@@ -31,7 +31,7 @@ namespace BuferMAN.ContextMenu
         private MenuItem _placeInBuferMenuItem;
         private String _originBuferText;
         private ToolTip _mouseOverTooltip;
-        private IClipboardWrapper _clipboardWrapper;
+        private readonly IClipboardWrapper _clipboardWrapper;
 
         public ClipMenuGenerator(IClipboardBuferService clipboardBuferService, BuferSelectionHandler buferSelectionHandler, IProgramSettings settings, IClipboardWrapper clipboardWrapper)
         {
