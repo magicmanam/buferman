@@ -102,6 +102,17 @@ namespace BuferMAN.Form
 
             string originBuferText = button.Text;
 
+            int maxBuferLength = 2000;// Into settings (not more then 5000 - add validation)
+            if (buferTextRepresentation != null && buferTextRepresentation.Length > maxBuferLength + 300)
+            {
+                buferTextRepresentation = buferTextRepresentation.Substring(0, maxBuferLength) + Environment.NewLine + Environment.NewLine + "...";
+
+                if (string.IsNullOrEmpty(buferTitle))
+                {
+                    buferTitle = this._MakeSpecialBuferText(Resource.BigTextBufer);
+                }
+            }
+
             var tooltip = new ToolTip() { InitialDelay = 0 };
             tooltip.IsBalloon = true;
             tooltip.SetToolTip(button, buferTextRepresentation);

@@ -184,4 +184,7 @@ Hot keys:
   <data name="FileContentsBufer" xml:space="preserve">
     <value>File Content</value>
   </data>
+  <data name="BigTextBufer" xml:space="preserve">
+    <value>Many characters...</value>
+  </data>
 </root>

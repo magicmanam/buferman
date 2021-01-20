@@ -11,7 +11,18 @@ namespace BuferMAN.BuferPresentations
 
         public override bool IsCompatibleWithBufer(IDataObject data)
         {
-            return data.GetFormats().Any(format => format == ClipboardFormats.FILE_CONTENTS_FORMAT);
+            if (data.GetFormats().Any(format => format == ClipboardFormats.FILE_CONTENTS_FORMAT))
+            {
+                return true;
+            }
+
+            var files = data.GetData(DataFormats.FileDrop) as string[];
+            if (files != null)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
