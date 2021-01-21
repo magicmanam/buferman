@@ -3,6 +3,7 @@
 
 # Resource designer's files
 **/*/[Rr]esource.[Dd]esigner.cs
+**/*/[Rr]esource.ru.[Dd]esigner.cs
 
 # User-specific files
 *.suo
