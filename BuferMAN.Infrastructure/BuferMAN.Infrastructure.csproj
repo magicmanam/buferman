@@ -36,6 +36,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuferItem.cs" />
     <Compile Include="ContextMenu\IClipMenuGenerator.cs" />
     <Compile Include="IBuferSelectionHandler.cs" />
     <Compile Include="IFileStorage.cs" />

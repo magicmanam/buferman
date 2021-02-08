@@ -28,6 +28,7 @@ namespace BuferMAN.Form
         private readonly IDictionary<IDataObject, Button> _buttonsMap;
         private readonly IClipboardWrapper _clipboardWrapper;
         private readonly INotificationEmitter _notificationEmitter;
+        private readonly IProgramSettings _settings;
         private ClipboardViewer _clipboardViewer;
         public const int MAX_BUFERS_COUNT = 30;
         public const int EXTRA_BUFERS_COUNT = 25;// Into a settings. Can not be big, because rendering is too slow cause of auto keyboard emulation.
@@ -49,9 +50,10 @@ namespace BuferMAN.Form
             this._buttonsMap = new Dictionary<IDataObject, Button>(MAX_BUFERS_COUNT);
             this._dataObjectHandler = new DataObjectHandler(clipboardBuferService, this, comparer);
             this._clipboardWrapper = clipboardWrapper;
-            this._loadingFileHandler = new LoadingFileHandler(this._dataObjectHandler);
+            this._loadingFileHandler = new LoadingFileHandler(this._dataObjectHandler, new SimpleFileParser(), settings);
             this._menuGenerator = new MenuGenerator(this._loadingFileHandler, this._clipboardBuferService, settings, this._notificationEmitter);
             this.Menu = this._menuGenerator.GenerateMenu();
+            this._settings = settings;
 
             this._StartTrickTimer(23);
             this._notificationEmitter.ShowInfoNotification(Resource.NotifyIconStartupText, 1500);
@@ -89,9 +91,9 @@ namespace BuferMAN.Form
             base.Dispose(disposing);
         }
 
-        public void LoadBufersFromFile(string fileName)
+        public void LoadBufersFromStorage()
         {
-            this._loadingFileHandler.LoadBufersFromFile(fileName);
+            this._loadingFileHandler.LoadBufersFromFile(_settings.DefaultBufersFileName);
         }
 
         protected override void WndProc(ref Message m)

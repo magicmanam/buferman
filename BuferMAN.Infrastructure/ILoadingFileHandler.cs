@@ -1,10 +1,12 @@
-﻿using System;
+﻿using BuferMAN.Storage;
+using System;
+using System.Collections.Generic;
 
 namespace BuferMAN.Infrastructure
 {
     public interface ILoadingFileHandler
     {
         void OnLoadFile(object sender, EventArgs args);
-        void LoadBufersFromFile(string fileName);
+        IEnumerable<BuferItem> LoadBufersFromFile(string fileName);
     }
 }

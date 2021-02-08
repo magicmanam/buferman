@@ -11,6 +11,8 @@
 Issues to solve:
 - Load all bufers as one action (update UndoRedo nuget)
 - Alias and persistent can not be set right now
+- 'Place bufer in clipboard' - reconsider
+- Abstract factory for working with storage (and maybe azure storage)
 
 - пароль хешировать
 

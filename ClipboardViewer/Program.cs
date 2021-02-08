@@ -19,7 +19,7 @@ namespace ClipboardViewer
 {
 	static class Program
     {
-        private delegate void _LoadBufersFromDefaultFileInvoker(string fileName);
+        private delegate void _LoadBufersFromDefaultFileInvoker();
 
         /// <summary>
         /// Главная точка входа для приложения.
@@ -75,8 +75,8 @@ namespace ClipboardViewer
             {
                 if (File.Exists(settings.DefaultBufersFileName))
                 {
-                    var invoker = new _LoadBufersFromDefaultFileInvoker(form.LoadBufersFromFile);
-                    form.Invoke(invoker, settings.DefaultBufersFileName);
+                    var invoker = new _LoadBufersFromDefaultFileInvoker(form.LoadBufersFromStorage);
+                    form.Invoke(invoker);
                 }
             });
 
