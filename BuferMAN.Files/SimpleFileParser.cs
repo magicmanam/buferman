@@ -13,7 +13,7 @@ namespace BuferMAN.Files
                 var bufer = reader.ReadLine();
                 if (!string.IsNullOrWhiteSpace(bufer))
                 {
-                    yield return new BuferItem { Data = bufer };
+                    yield return new BuferItem { Data = bufer, IsPersistent = false };
                 }
             }
         }
