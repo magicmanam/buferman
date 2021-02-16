@@ -35,12 +35,19 @@ namespace ClipboardViewer
                     WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
                     if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
                     {
-                        var result = MessageBox.Show(Resource.AdminModeConfirmation, Resource.AdminModeConfirmationTitle, MessageBoxButtons.OKCancel);
-                        if (result == DialogResult.Cancel)
+                        var result = MessageBox.Show(Resource.AdminModeConfirmation, Resource.AdminModeConfirmationTitle, MessageBoxButtons.YesNoCancel);
+
+                        switch (result)
                         {
-                            string arguments = "/select, \"" + Application.ExecutablePath + "\"";
-                            Process.Start("explorer.exe", arguments).WaitForInputIdle();
-                            return;
+                            case DialogResult.Yes:
+                                Program._RunWindow();
+                                return;
+                            case DialogResult.No:
+                                string arguments = "/select, \"" + Application.ExecutablePath + "\"";
+                                Process.Start("explorer.exe", arguments).WaitForInputIdle();
+                                return;
+                            case DialogResult.Cancel:
+                                return;
                         }
                     }
 

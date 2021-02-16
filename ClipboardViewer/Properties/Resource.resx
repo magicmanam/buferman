@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AdminModeConfirmation" xml:space="preserve">
-    <value>For correct work with programs launched in Admin mode, you need to launch the program in the same mode ("Run as administrator" in context menu). Click OK to continue in user mode or Cancel to run as administrator (file explorer with program selected will be opened)</value>
+    <value>You are launching the program in user mode. For correct work with programs launched in Admin mode, use context menu "Run as administrator". Click "Yes" to continue or "No" if you want to run it as administrator (File Explorer with program selected will be opened).</value>
   </data>
   <data name="AdminModeConfirmationTitle" xml:space="preserve">
     <value>User mode startup</value>

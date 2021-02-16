@@ -5,8 +5,6 @@
 # Release by 1 April 2018
 2 вектора: уходить от winforms dependencies, добавить DI
 
-Проверить: первое окно с выбором админ/не админ закрываю по крестику - программа закроется или нет?
-
 [{ bufer: [{ format: '', data: '' }, { format: '', data: '' }], p: true, alias: 'optional' }]
 Issues to solve:
 - Load all bufers as one action (update UndoRedo nuget)
