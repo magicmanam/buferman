@@ -1,4 +1,4 @@
-﻿using BuferMAN.Infrastructure;
+﻿using BuferMAN.Infrastructure.Storage;
 using System.IO;
 
 namespace BuferMAN.Files

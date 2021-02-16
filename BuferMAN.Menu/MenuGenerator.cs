@@ -11,6 +11,7 @@ using magicmanam.UndoRedo;
 using BuferMAN.Infrastructure;
 using BuferMAN.Menu.Properties;
 using BuferMAN.Menu.Plugins;
+using BuferMAN.Infrastructure.Storage;
 
 namespace BuferMAN.Menu
 {

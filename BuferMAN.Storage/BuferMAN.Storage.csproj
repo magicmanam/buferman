@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,10 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPersistentBufersStorage.cs" />
+    <Compile Include="BuferItemDataObjectConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuferMAN.Clipboard\BuferMAN.Clipboard.csproj">
+      <Project>{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}</Project>
+      <Name>BuferMAN.Clipboard</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BuferMAN.Infrastructure\BuferMAN.Infrastructure.csproj">
       <Project>{f14888de-e3de-4225-80aa-f836dcba8e2e}</Project>
       <Name>BuferMAN.Infrastructure</Name>

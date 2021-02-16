@@ -1,14 +1,19 @@
-﻿using BuferMAN.Storage;
+﻿using BuferMAN.Infrastructure.Storage;
+using BuferMAN.Storage;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.IO;
 
 namespace BuferMAN.Files
 {
-    public class JsonFileParser
+    public class JsonFileParser : IBufersFileParser
     {
-        IEnumerable<BuferItem> Parse(StreamReader stream)
+        public IEnumerable<BuferItem> Parse(StreamReader stream)
         {
-            return null;
+            var serializer = new JsonSerializer();
+
+            return JArray.Parse(stream.ReadToEnd()).ToObject<IEnumerable<BuferItem>>();
         }
     }
 }

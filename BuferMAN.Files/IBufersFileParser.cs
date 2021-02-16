@@ -1,4 +1,5 @@
-﻿using BuferMAN.Storage;
+﻿using BuferMAN.Infrastructure;
+using BuferMAN.Infrastructure.Storage;
 using System.Collections.Generic;
 using System.IO;
 

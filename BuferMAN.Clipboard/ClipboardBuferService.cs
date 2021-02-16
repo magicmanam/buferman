@@ -131,16 +131,18 @@ namespace BuferMAN.Clipboard
             }
         }
 
-        public bool MarkClipAsPersistent(IDataObject clip)
+        public bool TryMarkClipAsPersistent(IDataObject clip)
 		{
-            using (var operation = UndoableContext<ClipboardBuferServiceState>.Current.StartAction(Resource.BuferPersistent)) {
+            using (var operation = UndoableContext<ClipboardBuferServiceState>.Current.StartAction(Resource.BuferPersistent))
+            {
                 var dataObject = this._tempObjects.FirstOrDefault(d => this._comparer.Equals(d, clip));
                 if (dataObject != null && this._tempObjects.Remove(dataObject))
                 {
                     this._persistentObjects.Add(dataObject);
                     return true;
 
-                } else
+                }
+                else
                 {
                     operation.Cancel();
                     return false;

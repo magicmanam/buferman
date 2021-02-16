@@ -14,6 +14,8 @@ using SystemWindowsForm = System.Windows.Forms.Form;
 using BuferMAN.Menu;
 using BuferMAN.Form.Properties;
 using System.Windows.Input;
+using BuferMAN.Infrastructure.Storage;
+using BuferMAN.Storage;
 
 namespace BuferMAN.Form
 {
@@ -29,6 +31,7 @@ namespace BuferMAN.Form
         private readonly IClipboardWrapper _clipboardWrapper;
         private readonly INotificationEmitter _notificationEmitter;
         private readonly IProgramSettings _settings;
+        private readonly BuferItemDataObjectConverter _buferItemDataObjectConverter = new BuferItemDataObjectConverter();
         private ClipboardViewer _clipboardViewer;
         public const int MAX_BUFERS_COUNT = 30;
         public const int EXTRA_BUFERS_COUNT = 25;// Into a settings. Can not be big, because rendering is too slow cause of auto keyboard emulation.
@@ -48,15 +51,39 @@ namespace BuferMAN.Form
             this._clipboardBuferService = clipboardBuferService;
             this._comparer = comparer;
             this._buttonsMap = new Dictionary<IDataObject, Button>(MAX_BUFERS_COUNT);
-            this._dataObjectHandler = new DataObjectHandler(clipboardBuferService, this, comparer);
+            this._dataObjectHandler = new DataObjectHandler(clipboardBuferService, this);
+            this._dataObjectHandler.Updated += this._dataObjectHandler_Updated;
             this._clipboardWrapper = clipboardWrapper;
-            this._loadingFileHandler = new LoadingFileHandler(this._dataObjectHandler, new SimpleFileParser(), settings);
+            IBufersFileParser parser = new SimpleFileParser();
+            parser = new JsonFileParser();
+            this._loadingFileHandler = new LoadingFileHandler(this._dataObjectHandler, parser, settings);
+            this._loadingFileHandler.BuferLoaded += this._loadingFileHandler_BuferLoaded;
             this._menuGenerator = new MenuGenerator(this._loadingFileHandler, this._clipboardBuferService, settings, this._notificationEmitter);
             this.Menu = this._menuGenerator.GenerateMenu();
             this._settings = settings;
 
             this._StartTrickTimer(23);
             this._notificationEmitter.ShowInfoNotification(Resource.NotifyIconStartupText, 1500);
+        }
+
+        private void _loadingFileHandler_BuferLoaded(object sender, BuferLoadedEventArgs e)
+        {
+            var bufer = e.Bufer;
+
+            var dataObject = this._buferItemDataObjectConverter.ToDataObject(bufer);
+            this._dataObjectHandler.HandleDataObject(dataObject);
+            if (bufer.IsPersistent)
+            {
+                this._clipboardBuferService.TryMarkClipAsPersistent(dataObject);
+            }
+        }
+
+        private void _dataObjectHandler_Updated(object sender, EventArgs e)
+        {
+            if (this.WindowState != FormWindowState.Minimized && this.Visible)
+            {
+                WindowLevelContext.Current.RerenderBufers();
+            }
         }
 
         //TODO Find better solution

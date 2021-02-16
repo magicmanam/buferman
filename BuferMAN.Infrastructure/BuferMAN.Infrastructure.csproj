@@ -36,21 +36,30 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuferItem.cs" />
+    <Compile Include="Storage\BuferItem.cs" />
     <Compile Include="ContextMenu\IClipMenuGenerator.cs" />
     <Compile Include="IBuferSelectionHandler.cs" />
-    <Compile Include="IFileStorage.cs" />
+    <Compile Include="Storage\BuferLoadedEventArgs.cs" />
+    <Compile Include="Storage\IBuferItemDataObjectConverter.cs" />
+    <Compile Include="Storage\IFileStorage.cs" />
     <Compile Include="IIDataObjectHandler.cs" />
-    <Compile Include="ILoadingFileHandler.cs" />
+    <Compile Include="Storage\ILoadingFileHandler.cs" />
     <Compile Include="INotificationEmitter.cs" />
     <Compile Include="IProgramSettings.cs" />
     <Compile Include="IWindowLevelContext.cs" />
     <Compile Include="Menu\IMenuGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Storage\IPersistentBufersStorage.cs" />
     <Compile Include="WindowLevelContext.cs" />
     <Compile Include="Window\IRenderingHandler.cs" />
     <Compile Include="Window\IWindowActivationHandler.cs" />
     <Compile Include="Window\IWindowHidingHandler.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BuferMAN.Clipboard\BuferMAN.Clipboard.csproj">
+      <Project>{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}</Project>
+      <Name>BuferMAN.Clipboard</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

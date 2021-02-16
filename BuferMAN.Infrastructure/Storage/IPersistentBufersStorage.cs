@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BuferMAN.Storage
+namespace BuferMAN.Infrastructure.Storage
 {
     public interface IPersistentBufersStorage
     {

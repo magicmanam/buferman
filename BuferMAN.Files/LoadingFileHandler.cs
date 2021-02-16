@@ -5,14 +5,17 @@ using BuferMAN.Infrastructure;
 using System.Windows.Forms;
 using BuferMAN.Clipboard;
 using BuferMAN.Files.Properties;
-using System.Collections;
+using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Storage;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace BuferMAN.Files
 {
     public class LoadingFileHandler : ILoadingFileHandler
     {
+        public event EventHandler<BuferLoadedEventArgs> BuferLoaded;
+
         private readonly OpenFileDialog _dialog = new OpenFileDialog();
         private readonly IIDataObjectHandler _dataObjectHandler;
         private readonly IBufersFileParser _fileParser;
@@ -37,12 +40,9 @@ namespace BuferMAN.Files
 
             if (result == DialogResult.OK)
             {
-                foreach(var buferEntry in this.LoadBufersFromFile(this._dialog.FileName))
+                foreach (var buferEntry in this.LoadBufersFromFile(this._dialog.FileName))
                 {
-                        var dataObject = new DataObject();
-                        dataObject.SetText(buferEntry.Data as string);
-                        dataObject.SetData(ClipboardFormats.FROM_FILE_FORMAT, null);
-                        this._dataObjectHandler.HandleDataObject(dataObject);
+                    this.BuferLoaded?.Invoke(this, new BuferLoadedEventArgs(buferEntry));
                 }
             }
         }
@@ -58,10 +58,15 @@ namespace BuferMAN.Files
             }
             catch (IOException exc)
             {
-                MessageBox.Show(Resource.LoadFileErrorPrefix + $" {this._dialog.FileName}:\n\n {exc.Message}", Resource.LoadFileErrorTitle);
+                throw new ClipboardMessageException(Resource.LoadFileErrorPrefix + $" {this._dialog.FileName}:\n\n {exc.Message}", exc)
+                {
+                    Title = Resource.LoadFileErrorTitle
+                };
             }
-
-            return new List<BuferItem>();
+            catch (JsonReaderException exc)
+            {
+                throw new ClipboardMessageException(exc.Message, exc);
+            }
         }
 
         private static StreamReader GetMultiLanguageFileReader(string fileName)

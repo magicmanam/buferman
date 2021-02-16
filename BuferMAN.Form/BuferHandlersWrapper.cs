@@ -9,6 +9,7 @@ using BuferMAN.Form.Properties;
 using SystemWindowsForm = System.Windows.Forms.Form;
 using BuferMAN.Infrastructure;
 using BuferMAN.ContextMenu;
+using BuferMAN.Infrastructure.Storage;
 
 namespace BuferMAN.Form
 {

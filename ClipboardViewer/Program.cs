@@ -99,9 +99,10 @@ namespace ClipboardViewer
 		{
 			Logger.WriteError("Exception " + e.Exception.Message, e.Exception);
 
-            if (e.Exception is ClipboardMessageException)
-            {
-                MessageBox.Show(e.Exception.Message);
+            var exc = e.Exception as ClipboardMessageException;
+            if (exc != null)
+            {   
+                MessageBox.Show(exc.Message, exc.Title ?? Application.ProductName);
             }
 		}
 	}

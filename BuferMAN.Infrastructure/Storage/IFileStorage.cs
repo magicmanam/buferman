@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BuferMAN.Infrastructure
+namespace BuferMAN.Infrastructure.Storage
 {
     public interface IFileStorage
     {

@@ -5,20 +5,21 @@ using BuferMAN.Infrastructure;
 using BuferMAN.Clipboard;
 using BuferMAN.Form.Properties;
 using magicmanam.UndoRedo;
+using System;
 
 namespace BuferMAN.Form
 {
 	class DataObjectHandler : IIDataObjectHandler
     {
         private readonly IClipboardBuferService _clipboardBuferService;
-		private readonly IEqualityComparer<IDataObject> _comparer;
 		private readonly BuferAMForm _form;
 
-        public DataObjectHandler(IClipboardBuferService clipboardBuferService, BuferAMForm form, IEqualityComparer<IDataObject> comparer)
+        public event EventHandler Updated;
+
+        public DataObjectHandler(IClipboardBuferService clipboardBuferService, BuferAMForm form)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._form = form;
-			this._comparer = comparer;
         }
 
         public void HandleDataObject(IDataObject dataObject)
@@ -60,10 +61,7 @@ namespace BuferMAN.Form
                     }
                 }
 
-                if (this._form.WindowState != FormWindowState.Minimized && this._form.Visible)
-                {
-                    WindowLevelContext.Current.RerenderBufers();
-                }
+                this.Updated?.Invoke(this, EventArgs.Empty);
             }
         }
     }

@@ -3,6 +3,7 @@ using BuferMAN.ContextMenu;
 using BuferMAN.Form.Properties;
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.ContextMenu;
+using BuferMAN.Infrastructure.Storage;
 using FakeItEasy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;

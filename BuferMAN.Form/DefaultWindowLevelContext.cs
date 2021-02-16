@@ -1,6 +1,7 @@
 ﻿using BuferMAN.Clipboard;
 using BuferMAN.Form.Window;
 using BuferMAN.Infrastructure;
+using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Infrastructure.Window;
 using System;
 using System.Collections.Generic;

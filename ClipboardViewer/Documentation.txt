@@ -10,11 +10,19 @@
 [{ bufer: [{ format: '', data: '' }, { format: '', data: '' }], p: true, alias: 'optional' }]
 Issues to solve:
 - Load all bufers as one action (update UndoRedo nuget)
-- Alias and persistent can not be set right now
+- Alias can not be set right now
 - 'Place bufer in clipboard' - reconsider
 - Abstract factory for working with storage (and maybe azure storage)
 
 - пароль хешировать
+
+- разные "профили" с файлами. И теперь в меню "Сохранить буфер в файл" показывать в какой профиль (файл) сохранять.
+Баг: скриншоты не отображаются - перепроверить
+Много букав - сделать чуть по другому тултип и кэпшен
+При открытии файла если вылетает ошибка, она проглатывается
+При загрузке персистент-буфера из файла он не меняет цвет
+
+Загрузка / сохранение в файл одинаковым сериализатором
 
 Book:
 - MAX_STATUS_LENGTH = 55 as well as other magic numbers/strings - in scope of StatusStrip

@@ -103,6 +103,10 @@
       <Project>{2822F743-087D-403A-A8E9-92FBEAC0A3EF}</Project>
       <Name>BuferMAN.Plugins</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.Storage\BuferMAN.Storage.csproj">
+      <Project>{4C95D126-7345-4F6A-8BB6-DDE908E37E63}</Project>
+      <Name>BuferMAN.Storage</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="BuferAMForm.resx">

@@ -1,4 +1,4 @@
-﻿using BuferMAN.Storage;
+﻿using BuferMAN.Infrastructure.Storage;
 using System.Collections.Generic;
 using System.IO;
 
@@ -13,7 +13,7 @@ namespace BuferMAN.Files
                 var bufer = reader.ReadLine();
                 if (!string.IsNullOrWhiteSpace(bufer))
                 {
-                    yield return new BuferItem { Data = bufer, IsPersistent = false };
+                    yield return new BuferItem { Text = bufer, IsPersistent = false };
                 }
             }
         }

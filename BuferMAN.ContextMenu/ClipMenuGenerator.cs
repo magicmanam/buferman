@@ -174,7 +174,7 @@ namespace BuferMAN.ContextMenu
 
         private void _TryMarkClipAsPersistent(object sender, EventArgs e)
         {
-            if (this._clipboardBuferService.MarkClipAsPersistent(this._dataObject))
+            if (this._clipboardBuferService.TryMarkClipAsPersistent(this._dataObject))
             {
                 this._markAsPersistentMenuItem.Enabled = false;
                 this._button.BackColor = Color.LightSlateGray;

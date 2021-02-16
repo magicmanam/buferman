@@ -10,6 +10,7 @@ using BuferMAN.ContextMenu;
 using BuferMAN.Plugins.BuferPresentations;
 using BuferMAN.BuferPresentations;
 using magicmanam.UndoRedo;
+using BuferMAN.Infrastructure.Storage;
 
 namespace BuferMAN.Form.Window
 {
