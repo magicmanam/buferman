@@ -16,6 +16,7 @@ using BuferMAN.Form.Properties;
 using System.Windows.Input;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Storage;
+using magicmanam.UndoRedo;
 
 namespace BuferMAN.Form
 {
@@ -71,10 +72,15 @@ namespace BuferMAN.Form
             var bufer = e.Bufer;
 
             var dataObject = this._buferItemDataObjectConverter.ToDataObject(bufer);
-            this._dataObjectHandler.HandleDataObject(dataObject);
-            if (bufer.IsPersistent)
+
+            using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction(Resource.BuferLoaded))
             {
-                this._clipboardBuferService.TryMarkClipAsPersistent(dataObject);
+                this._dataObjectHandler.HandleDataObject(dataObject);
+                if (bufer.IsPersistent)
+                {
+                    this._clipboardBuferService.TryMarkClipAsPersistent(dataObject);
+                    WindowLevelContext.Current.RerenderBufers();
+                }
             }
         }
 

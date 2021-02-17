@@ -4,13 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F14888DE-E3DE-4225-80AA-F836DCBA8E2E}</ProjectGuid>
+    <ProjectGuid>{60FACDBB-0E8F-4EA9-8E18-99294EF5908A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuferMAN.Infrastructure</RootNamespace>
-    <AssemblyName>BuferMAN.Infrastructure</AssemblyName>
+    <RootNamespace>BuferMAN.View</RootNamespace>
+    <AssemblyName>BuferMAN.View</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -36,37 +37,8 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContextMenu\IClipMenuGenerator.cs" />
-    <Compile Include="IBuferSelectionHandler.cs" />
-    <Compile Include="Storage\BuferLoadedEventArgs.cs" />
-    <Compile Include="Storage\IBuferItemDataObjectConverter.cs" />
-    <Compile Include="Storage\IFileStorage.cs" />
-    <Compile Include="IIDataObjectHandler.cs" />
-    <Compile Include="Storage\ILoadingFileHandler.cs" />
-    <Compile Include="INotificationEmitter.cs" />
-    <Compile Include="IProgramSettings.cs" />
-    <Compile Include="IWindowLevelContext.cs" />
-    <Compile Include="Menu\IMenuGenerator.cs" />
+    <Compile Include="BuferViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Storage\IPersistentBufersStorage.cs" />
-    <Compile Include="WindowLevelContext.cs" />
-    <Compile Include="Window\IRenderingHandler.cs" />
-    <Compile Include="Window\IWindowActivationHandler.cs" />
-    <Compile Include="Window\IWindowHidingHandler.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BuferMAN.Clipboard\BuferMAN.Clipboard.csproj">
-      <Project>{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}</Project>
-      <Name>BuferMAN.Clipboard</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BuferMAN.Models\BuferMAN.Models.csproj">
-      <Project>{e949968b-00f2-4caa-8c8a-3053cbf79a63}</Project>
-      <Name>BuferMAN.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BuferMAN.View\BuferMAN.View.csproj">
-      <Project>{60FACDBB-0E8F-4EA9-8E18-99294EF5908A}</Project>
-      <Name>BuferMAN.View</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

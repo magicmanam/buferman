@@ -183,4 +183,7 @@
   <data name="BigTextBufer" xml:space="preserve">
     <value>Много букв...</value>
   </data>
+  <data name="BuferLoaded" xml:space="preserve">
+    <value>Буфер загружен из файла</value>
+  </data>
 </root>

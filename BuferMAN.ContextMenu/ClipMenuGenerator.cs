@@ -1,5 +1,4 @@
 ﻿using BuferMAN.Clipboard;
-using BuferMAN.Form;
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.ContextMenu;
 using ClipboardViewerForm.ClipMenu.Items;
@@ -12,6 +11,7 @@ using magicmanam.Windows;
 using BuferMAN.Menu;
 using BuferMAN.ContextMenu.Properties;
 using System.Drawing;
+using BuferMAN.View;
 
 namespace BuferMAN.ContextMenu
 {
@@ -20,7 +20,7 @@ namespace BuferMAN.ContextMenu
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IBuferSelectionHandler _buferSelectionHandler;
         private readonly IProgramSettings _settings;
-        private IDataObject _dataObject;
+        private BuferViewModel _buferViewModel;
         private Button _button;
         private MenuItem _returnTextToInitialMenuItem;
         private MenuItem _changeTextMenuItem;
@@ -41,31 +41,33 @@ namespace BuferMAN.ContextMenu
             this._clipboardWrapper = clipboardWrapper;
         }
 
-        public SystemWindowsFormsContextMenu GenerateContextMenu(IDataObject dataObject, Button button, ToolTip mouseOverTooltip, bool isChangeTextAvailable)
+        public SystemWindowsFormsContextMenu GenerateContextMenu(BuferViewModel buferViewModel, Button button, ToolTip mouseOverTooltip, bool isChangeTextAvailable)
         {
-            this._dataObject = dataObject;
+            this._buferViewModel = buferViewModel;
             this._button = button;
             this._originBuferText = button.Text;
             this._mouseOverTooltip = mouseOverTooltip;
 
             var contextMenu = new SystemWindowsFormsContextMenu();
 
-            this._markAsPersistentMenuItem = new MenuItem(Resource.MenuPersistent, this._TryMarkClipAsPersistent, Shortcut.CtrlS);
+            this._markAsPersistentMenuItem = new MakePersistentMenuItem();
+            this._markAsPersistentMenuItem.Click += this._TryMarkClipAsPersistent;
+            this._markAsPersistentMenuItem.Enabled = !buferViewModel.Persistent;
             contextMenu.MenuItems.Add(this._markAsPersistentMenuItem);
-            this._placeInBuferMenuItem = new PlaceInBuferMenuItem(this._clipboardWrapper, this._dataObject);
+            this._placeInBuferMenuItem = new PlaceInBuferMenuItem(this._clipboardWrapper, this._buferViewModel.Clip);
             contextMenu.MenuItems.Add(this._placeInBuferMenuItem);
 
-            var formats = this._dataObject.GetFormats();
+            var formats = this._buferViewModel.Clip.GetFormats();
             var formatsMenu = new MenuItem();
             var formatsCount = formats.Length;
             
             formatsMenu.Shortcut = Shortcut.AltDownArrow;
-            foreach (var format in this._dataObject.GetFormats())
+            foreach (var format in formats)
             {
                 if (format != ClipboardFormats.CUSTOM_IMAGE_FORMAT && format != ClipboardFormats.FROM_FILE_FORMAT)
                 {
                     var particularFormatMenu = new MenuItem(format);
-                    var formatData = this._dataObject.GetData(format);
+                    var formatData = this._buferViewModel.Clip.GetData(format);
 
                     if (formatData is Stream)
                     {
@@ -90,7 +92,7 @@ namespace BuferMAN.ContextMenu
             formatsMenu.Text = Resource.MenuFormats + $" ({formatsCount})";
             
             contextMenu.MenuItems.Add(formatsMenu);
-            contextMenu.MenuItems.Add(new DeleteClipMenuItem(this._clipboardBuferService, dataObject, button));
+            contextMenu.MenuItems.Add(new DeleteClipMenuItem(this._clipboardBuferService, this._buferViewModel.Clip, button));
 
             this._pasteMenuItem = new MenuItem(Resource.MenuPaste + $" {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
             {
@@ -110,6 +112,10 @@ namespace BuferMAN.ContextMenu
                 this._returnTextToInitialMenuItem = new ReturnToInitialTextMenuItem(this._button, this._originBuferText, this._mouseOverTooltip);
                 contextMenu.MenuItems.Add(this._returnTextToInitialMenuItem);
                 var changeTextMenuItem = new ChangeTextMenuItem(this._button, this._originBuferText, this._mouseOverTooltip);
+                if (!string.IsNullOrWhiteSpace(buferViewModel.Alias))
+                {
+                    changeTextMenuItem.TryChangeText(buferViewModel.Alias);
+                }
                 changeTextMenuItem.TextChanged += this._ChangeTextMenuItem_TextChanged;
                 this._changeTextMenuItem = changeTextMenuItem;
                 contextMenu.MenuItems.Add(this._changeTextMenuItem);
@@ -117,7 +123,7 @@ namespace BuferMAN.ContextMenu
                 this._addToFileMenuItem = new MenuItem(Resource.MenuAddToFile);
                 this._addToFileMenuItem.Shortcut = Shortcut.CtrlF;
 
-                if (dataObject.GetFormats().Contains(ClipboardFormats.FROM_FILE_FORMAT))
+                if (formats.Contains(ClipboardFormats.FROM_FILE_FORMAT))
                 {
                     this._MarkMenuItemAsAddedToFile();
                 } else
@@ -141,7 +147,7 @@ namespace BuferMAN.ContextMenu
             }
 
             contextMenu.MenuItems.AddSeparator();
-            contextMenu.MenuItems.Add(new MenuItem(string.Format(Resource.MenuCreatedTime, this._ButtonData.CreatedAt)));
+            contextMenu.MenuItems.Add(new MenuItem(string.Format(Resource.MenuCreatedTime, buferViewModel.CreatedAt)));
 
             return contextMenu;
         }
@@ -159,7 +165,7 @@ namespace BuferMAN.ContextMenu
             this._returnTextToInitialMenuItem.Enabled = false;
             this._placeInBuferMenuItem.Enabled = false;
             this._changeTextMenuItem.Enabled = false;
-            this._dataObject.SetData(ClipboardFormats.PASSWORD_FORMAT, e.Password);
+            this._buferViewModel.Clip.SetData(ClipboardFormats.PASSWORD_FORMAT, e.Password);
             if (this._markAsPersistentMenuItem.Enabled)
             {
                 this._TryMarkClipAsPersistent(sender, e);
@@ -174,18 +180,11 @@ namespace BuferMAN.ContextMenu
 
         private void _TryMarkClipAsPersistent(object sender, EventArgs e)
         {
-            if (this._clipboardBuferService.TryMarkClipAsPersistent(this._dataObject))
+            if (this._clipboardBuferService.TryMarkClipAsPersistent(this._buferViewModel.Clip))
             {
+                this._buferViewModel.Persistent = true;
                 this._markAsPersistentMenuItem.Enabled = false;
-                this._button.BackColor = Color.LightSlateGray;
-                this._ButtonData.DefaultBackColor = this._button.BackColor;
                 WindowLevelContext.Current.RerenderBufers();
-            }
-        }
-
-        private ButtonData _ButtonData { get
-            {
-                return this._button.Tag as ButtonData;
             }
         }
     }

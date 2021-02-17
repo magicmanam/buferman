@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace BuferMAN.Infrastructure.Storage
+namespace BuferMAN.Models
 {
     public class BuferItem
     {
@@ -8,5 +8,6 @@ namespace BuferMAN.Infrastructure.Storage
         public string Text { get; set; }
         public IDictionary<string, object> Formats { get; set; }
         public bool IsPersistent { get; set; }
+        public string Alias { get; set; }
     }
 }

@@ -10,6 +10,7 @@ using SystemWindowsForm = System.Windows.Forms.Form;
 using BuferMAN.Infrastructure;
 using BuferMAN.ContextMenu;
 using BuferMAN.Infrastructure.Storage;
+using BuferMAN.View;
 
 namespace BuferMAN.Form
 {
@@ -17,7 +18,7 @@ namespace BuferMAN.Form
     {
         private const int TOOLTIP_DURATION = 2500;
         private readonly IClipboardBuferService _clipboardBuferService;
-        private readonly IDataObject _dataObject;
+        private readonly BuferViewModel _buferViewModel;
         private readonly IBuferSelectionHandler _buferSelectionHandler;
         private readonly IFileStorage _fileStorage;
         private readonly Button _button;
@@ -25,28 +26,36 @@ namespace BuferMAN.Form
         private const float IMAGE_SCALE = 0.75f;
 
         public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IDataObject dataObject, Button button, SystemWindowsForm form, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler, IFileStorage fileStorage)
+            : this(clipboardBuferService, new BuferViewModel { Clip = dataObject }, button, form, clipMenuGenerator, buferSelectionHandler, fileStorage)
+        {
+
+        }
+
+        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, BuferViewModel buferViewModel, Button button, SystemWindowsForm form, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler, IFileStorage fileStorage)
         {
             this._clipboardBuferService = clipboardBuferService;
-            this._dataObject = dataObject;
+            this._buferViewModel = buferViewModel;
             this._button = button;
             this._buferSelectionHandler = buferSelectionHandler;
             this._fileStorage = fileStorage;
 
-            var buferTextRepresentation = dataObject.GetData(DataFormats.UnicodeText) as string;
+            var buferTextRepresentation = buferViewModel.Clip.GetData(DataFormats.UnicodeText) as string;
             if (string.IsNullOrEmpty(buferTextRepresentation))
             {
-                buferTextRepresentation = dataObject.GetData(DataFormats.StringFormat) as string;
+                buferTextRepresentation = buferViewModel.Clip.GetData(DataFormats.StringFormat) as string;
                 if (string.IsNullOrEmpty(buferTextRepresentation))
                 {
-                    buferTextRepresentation = dataObject.GetData(DataFormats.Text) as string;
+                    buferTextRepresentation = buferViewModel.Clip.GetData(DataFormats.Text) as string;
                 }
             }
-            
+
+            var formats = buferViewModel.Clip.GetFormats();
+
             var isChangeTextAvailable = true;
             string buferTitle = null;
             if (buferTextRepresentation == null)
             {
-                var files = dataObject.GetData(DataFormats.FileDrop) as string[];
+                var files = buferViewModel.Clip.GetData(DataFormats.FileDrop) as string[];
                 if (files != null && files.Length > 0)
                 {
                     isChangeTextAvailable = false;
@@ -66,7 +75,7 @@ namespace BuferMAN.Form
                 }
                 else
                 {
-                    var isBitmap = dataObject.GetFormats().Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT);
+                    var isBitmap = formats.Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT);
                     if (isBitmap)
                     {
                         isChangeTextAvailable = false;
@@ -75,7 +84,7 @@ namespace BuferMAN.Form
                     }
                     else
                     {
-                        if (dataObject.GetFormats().Contains(ClipboardFormats.FILE_CONTENTS_FORMAT))
+                        if (formats.Contains(ClipboardFormats.FILE_CONTENTS_FORMAT))
                         {
                             isChangeTextAvailable = false;
                             buferTextRepresentation = this._MakeSpecialBuferText(Resource.FileContentsBufer);
@@ -122,10 +131,10 @@ namespace BuferMAN.Form
                 tooltip.ToolTipTitle = buferTitle;
                 this._focusTooltip.ToolTipTitle = buferTitle;
             }
-
-            if (this._dataObject.GetFormats().Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT))
+            
+            if (formats.Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT))
             {
-                buttonData.Representation = this._dataObject.GetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT) as Image;
+                buttonData.Representation = this._buferViewModel.Clip.GetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT) as Image;
                 tooltip.IsBalloon = false;
                 tooltip.OwnerDraw = true;
                 tooltip.Popup += Tooltip_Popup;
@@ -137,7 +146,7 @@ namespace BuferMAN.Form
 
             button.Click += this._buferSelectionHandler.DoOnClipSelection;
 
-            button.ContextMenu = clipMenuGenerator.GenerateContextMenu(this._dataObject, button, tooltip, isChangeTextAvailable);
+            button.ContextMenu = clipMenuGenerator.GenerateContextMenu(this._buferViewModel, button, tooltip, isChangeTextAvailable);
         }
 
         private void _MakeItalicBoldFont(Button button)

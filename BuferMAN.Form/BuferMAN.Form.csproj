@@ -99,6 +99,10 @@
       <Project>{08184414-67ea-419e-b71b-b764f0f2e578}</Project>
       <Name>BuferMAN.Menu</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.Models\BuferMAN.Models.csproj">
+      <Project>{e949968b-00f2-4caa-8c8a-3053cbf79a63}</Project>
+      <Name>BuferMAN.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BuferMAN.Plugins\BuferMAN.Plugins.csproj">
       <Project>{2822F743-087D-403A-A8E9-92FBEAC0A3EF}</Project>
       <Name>BuferMAN.Plugins</Name>
@@ -106,6 +110,10 @@
     <ProjectReference Include="..\BuferMAN.Storage\BuferMAN.Storage.csproj">
       <Project>{4C95D126-7345-4F6A-8BB6-DDE908E37E63}</Project>
       <Name>BuferMAN.Storage</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.View\BuferMAN.View.csproj">
+      <Project>{60FACDBB-0E8F-4EA9-8E18-99294EF5908A}</Project>
+      <Name>BuferMAN.View</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

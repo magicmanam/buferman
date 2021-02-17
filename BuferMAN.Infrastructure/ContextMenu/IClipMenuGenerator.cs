@@ -1,10 +1,11 @@
-﻿using System;
+﻿using BuferMAN.View;
+using System;
 using System.Windows.Forms;
 
 namespace BuferMAN.Infrastructure.ContextMenu
 {
     public interface IClipMenuGenerator
     {
-        System.Windows.Forms.ContextMenu GenerateContextMenu(IDataObject dataObject, Button button, ToolTip mouseOverTooltip, bool isChangeTextAvailable);
+        System.Windows.Forms.ContextMenu GenerateContextMenu(BuferViewModel buferViewModel, Button button, ToolTip mouseOverTooltip, bool isChangeTextAvailable);
     }
 }

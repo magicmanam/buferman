@@ -21,7 +21,7 @@ namespace BuferMAN.ContextMenu
 
         public event EventHandler<TextChangedEventArgs> TextChanged;
 
-        protected void TryChangeText(string newText)
+        public void TryChangeText(string newText)
         {
             if (!string.IsNullOrWhiteSpace(newText) && newText != this.Button.Text)
             {

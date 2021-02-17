@@ -46,6 +46,9 @@
   <ItemGroup>
     <Compile Include="BuferSelectionHandler.cs" />
     <Compile Include="ButtonData.cs" />
+    <Compile Include="MakePersistentMenuItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ChangeTextMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -101,6 +104,10 @@
     <ProjectReference Include="..\BuferMAN.Menu\BuferMAN.Menu.csproj">
       <Project>{08184414-67ea-419e-b71b-b764f0f2e578}</Project>
       <Name>BuferMAN.Menu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.View\BuferMAN.View.csproj">
+      <Project>{60FACDBB-0E8F-4EA9-8E18-99294EF5908A}</Project>
+      <Name>BuferMAN.View</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

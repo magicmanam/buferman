@@ -11,6 +11,7 @@ using BuferMAN.Plugins.BuferPresentations;
 using BuferMAN.BuferPresentations;
 using magicmanam.UndoRedo;
 using BuferMAN.Infrastructure.Storage;
+using BuferMAN.View;
 
 namespace BuferMAN.Form.Window
 {
@@ -64,11 +65,11 @@ namespace BuferMAN.Form.Window
 
             if (persistentClips.Any())
             {
-                this._DrawButtonsForBufers(persistentClips.ToList(), this._persistentClipsDivider.Location.Y + this._persistentClipsDivider.Height + 1 + persistentClips.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryClips.Count + persistentClips.Count() - 1);
+                this._DrawButtonsForBufers(persistentClips.ToList(), this._persistentClipsDivider.Location.Y + this._persistentClipsDivider.Height + 1 + persistentClips.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryClips.Count + persistentClips.Count() - 1, true);
             }
         }
 
-        private void _DrawButtonsForBufers(List<IDataObject> bufers, int y, int currentButtonIndex)
+        private void _DrawButtonsForBufers(List<IDataObject> bufers, int y, int currentButtonIndex, bool persistent = false)
         {
             foreach (var bufer in bufers)
             {
@@ -102,7 +103,7 @@ namespace BuferMAN.Form.Window
 
                             var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._clipboardWrapper);
 
-                            new BuferHandlersWrapper(this._clipboardBuferService, bufer, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler, this._settings, this._clipboardWrapper), buferSelectionHandler, this._fileStorage);
+                            new BuferHandlersWrapper(this._clipboardBuferService, new BuferViewModel { Clip = bufer, Persistent = persistent }, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler, this._settings, this._clipboardWrapper), buferSelectionHandler, this._fileStorage);
 
                             this._TryApplyPresentation(bufer, button);
                         }
@@ -110,6 +111,21 @@ namespace BuferMAN.Form.Window
                         this._form.Controls.Add(button);
                         button.BringToFront();
                     }
+
+                    if (persistent)
+                    {
+                        foreach (var item in button.ContextMenu.MenuItems)
+                        {
+                            var persistentMenuItem = item as MakePersistentMenuItem;
+                            if (persistentMenuItem != null)
+                            {
+                                persistentMenuItem.Enabled = false;
+                            }
+                        }
+                    }
+
+                    button.BackColor = persistent ? Color.LightSlateGray : DEFAULT_CLIP_BACK_COLOR;
+                    (button.Tag as ButtonData).DefaultBackColor = button.BackColor;
 
                     button.TabIndex = currentButtonIndex;
                     button.Location = new Point(0, y);

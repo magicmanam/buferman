@@ -4,6 +4,7 @@ using BuferMAN.Form.Properties;
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.ContextMenu;
 using BuferMAN.Infrastructure.Storage;
+using BuferMAN.View;
 using FakeItEasy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -24,7 +25,7 @@ namespace BuferMAN.Form.Tests
             var originText = " Text";
             var data = new DataObject(DataFormats.Text, originText);
             data.SetData(DataFormats.StringFormat, string.Empty);
-            var wrapper = new BuferHandlersWrapper(buferService, data, button, new System.Windows.Forms.Form(), A.Fake<IClipMenuGenerator>(), A.Fake<IBuferSelectionHandler>(), A.Fake<IFileStorage>());
+            var wrapper = new BuferHandlersWrapper(buferService, new BuferViewModel { Clip = data }, button, new System.Windows.Forms.Form(), A.Fake<IClipMenuGenerator>(), A.Fake<IBuferSelectionHandler>(), A.Fake<IFileStorage>());
 
             Assert.AreEqual(originText, (button.Tag as ButtonData).Representation);
             Assert.AreEqual(originText.Trim(), button.Text);
@@ -39,7 +40,7 @@ namespace BuferMAN.Form.Tests
             var data = new DataObject(DataFormats.StringFormat, originText);
             data.SetData(DataFormats.Text, " Text");
             data.SetData(DataFormats.UnicodeText, null);
-            var wrapper = new BuferHandlersWrapper(buferService, data, button, new System.Windows.Forms.Form(), A.Fake<IClipMenuGenerator>(), A.Fake<IBuferSelectionHandler>(), A.Fake<IFileStorage>());
+            var wrapper = new BuferHandlersWrapper(buferService, new BuferViewModel { Clip = data }, button, new System.Windows.Forms.Form(), A.Fake<IClipMenuGenerator>(), A.Fake<IBuferSelectionHandler>(), A.Fake<IFileStorage>());
 
             Assert.AreEqual(originText, (button.Tag as ButtonData).Representation);
             Assert.AreEqual(originText.Trim(), button.Text);

@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using BuferMAN.Models;
+using System.Windows.Forms;
 
 namespace BuferMAN.Infrastructure.Storage
 {

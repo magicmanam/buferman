@@ -1,9 +1,9 @@
-﻿using BuferMAN.Infrastructure.Storage;
-using BuferMAN.Storage;
+﻿using BuferMAN.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace BuferMAN.Files
 {
@@ -13,7 +13,15 @@ namespace BuferMAN.Files
         {
             var serializer = new JsonSerializer();
 
-            return JArray.Parse(stream.ReadToEnd()).ToObject<IEnumerable<BuferItem>>();
+            var content = stream.ReadToEnd();
+            if (content == string.Empty)
+            {
+                return Enumerable.Empty<BuferItem>();
+            }
+            else
+            {
+                return JArray.Parse(content).ToObject<IEnumerable<BuferItem>>();
+            }
         }
     }
 }

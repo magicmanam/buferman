@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BuferMAN.Models;
+using System;
 
 namespace BuferMAN.Infrastructure.Storage
 {

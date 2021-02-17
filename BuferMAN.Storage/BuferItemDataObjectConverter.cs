@@ -1,5 +1,6 @@
 ﻿using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure.Storage;
+using BuferMAN.Models;
 using System.Windows.Forms;
 
 namespace BuferMAN.Storage

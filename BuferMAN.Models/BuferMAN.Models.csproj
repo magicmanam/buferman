@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4C95D126-7345-4F6A-8BB6-DDE908E37E63}</ProjectGuid>
+    <ProjectGuid>{E949968B-00F2-4CAA-8C8A-3053CBF79A63}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuferMAN.Storage</RootNamespace>
-    <AssemblyName>BuferMAN.Storage</AssemblyName>
+    <RootNamespace>BuferMAN.Models</RootNamespace>
+    <AssemblyName>BuferMAN.Models</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -33,32 +33,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuferItemDataObjectConverter.cs" />
+    <Compile Include="BuferItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BuferMAN.Clipboard\BuferMAN.Clipboard.csproj">
-      <Project>{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}</Project>
-      <Name>BuferMAN.Clipboard</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BuferMAN.Infrastructure\BuferMAN.Infrastructure.csproj">
-      <Project>{f14888de-e3de-4225-80aa-f836dcba8e2e}</Project>
-      <Name>BuferMAN.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BuferMAN.Models\BuferMAN.Models.csproj">
-      <Project>{e949968b-00f2-4caa-8c8a-3053cbf79a63}</Project>
-      <Name>BuferMAN.Models</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
