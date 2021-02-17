@@ -27,8 +27,9 @@ namespace BuferMAN.Form.Window
         private readonly IFileStorage _fileStorage;
         private readonly IDictionary<IDataObject, Button> _removedButtons = new Dictionary<IDataObject, Button>();
         private readonly IList<IBuferPresentation> _clipPresentations = new List<IBuferPresentation>() { new SkypeBuferPresentation(), new FileContentsBuferPresentation() };
-        private readonly Color FOCUSED_CLIP_BACK_COLOR = Color.LightSteelBlue;
-        private readonly Color DEFAULT_CLIP_BACK_COLOR = Color.Silver;
+        private readonly Color FOCUSED_BUFER_BACK_COLOR = Color.LightSteelBlue;
+        private readonly Color DEFAULT_BUFER_BACK_COLOR = Color.Silver;
+        private readonly Color PINNED_BUFER_BACK_COLOR = Color.LightSlateGray;
 
         private const int BUTTON_HEIGHT = 23;
 
@@ -48,24 +49,58 @@ namespace BuferMAN.Form.Window
 
         public void Render()
         {
-            var temporaryClips = this._clipboardBuferService.GetTemporaryClips().ToList();
-            var persistentClips = this._clipboardBuferService.GetPersistentClips();
+            var persistentBufers = this._clipboardBuferService.GetPersistentClips();
 
-            var extraTemporaryClipsCount = Math.Max(this._clipboardBuferService.ClipsCount - BuferAMForm.MAX_BUFERS_COUNT, 0);
-            temporaryClips = temporaryClips.Skip(extraTemporaryClipsCount).ToList();
-
-            this._RemoveOldButtons(temporaryClips.Union(persistentClips));
-
-            if (temporaryClips.Any())
+            var emptyClipFound = false;
+            foreach(var bufer in persistentBufers)
             {
-                this._DrawButtonsForBufers(temporaryClips, temporaryClips.Count * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryClips.Count - 1);
+                if (bufer.GetFormats().Length == 0)
+                {
+                    emptyClipFound = true;
+                    this._RemoveClipWithoutTrackingInUndoableContext(bufer);
+                }
             }
 
-            this._persistentClipsDivider.Location = new Point(0, temporaryClips.Count * BUTTON_HEIGHT + 1);
-
-            if (persistentClips.Any())
+            if (emptyClipFound)
             {
-                this._DrawButtonsForBufers(persistentClips.ToList(), this._persistentClipsDivider.Location.Y + this._persistentClipsDivider.Height + 1 + persistentClips.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryClips.Count + persistentClips.Count() - 1, true);
+                persistentBufers = this._clipboardBuferService.GetPersistentClips();
+            }
+
+            var temporaryBufers = this._clipboardBuferService.GetTemporaryClips().ToList();
+
+            do
+            {
+                emptyClipFound = false;
+                var extraTemporaryClipsCount = Math.Max(this._clipboardBuferService.ClipsCount - BuferAMForm.MAX_BUFERS_COUNT, 0);
+                temporaryBufers = temporaryBufers.Skip(extraTemporaryClipsCount).ToList();
+
+                foreach (var bufer in temporaryBufers)
+                {
+                    if (bufer.GetFormats().Length == 0)
+                    {
+                        emptyClipFound = true;
+                        this._RemoveClipWithoutTrackingInUndoableContext(bufer);
+                    }
+                }
+
+                if (emptyClipFound)
+                {
+                    temporaryBufers = this._clipboardBuferService.GetTemporaryClips().ToList();
+                }
+            } while (emptyClipFound);
+
+            this._RemoveOldButtons(temporaryBufers.Union(persistentBufers));
+
+            if (temporaryBufers.Any())
+            {
+                this._DrawButtonsForBufers(temporaryBufers, temporaryBufers.Count * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count - 1);
+            }
+
+            this._persistentClipsDivider.Location = new Point(0, temporaryBufers.Count * BUTTON_HEIGHT + 1);
+
+            if (persistentBufers.Any())
+            {
+                this._DrawButtonsForBufers(persistentBufers.ToList(), this._persistentClipsDivider.Location.Y + this._persistentClipsDivider.Height + 1 + persistentBufers.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count + persistentBufers.Count() - 1, true);
             }
         }
 
@@ -73,86 +108,79 @@ namespace BuferMAN.Form.Window
         {
             foreach (var bufer in bufers)
             {
-                if (bufer.GetFormats().Length == 0)
+                Button button;
+                var equalObject = this._form.ButtonsMap.FirstOrDefault(m => this._comparer.Equals(m.Key, bufer));
+
+                if (!equalObject.Equals(default(KeyValuePair<IDataObject, Button>)))
                 {
-                    this._RemoveBuferWithoutTrackingInUndoableContext(bufer);
+                    button = equalObject.Value;
                 }
                 else
                 {
-                    Button button;
-                    var equalObject = this._form.ButtonsMap.Keys.FirstOrDefault(k => this._comparer.Equals(k, bufer));
+                    var equalObjectFromDeleted = this._removedButtons.Keys.FirstOrDefault(k => this._comparer.Equals(k, bufer));
 
-                    if (equalObject != null)
+                    if (equalObjectFromDeleted != null)
                     {
-                        button = this._form.ButtonsMap[equalObject];
+                        button = this._removedButtons[equalObjectFromDeleted];
+                        this._removedButtons.Remove(equalObjectFromDeleted);
                     }
                     else
                     {
-                        var equalObjectFromDeleted = this._removedButtons.Keys.FirstOrDefault(k => this._comparer.Equals(k, bufer));
+                        button = new Button() { TextAlign = ContentAlignment.MiddleLeft, Margin = new Padding(0), Width = this._buttonWidth, BackColor = DEFAULT_BUFER_BACK_COLOR };
+                        button.GotFocus += Clip_GotFocus;
+                        button.LostFocus += Clip_LostFocus;
 
-                        if (equalObjectFromDeleted != null)
-                        {
-                            button = this._removedButtons[equalObjectFromDeleted];
-                            this._removedButtons.Remove(equalObjectFromDeleted);
-                        }
-                        else
-                        {
-                            button = new Button() { TextAlign = ContentAlignment.MiddleLeft, Margin = new Padding(0), Width = this._buttonWidth, BackColor = DEFAULT_CLIP_BACK_COLOR };
-                            button.GotFocus += Clip_GotFocus;
-                            button.LostFocus += Clip_LostFocus;
+                        var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._clipboardWrapper);
 
-                            var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._clipboardWrapper);
+                        new BuferHandlersWrapper(this._clipboardBuferService, new BuferViewModel { Clip = bufer, Persistent = persistent }, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler, this._settings, this._clipboardWrapper), buferSelectionHandler, this._fileStorage);
 
-                            new BuferHandlersWrapper(this._clipboardBuferService, new BuferViewModel { Clip = bufer, Persistent = persistent }, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler, this._settings, this._clipboardWrapper), buferSelectionHandler, this._fileStorage);
-
-                            this._TryApplyPresentation(bufer, button);
-                        }
-                        this._form.ButtonsMap.Add(bufer, button);
-                        this._form.Controls.Add(button);
-                        button.BringToFront();
+                        this._TryApplyPresentation(bufer, button);
                     }
-
-                    if (persistent)
-                    {
-                        foreach (var item in button.ContextMenu.MenuItems)
-                        {
-                            var persistentMenuItem = item as MakePersistentMenuItem;
-                            if (persistentMenuItem != null)
-                            {
-                                persistentMenuItem.Enabled = false;
-                            }
-                        }
-                    }
-
-                    button.BackColor = persistent ? Color.LightSlateGray : DEFAULT_CLIP_BACK_COLOR;
-                    (button.Tag as ButtonData).DefaultBackColor = button.BackColor;
-
-                    button.TabIndex = currentButtonIndex;
-                    button.Location = new Point(0, y);
+                    this._form.ButtonsMap.Add(bufer, button);
+                    this._form.Controls.Add(button);
+                    button.BringToFront();
                 }
+
+                if (persistent)
+                {
+                    foreach (var item in button.ContextMenu.MenuItems)
+                    {
+                        var persistentMenuItem = item as MakePersistentMenuItem;
+                        if (persistentMenuItem != null)
+                        {
+                            persistentMenuItem.Enabled = false;
+                        }
+                    }
+                }
+
+                button.BackColor = persistent ? PINNED_BUFER_BACK_COLOR : DEFAULT_BUFER_BACK_COLOR;
+                (button.Tag as ButtonData).DefaultBackColor = button.BackColor;
+
+                button.TabIndex = currentButtonIndex;
+                button.Location = new Point(0, y);
 
                 currentButtonIndex -= 1;
                 y -= BUTTON_HEIGHT;
             }
         }
                 
-        private void Clip_GotFocus(object sender, System.EventArgs e)
+        private void Clip_GotFocus(object sender, EventArgs e)
         {
             var button = sender as Button;
-            button.BackColor = FOCUSED_CLIP_BACK_COLOR;
+            button.BackColor = FOCUSED_BUFER_BACK_COLOR;
         }
 
-        private void Clip_LostFocus(object sender, System.EventArgs e)
+        private void Clip_LostFocus(object sender, EventArgs e)
         {
             var button = sender as Button;
             button.BackColor = (button.Tag as ButtonData).DefaultBackColor;
         }
 
-        private void _RemoveBuferWithoutTrackingInUndoableContext(IDataObject bufer)
+        private void _RemoveClipWithoutTrackingInUndoableContext(IDataObject clip)
         {
             using (var action = UndoableContext<ClipboardBuferServiceState>.Current.StartAction())
             {
-                this._clipboardBuferService.RemoveClip(bufer);
+                this._clipboardBuferService.RemoveClip(clip);
                 action.Cancel();
             }
         }

@@ -1,6 +1,4 @@
 ﻿using BuferMAN.ContextMenu.Properties;
-using Microsoft.VisualBasic;
-using System;
 using System.Windows.Forms;
 
 namespace BuferMAN.ContextMenu

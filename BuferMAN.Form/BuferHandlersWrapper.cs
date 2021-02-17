@@ -98,6 +98,10 @@ namespace BuferMAN.Form
             if (string.IsNullOrWhiteSpace(buttonText))
             {
                 buttonText = this._MakeSpecialBuferText(buttonText == null ? Resource.NotTextBufer : $"{buttonText.Length}   {Resource.WhiteSpaces}");
+                if (buttonText == null)
+                {// Can I delete this bufer? Check that "clip.GetFormats() == 0"
+                    // Maybe in debug mode I will catch this case and will find more details how it can happens
+                }
                 this._MakeItalicBoldFont(button);
                 isChangeTextAvailable = false;
             }
