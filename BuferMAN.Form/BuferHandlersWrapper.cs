@@ -109,6 +109,7 @@ namespace BuferMAN.Form
             buferViewModel.Representation = buferTextRepresentation;
             button.Tag = buferViewModel;
             button.Text = buttonText.Trim();
+            buferViewModel.OriginBuferText = button.Text;
 
             string originBuferText = button.Text;
 

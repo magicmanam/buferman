@@ -9,6 +9,12 @@ namespace BuferMAN.View
         public BuferViewModel()
         {
         }
+
+        //public BuferViewModel(string buferText)
+        //{
+        //    this.OriginBuferText = buferText;
+        //}
+
         public IDataObject Clip { get; set; }
         public bool Persistent { get; set; }
         public string Alias { get; set; }
@@ -16,5 +22,6 @@ namespace BuferMAN.View
         public DateTime? UpdatedAt { get; set; }
         public Color DefaultBackColor { get; set; }// Remove color from here
         public object Representation { get; set; }
+        public string OriginBuferText { get; set; }
     }
 }

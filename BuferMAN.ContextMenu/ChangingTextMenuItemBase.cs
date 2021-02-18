@@ -9,14 +9,12 @@ namespace BuferMAN.ContextMenu
 {
     public abstract class ChangingTextMenuItemBase : MenuItem
     {
-        protected string OriginBuferText { get; private set; }
         protected Button Button { get; private set; }
         protected ToolTip MouseOverTooltip { get; private set; }
 
-        protected ChangingTextMenuItemBase(Button button, string originBuferText, ToolTip mouseOverTooltip)
+        protected ChangingTextMenuItemBase(Button button, ToolTip mouseOverTooltip)
         {
             this.Button = button;
-            this.OriginBuferText = originBuferText;
             this.MouseOverTooltip = mouseOverTooltip;
         }
 
@@ -27,11 +25,11 @@ namespace BuferMAN.ContextMenu
             if (!string.IsNullOrWhiteSpace(newText) && newText != this.Button.Text)
             {
                 this.Button.Text = newText;
-                var buttonData = this.Button.Tag as BuferViewModel;
-                buttonData.Representation = newText;
+                var buttonViewModel = this.Button.Tag as BuferViewModel;
+                buttonViewModel.Representation = newText;
                 ChangingTextMenuItemBase._UpdateFocusTooltip();
 
-                bool isOriginText = newText == this.OriginBuferText;
+                bool isOriginText = newText == (this.Button.Tag as BuferViewModel).OriginBuferText;
 
                 if (isOriginText)
                 {

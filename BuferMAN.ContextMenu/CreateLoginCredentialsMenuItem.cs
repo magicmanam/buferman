@@ -5,12 +5,13 @@ using Microsoft.VisualBasic;
 using System;
 using System.Windows.Forms;
 using magicmanam.Windows;
+using BuferMAN.View;
 
 namespace ClipboardViewerForm.ClipMenu.Items
 {
     public class CreateLoginCredentialsMenuItem : ChangingTextMenuItemBase
     {
-        public CreateLoginCredentialsMenuItem(Button button, string originBuferText, ToolTip mouseOverTooltip) : base(button, originBuferText, mouseOverTooltip)
+        public CreateLoginCredentialsMenuItem(Button button, ToolTip mouseOverTooltip) : base(button, mouseOverTooltip)
         {
             this.Text = Resource.CreateCredsMenuItem;
             this.Click += this._CreateLoginCredentials;
@@ -21,7 +22,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
 
         private void _CreateLoginCredentials(object sender, EventArgs e)
         {
-            var password = Interaction.InputBox(Resource.CreateCredsPrefix + $" \"{this.OriginBuferText}\". " + Resource.CreateCredsPostfix,
+            var password = Interaction.InputBox(Resource.CreateCredsPrefix + $" \"{(this.Button.Tag as BuferViewModel).OriginBuferText}\". " + Resource.CreateCredsPostfix,
                   Resource.CreateCredsTitle,
                    null);
 
@@ -40,7 +41,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
                     WindowLevelContext.Current.HideWindow();
 
                     new KeyboardEmulator()
-                        .TypeText(this.OriginBuferText)
+                        .TypeText((this.Button.Tag as BuferViewModel).OriginBuferText)
                         .PressTab()
                         .TypeText(password)
                         .PressEnter();
@@ -65,7 +66,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
                     WindowLevelContext.Current.HideWindow();
 
                     new KeyboardEmulator()
-                        .TypeText(this.OriginBuferText);
+                        .TypeText((this.Button.Tag as BuferViewModel).OriginBuferText);
                 }));
             }
         }

@@ -132,7 +132,7 @@ namespace BuferMAN.Form.Window
 
                         var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._clipboardWrapper);
 
-                        new BuferHandlersWrapper(this._clipboardBuferService, new BuferViewModel { Clip = bufer, Persistent = persistent, CreatedAt = DateTime.Now }, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler, this._settings, this._clipboardWrapper), buferSelectionHandler, this._fileStorage);
+                        new BuferHandlersWrapper(this._clipboardBuferService, new BuferViewModel() { Clip = bufer, Persistent = persistent, CreatedAt = DateTime.Now }, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler, this._settings, this._clipboardWrapper), buferSelectionHandler, this._fileStorage);
 
                         this._TryApplyPresentation(bufer, button);
                     }

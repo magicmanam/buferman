@@ -1,4 +1,5 @@
 ﻿using BuferMAN.ContextMenu.Properties;
+using BuferMAN.View;
 using System;
 using System.Windows.Forms;
 
@@ -6,7 +7,7 @@ namespace BuferMAN.ContextMenu
 {
     public class ReturnToInitialTextMenuItem : ChangingTextMenuItemBase
     {
-        public ReturnToInitialTextMenuItem(Button button, string originBuferText, ToolTip mouseOverTooltip) : base(button, originBuferText, mouseOverTooltip)
+        public ReturnToInitialTextMenuItem(Button button, ToolTip mouseOverTooltip) : base(button, mouseOverTooltip)
         {
             this.Text = Resource.MenuReturn;
             this.Click += this._ReturnTextToInitial;
@@ -16,7 +17,7 @@ namespace BuferMAN.ContextMenu
 
         private void _ReturnTextToInitial(object sender, EventArgs e)
         {
-            this.TryChangeText(this.OriginBuferText);
+            this.TryChangeText((this.Button.Tag as BuferViewModel).OriginBuferText);
             this.Enabled = false;
         }
     }

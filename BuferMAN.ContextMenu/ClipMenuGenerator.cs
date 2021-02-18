@@ -29,7 +29,6 @@ namespace BuferMAN.ContextMenu
         private MenuItem _addToFileMenuItem;
         private MenuItem _pasteMenuItem;
         private MenuItem _placeInBuferMenuItem;
-        private String _originBuferText;
         private ToolTip _mouseOverTooltip;
         private readonly IClipboardWrapper _clipboardWrapper;
 
@@ -45,7 +44,6 @@ namespace BuferMAN.ContextMenu
         {
             this._buferViewModel = buferViewModel;
             this._button = button;
-            this._originBuferText = button.Text;
             this._mouseOverTooltip = mouseOverTooltip;
 
             var contextMenu = new SystemWindowsFormsContextMenu();
@@ -106,12 +104,12 @@ namespace BuferMAN.ContextMenu
                 contextMenu.MenuItems.Add(new MenuItem(Resource.MenuCharByChar, (object sender, EventArgs args) =>
                 {
                     WindowLevelContext.Current.HideWindow();
-                    new KeyboardEmulator().TypeText(this._originBuferText);
+                    new KeyboardEmulator().TypeText((this._button.Tag as BuferViewModel).OriginBuferText);
                 }));
 
-                this._returnTextToInitialMenuItem = new ReturnToInitialTextMenuItem(this._button, this._originBuferText, this._mouseOverTooltip);
+                this._returnTextToInitialMenuItem = new ReturnToInitialTextMenuItem(this._button, this._mouseOverTooltip);
                 contextMenu.MenuItems.Add(this._returnTextToInitialMenuItem);
-                var changeTextMenuItem = new ChangeTextMenuItem(this._button, this._originBuferText, this._mouseOverTooltip);
+                var changeTextMenuItem = new ChangeTextMenuItem(this._button, this._mouseOverTooltip);
                 if (!string.IsNullOrWhiteSpace(buferViewModel.Alias))
                 {
                     changeTextMenuItem.TryChangeText(buferViewModel.Alias);
@@ -133,14 +131,14 @@ namespace BuferMAN.ContextMenu
                         using (var sw = new StreamWriter(new FileStream(this._settings.DefaultBufersFileName, FileMode.Append, FileAccess.Write)))
                         {
                             sw.WriteLine();
-                            sw.WriteLine(this._originBuferText);
+                            sw.WriteLine((this._button.Tag as BuferViewModel).OriginBuferText);
                         }
                         this._MarkMenuItemAsAddedToFile();
                     };
                 }
                 contextMenu.MenuItems.Add(this._addToFileMenuItem);
 
-                var loginCredentialsMenuItem = new CreateLoginCredentialsMenuItem(this._button, this._originBuferText, this._mouseOverTooltip);
+                var loginCredentialsMenuItem = new CreateLoginCredentialsMenuItem(this._button, this._mouseOverTooltip);
                 loginCredentialsMenuItem.LoginCreated += this._LoginCredentialsMenuItem_LoginCreated;
                 this._createLoginDataMenuItem = loginCredentialsMenuItem;
                 contextMenu.MenuItems.Add(this._createLoginDataMenuItem);
