@@ -3,6 +3,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using magicmanam.Windows;
+using BuferMAN.View;
 
 namespace BuferMAN.ContextMenu
 {
@@ -26,7 +27,7 @@ namespace BuferMAN.ContextMenu
             if (!string.IsNullOrWhiteSpace(newText) && newText != this.Button.Text)
             {
                 this.Button.Text = newText;
-                var buttonData = this.Button.Tag as ButtonData;
+                var buttonData = this.Button.Tag as BuferViewModel;
                 buttonData.Representation = newText;
                 ChangingTextMenuItemBase._UpdateFocusTooltip();
 

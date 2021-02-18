@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace BuferMAN.View
@@ -7,12 +8,13 @@ namespace BuferMAN.View
     {
         public BuferViewModel()
         {
-            this.CreatedAt = DateTime.Now;
         }
         public IDataObject Clip { get; set; }
         public bool Persistent { get; set; }
         public string Alias { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public Color DefaultBackColor { get; set; }// Remove color from here
+        public object Representation { get; set; }
     }
 }

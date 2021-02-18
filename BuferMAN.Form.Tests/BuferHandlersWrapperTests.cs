@@ -27,7 +27,7 @@ namespace BuferMAN.Form.Tests
             data.SetData(DataFormats.StringFormat, string.Empty);
             var wrapper = new BuferHandlersWrapper(buferService, new BuferViewModel { Clip = data }, button, new System.Windows.Forms.Form(), A.Fake<IClipMenuGenerator>(), A.Fake<IBuferSelectionHandler>(), A.Fake<IFileStorage>());
 
-            Assert.AreEqual(originText, (button.Tag as ButtonData).Representation);
+            Assert.AreEqual(originText, (button.Tag as BuferViewModel).Representation);
             Assert.AreEqual(originText.Trim(), button.Text);
         }
 
@@ -42,7 +42,7 @@ namespace BuferMAN.Form.Tests
             data.SetData(DataFormats.UnicodeText, null);
             var wrapper = new BuferHandlersWrapper(buferService, new BuferViewModel { Clip = data }, button, new System.Windows.Forms.Form(), A.Fake<IClipMenuGenerator>(), A.Fake<IBuferSelectionHandler>(), A.Fake<IFileStorage>());
 
-            Assert.AreEqual(originText, (button.Tag as ButtonData).Representation);
+            Assert.AreEqual(originText, (button.Tag as BuferViewModel).Representation);
             Assert.AreEqual(originText.Trim(), button.Text);
         }
 
@@ -57,7 +57,7 @@ namespace BuferMAN.Form.Tests
             data.SetData(DataFormats.StringFormat, " String");
             var wrapper = new BuferHandlersWrapper(buferService, data, button, new System.Windows.Forms.Form(), A.Fake<IClipMenuGenerator>(), A.Fake<IBuferSelectionHandler>(), A.Fake<IFileStorage>());
 
-            Assert.AreEqual(originText, (button.Tag as ButtonData).Representation);
+            Assert.AreEqual(originText, (button.Tag as BuferViewModel).Representation);
             Assert.AreEqual(originText.Trim(), button.Text);
         }
 
@@ -75,7 +75,7 @@ namespace BuferMAN.Form.Tests
             var wrapper = new BuferHandlersWrapper(buferService, data, button, new System.Windows.Forms.Form(), A.Fake<IClipMenuGenerator>(), A.Fake<IBuferSelectionHandler>(), fileStorage);
 
             Assert.AreEqual($"<< {Resource.FileBufer} >>", button.Text);
-            Assert.AreEqual("C:\\" + Environment.NewLine + Environment.NewLine + "file.txt", (button.Tag as ButtonData).Representation);
+            Assert.AreEqual("C:\\" + Environment.NewLine + Environment.NewLine + "file.txt", (button.Tag as BuferViewModel).Representation);
         }
 
         [TestMethod]
@@ -95,7 +95,7 @@ namespace BuferMAN.Form.Tests
             var wrapper = new BuferHandlersWrapper(buferService, data, button, new System.Windows.Forms.Form(), A.Fake<IClipMenuGenerator>(), A.Fake<IBuferSelectionHandler>(), fileStorage);
 
             Assert.AreEqual($"<< {Resource.FilesBufer} (2) >>", button.Text);
-            Assert.AreEqual("c:\\" + Environment.NewLine + Environment.NewLine + "file1.ext" + Environment.NewLine + "file2.ext", (button.Tag as ButtonData).Representation);
+            Assert.AreEqual("c:\\" + Environment.NewLine + Environment.NewLine + "file1.ext" + Environment.NewLine + "file2.ext", (button.Tag as BuferViewModel).Representation);
         }
 
         [TestMethod]
@@ -116,7 +116,7 @@ namespace BuferMAN.Form.Tests
             var wrapper = new BuferHandlersWrapper(buferService, data, button, new System.Windows.Forms.Form(), A.Fake<IClipMenuGenerator>(), A.Fake<IBuferSelectionHandler>(), fileStorage);
 
             Assert.AreEqual($"<< {Resource.FilesBufer} (2) >>", button.Text);
-            Assert.AreEqual("c:\\" + Environment.NewLine + Environment.NewLine + "file1.ext" + Environment.NewLine + "folder\\", (button.Tag as ButtonData).Representation);
+            Assert.AreEqual("c:\\" + Environment.NewLine + Environment.NewLine + "file1.ext" + Environment.NewLine + "folder\\", (button.Tag as BuferViewModel).Representation);
         }
 
         [TestMethod]

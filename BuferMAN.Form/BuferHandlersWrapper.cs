@@ -26,7 +26,7 @@ namespace BuferMAN.Form
         private const float IMAGE_SCALE = 0.75f;
 
         public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IDataObject dataObject, Button button, SystemWindowsForm form, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler, IFileStorage fileStorage)
-            : this(clipboardBuferService, new BuferViewModel { Clip = dataObject }, button, form, clipMenuGenerator, buferSelectionHandler, fileStorage)
+            : this(clipboardBuferService, new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now }, button, form, clipMenuGenerator, buferSelectionHandler, fileStorage)
         {
 
         }
@@ -105,13 +105,9 @@ namespace BuferMAN.Form
                 this._MakeItalicBoldFont(button);
                 isChangeTextAvailable = false;
             }
-
-            var buttonData = new ButtonData
-            {
-                Representation = buferTextRepresentation,
-                DefaultBackColor = button.BackColor
-            };
-            button.Tag = buttonData;
+            buferViewModel.DefaultBackColor = button.BackColor;
+            buferViewModel.Representation = buferTextRepresentation;
+            button.Tag = buferViewModel;
             button.Text = buttonText.Trim();
 
             string originBuferText = button.Text;
@@ -138,7 +134,7 @@ namespace BuferMAN.Form
             
             if (formats.Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT))
             {
-                buttonData.Representation = this._buferViewModel.Clip.GetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT) as Image;
+                buferViewModel.Representation = this._buferViewModel.Clip.GetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT) as Image;
                 tooltip.IsBalloon = false;
                 tooltip.OwnerDraw = true;
                 tooltip.Popup += Tooltip_Popup;
@@ -167,7 +163,7 @@ namespace BuferMAN.Form
         {
             // to set the tag for each button or object
             Control parent = e.AssociatedControl;
-            var preview = (parent.Tag as ButtonData).Representation as Image;
+            var preview = (parent.Tag as BuferViewModel).Representation as Image;
 
             if (preview != null)
             {
@@ -185,7 +181,7 @@ namespace BuferMAN.Form
         private void Tooltip_Popup(object sender, PopupEventArgs e)
         {
             Control parent = e.AssociatedControl;
-            var previewImage = (parent.Tag as ButtonData).Representation as Image;
+            var previewImage = (parent.Tag as BuferViewModel).Representation as Image;
 
             if (previewImage != null)
             {
@@ -195,7 +191,7 @@ namespace BuferMAN.Form
 
         private void Bufer_GotFocus(object sender, EventArgs e)
         {
-            this._focusTooltip.Show((this._button.Tag as ButtonData).Representation as string, this._button, TOOLTIP_DURATION);
+            this._focusTooltip.Show((this._button.Tag as BuferViewModel).Representation as string, this._button, TOOLTIP_DURATION);
         }
 
         private void Bufer_LostFocus(object sender, EventArgs e)
