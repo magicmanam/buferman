@@ -16,7 +16,7 @@ using BuferMAN.Form.Properties;
 using System.Windows.Input;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Storage;
-using magicmanam.UndoRedo;
+using BuferMAN.View;
 
 namespace BuferMAN.Form
 {
@@ -58,7 +58,7 @@ namespace BuferMAN.Form
             IBufersFileParser parser = new SimpleFileParser();
             parser = new JsonFileParser();
             this._loadingFileHandler = new LoadingFileHandler(this._dataObjectHandler, parser, settings);
-            this._loadingFileHandler.BuferLoaded += this._loadingFileHandler_BuferLoaded;
+            this._loadingFileHandler.BufersLoaded += this._loadingFileHandler_BufersLoaded;
             this._menuGenerator = new MenuGenerator(this._loadingFileHandler, this._clipboardBuferService, settings, this._notificationEmitter);
             this.Menu = this._menuGenerator.GenerateMenu();
             this._settings = settings;
@@ -67,20 +67,20 @@ namespace BuferMAN.Form
             this._notificationEmitter.ShowInfoNotification(Resource.NotifyIconStartupText, 1500);
         }
 
-        private void _loadingFileHandler_BuferLoaded(object sender, BuferLoadedEventArgs e)
+        private void _loadingFileHandler_BufersLoaded(object sender, BufersLoadedEventArgs e)
         {
-            var bufer = e.Bufer;
-
-            var dataObject = this._buferItemDataObjectConverter.ToDataObject(bufer);
-
-            using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction(Resource.BuferLoaded))
+            foreach (var bufer in e.Bufers)
             {
-                this._dataObjectHandler.HandleDataObject(dataObject);
-                if (bufer.IsPersistent)
+                var dataObject = this._buferItemDataObjectConverter.ToDataObject(bufer);
+                var buferViewModel = new BuferViewModel
                 {
-                    this._clipboardBuferService.TryMarkClipAsPersistent(dataObject);
-                    WindowLevelContext.Current.RerenderBufers();
-                }
+                    Clip = dataObject,
+                    Alias = bufer.Alias,
+                    CreatedAt = DateTime.Now,
+                    Persistent = bufer.IsPersistent
+                };
+
+                this._dataObjectHandler.HandleDataObject(buferViewModel);
             }
         }
 
@@ -145,7 +145,7 @@ namespace BuferMAN.Form
             {
                 this._copiesCount++;
                 var dataObject = this._clipboardWrapper.GetDataObject();
-                this._dataObjectHandler.HandleDataObject(dataObject);
+                this._dataObjectHandler.HandleDataObject(new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now });
 
                 if (this._copiesCount == 100)
                 {

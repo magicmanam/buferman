@@ -1,11 +1,11 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using BuferMAN.View;
+using System;
 
 namespace BuferMAN.Infrastructure
 {
     public interface IIDataObjectHandler
     {
         event EventHandler Updated;
-        void HandleDataObject(IDataObject dataObject);
+        void HandleDataObject(BuferViewModel buferViewModel);
     }
 }

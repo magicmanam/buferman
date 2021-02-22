@@ -62,6 +62,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuferMAN.View\BuferMAN.View.csproj">
+      <Project>{60FACDBB-0E8F-4EA9-8E18-99294EF5908A}</Project>
+      <Name>BuferMAN.View</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logger\Logging.csproj">
       <Project>{0deecdc2-cf30-4625-a465-671f851f937e}</Project>
       <Name>Logging</Name>

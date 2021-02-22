@@ -14,7 +14,7 @@ namespace BuferMAN.Files
 {
     public class LoadingFileHandler : ILoadingFileHandler
     {
-        public event EventHandler<BuferLoadedEventArgs> BuferLoaded;
+        public event EventHandler<BufersLoadedEventArgs> BufersLoaded;
 
         private readonly OpenFileDialog _dialog = new OpenFileDialog();
         private readonly IIDataObjectHandler _dataObjectHandler;
@@ -40,10 +40,7 @@ namespace BuferMAN.Files
 
             if (result == DialogResult.OK)
             {
-                foreach (var buferEntry in this.LoadBufersFromFile(this._dialog.FileName))
-                {
-                    this.BuferLoaded?.Invoke(this, new BuferLoadedEventArgs(buferEntry));
-                }
+                this.BufersLoaded?.Invoke(this, new BufersLoadedEventArgs(this.LoadBufersFromFile(this._dialog.FileName)));
             }
         }
 

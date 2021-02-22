@@ -51,8 +51,8 @@ namespace BuferMAN.Clipboard
             //    }
             //}
             //
-
-            if (xFormats.Length != yFormats.Length)
+            
+            if (!xFormats.Any() || !yFormats.Any() || xFormats.Length != yFormats.Length)
             {
                 return false;
             }

@@ -11,7 +11,7 @@ namespace BuferMAN.Clipboard
     {
         private IList<IDataObject> _tempObjects = new List<IDataObject>();
 		private IList<IDataObject> _persistentObjects = new List<IDataObject>();
-		private readonly IEqualityComparer<IDataObject> _comparer;
+        private readonly IEqualityComparer<IDataObject> _comparer;
 
         public ClipboardBuferService(IEqualityComparer<IDataObject> comparer)
 		{
@@ -52,7 +52,7 @@ namespace BuferMAN.Clipboard
         
         public bool IsLastTemporaryClip(IDataObject dataObject)
         {
-            return dataObject.GetFormats().Any() && this._comparer.Equals(this.LastTemporaryClip, dataObject);
+            return this._comparer.Equals(this.LastTemporaryClip, dataObject);
         }
 
 		public bool IsPersistent(IDataObject dataObject)

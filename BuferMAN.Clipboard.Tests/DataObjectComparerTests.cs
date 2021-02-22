@@ -47,6 +47,28 @@ namespace BuferMAN.Clipboard.Tests
         }
 
         [TestMethod]
+        public void On_zero_length_formats_Equals_returns_False()
+        {
+            var obj1 = new DataObject();
+            var obj2 = new DataObject();
+
+            var result = this._comparer.Equals(obj1, obj2);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void When_one_object_has_no_formats_Equals_returns_False()
+        {
+            var obj1 = new DataObject("format", new object());
+            var obj2 = new DataObject();
+
+            var result = this._comparer.Equals(obj1, obj2);
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
         public void On_different_text_for_same_string_format_Equals_returns_False()
         {
             var obj1 = new DataObject(ClipboardFormats.StringFormats[0], "str1");

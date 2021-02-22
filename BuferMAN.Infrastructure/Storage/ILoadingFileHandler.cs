@@ -6,7 +6,7 @@ namespace BuferMAN.Infrastructure.Storage
 {
     public interface ILoadingFileHandler
     {
-        event EventHandler<BuferLoadedEventArgs> BuferLoaded;
+        event EventHandler<BufersLoadedEventArgs> BufersLoaded;
         void OnLoadFile(object sender, EventArgs args);
         IEnumerable<BuferItem> LoadBufersFromFile(string fileName);
     }

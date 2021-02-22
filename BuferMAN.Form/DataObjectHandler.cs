@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using BuferMAN.View;
 using System.Linq;
 using System.Windows.Forms;
 using BuferMAN.Infrastructure;
@@ -22,9 +22,10 @@ namespace BuferMAN.Form
             this._form = form;
         }
 
-        public void HandleDataObject(IDataObject dataObject)
+        public void HandleDataObject(BuferViewModel buferViewModel)
         {
-            if (dataObject.GetFormats().Any() && !this._clipboardBuferService.IsLastTemporaryClip(dataObject)) // Repeated Ctrl + C operation on the save object
+            var dataObject = buferViewModel.Clip;
+            if (buferViewModel.Persistent || !this._clipboardBuferService.IsLastTemporaryClip(dataObject)) // Repeated Ctrl + C operation on the save object
             {
                 using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction())
                 {
@@ -57,6 +58,10 @@ namespace BuferMAN.Form
                             }
 
                             this._clipboardBuferService.AddTemporaryClip(dataObject);
+                            if (buferViewModel.Persistent)
+                            {
+                                this._clipboardBuferService.TryMarkClipAsPersistent(dataObject);
+                            }
                         }
                     }
                 }
