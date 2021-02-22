@@ -22,52 +22,59 @@ namespace BuferMAN.Form
             this._form = form;
         }
 
-        public void HandleDataObject(BuferViewModel buferViewModel)
-        {
-            var dataObject = buferViewModel.Clip;
-            if (buferViewModel.Persistent || !this._clipboardBuferService.IsLastTemporaryClip(dataObject)) // Repeated Ctrl + C operation on the save object
-            {
-                using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction())
-                {
-                    if (this._clipboardBuferService.Contains(dataObject))
-                    {
-                        if (this._clipboardBuferService.IsPersistent(dataObject))
-                        {
-                            return;
-                        }
-                        else
-                        {
-                            this._clipboardBuferService.RemoveClip(dataObject);
-                            this._clipboardBuferService.AddTemporaryClip(dataObject);// Maybe just swap these clips? But they can be different.
-                        }
-                    }
-                    else
-                    {
-                        if (this._clipboardBuferService.GetPersistentClips().Count() == BuferAMForm.MAX_BUFERS_COUNT)
-                        {
-                            MessageBox.Show(Resource.AllBufersPersistent, Resource.TratataTitle);
-                            // Maybe display a program window if not ?
-                            // Maybe all visible bufers can not be persistent (create a limit of persistent bufers)?
-                            return;
-                        }
-                        else
-                        {
-                            if (this._clipboardBuferService.ClipsCount == BuferAMForm.MAX_BUFERS_COUNT + BuferAMForm.EXTRA_BUFERS_COUNT)
-                            {
-                                this._clipboardBuferService.RemoveClip(this._clipboardBuferService.FirstTemporaryClip);
-                            }
+        // For unit tests:
+        // not persistent: last temp ? <nothing> :
+        // any temp ? <swap> : 
+        // pinned ? <nothing> :
+        // (not exist) - <add temp>
 
-                            this._clipboardBuferService.AddTemporaryClip(dataObject);
-                            if (buferViewModel.Persistent)
-                            {
-                                this._clipboardBuferService.TryMarkClipAsPersistent(dataObject);
-                            }
-                        }
-                    }
+        // persistent: pinned ? <nothing> :
+        // any temp ? <remove from temp and add pinned> : 
+        // (not exist) <add pinned>
+        public bool TryHandleDataObject(BuferViewModel buferViewModel)
+        {
+            var isLastTempBufer = this._clipboardBuferService.IsLastTemporaryBufer(buferViewModel);
+
+            if (!buferViewModel.Persistent && isLastTempBufer // Repeated Ctrl + C operation
+                || this._clipboardBuferService.IsPersistent(buferViewModel.Clip))
+            {
+                return false;
+            }
+
+            var alreadyInTempBufers = this._clipboardBuferService.IsInTemporaryBufers(buferViewModel);
+
+            if (!alreadyInTempBufers && this._clipboardBuferService.GetPersistentClips().Count() == BuferAMForm.MAX_BUFERS_COUNT)
+            {// Maybe we should not do any check if persistent clips count = max bufers count
+                MessageBox.Show(Resource.AllBufersPersistent, Resource.TratataTitle);// Into Event
+                // Maybe display a program window if not ?
+                // Maybe all visible bufers can not be persistent (create a limit of persistent bufers)?
+                return false;
+            }
+
+            using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction())
+            {
+                if (!alreadyInTempBufers && this._clipboardBuferService.ClipsCount == BuferAMForm.MAX_BUFERS_COUNT + BuferAMForm.EXTRA_BUFERS_COUNT)
+                {
+                    this._clipboardBuferService.RemoveClip(this._clipboardBuferService.FirstTemporaryClip);
                 }
 
-                this.Updated?.Invoke(this, EventArgs.Empty);
+                var dataObject = buferViewModel.Clip;
+
+                if (alreadyInTempBufers)
+                {
+                    this._clipboardBuferService.RemoveClip(dataObject);
+                }
+
+                this._clipboardBuferService.AddTemporaryClip(dataObject);
+
+                if (buferViewModel.Persistent)
+                {
+                    this._clipboardBuferService.TryMarkClipAsPersistent(dataObject);
+                }
             }
+
+            this.Updated?.Invoke(this, EventArgs.Empty);
+            return true;
         }
     }
 }

@@ -17,6 +17,7 @@ using System.Windows.Input;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Storage;
 using BuferMAN.View;
+using magicmanam.UndoRedo;
 
 namespace BuferMAN.Form
 {
@@ -69,18 +70,29 @@ namespace BuferMAN.Form
 
         private void _loadingFileHandler_BufersLoaded(object sender, BufersLoadedEventArgs e)
         {
-            foreach (var bufer in e.Bufers)
+            using (var action = UndoableContext<ClipboardBuferServiceState>.Current.StartAction())
             {
-                var dataObject = this._buferItemDataObjectConverter.ToDataObject(bufer);
-                var buferViewModel = new BuferViewModel
-                {
-                    Clip = dataObject,
-                    Alias = bufer.Alias,
-                    CreatedAt = DateTime.Now,
-                    Persistent = bufer.IsPersistent
-                };
+                var loaded = false;
 
-                this._dataObjectHandler.HandleDataObject(buferViewModel);
+                foreach (var bufer in e.Bufers)
+                {
+                    var dataObject = this._buferItemDataObjectConverter.ToDataObject(bufer);
+                    var buferViewModel = new BuferViewModel
+                    {
+                        Clip = dataObject,
+                        Alias = bufer.Alias,
+                        CreatedAt = DateTime.Now,
+                        Persistent = bufer.IsPersistent
+                    };
+
+                    var tempLoaded = this._dataObjectHandler.TryHandleDataObject(buferViewModel);
+                    loaded = tempLoaded || loaded;
+                }
+
+                if (!loaded)
+                {
+                    action.Cancel();
+                }
             }
         }
 
@@ -145,7 +157,7 @@ namespace BuferMAN.Form
             {
                 this._copiesCount++;
                 var dataObject = this._clipboardWrapper.GetDataObject();
-                this._dataObjectHandler.HandleDataObject(new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now });
+                this._dataObjectHandler.TryHandleDataObject(new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now });
 
                 if (this._copiesCount == 100)
                 {

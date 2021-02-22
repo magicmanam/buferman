@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using BuferMAN.View;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace BuferMAN.Clipboard
@@ -23,15 +24,15 @@ namespace BuferMAN.Clipboard
 
         IDataObject LastTemporaryClip { get; }
 
-        bool IsLastTemporaryClip(IDataObject clipObject);
+        bool IsLastTemporaryBufer(BuferViewModel bufer);
 
-		bool IsPersistent(IDataObject clipObject);
+		bool IsPersistent(IDataObject clipObject);// IsPinned(BuferViewModel bufer);
 
 		IDataObject FirstTemporaryClip { get; }
 
         IDataObject FirstPersistentClip { get; }
 
-        bool Contains(IDataObject clipDataObject);
+        bool IsInTemporaryBufers(BuferViewModel clipDataObject);
 
         void RemoveClip(IDataObject clip);
 

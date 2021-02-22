@@ -6,6 +6,6 @@ namespace BuferMAN.Infrastructure
     public interface IIDataObjectHandler
     {
         event EventHandler Updated;
-        void HandleDataObject(BuferViewModel buferViewModel);
+        bool TryHandleDataObject(BuferViewModel buferViewModel);
     }
 }

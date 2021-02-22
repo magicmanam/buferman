@@ -1,4 +1,5 @@
 ﻿using BuferMAN.Clipboard.Properties;
+using BuferMAN.View;
 using magicmanam.UndoRedo;
 using System;
 using System.Collections.Generic;
@@ -50,9 +51,9 @@ namespace BuferMAN.Clipboard
             }
         }
         
-        public bool IsLastTemporaryClip(IDataObject dataObject)
+        public bool IsLastTemporaryBufer(BuferViewModel bufer)
         {
-            return this._comparer.Equals(this.LastTemporaryClip, dataObject);
+            return this._comparer.Equals(this.LastTemporaryClip, bufer.Clip);
         }
 
 		public bool IsPersistent(IDataObject dataObject)
@@ -76,9 +77,9 @@ namespace BuferMAN.Clipboard
             }
         }
 
-        public bool Contains(IDataObject clip)
+        public bool IsInTemporaryBufers(BuferViewModel bufer)
         {
-            return this._GetAllClips(false).Contains(clip, this._comparer);
+            return this._tempObjects.Contains(bufer.Clip, this._comparer);
         }
 
         // Maybe add two methods for temp and persistent clips?
