@@ -54,6 +54,7 @@ namespace BuferMAN.Form
             this._comparer = comparer;
             this._buttonsMap = new Dictionary<IDataObject, Button>(MAX_BUFERS_COUNT);
             this._dataObjectHandler = new DataObjectHandler(clipboardBuferService, this);
+            this._dataObjectHandler.Full += this._dataObjectHandler_Full;
             this._dataObjectHandler.Updated += this._dataObjectHandler_Updated;
             this._clipboardWrapper = clipboardWrapper;
             IBufersFileParser parser = new SimpleFileParser();
@@ -66,6 +67,12 @@ namespace BuferMAN.Form
 
             this._StartTrickTimer(23);
             this._notificationEmitter.ShowInfoNotification(Resource.NotifyIconStartupText, 1500);
+        }
+
+        private void _dataObjectHandler_Full(object sender, EventArgs e)
+        {
+            MessageBox.Show(Resource.AllBufersPersistent, Resource.TratataTitle);
+            // Maybe display a program window if not ?
         }
 
         private void _loadingFileHandler_BufersLoaded(object sender, BufersLoadedEventArgs e)

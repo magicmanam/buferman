@@ -1,9 +1,7 @@
 ﻿using BuferMAN.View;
 using System.Linq;
-using System.Windows.Forms;
 using BuferMAN.Infrastructure;
 using BuferMAN.Clipboard;
-using BuferMAN.Form.Properties;
 using magicmanam.UndoRedo;
 using System;
 
@@ -15,6 +13,7 @@ namespace BuferMAN.Form
 		private readonly BuferAMForm _form;
 
         public event EventHandler Updated;
+        public event EventHandler Full;
 
         public DataObjectHandler(IClipboardBuferService clipboardBuferService, BuferAMForm form)
         {
@@ -44,10 +43,9 @@ namespace BuferMAN.Form
             var alreadyInTempBufers = this._clipboardBuferService.IsInTemporaryBufers(buferViewModel);
 
             if (!alreadyInTempBufers && this._clipboardBuferService.GetPersistentClips().Count() == BuferAMForm.MAX_BUFERS_COUNT)
-            {// Maybe we should not do any check if persistent clips count = max bufers count
-                MessageBox.Show(Resource.AllBufersPersistent, Resource.TratataTitle);// Into Event
-                // Maybe display a program window if not ?
+            {   // Maybe we should not do any check if persistent clips count = max bufers count
                 // Maybe all visible bufers can not be persistent (create a limit of persistent bufers)?
+                this.Full?.Invoke(this, EventArgs.Empty);
                 return false;
             }
 
