@@ -190,4 +190,10 @@ Hot keys:
   <data name="BuferLoaded" xml:space="preserve">
     <value>Bufer was loaded from storage</value>
   </data>
+  <data name="FolderBufer" xml:space="preserve">
+    <value>Folder</value>
+  </data>
+  <data name="FoldersBufer" xml:space="preserve">
+    <value>Folders</value>
+  </data>
 </root>

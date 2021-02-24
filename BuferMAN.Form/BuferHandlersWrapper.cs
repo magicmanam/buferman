@@ -53,23 +53,36 @@ namespace BuferMAN.Form
 
             var isChangeTextAvailable = true;
             string buferTitle = null;
+            string tooltipTitle = null;
             if (buferTextRepresentation == null)
             {
                 var files = buferViewModel.Clip.GetData(DataFormats.FileDrop) as string[];
                 if (files != null && files.Length > 0)
                 {
                     isChangeTextAvailable = false;
+                    var firstFile = files.First();
+                    var onlyFolders = files.Select(f => this._fileStorage.GetFileAttributes(f).HasFlag(FileAttributes.Directory))
+                        .All(f => f);
 
                     if (files.Length == 1)
                     {
-                        buferTitle = this._MakeSpecialBuferText(Resource.FileBufer);
+                        var buferText = onlyFolders ? Resource.FolderBufer : Resource.FileBufer;
+
+                        const int MAX_FILE_LENGTH_FOR_BUFER_TITLE = 50;
+                        if (firstFile.Length < MAX_FILE_LENGTH_FOR_BUFER_TITLE)
+                        {
+                            tooltipTitle = this._MakeSpecialBuferText(buferText);
+                        }
+
+                        buferTitle = this._MakeSpecialBuferText(firstFile.Length < MAX_FILE_LENGTH_FOR_BUFER_TITLE ? firstFile : buferText);
                     }
                     else
                     {
-                        buferTitle = this._MakeSpecialBuferText($"{Resource.FilesBufer} ({files.Length})");
+                        var buferText = onlyFolders ? Resource.FoldersBufer : Resource.FilesBufer;
+                        buferTitle = this._MakeSpecialBuferText($"{buferText} ({files.Length})");
                     }
 
-                    var folder = this._fileStorage.GetFileDirectory(files.First());
+                    var folder = this._fileStorage.GetFileDirectory(firstFile);
                     buferTextRepresentation += folder + Environment.NewLine + Environment.NewLine;
                     buferTextRepresentation += string.Join(Environment.NewLine, files.Select(f => this._fileStorage.GetFileName(f) + (this._fileStorage.GetFileAttributes(f).HasFlag(FileAttributes.Directory) ? Path.DirectorySeparatorChar.ToString() : string.Empty)).ToList());
                 }
@@ -127,10 +140,12 @@ namespace BuferMAN.Form
             var tooltip = new ToolTip() { InitialDelay = 0 };
             tooltip.IsBalloon = true;
             tooltip.SetToolTip(button, buferTextRepresentation);
-            if (!string.IsNullOrWhiteSpace(buferTitle))
+            tooltipTitle = tooltipTitle ?? buferTitle;
+
+            if (!string.IsNullOrWhiteSpace(tooltipTitle))
             {
-                tooltip.ToolTipTitle = buferTitle;
-                this._focusTooltip.ToolTipTitle = buferTitle;
+                tooltip.ToolTipTitle = tooltipTitle;
+                this._focusTooltip.ToolTipTitle = tooltipTitle;
             }
             
             if (formats.Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT))

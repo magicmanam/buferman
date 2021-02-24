@@ -186,4 +186,10 @@
   <data name="BuferLoaded" xml:space="preserve">
     <value>Буфер загружен из файла</value>
   </data>
+  <data name="FolderBufer" xml:space="preserve">
+    <value>Папка</value>
+  </data>
+  <data name="FoldersBufer" xml:space="preserve">
+    <value>Папки</value>
+  </data>
 </root>
