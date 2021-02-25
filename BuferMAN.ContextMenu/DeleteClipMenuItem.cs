@@ -4,19 +4,20 @@ using BuferMAN.Infrastructure;
 using System;
 using System.Windows.Forms;
 using magicmanam.Windows;
+using BuferMAN.View;
 
 namespace BuferMAN.ContextMenu
 {
     public class DeleteClipMenuItem : MenuItem
     {
         private readonly IClipboardBuferService _clipboardBuferService;
-        private IDataObject _dataObject;
+        private BuferViewModel _bufer;
         private Button _button;
 
-        public DeleteClipMenuItem(IClipboardBuferService clipboardBuferService, IDataObject dataObject, Button button)
+        public DeleteClipMenuItem(IClipboardBuferService clipboardBuferService, BuferViewModel bufer, Button button)
         {
             this._clipboardBuferService = clipboardBuferService;
-            this._dataObject = dataObject;
+            this._bufer = bufer;
             this._button = button;
             this.Text = Resource.DeleteClipMenuItem;
             this.Shortcut = Shortcut.Del;
@@ -26,7 +27,7 @@ namespace BuferMAN.ContextMenu
         private void _DeleteBufer(object sender, EventArgs e)
         {
             var tabIndex = this._button.TabIndex;
-            this._clipboardBuferService.RemoveClip(this._dataObject);
+            this._clipboardBuferService.RemoveBufer(this._bufer.ViewId);
             WindowLevelContext.Current.RerenderBufers();
 
             tabIndex = this._GetNearestTabIndex(tabIndex);

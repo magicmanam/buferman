@@ -45,6 +45,21 @@ namespace BuferMAN.Application
 
             this._settings = settings;
 
+            UndoableContext<ApplicationStateSnapshot>.Current = new UndoableContext<ApplicationStateSnapshot>(this._clipboardBuferService);
+
+            UndoableContext<ApplicationStateSnapshot>.Current.UndoableAction += (object sender, UndoableActionEventArgs e) =>
+            {
+                this._buferMANHost.SetStatusBarText(e.Action);
+            };
+            UndoableContext<ApplicationStateSnapshot>.Current.UndoAction += (object sender, UndoableActionEventArgs e) =>
+            {
+                this._buferMANHost.SetStatusBarText(e.Action);
+            };
+            UndoableContext<ApplicationStateSnapshot>.Current.RedoAction += (object sender, UndoableActionEventArgs e) =>
+            {
+                this._buferMANHost.SetStatusBarText(e.Action);
+            };
+
             if (File.Exists(settings.DefaultBufersFileName))
             {
                 this.LoadBufersFromStorage();
@@ -94,19 +109,19 @@ namespace BuferMAN.Application
                     break;
                 case Keys.X:
                 case Keys.Home:
-                    var lastBufer = this._clipboardBuferService.LastTemporaryClip;
+                    var lastBufer = this._clipboardBuferService.LastTemporaryBufer;
                     if (lastBufer != null)
                     {
-                        this.BuferFocused?.Invoke(this, new BuferFocusedEventArgs(new BuferViewModel { Clip = lastBufer }));
+                        this.BuferFocused?.Invoke(this, new BuferFocusedEventArgs(lastBufer));
                     }
                     break;
                 case Keys.V:
                 case Keys.End:
-                    var firstBufer = this._clipboardBuferService.FirstPersistentClip ?? this._clipboardBuferService.FirstTemporaryClip;
+                    var firstBufer = this._clipboardBuferService.FirstPersistentBufer ?? this._clipboardBuferService.FirstTemporaryBufer;
 
                     if (firstBufer != null)
                     {
-                        this.BuferFocused?.Invoke(this, new BuferFocusedEventArgs(new BuferViewModel { Clip = firstBufer }));
+                        this.BuferFocused?.Invoke(this, new BuferFocusedEventArgs(firstBufer));
                     }
                     break;
                 case Keys.P:

@@ -25,7 +25,7 @@ namespace BuferMAN.Form.Window
         private readonly IClipboardWrapper _clipboardWrapper;
         private readonly IProgramSettings _settings;
         private readonly IFileStorage _fileStorage;
-        private readonly IDictionary<IDataObject, Button> _removedButtons = new Dictionary<IDataObject, Button>();
+        private readonly IDictionary<Guid, Button> _removedButtons = new Dictionary<Guid, Button>();
         private readonly IList<IBuferPresentation> _clipPresentations = new List<IBuferPresentation>() { new SkypeBuferPresentation(), new FileContentsBuferPresentation() };
         private readonly Color FOCUSED_BUFER_BACK_COLOR = Color.LightSteelBlue;
         private readonly Color DEFAULT_BUFER_BACK_COLOR = Color.Silver;
@@ -54,7 +54,7 @@ namespace BuferMAN.Form.Window
             var emptyClipFound = false;
             foreach(var bufer in persistentBufers)
             {
-                if (bufer.GetFormats().Length == 0)
+                if (bufer.Clip.GetFormats().Length == 0)
                 {
                     emptyClipFound = true;
                     this._RemoveClipWithoutTrackingInUndoableContext(bufer);
@@ -71,12 +71,12 @@ namespace BuferMAN.Form.Window
             do
             {
                 emptyClipFound = false;
-                var extraTemporaryClipsCount = Math.Max(this._clipboardBuferService.BufersCount - BuferAMForm.MAX_BUFERS_COUNT, 0);
+                var extraTemporaryClipsCount = Math.Max(this._clipboardBuferService.BufersCount - this._settings.MaxBufersCount, 0);
                 temporaryBufers = temporaryBufers.Skip(extraTemporaryClipsCount).ToList();
 
                 foreach (var bufer in temporaryBufers)
                 {
-                    if (bufer.GetFormats().Length == 0)
+                    if (bufer.Clip.GetFormats().Length == 0)
                     {
                         emptyClipFound = true;
                         this._RemoveClipWithoutTrackingInUndoableContext(bufer);
@@ -104,25 +104,25 @@ namespace BuferMAN.Form.Window
             }
         }
 
-        private void _DrawButtonsForBufers(List<IDataObject> bufers, int y, int currentButtonIndex, bool persistent = false)
+        private void _DrawButtonsForBufers(List<BuferViewModel> bufers, int y, int currentButtonIndex, bool persistent = false)
         {
             foreach (var bufer in bufers)
             {
                 Button button;
-                var equalObject = this._form.ButtonsMap.FirstOrDefault(m => this._comparer.Equals(m.Key, bufer));
+                var equalObject = this._form.ButtonsMap.ContainsKey(bufer.ViewId);
 
-                if (!equalObject.Equals(default(KeyValuePair<IDataObject, Button>)))
+                if (equalObject)
                 {
-                    button = equalObject.Value;
+                    button = this._form.ButtonsMap[bufer.ViewId];
                 }
                 else
                 {
-                    var equalObjectFromDeleted = this._removedButtons.Keys.FirstOrDefault(k => this._comparer.Equals(k, bufer));
+                    var equalObjectFromDeleted = this._removedButtons.ContainsKey(bufer.ViewId);
 
-                    if (equalObjectFromDeleted != null)
+                    if (equalObjectFromDeleted)
                     {
-                        button = this._removedButtons[equalObjectFromDeleted];
-                        this._removedButtons.Remove(equalObjectFromDeleted);
+                        button = this._removedButtons[bufer.ViewId];
+                        this._removedButtons.Remove(bufer.ViewId);
                     }
                     else
                     {
@@ -130,13 +130,13 @@ namespace BuferMAN.Form.Window
                         button.GotFocus += Clip_GotFocus;
                         button.LostFocus += Clip_LostFocus;
 
-                        var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer, this._clipboardWrapper);
+                        var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer.Clip, this._clipboardWrapper);
 
-                        new BuferHandlersWrapper(this._clipboardBuferService, new BuferViewModel() { Clip = bufer, Persistent = persistent, CreatedAt = DateTime.Now }, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler, this._settings, this._clipboardWrapper), buferSelectionHandler, this._fileStorage);
+                        new BuferHandlersWrapper(this._clipboardBuferService, bufer, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler, this._settings, this._clipboardWrapper), buferSelectionHandler, this._fileStorage);
 
-                        this._TryApplyPresentation(bufer, button);
+                        this._TryApplyPresentation(bufer.Clip, button);
                     }
-                    this._form.ButtonsMap.Add(bufer, button);
+                    this._form.ButtonsMap.Add(bufer.ViewId, button);
                     this._form.Controls.Add(button);
                     button.BringToFront();
                 }
@@ -176,11 +176,11 @@ namespace BuferMAN.Form.Window
             button.BackColor = (button.Tag as BuferViewModel).DefaultBackColor;
         }
 
-        private void _RemoveClipWithoutTrackingInUndoableContext(IDataObject clip)
+        private void _RemoveClipWithoutTrackingInUndoableContext(BuferViewModel bufer)
         {
             using (var action = UndoableContext<ApplicationStateSnapshot>.Current.StartAction())
             {
-                this._clipboardBuferService.RemoveClip(clip);
+                this._clipboardBuferService.RemoveBufer(bufer.ViewId);
                 action.Cancel();
             }
         }
@@ -197,13 +197,13 @@ namespace BuferMAN.Form.Window
             }
         }
 
-        private void _RemoveOldButtons(IEnumerable<IDataObject> bufers)
+        private void _RemoveOldButtons(IEnumerable<BuferViewModel> bufers)
         {
-			var deletedKeys = new List<IDataObject>();
+			var deletedKeys = new List<Guid>();
 
             foreach (var key in this._form.ButtonsMap.Keys.ToList())
             {
-				var equalKey = bufers.FirstOrDefault(b => this._comparer.Equals(key, b));
+				var equalKey = bufers.FirstOrDefault(b => b.ViewId == key);
                 if (equalKey == null)
                 {
                     var button = this._form.ButtonsMap[key];

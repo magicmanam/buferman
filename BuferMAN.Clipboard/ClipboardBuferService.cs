@@ -8,10 +8,10 @@ using System.Windows.Forms;
 
 namespace BuferMAN.Clipboard
 {
-    public class ClipboardBuferService : IClipboardBuferService, IStatefulComponent<ApplicationStateSnapshot>
+    public class ClipboardBuferService : IClipboardBuferService
     {
-        private IList<IDataObject> _tempObjects = new List<IDataObject>();
-		private IList<IDataObject> _persistentObjects = new List<IDataObject>();
+        private IList<BuferViewModel> _tempObjects = new List<BuferViewModel>();
+		private IList<BuferViewModel> _persistentObjects = new List<BuferViewModel>();
         private readonly IEqualityComparer<IDataObject> _comparer;
 
         public ClipboardBuferService(IEqualityComparer<IDataObject> comparer)
@@ -40,10 +40,10 @@ namespace BuferMAN.Clipboard
 
 		private IEnumerable<IDataObject> _GetAllClips(bool persistentFirst)
 		{
-            return persistentFirst ? this._persistentObjects.Union(this._tempObjects) : this._tempObjects.Union(this._persistentObjects);
+            return persistentFirst ? this._persistentObjects.Union(this._tempObjects).Select(t => t.Clip) : this._tempObjects.Union(this._persistentObjects).Select(t => t.Clip);
 		}
 
-        public IDataObject LastTemporaryClip
+        public BuferViewModel LastTemporaryBufer
         {
             get
             {
@@ -53,15 +53,15 @@ namespace BuferMAN.Clipboard
 
         public bool IsLastTemporaryBufer(BuferViewModel bufer)
         {
-            return this._comparer.Equals(this.LastTemporaryClip, bufer.Clip);
+            return this._comparer.Equals(this.LastTemporaryBufer?.Clip, bufer.Clip);
         }
 
         public bool IsPersistent(IDataObject dataObject)
 		{
-			return this._persistentObjects.Contains(dataObject, this._comparer);
+			return this._persistentObjects.Any(d => this._comparer.Equals(dataObject, d.Clip));
 		}
 
-        public IDataObject FirstTemporaryClip
+        public BuferViewModel FirstTemporaryBufer
         {
             get
             {
@@ -69,7 +69,7 @@ namespace BuferMAN.Clipboard
             }
         }
 
-        public IDataObject FirstPersistentClip
+        public BuferViewModel FirstPersistentBufer
         {
             get
             {
@@ -79,29 +79,29 @@ namespace BuferMAN.Clipboard
 
         public bool IsInTemporaryBufers(BuferViewModel bufer)
         {
-            return this._tempObjects.Contains(bufer.Clip, this._comparer);
+            return this._tempObjects.Select(t => t.Clip).Contains(bufer.Clip, this._comparer);
         }
 
         // Maybe add two methods for temp and persistent clips?
-        public void RemoveClip(IDataObject clipDataObject)
+        public void RemoveBufer(Guid buferViewId)
         {
-            if (this._RemoveClipObject(this._tempObjects, clipDataObject) == false)
+            if (this._RemoveClipObject(this._tempObjects, buferViewId) == false)
             {
-                if (this._RemoveClipObject(this._persistentObjects, clipDataObject) == false)
+                if (this._RemoveClipObject(this._persistentObjects, buferViewId) == false)
                 {
                     throw new Exception("The clip was not found in temp and persistent collections - unknown situation.");
                 }
             }
         }
 
-        private bool _RemoveClipObject(IList<IDataObject> list, IDataObject clip)
+        private bool _RemoveClipObject(IList<BuferViewModel> list, Guid buferViewId)
         {
-            var dataObject = list.FirstOrDefault(d => this._comparer.Equals(d, clip));
-            if (dataObject != null)
+            var bufer = list.FirstOrDefault(d => d.ViewId == buferViewId);
+            if (bufer != null)
             {
                 using (UndoableContext<ApplicationStateSnapshot>.Current.StartAction(Resource.BuferDeleted))
                 {
-                    list.Remove(dataObject);
+                    list.Remove(bufer);
                 }
                 return true;
             }
@@ -115,28 +115,28 @@ namespace BuferMAN.Clipboard
         {
             get
             {
-                return new ApplicationStateSnapshot(this._tempObjects.Select(t => new BuferViewModel { Clip = t, Persistent = false }).Union(this._persistentObjects.Select(p => new BuferViewModel { Clip = p, Persistent = true })).ToList());
+                return new ApplicationStateSnapshot(this._tempObjects.Union(this._persistentObjects).ToList());
             }
             set
             {
-                this._tempObjects = value.Bufers.Where(b => !b.Persistent).Select(b => b.Clip).ToList();
-                this._persistentObjects = value.Bufers.Where(b => b.Persistent).Select(b => b.Clip).ToList();
+                this._tempObjects = value.Bufers.Where(b => !b.Persistent).ToList();
+                this._persistentObjects = value.Bufers.Where(b => b.Persistent).ToList();
             }
         }
 
-        public void AddTemporaryClip(IDataObject dataObject)
+        public void AddTemporaryClip(BuferViewModel bufer)
         {
             using (UndoableContext<ApplicationStateSnapshot>.Current.StartAction(Resource.BuferAdded))
             {
-                this._tempObjects.Add(dataObject);
+                this._tempObjects.Add(bufer);
             }
         }
 
-        public bool TryMarkClipAsPersistent(IDataObject clip)
+        public bool TryMarkBuferAsPersistent(Guid buferViewId)
 		{
             using (var operation = UndoableContext<ApplicationStateSnapshot>.Current.StartAction(Resource.BuferPersistent))
             {
-                var dataObject = this._tempObjects.FirstOrDefault(d => this._comparer.Equals(d, clip));
+                var dataObject = this._tempObjects.FirstOrDefault(d => d.ViewId == buferViewId);
                 if (dataObject != null && this._tempObjects.Remove(dataObject))
                 {
                     this._persistentObjects.Add(dataObject);
@@ -151,12 +151,12 @@ namespace BuferMAN.Clipboard
             }
 		}
 
-        public IEnumerable<IDataObject> GetTemporaryClips()
+        public IEnumerable<BuferViewModel> GetTemporaryClips()
         {
             return this._tempObjects.ToList();
         }
 
-        public IEnumerable<IDataObject> GetPersistentClips()
+        public IEnumerable<BuferViewModel> GetPersistentClips()
         {
             return this._persistentObjects.ToList();
         }

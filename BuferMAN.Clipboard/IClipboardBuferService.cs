@@ -1,10 +1,12 @@
 ﻿using BuferMAN.View;
+using magicmanam.UndoRedo;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace BuferMAN.Clipboard
 {
-	public interface IClipboardBuferService
+	public interface IClipboardBuferService : IStatefulComponent<ApplicationStateSnapshot>
     {
 		/// <summary>
 		/// Returns persistent + temporary clips.
@@ -12,29 +14,28 @@ namespace BuferMAN.Clipboard
 		/// <returns></returns>
         IEnumerable<IDataObject> GetClips(bool persistentFirst = false);
 
-        IEnumerable<IDataObject> GetTemporaryClips();
+        IEnumerable<BuferViewModel> GetTemporaryClips();
 
-        IEnumerable<IDataObject> GetPersistentClips();
+        IEnumerable<BuferViewModel> GetPersistentClips();
 
         int BufersCount { get; }
 
-        void AddTemporaryClip(IDataObject clipDataObject);
+        void AddTemporaryClip(BuferViewModel bufer);
 
-		bool TryMarkClipAsPersistent(IDataObject dataObject);
+		bool TryMarkBuferAsPersistent(Guid buferViewId);
 
-        IDataObject LastTemporaryClip { get; }
-
+        BuferViewModel LastTemporaryBufer { get; }
         bool IsLastTemporaryBufer(BuferViewModel bufer);
 
 		bool IsPersistent(IDataObject clipObject);// IsPinned(BuferViewModel bufer);
 
-		IDataObject FirstTemporaryClip { get; }
+		BuferViewModel FirstTemporaryBufer { get; }
 
-        IDataObject FirstPersistentClip { get; }
+        BuferViewModel FirstPersistentBufer { get; }
 
         bool IsInTemporaryBufers(BuferViewModel clipDataObject);
 
-        void RemoveClip(IDataObject clip);
+        void RemoveBufer(Guid buferViewId);
 
         void RemoveAllBufers();
 

@@ -10,15 +10,15 @@ namespace BuferMAN.Form
 	public class DataObjectHandler : IIDataObjectHandler
     {
         private readonly IClipboardBuferService _clipboardBuferService;
-		private readonly BuferAMForm _form;
+		private readonly IProgramSettings _settings;
 
         public event EventHandler Updated;
         public event EventHandler Full;
 
-        public DataObjectHandler(IClipboardBuferService clipboardBuferService, BuferAMForm form)
+        public DataObjectHandler(IClipboardBuferService clipboardBuferService, IProgramSettings settings)
         {
             this._clipboardBuferService = clipboardBuferService;
-            this._form = form;
+            this._settings = settings;
         }
 
         // For unit tests:
@@ -42,7 +42,7 @@ namespace BuferMAN.Form
 
             var alreadyInTempBufers = this._clipboardBuferService.IsInTemporaryBufers(buferViewModel);
 
-            if (!alreadyInTempBufers && this._clipboardBuferService.GetPersistentClips().Count() == BuferAMForm.MAX_BUFERS_COUNT)
+            if (!alreadyInTempBufers && this._clipboardBuferService.GetPersistentClips().Count() == this._settings.MaxBufersCount)
             {   // Maybe we should not do any check if persistent clips count = max bufers count
                 // Maybe all visible bufers can not be persistent (create a limit of persistent bufers)?
                 this.Full?.Invoke(this, EventArgs.Empty);
@@ -51,23 +51,22 @@ namespace BuferMAN.Form
 
             using (UndoableContext<ApplicationStateSnapshot>.Current.StartAction())
             {
-                if (!alreadyInTempBufers && this._clipboardBuferService.BufersCount == BuferAMForm.MAX_BUFERS_COUNT + BuferAMForm.EXTRA_BUFERS_COUNT)
+                if (!alreadyInTempBufers && this._clipboardBuferService.BufersCount == this._settings.MaxBufersCount + this._settings.ExtraBufersCount)
                 {
-                    this._clipboardBuferService.RemoveClip(this._clipboardBuferService.FirstTemporaryClip);
+                    this._clipboardBuferService.RemoveBufer(this._clipboardBuferService.FirstTemporaryBufer.ViewId);
                 }
-
-                var dataObject = buferViewModel.Clip;
 
                 if (alreadyInTempBufers)
                 {
-                    this._clipboardBuferService.RemoveClip(dataObject);
+                    this._clipboardBuferService.RemoveBufer(buferViewModel.ViewId);
                 }
 
-                this._clipboardBuferService.AddTemporaryClip(dataObject);
+                buferViewModel.ViewId = Guid.NewGuid();
+                this._clipboardBuferService.AddTemporaryClip(buferViewModel);
 
                 if (buferViewModel.Persistent)
                 {
-                    this._clipboardBuferService.TryMarkClipAsPersistent(dataObject);
+                    this._clipboardBuferService.TryMarkBuferAsPersistent(buferViewModel.ViewId);
                 }
             }
 

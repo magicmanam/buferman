@@ -89,6 +89,10 @@
       <Project>{f14888de-e3de-4225-80aa-f836dcba8e2e}</Project>
       <Name>BuferMAN.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.View\BuferMAN.View.csproj">
+      <Project>{60FACDBB-0E8F-4EA9-8E18-99294EF5908A}</Project>
+      <Name>BuferMAN.View</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

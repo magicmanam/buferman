@@ -21,33 +21,27 @@ namespace BuferMAN.Form
 {
     partial class BuferAMForm
     {
-        private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IEqualityComparer<IDataObject> _comparer;
-        private readonly IDictionary<IDataObject, Button> _buttonsMap;
-        private readonly IProgramSettings _settings;
+        private readonly IDictionary<Guid, Button> _buttonsMap;
         private ClipboardViewer _clipboardViewer;
-        public const int MAX_BUFERS_COUNT = 30;
-        public const int EXTRA_BUFERS_COUNT = 25;// Into a settings. Can not be big, because rendering is too slow cause of auto keyboard emulation.
         private NotifyIcon TrayIcon;
 
         public INotificationEmitter NotificationEmitter { get; set; }
         public event EventHandler ClipbordUpdated;
         public event EventHandler WindowActivated;
 
-        public IDictionary<IDataObject, Button> ButtonsMap { get { return this._buttonsMap; } }
+        public IDictionary<Guid, Button> ButtonsMap { get { return this._buttonsMap; } }
         internal StatusStrip StatusLine { get; set; }
         public ToolStripStatusLabel StatusLabel { get; set; }
 
-        public BuferAMForm(IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IProgramSettings settings)
+        public BuferAMForm(IEqualityComparer<IDataObject> comparer, IProgramSettings settings)
         {
             InitializeComponent();
             InitializeForm();
 
             this.NotificationEmitter = new NotificationEmitter(this.TrayIcon, Resource.WindowTitle);
-            this._clipboardBuferService = clipboardBuferService;
             this._comparer = comparer;
-            this._buttonsMap = new Dictionary<IDataObject, Button>(MAX_BUFERS_COUNT);
-            this._settings = settings;
+            this._buttonsMap = new Dictionary<Guid, Button>(settings.MaxBufersCount + settings.ExtraBufersCount);
 
             this._StartTrickTimer(23);
             this.NotificationEmitter.ShowInfoNotification(Resource.NotifyIconStartupText, 1500);
@@ -66,8 +60,7 @@ namespace BuferMAN.Form
 
         public void BuferFocused(object sender, BuferFocusedEventArgs e)
         {
-            var button = this._buttonsMap.First(kv => this._comparer.Equals(e.Bufer.Clip, kv.Key)).Value;
-            button.Focus();
+            this._buttonsMap[e.Bufer.ViewId].Focus();
         }
 
         public void OnFullBuferMAN(object sender, EventArgs e)

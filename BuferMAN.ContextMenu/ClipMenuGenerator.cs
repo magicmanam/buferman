@@ -90,7 +90,7 @@ namespace BuferMAN.ContextMenu
             formatsMenu.Text = Resource.MenuFormats + $" ({formatsCount})";
             
             contextMenu.MenuItems.Add(formatsMenu);
-            contextMenu.MenuItems.Add(new DeleteClipMenuItem(this._clipboardBuferService, this._buferViewModel.Clip, button));
+            contextMenu.MenuItems.Add(new DeleteClipMenuItem(this._clipboardBuferService, this._buferViewModel, button));
 
             this._pasteMenuItem = new MenuItem(Resource.MenuPaste + $" {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
             {
@@ -178,7 +178,7 @@ namespace BuferMAN.ContextMenu
 
         private void _TryMarkClipAsPersistent(object sender, EventArgs e)
         {
-            if (this._clipboardBuferService.TryMarkClipAsPersistent(this._buferViewModel.Clip))
+            if (this._clipboardBuferService.TryMarkBuferAsPersistent(this._buferViewModel.ViewId))
             {
                 this._buferViewModel.Persistent = true;
                 this._markAsPersistentMenuItem.Enabled = false;
