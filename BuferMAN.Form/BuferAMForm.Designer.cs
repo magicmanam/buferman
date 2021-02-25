@@ -39,6 +39,7 @@ namespace BuferMAN.Form
         public const int EXTRA_BUFERS_COUNT = 25;// Into a settings. Can not be big, because rendering is too slow cause of auto keyboard emulation.
         private NotifyIcon TrayIcon;
         private bool _shouldCatchCopies = true;
+        private bool _needRerender = false;
 
         public IDictionary<IDataObject, Button> ButtonsMap { get { return this._buttonsMap; } }
         internal StatusStrip StatusLine { get; set; }
@@ -108,6 +109,11 @@ namespace BuferMAN.Form
             if (this.WindowState != FormWindowState.Minimized && this.Visible)
             {
                 WindowLevelContext.Current.RerenderBufers();
+                this._needRerender = false;
+            }
+            else
+            {
+                this._needRerender = true;
             }
         }
 
@@ -229,7 +235,12 @@ namespace BuferMAN.Form
         private void _onFormActivated(object sender, EventArgs e)
         {
             WindowLevelContext.Current.ActivateWindow();
-            WindowLevelContext.Current.RerenderBufers();
+
+            if (this._needRerender)
+            {
+                WindowLevelContext.Current.RerenderBufers();
+                this._needRerender = false;
+            }
         }
 
         private void _SetupTrayIcon()
