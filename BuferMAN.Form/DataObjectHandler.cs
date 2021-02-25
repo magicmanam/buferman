@@ -49,9 +49,9 @@ namespace BuferMAN.Form
                 return false;
             }
 
-            using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction())
+            using (UndoableContext<ApplicationStateSnapshot>.Current.StartAction())
             {
-                if (!alreadyInTempBufers && this._clipboardBuferService.ClipsCount == BuferAMForm.MAX_BUFERS_COUNT + BuferAMForm.EXTRA_BUFERS_COUNT)
+                if (!alreadyInTempBufers && this._clipboardBuferService.BufersCount == BuferAMForm.MAX_BUFERS_COUNT + BuferAMForm.EXTRA_BUFERS_COUNT)
                 {
                     this._clipboardBuferService.RemoveClip(this._clipboardBuferService.FirstTemporaryClip);
                 }

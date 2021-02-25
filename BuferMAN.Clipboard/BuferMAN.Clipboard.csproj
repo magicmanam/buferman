@@ -42,7 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClipboardBuferService.cs" />
-    <Compile Include="ClipboardBuferServiceState.cs" />
+    <Compile Include="ApplicationStateSnapshot.cs" />
     <Compile Include="ClipboardFormats.cs" />
     <Compile Include="ClipboardMessageException.cs" />
     <Compile Include="ClipboardWrapper.cs" />

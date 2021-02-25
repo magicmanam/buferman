@@ -77,7 +77,7 @@ namespace BuferMAN.Form
 
         private void _loadingFileHandler_BufersLoaded(object sender, BufersLoadedEventArgs e)
         {
-            using (var action = UndoableContext<ClipboardBuferServiceState>.Current.StartAction())
+            using (var action = UndoableContext<ApplicationStateSnapshot>.Current.StartAction())
             {
                 var loaded = false;
 

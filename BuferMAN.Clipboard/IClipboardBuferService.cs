@@ -16,7 +16,7 @@ namespace BuferMAN.Clipboard
 
         IEnumerable<IDataObject> GetPersistentClips();
 
-        int ClipsCount { get; }
+        int BufersCount { get; }
 
         void AddTemporaryClip(IDataObject clipDataObject);
 
@@ -36,7 +36,7 @@ namespace BuferMAN.Clipboard
 
         void RemoveClip(IDataObject clip);
 
-        void RemoveAllClips();
+        void RemoveAllBufers();
 
         void RemovePersistentClips();
 

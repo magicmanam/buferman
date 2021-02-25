@@ -35,20 +35,20 @@ namespace BuferMAN.ContextMenu
             {
                 var keyboard = new KeyboardEmulator();
 
-                if (tabIndex < this._clipboardBuferService.ClipsCount - tabIndex)
+                if (tabIndex < this._clipboardBuferService.BufersCount - tabIndex)
                 {
                     new KeyboardEmulator().PressTab((uint)tabIndex);
                 }
                 else
                 {
-                    new KeyboardEmulator().HoldDownShift().PressTab((uint)(this._clipboardBuferService.ClipsCount - tabIndex));
+                    new KeyboardEmulator().HoldDownShift().PressTab((uint)(this._clipboardBuferService.BufersCount - tabIndex));
                 }
             }
         }
 
         private int _GetNearestTabIndex(int tabIndex)
         {
-            if (tabIndex == this._clipboardBuferService.ClipsCount)
+            if (tabIndex == this._clipboardBuferService.BufersCount)
             {
                 tabIndex -= 1;
             }

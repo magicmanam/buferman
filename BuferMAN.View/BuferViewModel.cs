@@ -15,6 +15,7 @@ namespace BuferMAN.View
         //    this.OriginBuferText = buferText;
         //}
 
+        public Guid ViewId { get; set; }
         public IDataObject Clip { get; set; }
         public bool Persistent { get; set; }
         public string Alias { get; set; }

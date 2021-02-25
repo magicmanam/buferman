@@ -71,7 +71,7 @@ namespace BuferMAN.Form.Window
             do
             {
                 emptyClipFound = false;
-                var extraTemporaryClipsCount = Math.Max(this._clipboardBuferService.ClipsCount - BuferAMForm.MAX_BUFERS_COUNT, 0);
+                var extraTemporaryClipsCount = Math.Max(this._clipboardBuferService.BufersCount - BuferAMForm.MAX_BUFERS_COUNT, 0);
                 temporaryBufers = temporaryBufers.Skip(extraTemporaryClipsCount).ToList();
 
                 foreach (var bufer in temporaryBufers)
@@ -178,7 +178,7 @@ namespace BuferMAN.Form.Window
 
         private void _RemoveClipWithoutTrackingInUndoableContext(IDataObject clip)
         {
-            using (var action = UndoableContext<ClipboardBuferServiceState>.Current.StartAction())
+            using (var action = UndoableContext<ApplicationStateSnapshot>.Current.StartAction())
             {
                 this._clipboardBuferService.RemoveClip(clip);
                 action.Cancel();

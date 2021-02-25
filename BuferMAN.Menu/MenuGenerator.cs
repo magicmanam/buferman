@@ -56,9 +56,9 @@ namespace BuferMAN.Menu
         {
             var editMenu = new MenuItem(Resource.MenuEdit);
 
-            var undoMenuItem = new MenuItem(Resource.MenuEditUndo, (sender, args) => { UndoableContext<ClipboardBuferServiceState>.Current.Undo(); WindowLevelContext.Current.RerenderBufers(); }, Shortcut.CtrlZ) { Enabled = false };
+            var undoMenuItem = new MenuItem(Resource.MenuEditUndo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Undo(); WindowLevelContext.Current.RerenderBufers(); }, Shortcut.CtrlZ) { Enabled = false };
             editMenu.MenuItems.Add(undoMenuItem);
-            var redoMenuItem = new MenuItem(Resource.MenuEditRedo, (sender, args) => { UndoableContext<ClipboardBuferServiceState>.Current.Redo(); WindowLevelContext.Current.RerenderBufers(); }, Shortcut.CtrlY) { Enabled = false };
+            var redoMenuItem = new MenuItem(Resource.MenuEditRedo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Redo(); WindowLevelContext.Current.RerenderBufers(); }, Shortcut.CtrlY) { Enabled = false };
             editMenu.MenuItems.Add(redoMenuItem);
             var deleteAllMenuItem = new MenuItem(Resource.MenuEditDel, this._OnDeleteAll);
             editMenu.MenuItems.Add(deleteAllMenuItem);
@@ -71,7 +71,7 @@ namespace BuferMAN.Menu
                 deleteAllMenuItem.Enabled = deleteTemporaryMenuItem.Enabled || this._clipboardBuferService.GetPersistentClips().Count() > 0;
             };
 
-            UndoableContext<ClipboardBuferServiceState>.Current.StateChanged += (object sender, UndoableContextChangedEventArgs e) =>
+            UndoableContext<ApplicationStateSnapshot>.Current.StateChanged += (object sender, UndoableContextChangedEventArgs e) =>
             {
                 undoMenuItem.Enabled = e.CanUndo;
                 redoMenuItem.Enabled = e.CanRedo;
@@ -92,7 +92,7 @@ namespace BuferMAN.Menu
                 }
                 else if (result == DialogResult.No)
                 {
-                    this._clipboardBuferService.RemoveAllClips();
+                    this._clipboardBuferService.RemoveAllBufers();
                 }
             }
             else

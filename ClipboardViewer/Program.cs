@@ -74,7 +74,7 @@ namespace ClipboardViewer
             var clipboardService = new ClipboardBuferService(comparer);
             var settings = new ProgramSettings();
             var clipboardWrapper = new ClipboardWrapper();
-            UndoableContext<ClipboardBuferServiceState>.Current = new UndoableContext<ClipboardBuferServiceState>(clipboardService);
+            UndoableContext<ApplicationStateSnapshot>.Current = new UndoableContext<ApplicationStateSnapshot>(clipboardService);
             var form = new BuferAMForm(clipboardService, comparer, clipboardWrapper, settings);
             WindowLevelContext.SetCurrent(new DefaultWindowLevelContext(form, clipboardService, comparer, clipboardWrapper, settings, new FileStorage()));
 
@@ -87,15 +87,15 @@ namespace ClipboardViewer
                 }
             });
 
-            UndoableContext<ClipboardBuferServiceState>.Current.UndoableAction += (object sender, UndoableActionEventArgs e) =>
+            UndoableContext<ApplicationStateSnapshot>.Current.UndoableAction += (object sender, UndoableActionEventArgs e) =>
             {
                 form.SetStatusBarText(e.Action);
             };
-            UndoableContext<ClipboardBuferServiceState>.Current.UndoAction += (object sender, UndoableActionEventArgs e) =>
+            UndoableContext<ApplicationStateSnapshot>.Current.UndoAction += (object sender, UndoableActionEventArgs e) =>
             {
                 form.SetStatusBarText(e.Action);
             };
-            UndoableContext<ClipboardBuferServiceState>.Current.RedoAction += (object sender, UndoableActionEventArgs e) =>
+            UndoableContext<ApplicationStateSnapshot>.Current.RedoAction += (object sender, UndoableActionEventArgs e) =>
             {
                 form.SetStatusBarText(e.Action);
             };

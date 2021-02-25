@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace BuferMAN.Clipboard
 {
-    public class ClipboardBuferService : IClipboardBuferService, IStatefulComponent<ClipboardBuferServiceState>
+    public class ClipboardBuferService : IClipboardBuferService, IStatefulComponent<ApplicationStateSnapshot>
     {
         private IList<IDataObject> _tempObjects = new List<IDataObject>();
 		private IList<IDataObject> _persistentObjects = new List<IDataObject>();
@@ -24,13 +24,13 @@ namespace BuferMAN.Clipboard
             return this._GetAllClips(persistentFirst).ToList();
         }   
 
-        public int ClipsCount { get { return this._tempObjects.Count + this._persistentObjects.Count; } }
+        public int BufersCount { get { return this._tempObjects.Count + this._persistentObjects.Count; } }
 
-        public void RemoveAllClips()
+        public void RemoveAllBufers()
         {
             if (this._tempObjects.Count + this._persistentObjects.Count > 0)
             {
-                using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction(Resource.AllDeleted))
+                using (UndoableContext<ApplicationStateSnapshot>.Current.StartAction(Resource.AllDeleted))
                 {
                     this._tempObjects.Clear();
                     this._persistentObjects.Clear();
@@ -50,13 +50,13 @@ namespace BuferMAN.Clipboard
                 return this._tempObjects.LastOrDefault();
             }
         }
-        
+
         public bool IsLastTemporaryBufer(BuferViewModel bufer)
         {
             return this._comparer.Equals(this.LastTemporaryClip, bufer.Clip);
         }
 
-		public bool IsPersistent(IDataObject dataObject)
+        public bool IsPersistent(IDataObject dataObject)
 		{
 			return this._persistentObjects.Contains(dataObject, this._comparer);
 		}
@@ -99,7 +99,7 @@ namespace BuferMAN.Clipboard
             var dataObject = list.FirstOrDefault(d => this._comparer.Equals(d, clip));
             if (dataObject != null)
             {
-                using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction(Resource.BuferDeleted))
+                using (UndoableContext<ApplicationStateSnapshot>.Current.StartAction(Resource.BuferDeleted))
                 {
                     list.Remove(dataObject);
                 }
@@ -111,22 +111,22 @@ namespace BuferMAN.Clipboard
             }
         }
 
-        public ClipboardBuferServiceState UndoableState
+        public ApplicationStateSnapshot UndoableState
         {
             get
             {
-                return new ClipboardBuferServiceState(this._tempObjects.ToList(), this._persistentObjects.ToList());
+                return new ApplicationStateSnapshot(this._tempObjects.Select(t => new BuferViewModel { Clip = t, Persistent = false }).Union(this._persistentObjects.Select(p => new BuferViewModel { Clip = p, Persistent = true })).ToList());
             }
             set
             {
-                this._tempObjects = value.TempObjects;
-                this._persistentObjects = value.PersistentObjects;
+                this._tempObjects = value.Bufers.Where(b => !b.Persistent).Select(b => b.Clip).ToList();
+                this._persistentObjects = value.Bufers.Where(b => b.Persistent).Select(b => b.Clip).ToList();
             }
         }
 
         public void AddTemporaryClip(IDataObject dataObject)
         {
-            using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction(Resource.BuferAdded))
+            using (UndoableContext<ApplicationStateSnapshot>.Current.StartAction(Resource.BuferAdded))
             {
                 this._tempObjects.Add(dataObject);
             }
@@ -134,7 +134,7 @@ namespace BuferMAN.Clipboard
 
         public bool TryMarkClipAsPersistent(IDataObject clip)
 		{
-            using (var operation = UndoableContext<ClipboardBuferServiceState>.Current.StartAction(Resource.BuferPersistent))
+            using (var operation = UndoableContext<ApplicationStateSnapshot>.Current.StartAction(Resource.BuferPersistent))
             {
                 var dataObject = this._tempObjects.FirstOrDefault(d => this._comparer.Equals(d, clip));
                 if (dataObject != null && this._tempObjects.Remove(dataObject))
@@ -165,7 +165,7 @@ namespace BuferMAN.Clipboard
         {
             if (this._persistentObjects.Count > 0)
             {
-                using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction(Resource.PersistentBufersDeleted))
+                using (UndoableContext<ApplicationStateSnapshot>.Current.StartAction(Resource.PersistentBufersDeleted))
                 {
                     this._persistentObjects.Clear();
                 }
@@ -176,7 +176,7 @@ namespace BuferMAN.Clipboard
         {
             if (this._tempObjects.Count > 0)
             {
-                using (UndoableContext<ClipboardBuferServiceState>.Current.StartAction(Resource.TemporaryBufersDeleted))
+                using (UndoableContext<ApplicationStateSnapshot>.Current.StartAction(Resource.TemporaryBufersDeleted))
                 {
                     this._tempObjects.Clear();
                 }
