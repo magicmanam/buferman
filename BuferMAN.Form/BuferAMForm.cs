@@ -1,30 +1,17 @@
 ﻿using System;
-using SystemWindowsForm = System.Windows.Forms.Form;
+using BuferMAN.Application;
 using magicmanam.Windows;
+using BuferMAN.Clipboard;
 
 namespace BuferMAN.Form
 {
-	public partial class BuferAMForm : SystemWindowsForm
+	public partial class BuferAMForm : System.Windows.Forms.Form, IBuferMANHost
     {
         protected override void OnClosed(EventArgs e)
         {
             base.OnClosed(e);
-            WindowsFunctions.UnregisterHotKey(this.Handle, 1);
-        }
-
-        private void InitializeComponent()
-        {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BuferAMForm));
-            this.SuspendLayout();
-            // 
-            // BuferAMForm
-            // 
-            this.ClientSize = new System.Drawing.Size(282, 253);
-            this.DoubleBuffered = true;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "BuferAMForm";
-            this.ResumeLayout(false);
-
+            WindowsFunctions.UnregisterHotKey(this.Handle, 1);// Разобраться нужно ли это?
+            throw new ClipboardMessageException("Do not delete this method if you see this message", new Exception());
         }
     }
 }

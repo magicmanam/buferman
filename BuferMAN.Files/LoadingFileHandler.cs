@@ -8,7 +8,7 @@ using BuferMAN.Files.Properties;
 using BuferMAN.Infrastructure.Storage;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using BuferMAN.Models;
+using System.Linq;
 
 namespace BuferMAN.Files
 {
@@ -40,17 +40,21 @@ namespace BuferMAN.Files
 
             if (result == DialogResult.OK)
             {
-                this.BufersLoaded?.Invoke(this, new BufersLoadedEventArgs(this.LoadBufersFromFile(this._dialog.FileName)));
+                this.LoadBufersFromFile(this._dialog.FileName);
             }
         }
 
-        public IEnumerable<BuferItem> LoadBufersFromFile(string fileName)
+        public void LoadBufersFromFile(string fileName)
         {
             try
             {
                 using (var fileReader = LoadingFileHandler.GetMultiLanguageFileReader(fileName))
                 {
-                    return this._fileParser.Parse(fileReader);
+                    var bufers =  this._fileParser.Parse(fileReader);
+                    if (bufers.Any())
+                    {
+                        this.BufersLoaded?.Invoke(this, new BufersLoadedEventArgs(bufers));
+                    }
                 }
             }
             catch (IOException exc)

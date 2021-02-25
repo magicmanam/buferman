@@ -117,64 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="FileBufer" xml:space="preserve">
-    <value>Файл</value>
+  <data name="LastClipboardUpdate" xml:space="preserve">
+    <value>Clipboard last update was at </value>
   </data>
-  <data name="FilesBufer" xml:space="preserve">
-    <value>Файлы</value>
+  <data name="NotifyIcon1000Congrats" xml:space="preserve">
+    <value>You copied 1000 times! You are great copypaster ever!</value>
   </data>
-  <data name="ImageBufer" xml:space="preserve">
-    <value>Картинка</value>
+  <data name="NotifyIcon100Congrats" xml:space="preserve">
+    <value>You copied 100 times! Congrats!</value>
   </data>
-  <data name="NotTextBufer" xml:space="preserve">
-    <value>Странный буфер</value>
+  <data name="PausedStatus" xml:space="preserve">
+    <value>BuferMAN is paused. Alt+P to continue</value>
   </data>
-  <data name="TratataTitle" xml:space="preserve">
-    <value>Тра-та-та!!!</value>
-  </data>
-  <data name="AllBufersPersistent" xml:space="preserve">
-    <value>Все буферы постоянные. Удалите любой из них и повторите попытку копирования...</value>
-  </data>
-  <data name="WhiteSpaces" xml:space="preserve">
-    <value>пробел(а,ов)</value>
-  </data>
-  <data name="UserManual" xml:space="preserve">
-    <value>Выберите буфер, чтобы вставить в активное окно
-Каждый буфер имеет контекстное меню
-
-Горячие клавиши:
-  - Запустить программу: Alt + C
-  - Перейти к первому буферу: X (Home)
-  - Перейти к последнему буферу: V (End)
-  - Сместиться на 3 буфера: C  
-  - Отменить/вернуть действие: Ctrl+Z / Ctrl+Y 
-
--&gt; Копируйте на здоровье!</value>
-  </data>
-  <data name="NotAdminWarning" xml:space="preserve">
-    <value>Программа запущена в пользовательском режиме. Вы не сможете копировать буферы в программы, запущенные в режиме администратора!
-
-</value>
-  </data>
-  <data name="NotifyIconStartupText" xml:space="preserve">
-    <value>BuferMAN: Alt+C чтобы открыть</value>
-  </data>
-  <data name="MenuFileExit" xml:space="preserve">
-    <value>Выход из программы</value>
-  </data>
-  <data name="FileContentsBufer" xml:space="preserve">
-    <value>В буфере файлы</value>
-  </data>
-  <data name="BigTextBufer" xml:space="preserve">
-    <value>Много букв...</value>
-  </data>
-  <data name="BuferLoaded" xml:space="preserve">
-    <value>Буфер загружен из файла</value>
-  </data>
-  <data name="FolderBufer" xml:space="preserve">
-    <value>Папка</value>
-  </data>
-  <data name="FoldersBufer" xml:space="preserve">
-    <value>Папки</value>
+  <data name="ResumedStatus" xml:space="preserve">
+    <value>BuferMAN is resumed. Enjoy copies!</value>
   </data>
 </root>

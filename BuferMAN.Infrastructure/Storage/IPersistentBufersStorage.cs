@@ -5,7 +5,7 @@ namespace BuferMAN.Infrastructure.Storage
 {
     public interface IPersistentBufersStorage
     {
-        IEnumerable<BuferItem> LoadBufers();
+        void LoadBufers();
 
         void SaveBufer(BuferItem bufer);
     }

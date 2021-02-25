@@ -4,8 +4,8 @@ using System;
 using System.Threading;
 using System.Windows.Forms;
 using BuferMAN.Form;
-using System.IO;
-using System.Threading.Tasks;
+using BuferMAN.Application;
+using BuferMAN.Menu;
 using ClipboardViewer.Properties;
 using System.Security.Principal;
 using System.Diagnostics;
@@ -19,8 +19,6 @@ namespace ClipboardViewer
 {
 	static class Program
     {
-        private delegate void _LoadBufersFromDefaultFileInvoker();
-
         /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
@@ -75,17 +73,18 @@ namespace ClipboardViewer
             var settings = new ProgramSettings();
             var clipboardWrapper = new ClipboardWrapper();
             UndoableContext<ApplicationStateSnapshot>.Current = new UndoableContext<ApplicationStateSnapshot>(clipboardService);
-            var form = new BuferAMForm(clipboardService, comparer, clipboardWrapper, settings);
-            WindowLevelContext.SetCurrent(new DefaultWindowLevelContext(form, clipboardService, comparer, clipboardWrapper, settings, new FileStorage()));
 
-            Task.Delay(777).ContinueWith(t =>
-            {
-                if (File.Exists(settings.DefaultBufersFileName))
-                {
-                    var invoker = new _LoadBufersFromDefaultFileInvoker(form.LoadBufersFromStorage);
-                    form.Invoke(invoker);
-                }
-            });
+            IBufersFileParser parser = new SimpleFileParser();
+            parser = new JsonFileParser();
+            var form = new BuferAMForm(clipboardService, comparer, settings);
+            var dataObjectHandler = new DataObjectHandler(clipboardService, form);
+            var loadingFileHandler = new LoadingFileHandler(dataObjectHandler, parser, settings);
+            var app = new BuferMANApplication(form, clipboardService, clipboardWrapper, loadingFileHandler, dataObjectHandler, settings);
+            app.BuferFocused += form.BuferFocused;
+            var menuGenerator = new MenuGenerator(loadingFileHandler, clipboardService, settings, form.NotificationEmitter);
+            form.Menu = menuGenerator.GenerateMenu();
+            form.KeyDown += app.OnKeyDown;
+            WindowLevelContext.SetCurrent(new DefaultWindowLevelContext(form, clipboardService, comparer, clipboardWrapper, settings, new FileStorage()));
 
             UndoableContext<ApplicationStateSnapshot>.Current.UndoableAction += (object sender, UndoableActionEventArgs e) =>
             {

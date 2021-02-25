@@ -206,6 +206,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuferMAN.Application\BuferMAN.Application.csproj">
+      <Project>{19DFDADA-87FF-4E18-BB5D-692AF8EA4E4C}</Project>
+      <Name>BuferMAN.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BuferMAN.Clipboard\BuferMAN.Clipboard.csproj">
       <Project>{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}</Project>
       <Name>BuferMAN.Clipboard</Name>
@@ -221,6 +225,10 @@
     <ProjectReference Include="..\BuferMAN.Infrastructure\BuferMAN.Infrastructure.csproj">
       <Project>{f14888de-e3de-4225-80aa-f836dcba8e2e}</Project>
       <Name>BuferMAN.Infrastructure</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.Menu\BuferMAN.Menu.csproj">
+      <Project>{08184414-67EA-419E-B71B-B764F0F2E578}</Project>
+      <Name>BuferMAN.Menu</Name>
     </ProjectReference>
     <ProjectReference Include="..\BuferMAN.Settings\BuferMAN.Settings.csproj">
       <Project>{ef659b53-6244-4053-975c-f807859f84d2}</Project>

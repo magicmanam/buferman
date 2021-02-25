@@ -1,7 +1,6 @@
 ﻿using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Models;
 using System;
-using System.Collections.Generic;
 
 namespace BuferMAN.Files
 {
@@ -14,12 +13,12 @@ namespace BuferMAN.Files
             _loadingFileHandler = loadingFileHandler;
         }
 
-        public IEnumerable<BuferItem> LoadBufers(string fileName)
+        public void LoadBufers(string fileName)
         {
-            return this._loadingFileHandler.LoadBufersFromFile(fileName);
+            this._loadingFileHandler.LoadBufersFromFile(fileName);
         }
 
-        public IEnumerable<BuferItem> LoadBufers()
+        public void LoadBufers()
         {
             throw new NotImplementedException();
         }

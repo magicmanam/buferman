@@ -135,9 +135,6 @@
   <data name="AllBufersPersistent" xml:space="preserve">
     <value>All your bufers are persistent. Please remove some of them and then try to copy again...</value>
   </data>
-  <data name="LastClipboardUpdate" xml:space="preserve">
-    <value>Clipboard last update was at </value>
-  </data>
   <data name="WhiteSpaces" xml:space="preserve">
     <value>white spaces</value>
   </data>
@@ -160,12 +157,6 @@ Hot keys:
 
 </value>
   </data>
-  <data name="NotifyIcon1000Congrats" xml:space="preserve">
-    <value>You copied 1000 times! You are great copypaster ever!</value>
-  </data>
-  <data name="NotifyIcon100Congrats" xml:space="preserve">
-    <value>You copied 100 times! Congrats!</value>
-  </data>
   <data name="NotifyIconStartupText" xml:space="preserve">
     <value>BuferMAN: Alt+C to open</value>
   </data>
@@ -174,12 +165,6 @@ Hot keys:
   </data>
   <data name="MenuFileExit" xml:space="preserve">
     <value>E&amp;xit session</value>
-  </data>
-  <data name="PausedStatus" xml:space="preserve">
-    <value>BuferMAN is paused. Alt+P to continue</value>
-  </data>
-  <data name="ResumedStatus" xml:space="preserve">
-    <value>BuferMAN is resumed. Enjoy copies!</value>
   </data>
   <data name="FileContentsBufer" xml:space="preserve">
     <value>File Content</value>

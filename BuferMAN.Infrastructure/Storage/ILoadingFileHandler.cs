@@ -8,6 +8,6 @@ namespace BuferMAN.Infrastructure.Storage
     {
         event EventHandler<BufersLoadedEventArgs> BufersLoaded;
         void OnLoadFile(object sender, EventArgs args);
-        IEnumerable<BuferItem> LoadBufersFromFile(string fileName);
+        void LoadBufersFromFile(string fileName);
     }
 }

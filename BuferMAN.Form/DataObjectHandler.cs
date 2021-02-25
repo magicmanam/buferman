@@ -7,7 +7,7 @@ using System;
 
 namespace BuferMAN.Form
 {
-	class DataObjectHandler : IIDataObjectHandler
+	public class DataObjectHandler : IIDataObjectHandler
     {
         private readonly IClipboardBuferService _clipboardBuferService;
 		private readonly BuferAMForm _form;

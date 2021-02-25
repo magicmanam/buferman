@@ -14,106 +14,73 @@ using SystemWindowsForm = System.Windows.Forms.Form;
 using BuferMAN.Menu;
 using BuferMAN.Form.Properties;
 using System.Windows.Input;
-using BuferMAN.Infrastructure.Storage;
-using BuferMAN.Storage;
-using BuferMAN.View;
-using magicmanam.UndoRedo;
+using BuferMAN.Application;
+using System.ComponentModel;
 
 namespace BuferMAN.Form
 {
     partial class BuferAMForm
     {
         private readonly IClipboardBuferService _clipboardBuferService;
-        private long _copiesCount = 0;
-        private readonly IIDataObjectHandler _dataObjectHandler;
-        private readonly IMenuGenerator _menuGenerator;
         private readonly IEqualityComparer<IDataObject> _comparer;
-        private readonly ILoadingFileHandler _loadingFileHandler;
         private readonly IDictionary<IDataObject, Button> _buttonsMap;
-        private readonly IClipboardWrapper _clipboardWrapper;
-        private readonly INotificationEmitter _notificationEmitter;
         private readonly IProgramSettings _settings;
-        private readonly BuferItemDataObjectConverter _buferItemDataObjectConverter = new BuferItemDataObjectConverter();
         private ClipboardViewer _clipboardViewer;
         public const int MAX_BUFERS_COUNT = 30;
         public const int EXTRA_BUFERS_COUNT = 25;// Into a settings. Can not be big, because rendering is too slow cause of auto keyboard emulation.
         private NotifyIcon TrayIcon;
-        private bool _shouldCatchCopies = true;
-        private bool _needRerender = false;
+
+        public INotificationEmitter NotificationEmitter { get; set; }
+        public event EventHandler ClipbordUpdated;
+        public event EventHandler WindowActivated;
 
         public IDictionary<IDataObject, Button> ButtonsMap { get { return this._buttonsMap; } }
         internal StatusStrip StatusLine { get; set; }
         public ToolStripStatusLabel StatusLabel { get; set; }
 
-        public BuferAMForm(IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IProgramSettings settings)
+        public BuferAMForm(IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IProgramSettings settings)
         {
             InitializeComponent();
             InitializeForm();
 
-            this._notificationEmitter = new NotificationEmitter(this.TrayIcon, Resource.WindowTitle);
+            this.NotificationEmitter = new NotificationEmitter(this.TrayIcon, Resource.WindowTitle);
             this._clipboardBuferService = clipboardBuferService;
             this._comparer = comparer;
             this._buttonsMap = new Dictionary<IDataObject, Button>(MAX_BUFERS_COUNT);
-            this._dataObjectHandler = new DataObjectHandler(clipboardBuferService, this);
-            this._dataObjectHandler.Full += this._dataObjectHandler_Full;
-            this._dataObjectHandler.Updated += this._dataObjectHandler_Updated;
-            this._clipboardWrapper = clipboardWrapper;
-            IBufersFileParser parser = new SimpleFileParser();
-            parser = new JsonFileParser();
-            this._loadingFileHandler = new LoadingFileHandler(this._dataObjectHandler, parser, settings);
-            this._loadingFileHandler.BufersLoaded += this._loadingFileHandler_BufersLoaded;
-            this._menuGenerator = new MenuGenerator(this._loadingFileHandler, this._clipboardBuferService, settings, this._notificationEmitter);
-            this.Menu = this._menuGenerator.GenerateMenu();
             this._settings = settings;
 
             this._StartTrickTimer(23);
-            this._notificationEmitter.ShowInfoNotification(Resource.NotifyIconStartupText, 1500);
+            this.NotificationEmitter.ShowInfoNotification(Resource.NotifyIconStartupText, 1500);
         }
 
-        private void _dataObjectHandler_Full(object sender, EventArgs e)
+        private void InitializeComponent()
+        {
+            ComponentResourceManager resources = new ComponentResourceManager(typeof(BuferAMForm));
+            this.SuspendLayout();
+
+            this.ClientSize = new Size(282, 253);
+            this.DoubleBuffered = true;
+            this.Icon = resources.GetObject("$this.Icon") as Icon;
+            this.ResumeLayout(false);
+        }
+
+        public void BuferFocused(object sender, BuferFocusedEventArgs e)
+        {
+            var button = this._buttonsMap.First(kv => this._comparer.Equals(e.Bufer.Clip, kv.Key)).Value;
+            button.Focus();
+        }
+
+        public void OnFullBuferMAN(object sender, EventArgs e)
         {
             MessageBox.Show(Resource.AllBufersPersistent, Resource.TratataTitle);
             // Maybe display a program window if not ?
         }
 
-        private void _loadingFileHandler_BufersLoaded(object sender, BufersLoadedEventArgs e)
+        public bool IsVisible
         {
-            using (var action = UndoableContext<ApplicationStateSnapshot>.Current.StartAction())
+            get
             {
-                var loaded = false;
-
-                foreach (var bufer in e.Bufers)
-                {
-                    var dataObject = this._buferItemDataObjectConverter.ToDataObject(bufer);
-                    var buferViewModel = new BuferViewModel
-                    {
-                        Clip = dataObject,
-                        Alias = bufer.Alias,
-                        CreatedAt = DateTime.Now,
-                        Persistent = bufer.IsPersistent
-                    };
-
-                    var tempLoaded = this._dataObjectHandler.TryHandleDataObject(buferViewModel);
-                    loaded = tempLoaded || loaded;
-                }
-
-                if (!loaded)
-                {
-                    action.Cancel();
-                }
-            }
-        }
-
-        private void _dataObjectHandler_Updated(object sender, EventArgs e)
-        {
-            if (this.WindowState != FormWindowState.Minimized && this.Visible)
-            {
-                WindowLevelContext.Current.RerenderBufers();
-                this._needRerender = false;
-            }
-            else
-            {
-                this._needRerender = true;
+                return this.WindowState != FormWindowState.Minimized && this.Visible;
             }
         }
 
@@ -149,11 +116,6 @@ namespace BuferMAN.Form
             base.Dispose(disposing);
         }
 
-        public void LoadBufersFromStorage()
-        {
-            this._loadingFileHandler.LoadBufersFromFile(_settings.DefaultBufersFileName);
-        }
-
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == Messages.WM_CREATE)
@@ -166,22 +128,9 @@ namespace BuferMAN.Form
                 this._clipboardViewer.HandleWindowsMessage(m.Msg, m.WParam, m.LParam);
             }
 
-            if (m.Msg == Messages.WM_DRAWCLIPBOARD && this._shouldCatchCopies)
+            if (m.Msg == Messages.WM_DRAWCLIPBOARD)
             {
-                this._copiesCount++;
-                var dataObject = this._clipboardWrapper.GetDataObject();
-                this._dataObjectHandler.TryHandleDataObject(new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now });
-
-                if (this._copiesCount == 100)
-                {
-                    this._notificationEmitter.ShowInfoNotification(Resource.NotifyIcon100Congrats, 2500);
-                }
-                else if (this._copiesCount == 1000)
-                {
-                    this._notificationEmitter.ShowInfoNotification(Resource.NotifyIcon1000Congrats, 2500);
-                }
-
-                this.SetStatusBarText(Resource.LastClipboardUpdate + DateTime.Now.ToShortTimeString());//Should be in separate strip label
+                this.ClipbordUpdated?.Invoke(this, EventArgs.Empty);
             }
 
             if (m.Msg == Messages.WM_HOTKEY)
@@ -199,7 +148,7 @@ namespace BuferMAN.Form
             {
                 this.TrayIcon.Visible = false;
                 WindowsFunctions.UnregisterHotKey(this.Handle, 0);
-                Application.Exit();//Note
+                System.Windows.Forms.Application.Exit();//Note
             }
 
             base.WndProc(ref m);
@@ -220,7 +169,6 @@ namespace BuferMAN.Form
             this.Text = Resource.WindowTitle;
             this.Height = 753 + 3 + 1;//+ is divider height + divider margin
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.KeyDown += this._onKeyDown;
             this.KeyPreview = true;
             this.FormClosing += BuferAMForm_FormClosing;
             this.MaximizeBox = false;
@@ -234,13 +182,7 @@ namespace BuferMAN.Form
 
         private void _onFormActivated(object sender, EventArgs e)
         {
-            WindowLevelContext.Current.ActivateWindow();
-
-            if (this._needRerender)
-            {
-                WindowLevelContext.Current.RerenderBufers();
-                this._needRerender = false;
-            }
+            this.WindowActivated?.Invoke(this, EventArgs.Empty);
         }
 
         private void _SetupTrayIcon()
@@ -301,48 +243,6 @@ namespace BuferMAN.Form
             e.Cancel = true;
             var form = (SystemWindowsForm)sender;
             form.WindowState = FormWindowState.Minimized;
-        }
-
-        private void _onKeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.KeyCode)
-            {
-                case Keys.Escape:
-                    WindowLevelContext.Current.HideWindow();
-                    break;
-                case Keys.Space:
-                    new KeyboardEmulator().PressEnter();
-                    break;
-                case Keys.C:
-                    new KeyboardEmulator().PressTab(3);
-                    break;
-                case Keys.X:
-                case Keys.Home:
-                    var lastBufer = this._clipboardBuferService.LastTemporaryClip;
-                    if (lastBufer != null)
-                    {
-                        var button = this._buttonsMap.First(kv => this._comparer.Equals(lastBufer, kv.Key)).Value;
-                        button.Focus();
-                    }
-                    break;
-                case Keys.V:
-                case Keys.End:
-                    var firstBufer = this._clipboardBuferService.FirstPersistentClip ?? this._clipboardBuferService.FirstTemporaryClip;
-
-                    if (firstBufer != null)
-                    {
-                        var button = this._buttonsMap.First(kv => this._comparer.Equals(firstBufer, kv.Key)).Value;
-                        button.Focus();
-                    }
-                    break;
-                case Keys.P:
-                    if (e.Alt)
-                    {
-                        this._shouldCatchCopies = !this._shouldCatchCopies;
-                        this.SetStatusBarText(this._shouldCatchCopies ? Resource.ResumedStatus : Resource.PausedStatus);
-                    }
-                    break;
-            }
         }
     }
 }
