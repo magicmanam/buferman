@@ -126,11 +126,11 @@
   <data name="BuferDeleted" xml:space="preserve">
     <value>Bufer was deleted</value>
   </data>
-  <data name="BuferPersistent" xml:space="preserve">
-    <value>Bufer was marked as persistent</value>
+  <data name="BuferPinned" xml:space="preserve">
+    <value>Bufer pinned</value>
   </data>
-  <data name="PersistentBufersDeleted" xml:space="preserve">
-    <value>Persistent bufers were deleted</value>
+  <data name="PinnedBufersDeleted" xml:space="preserve">
+    <value>Pinned bufers deleted</value>
   </data>
   <data name="TemporaryBufersDeleted" xml:space="preserve">
     <value>Temporary bufers were deleted</value>

@@ -183,8 +183,8 @@
   <data name="MenuPaste" xml:space="preserve">
     <value>&amp;Paste</value>
   </data>
-  <data name="MenuPersistent" xml:space="preserve">
-    <value>M&amp;ark as persistent</value>
+  <data name="MenuPin" xml:space="preserve">
+    <value>P&amp;in</value>
   </data>
   <data name="MenuPlaceInBufer" xml:space="preserve">
     <value>Place in bufer without paste</value>

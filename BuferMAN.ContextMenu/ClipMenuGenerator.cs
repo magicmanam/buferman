@@ -24,7 +24,7 @@ namespace BuferMAN.ContextMenu
         private Button _button;
         private MenuItem _returnTextToInitialMenuItem;
         private MenuItem _changeTextMenuItem;
-        private MenuItem _markAsPersistentMenuItem;
+        private MenuItem _markAsPinnedMenuItem;
         private MenuItem _createLoginDataMenuItem;
         private MenuItem _addToFileMenuItem;
         private MenuItem _pasteMenuItem;
@@ -48,10 +48,10 @@ namespace BuferMAN.ContextMenu
 
             var contextMenu = new SystemWindowsFormsContextMenu();
 
-            this._markAsPersistentMenuItem = new MakePersistentMenuItem();
-            this._markAsPersistentMenuItem.Click += this._TryMarkClipAsPersistent;
-            this._markAsPersistentMenuItem.Enabled = !buferViewModel.Persistent;
-            contextMenu.MenuItems.Add(this._markAsPersistentMenuItem);
+            this._markAsPinnedMenuItem = new MakePinnedMenuItem();
+            this._markAsPinnedMenuItem.Click += this._TryPinBufer;
+            this._markAsPinnedMenuItem.Enabled = !buferViewModel.Pinned;
+            contextMenu.MenuItems.Add(this._markAsPinnedMenuItem);
             this._placeInBuferMenuItem = new PlaceInBuferMenuItem(this._clipboardWrapper, this._buferViewModel.Clip);
             contextMenu.MenuItems.Add(this._placeInBuferMenuItem);
 
@@ -164,9 +164,9 @@ namespace BuferMAN.ContextMenu
             this._placeInBuferMenuItem.Enabled = false;
             this._changeTextMenuItem.Enabled = false;
             this._buferViewModel.Clip.SetData(ClipboardFormats.PASSWORD_FORMAT, e.Password);
-            if (this._markAsPersistentMenuItem.Enabled)
+            if (this._markAsPinnedMenuItem.Enabled)
             {
-                this._TryMarkClipAsPersistent(sender, e);
+                this._TryPinBufer(sender, e);
             }
             this._button.Click -= this._buferSelectionHandler.DoOnClipSelection;
         }
@@ -176,12 +176,12 @@ namespace BuferMAN.ContextMenu
             this._returnTextToInitialMenuItem.Enabled = !e.IsOriginText;
         }
 
-        private void _TryMarkClipAsPersistent(object sender, EventArgs e)
+        private void _TryPinBufer(object sender, EventArgs e)
         {
-            if (this._clipboardBuferService.TryMarkBuferAsPersistent(this._buferViewModel.ViewId))
+            if (this._clipboardBuferService.TryPinBufer(this._buferViewModel.ViewId))
             {
-                this._buferViewModel.Persistent = true;
-                this._markAsPersistentMenuItem.Enabled = false;
+                this._buferViewModel.Pinned = true;
+                this._markAsPinnedMenuItem.Enabled = false;
                 WindowLevelContext.Current.RerenderBufers();
             }
         }

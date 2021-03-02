@@ -11,7 +11,7 @@ namespace BuferMAN.Clipboard
     public class ClipboardBuferService : IClipboardBuferService
     {
         private IList<BuferViewModel> _tempObjects = new List<BuferViewModel>();
-		private IList<BuferViewModel> _persistentObjects = new List<BuferViewModel>();
+		private IList<BuferViewModel> _pinnedObjects = new List<BuferViewModel>();
         private readonly IEqualityComparer<IDataObject> _comparer;
 
         public ClipboardBuferService(IEqualityComparer<IDataObject> comparer)
@@ -19,28 +19,28 @@ namespace BuferMAN.Clipboard
 			this._comparer = comparer;
 		}
 
-        public IEnumerable<IDataObject> GetClips(bool persistentFirst = false)
+        public IEnumerable<IDataObject> GetClips(bool pinnedFirst = false)
         {
-            return this._GetAllClips(persistentFirst).ToList();
+            return this._GetAllClips(pinnedFirst).ToList();
         }   
 
-        public int BufersCount { get { return this._tempObjects.Count + this._persistentObjects.Count; } }
+        public int BufersCount { get { return this._tempObjects.Count + this._pinnedObjects.Count; } }
 
         public void RemoveAllBufers()
         {
-            if (this._tempObjects.Count + this._persistentObjects.Count > 0)
+            if (this._tempObjects.Count + this._pinnedObjects.Count > 0)
             {
                 using (UndoableContext<ApplicationStateSnapshot>.Current.StartAction(Resource.AllDeleted))
                 {
                     this._tempObjects.Clear();
-                    this._persistentObjects.Clear();
+                    this._pinnedObjects.Clear();
                 }
             }
         }
 
-		private IEnumerable<IDataObject> _GetAllClips(bool persistentFirst)
+		private IEnumerable<IDataObject> _GetAllClips(bool pinnedFirst)
 		{
-            return persistentFirst ? this._persistentObjects.Union(this._tempObjects).Select(t => t.Clip) : this._tempObjects.Union(this._persistentObjects).Select(t => t.Clip);
+            return pinnedFirst ? this._pinnedObjects.Union(this._tempObjects).Select(t => t.Clip) : this._tempObjects.Union(this._pinnedObjects).Select(t => t.Clip);
 		}
 
         public BuferViewModel LastTemporaryBufer
@@ -60,9 +60,9 @@ namespace BuferMAN.Clipboard
                 this._comparer.Equals(lastTemporaryBufer?.Clip, bufer.Clip);
         }
 
-        public bool IsPersistent(BuferViewModel bufer)
+        public bool IsPinned(BuferViewModel bufer)
 		{
-			return this._persistentObjects.Any(d => this._comparer.Equals(bufer.Clip, d.Clip) && string.Equals(bufer.Alias, d.Alias, StringComparison.CurrentCulture));
+			return this._pinnedObjects.Any(d => this._comparer.Equals(bufer.Clip, d.Clip) && string.Equals(bufer.Alias, d.Alias, StringComparison.CurrentCulture));
 		}
 
         public BuferViewModel FirstTemporaryBufer
@@ -73,11 +73,11 @@ namespace BuferMAN.Clipboard
             }
         }
 
-        public BuferViewModel FirstPersistentBufer
+        public BuferViewModel FirstPinnedBufer
         {
             get
             {
-                return this._persistentObjects.FirstOrDefault();
+                return this._pinnedObjects.FirstOrDefault();
             }
         }
 
@@ -91,9 +91,9 @@ namespace BuferMAN.Clipboard
         {
             if (this._RemoveClipObject(this._tempObjects, buferViewId) == false)
             {
-                if (this._RemoveClipObject(this._persistentObjects, buferViewId) == false)
+                if (this._RemoveClipObject(this._pinnedObjects, buferViewId) == false)
                 {
-                    throw new Exception("The clip was not found in temp and persistent collections - unknown situation.");
+                    throw new Exception("The clip was not found in temp and pinned collections - unknown situation.");
                 }
             }
         }
@@ -119,12 +119,12 @@ namespace BuferMAN.Clipboard
         {
             get
             {
-                return new ApplicationStateSnapshot(this._tempObjects.Union(this._persistentObjects).ToList());
+                return new ApplicationStateSnapshot(this._tempObjects.Union(this._pinnedObjects).ToList());
             }
             set
             {
-                this._tempObjects = value.Bufers.Where(b => !b.Persistent).ToList();
-                this._persistentObjects = value.Bufers.Where(b => b.Persistent).ToList();
+                this._tempObjects = value.Bufers.Where(b => !b.Pinned).ToList();
+                this._pinnedObjects = value.Bufers.Where(b => b.Pinned).ToList();
             }
         }
 
@@ -136,14 +136,14 @@ namespace BuferMAN.Clipboard
             }
         }
 
-        public bool TryMarkBuferAsPersistent(Guid buferViewId)
+        public bool TryPinBufer(Guid buferViewId)
 		{
-            using (var operation = UndoableContext<ApplicationStateSnapshot>.Current.StartAction(Resource.BuferPersistent))
+            using (var operation = UndoableContext<ApplicationStateSnapshot>.Current.StartAction(Resource.BuferPinned))
             {
                 var dataObject = this._tempObjects.FirstOrDefault(d => d.ViewId == buferViewId);
                 if (dataObject != null && this._tempObjects.Remove(dataObject))
                 {
-                    this._persistentObjects.Add(dataObject);
+                    this._pinnedObjects.Add(dataObject);
                     return true;
 
                 }
@@ -160,18 +160,18 @@ namespace BuferMAN.Clipboard
             return this._tempObjects.ToList();
         }
 
-        public IEnumerable<BuferViewModel> GetPersistentClips()
+        public IEnumerable<BuferViewModel> GetPinnedBufers()
         {
-            return this._persistentObjects.ToList();
+            return this._pinnedObjects.ToList();
         }
 
-        public void RemovePersistentClips()
+        public void RemovePinnedClips()
         {
-            if (this._persistentObjects.Count > 0)
+            if (this._pinnedObjects.Count > 0)
             {
-                using (UndoableContext<ApplicationStateSnapshot>.Current.StartAction(Resource.PersistentBufersDeleted))
+                using (UndoableContext<ApplicationStateSnapshot>.Current.StartAction(Resource.PinnedBufersDeleted))
                 {
-                    this._persistentObjects.Clear();
+                    this._pinnedObjects.Clear();
                 }
             }
         }

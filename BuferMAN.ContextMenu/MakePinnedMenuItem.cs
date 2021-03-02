@@ -3,11 +3,11 @@ using System.Windows.Forms;
 
 namespace BuferMAN.ContextMenu
 {
-    public class MakePersistentMenuItem : MenuItem
+    public class MakePinnedMenuItem : MenuItem
     {
-        public MakePersistentMenuItem()
+        public MakePinnedMenuItem()
         {
-            this.Text = Resource.MenuPersistent;
+            this.Text = Resource.MenuPin;
             this.Shortcut = Shortcut.CtrlS;
         }
     }

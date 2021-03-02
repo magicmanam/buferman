@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuferSelectionHandler.cs" />
-    <Compile Include="MakePersistentMenuItem.cs">
+    <Compile Include="MakePinnedMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="ChangeTextMenuItem.cs">

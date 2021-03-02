@@ -2,8 +2,8 @@
 /*Check: . */
 /*Check: Если 30 буферов на экране и один удаляется, то появляется последний временный буфер, который исчез недавно с экрана (если такой был). */
 /*Check: Если 30 буферов на экране и все персистент, то покажется сообщение при добавлении нового буфера. Иначе просто исчезнет самый нижний временный буфер и появится новый сверху. */
-/*Check: Persistent clips have another color. */
-/*Check: Persistent clips after losing focus have persistent clip color. */
+/*Check: Pinned clips have another color. */
+/*Check: Pinned clips after losing focus have pinned clip color. */
 /*Check: Focused/unfocused clip changes its color. */
 /*Check: [Make bufer alias | make login | save in file], delete it, Ctrl+Z - it should be restored as was before delete. */
 /*Check: Copy bufer that is already in program but not first. After Ctrl+Z state is returned to initial (no intermediate states). */
@@ -26,7 +26,7 @@
 /*Check: Если программа запущена, то показывается алерт с заголовком BuferMAN (берется из Product name сборки). */
 /*Check: Update bufer alias. After that check tooltip on focus and on mouse over - it should be a new alias. */
 /*Check: When there is no bufers, manual in light gray color is shown. */
-/*Check: Paste or load > 30 bufers. All bufers and persistent divider is visible. */
+/*Check: Paste or load > 30 bufers. All bufers and pinned divider is visible. */
 /*Check: > 7 буферов в программе. При удалении первого, фокус остаётся на первом, при удалении 2-ого - на 2-ом. При удалении последнего - на последнем и с табуляцией с конца. Тоже самое для предпоследнего. */
 /*Check: В программе 2 текстовых буфера. Вставить в любое место второй буфер (они поменяются местами). А потом вставить в любое место второй буфер (тоже 2-о по счёту будет). После этого горячие клавиши X и V продолжат работать. */
 /*Check: Поставить русскую локаль и скопировать файл/файлы/скрин. << Text >> should russian. */

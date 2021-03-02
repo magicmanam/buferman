@@ -25,11 +25,11 @@ Issues to solve:
 Book:
 - MAX_STATUS_LENGTH = 55 as well as other magic numbers/strings - in scope of StatusStrip
 - Search from keyboard (by text or aliases). Ctrl + F - search mode on visible time. Many keys are handled, so only Ctrl + F and a separate input - this will handle a case with different languages
-- Помечать клип в буфере отдельным цветом - для случая, если он persistent - может он просто полусерым будет?
+- Помечать клип в буфере отдельным цветом - для случая, если он pinned - может он просто полусерым будет?
 - running line in button text - as new presentation
 - Show status line on every action
 - Add clips count into status bar (separate strip) <100 100+, 200
-- Add drag an drop for temp/persistent bufers
+- Add drag an drop for temp/pinned bufers
 - На основе фич сделать список подсказок и показывать их на стартапе. Чаще показывать фичи, которые редко используются
 
 Hard:
@@ -42,7 +42,7 @@ Hard:
 - Window with hot keys + menu with applications (scripts tool and others)
 - Refactor: add DI with plugin support. reminders as plugin
 - Write youtube clip
-- if bufer selected 3 and more time - ask to save as persistent
+- if bufer selected 3 and more time - ask to save as pinned
 - Alt + C can be overwritten in some programs (like Notepad++)
 - Complete presentation - залить на гитхаб и возможно на slides.net
 - relocate tooltips to presentation classes. Make plugins for preview tooltips with settings
@@ -66,7 +66,7 @@ Hard:
 //MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")
 
 Settings:  //Minimalize settings for easy using
-  - Clip colors: default, focused, persistent
+  - Clip colors: default, focused, pinned
   - Bufer's width: 300 by default
   - Toolip duration (2500 by default)
   - Show tooltip when bufer gets focus (arrows keys or Tab). Set up time of tooltip

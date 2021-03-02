@@ -17,7 +17,7 @@ namespace BuferMAN.View
 
         public Guid ViewId { get; set; }
         public IDataObject Clip { get; set; }
-        public bool Persistent { get; set; }
+        public bool Pinned { get; set; }
         public string Alias { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }

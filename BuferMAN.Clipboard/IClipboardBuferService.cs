@@ -16,22 +16,22 @@ namespace BuferMAN.Clipboard
 
         IEnumerable<BuferViewModel> GetTemporaryClips();
 
-        IEnumerable<BuferViewModel> GetPersistentClips();
+        IEnumerable<BuferViewModel> GetPinnedBufers();
 
         int BufersCount { get; }
 
         void AddTemporaryClip(BuferViewModel bufer);
 
-		bool TryMarkBuferAsPersistent(Guid buferViewId);
+		bool TryPinBufer(Guid buferViewId);
 
         BuferViewModel LastTemporaryBufer { get; }
         bool IsLastTemporaryBufer(BuferViewModel bufer);
 
-		bool IsPersistent(BuferViewModel bufer);// IsPinned(BuferViewModel bufer);
+		bool IsPinned(BuferViewModel bufer);
 
 		BuferViewModel FirstTemporaryBufer { get; }
 
-        BuferViewModel FirstPersistentBufer { get; }
+        BuferViewModel FirstPinnedBufer { get; }
 
         bool IsInTemporaryBufers(BuferViewModel clipDataObject);
 
@@ -39,7 +39,7 @@ namespace BuferMAN.Clipboard
 
         void RemoveAllBufers();
 
-        void RemovePersistentClips();
+        void RemovePinnedClips();
 
         void RemoveTemporaryClips();
     }

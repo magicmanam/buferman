@@ -65,7 +65,7 @@ namespace BuferMAN.Form
 
         public void OnFullBuferMAN(object sender, EventArgs e)
         {
-            MessageBox.Show(Resource.AllBufersPersistent, Resource.TratataTitle);
+            MessageBox.Show(Resource.AllBufersPinned, Resource.TratataTitle);
             // Maybe display a program window if not ?
         }
 

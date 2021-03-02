@@ -116,7 +116,7 @@ namespace BuferMAN.Application
                     break;
                 case Keys.V:
                 case Keys.End:
-                    var firstBufer = this._clipboardBuferService.FirstPersistentBufer ?? this._clipboardBuferService.FirstTemporaryBufer;
+                    var firstBufer = this._clipboardBuferService.FirstPinnedBufer ?? this._clipboardBuferService.FirstTemporaryBufer;
 
                     if (firstBufer != null)
                     {
@@ -171,7 +171,7 @@ namespace BuferMAN.Application
                         Clip = dataObject,
                         Alias = bufer.Alias,
                         CreatedAt = DateTime.Now,
-                        Persistent = bufer.IsPersistent
+                        Pinned = bufer.Pinned
                     };
 
                     var tempLoaded = this._dataObjectHandler.TryHandleDataObject(buferViewModel);

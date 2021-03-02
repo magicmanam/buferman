@@ -183,8 +183,8 @@
   <data name="MenuPaste" xml:space="preserve">
     <value>Вставить</value>
   </data>
-  <data name="MenuPersistent" xml:space="preserve">
-    <value>Сделать буфер постоянным</value>
+  <data name="MenuPin" xml:space="preserve">
+    <value>Запинить буфер</value>
   </data>
   <data name="MenuPlaceInBufer" xml:space="preserve">
     <value>Поместить в буфер без вставки</value>

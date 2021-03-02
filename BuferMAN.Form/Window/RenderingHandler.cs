@@ -49,10 +49,10 @@ namespace BuferMAN.Form.Window
 
         public void Render()
         {
-            var persistentBufers = this._clipboardBuferService.GetPersistentClips();
+            var pinnedBufers = this._clipboardBuferService.GetPinnedBufers();
 
             var emptyClipFound = false;
-            foreach(var bufer in persistentBufers)
+            foreach(var bufer in pinnedBufers)
             {
                 if (bufer.Clip.GetFormats().Length == 0)
                 {
@@ -63,7 +63,7 @@ namespace BuferMAN.Form.Window
 
             if (emptyClipFound)
             {
-                persistentBufers = this._clipboardBuferService.GetPersistentClips();
+                pinnedBufers = this._clipboardBuferService.GetPinnedBufers();
             }
 
             var temporaryBufers = this._clipboardBuferService.GetTemporaryClips().ToList();
@@ -89,7 +89,7 @@ namespace BuferMAN.Form.Window
                 }
             } while (emptyClipFound);
 
-            this._RemoveOldButtons(temporaryBufers.Union(persistentBufers));
+            this._RemoveOldButtons(temporaryBufers.Union(pinnedBufers));
 
             if (temporaryBufers.Any())
             {
@@ -98,9 +98,9 @@ namespace BuferMAN.Form.Window
 
             this._persistentClipsDivider.Location = new Point(0, temporaryBufers.Count * BUTTON_HEIGHT + 1);
 
-            if (persistentBufers.Any())
+            if (pinnedBufers.Any())
             {
-                this._DrawButtonsForBufers(persistentBufers.ToList(), this._persistentClipsDivider.Location.Y + this._persistentClipsDivider.Height + 1 + persistentBufers.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count + persistentBufers.Count() - 1, true);
+                this._DrawButtonsForBufers(pinnedBufers.ToList(), this._persistentClipsDivider.Location.Y + this._persistentClipsDivider.Height + 1 + pinnedBufers.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count + pinnedBufers.Count() - 1, true);
             }
         }
 
@@ -145,7 +145,7 @@ namespace BuferMAN.Form.Window
                 {
                     foreach (var item in button.ContextMenu.MenuItems)
                     {
-                        var persistentMenuItem = item as MakePersistentMenuItem;
+                        var persistentMenuItem = item as MakePinnedMenuItem;
                         if (persistentMenuItem != null)
                         {
                             persistentMenuItem.Enabled = false;

@@ -130,10 +130,10 @@
     <value>Delete all &amp;temporary</value>
   </data>
   <data name="MenuEditDelText" xml:space="preserve">
-    <value>There are persistent bufers exist. Do you want to delete only temporal bufers?</value>
+    <value>There are pinned bufers exist. Do you want to delete only temporal bufers?</value>
   </data>
   <data name="MenuEditDelTitle" xml:space="preserve">
-    <value>Confirm persistent bufers deletion</value>
+    <value>Confirm pinned bufers deletion</value>
   </data>
   <data name="MenuEditRedo" xml:space="preserve">
     <value>&amp;Redo</value>

@@ -34,15 +34,15 @@ namespace BuferMAN.Form
         {
             var isLastTempBufer = this._clipboardBuferService.IsLastTemporaryBufer(buferViewModel);
 
-            if (!buferViewModel.Persistent && isLastTempBufer // Repeated Ctrl + C operation
-                || this._clipboardBuferService.IsPersistent(buferViewModel))
+            if (!buferViewModel.Pinned && isLastTempBufer // Repeated Ctrl + C operation
+                || this._clipboardBuferService.IsPinned(buferViewModel))
             {
                 return false;
             }
 
             var alreadyInTempBufers = this._clipboardBuferService.IsInTemporaryBufers(buferViewModel);
 
-            if (!alreadyInTempBufers && this._clipboardBuferService.GetPersistentClips().Count() == this._settings.MaxBufersCount)
+            if (!alreadyInTempBufers && this._clipboardBuferService.GetPinnedBufers().Count() == this._settings.MaxBufersCount)
             {   // Maybe we should not do any check if persistent clips count = max bufers count
                 // Maybe all visible bufers can not be persistent (create a limit of persistent bufers)?
                 this.Full?.Invoke(this, EventArgs.Empty);
@@ -64,9 +64,9 @@ namespace BuferMAN.Form
                 buferViewModel.ViewId = Guid.NewGuid();
                 this._clipboardBuferService.AddTemporaryClip(buferViewModel);
 
-                if (buferViewModel.Persistent)
+                if (buferViewModel.Pinned)
                 {
-                    this._clipboardBuferService.TryMarkBuferAsPersistent(buferViewModel.ViewId);
+                    this._clipboardBuferService.TryPinBufer(buferViewModel.ViewId);
                 }
             }
 

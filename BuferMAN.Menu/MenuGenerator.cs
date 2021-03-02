@@ -68,7 +68,7 @@ namespace BuferMAN.Menu
             editMenu.Popup += (object sender, EventArgs args) =>
             {
                 deleteTemporaryMenuItem.Enabled = this._clipboardBuferService.GetTemporaryClips().Count() > 0;
-                deleteAllMenuItem.Enabled = deleteTemporaryMenuItem.Enabled || this._clipboardBuferService.GetPersistentClips().Count() > 0;
+                deleteAllMenuItem.Enabled = deleteTemporaryMenuItem.Enabled || this._clipboardBuferService.GetPinnedBufers().Count() > 0;
             };
 
             UndoableContext<ApplicationStateSnapshot>.Current.StateChanged += (object sender, UndoableContextChangedEventArgs e) =>
@@ -82,7 +82,7 @@ namespace BuferMAN.Menu
 
         private void _OnDeleteAll(object sender, EventArgs args)
         {
-            if (this._clipboardBuferService.GetPersistentClips().Any())
+            if (this._clipboardBuferService.GetPinnedBufers().Any())
             {
                 var result = MessageBox.Show(Resource.MenuEditDelText, Resource.MenuEditDelTitle, MessageBoxButtons.YesNoCancel);
 
