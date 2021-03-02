@@ -53,12 +53,16 @@ namespace BuferMAN.Clipboard
 
         public bool IsLastTemporaryBufer(BuferViewModel bufer)
         {
-            return this._comparer.Equals(this.LastTemporaryBufer?.Clip, bufer.Clip);
+            var lastTemporaryBufer = this.LastTemporaryBufer;
+
+            return lastTemporaryBufer != null &&
+                string.Equals(lastTemporaryBufer.Alias, bufer.Alias, StringComparison.CurrentCulture) &&
+                this._comparer.Equals(lastTemporaryBufer?.Clip, bufer.Clip);
         }
 
-        public bool IsPersistent(IDataObject dataObject)
+        public bool IsPersistent(BuferViewModel bufer)
 		{
-			return this._persistentObjects.Any(d => this._comparer.Equals(dataObject, d.Clip));
+			return this._persistentObjects.Any(d => this._comparer.Equals(bufer.Clip, d.Clip) && string.Equals(bufer.Alias, d.Alias, StringComparison.CurrentCulture));
 		}
 
         public BuferViewModel FirstTemporaryBufer
@@ -79,7 +83,7 @@ namespace BuferMAN.Clipboard
 
         public bool IsInTemporaryBufers(BuferViewModel bufer)
         {
-            return this._tempObjects.Select(t => t.Clip).Contains(bufer.Clip, this._comparer);
+            return this._tempObjects.Any(b => string.Equals(b.Alias, bufer.Alias, StringComparison.CurrentCulture) && this._comparer.Equals(bufer.Clip, b.Clip));
         }
 
         // Maybe add two methods for temp and persistent clips?

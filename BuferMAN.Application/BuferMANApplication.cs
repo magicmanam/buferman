@@ -8,7 +8,6 @@ using magicmanam.UndoRedo;
 using magicmanam.Windows;
 using System;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BuferMAN.Application

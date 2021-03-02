@@ -35,7 +35,7 @@ namespace BuferMAN.Form
             var isLastTempBufer = this._clipboardBuferService.IsLastTemporaryBufer(buferViewModel);
 
             if (!buferViewModel.Persistent && isLastTempBufer // Repeated Ctrl + C operation
-                || this._clipboardBuferService.IsPersistent(buferViewModel.Clip))
+                || this._clipboardBuferService.IsPersistent(buferViewModel))
             {
                 return false;
             }

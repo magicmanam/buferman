@@ -27,7 +27,7 @@ namespace BuferMAN.Clipboard
         BuferViewModel LastTemporaryBufer { get; }
         bool IsLastTemporaryBufer(BuferViewModel bufer);
 
-		bool IsPersistent(IDataObject clipObject);// IsPinned(BuferViewModel bufer);
+		bool IsPersistent(BuferViewModel bufer);// IsPinned(BuferViewModel bufer);
 
 		BuferViewModel FirstTemporaryBufer { get; }
 
