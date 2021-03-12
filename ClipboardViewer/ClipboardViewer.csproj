@@ -132,18 +132,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="CheckList.txt" />
-    <Content Include="TextFile1 - Копировать %2811%29.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TextFile1 - Копировать %2814%29.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TextFile1 - Копировать %2815%29.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TextFile1 - Копировать %2816%29.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="TextFile1 - Копировать %2817%29.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
