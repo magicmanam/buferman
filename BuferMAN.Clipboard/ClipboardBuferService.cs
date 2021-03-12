@@ -81,9 +81,13 @@ namespace BuferMAN.Clipboard
             }
         }
 
-        public bool IsInTemporaryBufers(BuferViewModel bufer)
+        public bool IsInTemporaryBufers(BuferViewModel bufer, out Guid viewId)
         {
-            return this._tempObjects.Any(b => string.Equals(b.Alias, bufer.Alias, StringComparison.CurrentCulture) && this._comparer.Equals(bufer.Clip, b.Clip));
+            var tempBufer = this._tempObjects.FirstOrDefault(b => string.Equals(b.Alias, bufer.Alias, StringComparison.CurrentCulture) && this._comparer.Equals(bufer.Clip, b.Clip));
+
+            viewId = tempBufer != null ? tempBufer.ViewId : Guid.Empty;
+
+            return tempBufer != null;
         }
 
         // Maybe add two methods for temp and persistent clips?

@@ -40,7 +40,7 @@ namespace BuferMAN.Form
                 return false;
             }
 
-            var alreadyInTempBufers = this._clipboardBuferService.IsInTemporaryBufers(buferViewModel);
+            var alreadyInTempBufers = this._clipboardBuferService.IsInTemporaryBufers(buferViewModel, out Guid viewId);
 
             if (!alreadyInTempBufers && this._clipboardBuferService.GetPinnedBufers().Count() == this._settings.MaxBufersCount)
             {   // Maybe we should not do any check if persistent clips count = max bufers count
@@ -58,7 +58,7 @@ namespace BuferMAN.Form
 
                 if (alreadyInTempBufers)
                 {
-                    this._clipboardBuferService.RemoveBufer(buferViewModel.ViewId);
+                    this._clipboardBuferService.RemoveBufer(viewId);
                 }
 
                 buferViewModel.ViewId = Guid.NewGuid();

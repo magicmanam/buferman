@@ -33,7 +33,7 @@ namespace BuferMAN.Clipboard
 
         BuferViewModel FirstPinnedBufer { get; }
 
-        bool IsInTemporaryBufers(BuferViewModel clipDataObject);
+        bool IsInTemporaryBufers(BuferViewModel clipDataObject, out Guid viewId);
 
         void RemoveBufer(Guid buferViewId);
 
