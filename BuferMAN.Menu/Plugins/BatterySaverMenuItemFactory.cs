@@ -1,18 +1,25 @@
 ﻿using BuferMAN.Infrastructure;
+using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Menu.Properties;
 using System;
 using System.Windows.Forms;
 
 namespace BuferMAN.Menu.Plugins
 {
-    public class BatterySaverMenuItem : MenuItem
+    public class BatterySaverMenuItemFactory
     {
-        private readonly INotificationEmitter _notificationEmitter;
+        private readonly IBuferMANHost _buferManHost;
         private const string NOTIFICATION_TITLE = "Battery saver plugin";
         private const int INTERVAL_IN_SECONDS = 60;
 
         private int _highLimit = 90;
         private int _lowLimit = 25;
+
+        public BatterySaverMenuItemFactory(IBuferMANHost buferManHost)
+        {
+            this._buferManHost = buferManHost;
+        }
+
         public int HighLimit
         {
             get
@@ -43,17 +50,16 @@ namespace BuferMAN.Menu.Plugins
             }
         }
 
-        public BatterySaverMenuItem(INotificationEmitter notificationEmitter)
+        public BuferMANMenuItem Create()
         {
-            this._notificationEmitter = notificationEmitter;
-
-            this.Text = Resource.MenuPluginsBattery;
-            this.Click += BatterySaverMenuItem_Click;
+            var menuItem = this._buferManHost.CreateMenuItem(Resource.MenuPluginsBattery, this.BatterySaverMenuItem_Click);
 
             var trickTimer = new Timer();
             trickTimer.Interval = INTERVAL_IN_SECONDS * 1000;
             trickTimer.Tick += BatteryCheckHandler;
             trickTimer.Start();
+
+            return menuItem;
         }
 
         private void BatteryCheckHandler(object sender, EventArgs e)
@@ -62,12 +68,12 @@ namespace BuferMAN.Menu.Plugins
 
             if (status.PowerLineStatus == PowerLineStatus.Offline && status.BatteryLifePercent * 100 < LowLimit)
             {
-                this._notificationEmitter.ShowWarningNotification($"Please charge your battery ({(status.BatteryLifePercent * 100)}%) in order to save your battery's health.", 2500, NOTIFICATION_TITLE);
+                this._buferManHost.NotificationEmitter.ShowWarningNotification($"Please charge your battery ({(status.BatteryLifePercent * 100)}%) in order to save your battery's health.", 2500, NOTIFICATION_TITLE);
             }
 
             if (status.PowerLineStatus == PowerLineStatus.Online && status.BatteryLifePercent * 100 > HighLimit)
             {
-                this._notificationEmitter.ShowWarningNotification($"Please uncharge your battery ({(status.BatteryLifePercent * 100)}%) in order to save your battery's health", 2500, NOTIFICATION_TITLE);
+                this._buferManHost.NotificationEmitter.ShowWarningNotification($"Please uncharge your battery ({(status.BatteryLifePercent * 100)}%) in order to save your battery's health", 2500, NOTIFICATION_TITLE);
             }
         }
 

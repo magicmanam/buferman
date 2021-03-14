@@ -40,6 +40,7 @@
     <Compile Include="ContextMenu\IClipMenuGenerator.cs" />
     <Compile Include="IBuferMANHost.cs" />
     <Compile Include="IBuferSelectionHandler.cs" />
+    <Compile Include="Menu\BuferMANMenuItem.cs" />
     <Compile Include="Storage\BufersLoadedEventArgs.cs" />
     <Compile Include="Storage\IBuferItemDataObjectConverter.cs" />
     <Compile Include="Storage\IFileStorage.cs" />

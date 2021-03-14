@@ -1,5 +1,7 @@
-﻿using BuferMAN.Infrastructure;
+﻿using BuferMAN.Infrastructure.Menu;
 using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 
 namespace BuferMAN.Infrastructure
 {
@@ -12,10 +14,13 @@ namespace BuferMAN.Infrastructure
         void SetStatusBarText(string newText);
         void OnFullBuferMAN(object sender, EventArgs e);
         void BuferFocused(object sender, BuferFocusedEventArgs e);
+        void SetOnKeyDown(KeyEventHandler keyDown);
         void ActivateWindow();
         void HideWindow();
         void RerenderBufers();
         void Exit();
-        void GenerateMenu();
+        void Start();
+        void SetMainMenu(IEnumerable<BuferMANMenuItem> menuItems);
+        BuferMANMenuItem CreateMenuItem(string text, EventHandler eventHandler = null);
     }
 }

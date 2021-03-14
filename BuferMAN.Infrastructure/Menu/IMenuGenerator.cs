@@ -1,9 +1,7 @@
-﻿using System.Windows.Forms;
-
-namespace BuferMAN.Infrastructure.Menu
+﻿namespace BuferMAN.Infrastructure.Menu
 {
     public interface IMenuGenerator
     {
-        MainMenu GenerateMenu(IBuferMANHost buferMANHost);
+        void GenerateMainMenu(IBuferMANHost buferMANHost);
     }
 }

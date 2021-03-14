@@ -5,7 +5,6 @@ using BuferMAN.Clipboard;
 using System.Diagnostics;
 using System.Deployment.Application;
 using System.Reflection;
-using BuferMAN.Menu.Help;
 using magicmanam.UndoRedo;
 using BuferMAN.Infrastructure;
 using BuferMAN.Menu.Properties;
@@ -13,6 +12,7 @@ using BuferMAN.Menu.Plugins;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Infrastructure.Menu;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace BuferMAN.Menu
 {
@@ -28,47 +28,60 @@ namespace BuferMAN.Menu
             this._clipboardBuferService = clipboardBuferService;
             this._settings = settings;
         }
-        public MainMenu GenerateMenu(IBuferMANHost buferManHost)
-        {
-            var menu = new MainMenu();
-            menu.MenuItems.Add(this._GenerateFileMenu(buferManHost));
-            menu.MenuItems.Add(this._GenerateEditMenu());
-            menu.MenuItems.Add(this._GenerateToolsMenu(buferManHost));
-            menu.MenuItems.Add(this._GenerateHelpMenu());
 
-            return menu;
+        public void GenerateMainMenu(IBuferMANHost buferManHost)
+        {
+            var items = new List<BuferMANMenuItem>
+            {
+                this._GenerateFileMenu(buferManHost),
+                this._GenerateEditMenu(buferManHost),
+                this._GenerateToolsMenu(buferManHost),
+                this._GenerateHelpMenu(buferManHost)
+            };
+
+            buferManHost.SetMainMenu(items);
         }
 
-        private MenuItem _GenerateFileMenu(IBuferMANHost buferManHost)
+        private BuferMANMenuItem _GenerateFileMenu(IBuferMANHost buferManHost)
         {
-            var fileMenu = new MenuItem(Resource.MenuFile);
+            var fileMenu = buferManHost.CreateMenuItem(Resource.MenuFile);
 
-            fileMenu.MenuItems.Add(new MenuItem(Resource.MenuFileLoad, this._loadingFileHandler.OnLoadFile));
-            fileMenu.MenuItems.Add(new MenuItem(Resource.MenuFileChangeDefault, (object sender, EventArgs args) => Process.Start(this._settings.DefaultBufersFileName)));
-            fileMenu.MenuItems.AddSeparator();
-            fileMenu.MenuItems.Add(new MenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => buferManHost.Exit()));
+            fileMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuFileLoad, this._loadingFileHandler.OnLoadFile));
+            fileMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuFileChangeDefault, (object sender, EventArgs args) => Process.Start(this._settings.DefaultBufersFileName)));
+            fileMenu.AddSeparator();
+            fileMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => buferManHost.Exit()));
 
             return fileMenu;
         }
 
-        private MenuItem _GenerateEditMenu()
+        private BuferMANMenuItem _GenerateEditMenu(IBuferMANHost buferMANHost)
         {
-            var editMenu = new MenuItem(Resource.MenuEdit);
+            var editMenu = buferMANHost.CreateMenuItem(Resource.MenuEdit);
 
-            var undoMenuItem = new MenuItem(Resource.MenuEditUndo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Undo(); WindowLevelContext.Current.RerenderBufers(); }, Shortcut.CtrlZ) { Enabled = false };
-            editMenu.MenuItems.Add(undoMenuItem);
-            var redoMenuItem = new MenuItem(Resource.MenuEditRedo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Redo(); WindowLevelContext.Current.RerenderBufers(); }, Shortcut.CtrlY) { Enabled = false };
-            editMenu.MenuItems.Add(redoMenuItem);
-            var deleteAllMenuItem = new MenuItem(Resource.MenuEditDel, this._OnDeleteAll);
-            editMenu.MenuItems.Add(deleteAllMenuItem);
-            var deleteTemporaryMenuItem = new MenuItem(Resource.MenuEditDelTemp, this._OnDeleteAllTemporary);
-            editMenu.MenuItems.Add(deleteTemporaryMenuItem);
+            var undoMenuItem = buferMANHost.CreateMenuItem(Resource.MenuEditUndo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Undo(); WindowLevelContext.Current.RerenderBufers(); });
+            undoMenuItem.ShortCut = Shortcut.CtrlZ;
+            undoMenuItem.Enabled = false;
 
-            editMenu.Popup += (object sender, EventArgs args) =>
+            editMenu.AddMenuItem(undoMenuItem);
+
+            var redoMenuItem = buferMANHost.CreateMenuItem(Resource.MenuEditRedo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Redo(); WindowLevelContext.Current.RerenderBufers(); });
+            redoMenuItem.ShortCut = Shortcut.CtrlY;
+            redoMenuItem.Enabled = false;
+
+            editMenu.AddMenuItem(redoMenuItem);
+            var deleteAllMenuItem = buferMANHost.CreateMenuItem(Resource.MenuEditDel, this._OnDeleteAll);
+
+            editMenu.AddMenuItem(deleteAllMenuItem);
+
+            var deleteTemporaryMenuItem = buferMANHost.CreateMenuItem(Resource.MenuEditDelTemp, this._OnDeleteAllTemporary);
+
+            editMenu.AddMenuItem(deleteTemporaryMenuItem);
+
+            editMenu.SetOnPopupHandler((object sender, EventArgs args) =>
             {
                 deleteTemporaryMenuItem.Enabled = this._clipboardBuferService.GetTemporaryClips().Count() > 0;
                 deleteAllMenuItem.Enabled = deleteTemporaryMenuItem.Enabled || this._clipboardBuferService.GetPinnedBufers().Count() > 0;
-            };
+            });
 
             UndoableContext<ApplicationStateSnapshot>.Current.StateChanged += (object sender, UndoableContextChangedEventArgs e) =>
             {
@@ -108,55 +121,88 @@ namespace BuferMAN.Menu
             WindowLevelContext.Current.RerenderBufers();
         }
 
-        private MenuItem _GenerateToolsMenu(IBuferMANHost buferManHost)
+        private BuferMANMenuItem _GenerateToolsMenu(IBuferMANHost buferManHost)
         {
-            var toolsMenu = new MenuItem(Resource.MenuTools);
+            var toolsMenu = buferManHost.CreateMenuItem(Resource.MenuTools);
 
-            toolsMenu.MenuItems.Add(new MenuItem(Resource.MenuToolsMemory) { });// 1) Show taken memory; 2) Clear old bufers when memory taken is too much; 3) Number of all bufers (with deleted and not visible)
-            toolsMenu.MenuItems.Add(this._GeneratePluginsMenu(buferManHost));
-            toolsMenu.MenuItems.Add(this._GenerateLanguageMenu(buferManHost));
+            toolsMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuToolsMemory));// 1) Show taken memory; 2) Clear old bufers when memory taken is too much; 3) Number of all bufers (with deleted and not visible)
+            toolsMenu.AddMenuItem(this._GeneratePluginsMenu(buferManHost));
+            toolsMenu.AddMenuItem(this._GenerateLanguageMenu(buferManHost));
 
             return toolsMenu;
         }
 
-        private MenuItem _GeneratePluginsMenu(IBuferMANHost buferManHost)
+        private BuferMANMenuItem _GeneratePluginsMenu(IBuferMANHost buferManHost)
         {
-            var pluginsMenu = new MenuItem(Resource.MenuToolsPlugins);
+            var pluginsMenu = buferManHost.CreateMenuItem(Resource.MenuToolsPlugins);
 
-            pluginsMenu.MenuItems.Add(new MenuItem(Resource.MenuPluginsScripts));
-            pluginsMenu.MenuItems.Add(new MenuItem(Resource.MenuPluginsPCCleaner));
+            pluginsMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuPluginsScripts));
+            pluginsMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuPluginsPCCleaner));
 
             var status = SystemInformation.PowerStatus;
             if ((status.BatteryChargeStatus & (BatteryChargeStatus.NoSystemBattery | BatteryChargeStatus.Unknown)) != 0)
             {
-                pluginsMenu.MenuItems.Add(new BatterySaverMenuItem(buferManHost.NotificationEmitter));
+                var factory = new BatterySaverMenuItemFactory(buferManHost);// TODO : into DI constructor and implement via plugins 
+                pluginsMenu.AddMenuItem(factory.Create());
             }
 
             return pluginsMenu;
         }
 
-        private MenuItem _GenerateLanguageMenu(IBuferMANHost buferManHost)
+        private BuferMANMenuItem _GenerateLanguageMenu(IBuferMANHost buferManHost)
         {
-            var languageMenu = new MenuItem(Resource.MenuToolsLanguage);
-            // Текущий язык выделить (или сделать задизэййбленным)
-            // Main menu, context menu, guide
-            languageMenu.MenuItems.Add(new MenuItem(Resource.MenuToolsLanguageEn, (object sender, EventArgs args) => { Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en"); }));
-            languageMenu.MenuItems.Add(new MenuItem(Resource.MenuToolsLanguageRu, (object sender, EventArgs args) => { Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("ru"); }));
+            // во время открытия приложения показывать диалог с выбором языка и сохранять это значение
+            var languageMenu = buferManHost.CreateMenuItem(Resource.MenuToolsLanguage);
+            
+            var englishMenuItem = buferManHost.CreateMenuItem(Resource.MenuToolsLanguageEn);
+            languageMenu.AddMenuItem(englishMenuItem);
+
+            var russianMenuItem = buferManHost.CreateMenuItem(Resource.MenuToolsLanguageRu);
+            languageMenu.AddMenuItem(russianMenuItem);
+
+            switch(Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName)
+            {
+                case "ru":
+                    russianMenuItem.Checked = true;
+                    russianMenuItem.Enabled = false;
+                    break;
+                case "en":
+                    englishMenuItem.Checked = true;
+                    englishMenuItem.Enabled = false;
+                    break;
+            }
+
+            englishMenuItem.SetOnClickHandler(this._createLanguageEventHandler("en", buferManHost));
+            russianMenuItem.SetOnClickHandler(this._createLanguageEventHandler("ru", buferManHost));
 
             return languageMenu;
         }
 
-        private MenuItem _GenerateHelpMenu()
+        private EventHandler _createLanguageEventHandler(string culture, IBuferMANHost buferManHost)
         {
-            var helpMenu = new MenuItem(Resource.MenuHelp);
+            return (object sender, EventArgs args) =>
+            {
+                Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(culture);
+
+                this.GenerateMainMenu(buferManHost);
+                // rerender context menu for bufers + short guide at the bottom of main window
+            };
+        }
+
+        private BuferMANMenuItem _GenerateHelpMenu(IBuferMANHost buferManHost)
+        {
+            var helpMenu = buferManHost.CreateMenuItem(Resource.MenuHelp);
             var startTime = DateTime.Now;
-            helpMenu.MenuItems.Add(new SendFeedbackMenuItem());
-            helpMenu.MenuItems.Add(new MenuItem(Resource.MenuHelpStart, (object sender, EventArgs args) => MessageBox.Show(Resource.MenuHelpStartPrefix + $" {startTime}.", Resource.MenuHelpStartTitle)));
-            helpMenu.MenuItems.Add(new MenuItem(Resource.MenuHelpDonate, (object sender, EventArgs args) => MessageBox.Show(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)));
-            helpMenu.MenuItems.Add(new DocumentationMenuItem());
-            helpMenu.MenuItems.Add(new KlopatMenuItem());
-            helpMenu.MenuItems.AddSeparator();
-            helpMenu.MenuItems.Add(new MenuItem(Resource.MenuHelpAbout, (object sender, EventArgs args) => {
+            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpSend, (object sender, EventArgs e) =>
+                Process.Start("https://rink.hockeyapp.net/apps/51633746a31f44999eca3bc7b7945e92/feedback/new")));
+            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpStart, (object sender, EventArgs args) => MessageBox.Show(Resource.MenuHelpStartPrefix + $" {startTime}.", Resource.MenuHelpStartTitle)));
+            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpDonate, (object sender, EventArgs args) => MessageBox.Show(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)));
+            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.DocumentationMenuItem, (object sender, System.EventArgs e) =>
+                Process.Start("Documentation.html")));
+            helpMenu.AddMenuItem(buferManHost.CreateMenuItem("-> klopat.by", (object sender, System.EventArgs e) =>
+                Process.Start("http://www.klopat.by/")));
+            helpMenu.AddSeparator();
+            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpAbout, (object sender, EventArgs args) => {
                 var version = ApplicationDeployment.IsNetworkDeployed ? ApplicationDeployment.CurrentDeployment.CurrentVersion : Assembly.GetEntryAssembly().GetName().Version;
 
                 MessageBox.Show(Resource.MenuHelpAboutText + " " + version.ToString(), Resource.MenuHelpAboutTitle); }));

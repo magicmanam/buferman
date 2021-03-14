@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Form.Window;
 using BuferMAN.Infrastructure.Menu;
+using BuferMAN.Infrastructure.Window;
 
 namespace ClipboardViewer
 {
@@ -66,12 +67,7 @@ namespace ClipboardViewer
             Logger.Current = new Log4netLogger();
             //Logger.Logger.Current = new ConsoleLogger();
 
-            Application.ThreadException += Program._Application_ThreadException;//Must be run before Application.Run() //Note
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-
-            Program.Container = new Container();
+            Program.Container = new Container();// TODO into separate project
             Program.Container.Register<IProgramSettings, ProgramSettings>(Lifestyle.Singleton);
             Program.Container.Register<IClipboardWrapper, ClipboardWrapper>(Lifestyle.Singleton);
             Program.Container.Register<IEqualityComparer<IDataObject>>(() => new DataObjectComparer(ClipboardFormats.StringFormats, ClipboardFormats.FileFormats), Lifestyle.Singleton);
@@ -80,43 +76,16 @@ namespace ClipboardViewer
             Program.Container.Register<IIDataObjectHandler, DataObjectHandler>(Lifestyle.Singleton);
             Program.Container.Register<ILoadingFileHandler, LoadingFileHandler>(Lifestyle.Singleton);
             Program.Container.Register<IFileStorage, FileStorage>(Lifestyle.Singleton);
-            Program.Container.Register<IBuferMANHost, BuferAMForm>(Lifestyle.Singleton);
+            Program.Container.Register<IBuferMANHost>(() => Program.Container.GetInstance<BuferAMForm>(), Lifestyle.Singleton);
+            Program.Container.Register<BuferAMForm>(Lifestyle.Singleton);// remove this! it is here because RenderingHandler has it in constructor parameter
             Program.Container.Register<BuferMANApplication>(Lifestyle.Singleton);
             Program.Container.Register<IMenuGenerator, MenuGenerator>(Lifestyle.Singleton);
+            Program.Container.Register<IWindowLevelContext, DefaultWindowLevelContext>(Lifestyle.Singleton);
+            Program.Container.Register<IRenderingHandler, RenderingHandler>(Lifestyle.Singleton);
 
             Program.Container.Verify();
 
-            var comparer = Program.Container.GetInstance<IEqualityComparer<IDataObject>>();
-            var clipboardService = Program.Container.GetInstance<IClipboardBuferService>();
-            var settings = Program.Container.GetInstance<IProgramSettings>();
-            var clipboardWrapper = Program.Container.GetInstance<IClipboardWrapper>();
-
-            var parser = Program.Container.GetInstance<IBufersFileParser>();
-
             var app = Program.Container.GetInstance<BuferMANApplication>();
-            var form = Program.Container.GetInstance<IBuferMANHost>() as BuferAMForm;
-
-            var dataObjectHandler = Program.Container.GetInstance<IIDataObjectHandler>();
-            var loadingFileHandler = Program.Container.GetInstance<ILoadingFileHandler>();
-
-            app.BuferFocused += form.BuferFocused;
-            form.KeyDown += app.OnKeyDown;
-            // TODO remove this 2 creations
-            var renderingHandler = new RenderingHandler(form, clipboardService, comparer, clipboardWrapper, settings, Program.Container.GetInstance<IFileStorage>());
-            WindowLevelContext.SetCurrent(new DefaultWindowLevelContext(form, renderingHandler));
-
-            Application.Run(form);
         }
-
-        private static void _Application_ThreadException(object sender, ThreadExceptionEventArgs e)
-		{
-			Logger.WriteError("Exception " + e.Exception.Message, e.Exception);
-
-            var exc = e.Exception as ClipboardMessageException;
-            if (exc != null)
-            {   
-                MessageBox.Show(exc.Message, exc.Title ?? Application.ProductName);
-            }
-		}
 	}
 }

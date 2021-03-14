@@ -1,6 +1,7 @@
 ﻿using BuferMAN.Application.Properties;
 using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure;
+using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Storage;
 using BuferMAN.View;
@@ -24,9 +25,9 @@ namespace BuferMAN.Application
         private long _copiesCount = 0;
         private bool _shouldCatchCopies = true;
 
-        public event EventHandler<BuferFocusedEventArgs> BuferFocused;
+        private event EventHandler<BuferFocusedEventArgs> _BuferFocused;
 
-        public BuferMANApplication(IBuferMANHost buferMANHost, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, ILoadingFileHandler loadingFileHandler, IIDataObjectHandler dataObjectHandler, IProgramSettings settings)
+        public BuferMANApplication(IBuferMANHost buferMANHost, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, ILoadingFileHandler loadingFileHandler, IIDataObjectHandler dataObjectHandler, IProgramSettings settings, IMenuGenerator menuGenerator, IWindowLevelContext windowLevelContext)
         {
             this._buferMANHost = buferMANHost;
             this._clipboardBuferService = clipboardBuferService;
@@ -64,7 +65,14 @@ namespace BuferMAN.Application
                 this.LoadBufersFromStorage();
             }
 
-            this._buferMANHost.GenerateMenu();
+            menuGenerator.GenerateMainMenu(buferMANHost);
+
+            buferMANHost.SetOnKeyDown(this.OnKeyDown);
+            this._BuferFocused += buferMANHost.BuferFocused;
+
+            WindowLevelContext.SetCurrent(windowLevelContext);
+
+            buferMANHost.Start();
         }
 
         public bool NeedRerender { get; set; }
@@ -95,7 +103,7 @@ namespace BuferMAN.Application
             this._loadingFileHandler.LoadBufersFromFile(_settings.DefaultBufersFileName);
         }
 
-        public void OnKeyDown(object sender, KeyEventArgs e)
+        private void OnKeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -113,7 +121,7 @@ namespace BuferMAN.Application
                     var lastBufer = this._clipboardBuferService.LastTemporaryBufer;
                     if (lastBufer != null)
                     {
-                        this.BuferFocused?.Invoke(this, new BuferFocusedEventArgs(lastBufer));
+                        this._BuferFocused?.Invoke(this, new BuferFocusedEventArgs(lastBufer));
                     }
                     break;
                 case Keys.V:
@@ -122,7 +130,7 @@ namespace BuferMAN.Application
 
                     if (firstBufer != null)
                     {
-                        this.BuferFocused?.Invoke(this, new BuferFocusedEventArgs(firstBufer));
+                        this._BuferFocused?.Invoke(this, new BuferFocusedEventArgs(firstBufer));
                     }
                     break;
                 case Keys.P:

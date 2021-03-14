@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,15 +10,16 @@ using BuferMAN.Infrastructure;
 using SystemWindowsForm = System.Windows.Forms.Form;
 using BuferMAN.Form.Properties;
 using System.Windows.Input;
-using BuferMAN.Application;
 using System.ComponentModel;
 using BuferMAN.Infrastructure.Window;
 using BuferMAN.Form.Window;
 using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Infrastructure.Menu;
+using BuferMAN.Form.Menu;
+using Logging;
 
-namespace BuferMAN.Form
+namespace BuferMAN.Form// TODO: Rename this namespace because 'Form' conflicts with system namespace. After that remove 'System.Windows.Forms.' prefix in this file
 {
     partial class BuferAMForm
     {
@@ -27,7 +27,6 @@ namespace BuferMAN.Form
         private readonly IDictionary<Guid, Button> _buttonsMap;
         private ClipboardViewer _clipboardViewer;
         private readonly IRenderingHandler _renderingHandler;
-        private readonly IMenuGenerator _menuGenerator;
         private NotifyIcon TrayIcon;
 
         public INotificationEmitter NotificationEmitter { get; set; }
@@ -38,8 +37,12 @@ namespace BuferMAN.Form
         internal StatusStrip StatusLine { get; set; }
         public ToolStripStatusLabel StatusLabel { get; set; }
 
-        public BuferAMForm(IEqualityComparer<IDataObject> comparer, IProgramSettings settings, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, IFileStorage fileStorage, IMenuGenerator menuGenerator)
+        public BuferAMForm(IEqualityComparer<IDataObject> comparer, IProgramSettings settings, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, IFileStorage fileStorage)
         {
+            System.Windows.Forms.Application.ThreadException += BuferAMForm._Application_ThreadException;//Must be run before Application.Run() //Note
+
+            System.Windows.Forms.Application.EnableVisualStyles();
+
             InitializeComponent();
             InitializeForm();
 
@@ -51,12 +54,21 @@ namespace BuferMAN.Form
             this.NotificationEmitter.ShowInfoNotification(Resource.NotifyIconStartupText, 1500);
 
             this._renderingHandler = new RenderingHandler(this, clipboardBuferService, comparer, clipboardWrapper, settings, fileStorage);
-            this._menuGenerator = menuGenerator;
         }
 
-        public void GenerateMenu()
+        public void SetMainMenu(IEnumerable<BuferMANMenuItem> menuItems)
         {
-            this.Menu = this._menuGenerator.GenerateMenu(this);
+            this.Menu = new MainMenu();
+
+            foreach (var menuItem in menuItems)
+            {
+                this.Menu.MenuItems.Add((menuItem as FormMenuItem).GetMenuItem());
+            }
+        }
+
+        public BuferMANMenuItem CreateMenuItem(string text, EventHandler eventHandler = null)
+        {
+            return new FormMenuItem(text, eventHandler);
         }
 
         private void InitializeComponent()
@@ -75,6 +87,11 @@ namespace BuferMAN.Form
             this._buttonsMap[e.Bufer.ViewId].Focus();
         }
 
+        public void SetOnKeyDown(KeyEventHandler handler)
+        {
+            this.KeyDown += handler;
+        }
+
         public void OnFullBuferMAN(object sender, EventArgs e)
         {
             MessageBox.Show(Resource.AllBufersPinned, Resource.TratataTitle);
@@ -87,6 +104,11 @@ namespace BuferMAN.Form
             {
                 return this.WindowState != FormWindowState.Minimized && this.Visible;
             }
+        }
+
+        public void Start()
+        {
+            System.Windows.Forms.Application.Run(this);
         }
 
         //TODO Find better solution
@@ -269,6 +291,17 @@ namespace BuferMAN.Form
             e.Cancel = true;
             var form = (SystemWindowsForm)sender;
             form.WindowState = FormWindowState.Minimized;
+        }
+
+        private static void _Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
+        {
+            Logger.WriteError("Exception " + e.Exception.Message, e.Exception);
+
+            var exc = e.Exception as ClipboardMessageException;
+            if (exc != null)
+            {
+                MessageBox.Show(exc.Message, exc.Title ?? System.Windows.Forms.Application.ProductName);
+            }
         }
     }
 }
