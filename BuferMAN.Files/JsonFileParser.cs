@@ -1,5 +1,4 @@
 ﻿using BuferMAN.Models;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.IO;
@@ -11,8 +10,6 @@ namespace BuferMAN.Files
     {
         public IEnumerable<BuferItem> Parse(StreamReader stream)
         {
-            var serializer = new JsonSerializer();
-
             var content = stream.ReadToEnd();
             if (content == string.Empty)
             {

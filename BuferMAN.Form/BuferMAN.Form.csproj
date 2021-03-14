@@ -71,8 +71,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Window\RenderingHandler.cs" />
-    <Compile Include="Window\WindowActivationHandler.cs" />
-    <Compile Include="Window\WindowHidingHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuferMAN.Application\BuferMAN.Application.csproj">

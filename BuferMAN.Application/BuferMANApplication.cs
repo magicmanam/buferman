@@ -63,6 +63,8 @@ namespace BuferMAN.Application
             {
                 this.LoadBufersFromStorage();
             }
+
+            this._buferMANHost.GenerateMenu();
         }
 
         public bool NeedRerender { get; set; }
@@ -137,7 +139,7 @@ namespace BuferMAN.Application
         {
             if (this._buferMANHost.IsVisible)
             {
-                WindowLevelContext.Current.RerenderBufers();
+                this._buferMANHost.RerenderBufers();
                 this.NeedRerender = false;
             }
             else

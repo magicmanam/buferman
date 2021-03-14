@@ -1,38 +1,28 @@
-﻿using BuferMAN.Clipboard;
-using BuferMAN.Form.Window;
+﻿using BuferMAN.Application;
 using BuferMAN.Infrastructure;
-using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Infrastructure.Window;
-using System;
-using System.Collections.Generic;
-using System.Windows.Forms;
 
 namespace BuferMAN.Form
 {
     public class DefaultWindowLevelContext : IWindowLevelContext
     {
-        private readonly IRenderingHandler _renderingHandler;
-        private readonly IWindowHidingHandler _hidingHandler;
-        private readonly IWindowActivationHandler _windowActivationHandler;
+        private readonly IRenderingHandler _renderingHandler;// TODO remove from here. Use IBuferMANHost.Rerender instead
+        private readonly IBuferMANHost _buferManHost;
 
-        public DefaultWindowLevelContext(BuferAMForm form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IProgramSettings settings, IFileStorage fileStorage)
+        public DefaultWindowLevelContext(BuferAMForm form, IRenderingHandler renderingHandler)
         {
-            this._renderingHandler = new RenderingHandler(form, clipboardBuferService, comparer, clipboardWrapper, settings, fileStorage);
-            this._hidingHandler = new WindowHidingHandler(form);
-            this._windowActivationHandler = new WindowActivationHandler(clipboardBuferService, form);
-            this.WindowHandle = form.Handle;
+            this._renderingHandler = renderingHandler;
+            this._buferManHost = form;
         }
-
-        public IntPtr WindowHandle { get; set; }
 
         public void HideWindow()
         {
-            this._hidingHandler.HideWindow();
+            this._buferManHost.HideWindow();
         }
 
         public void ActivateWindow()
         {
-            this._windowActivationHandler.Activate();
+            this._buferManHost.ActivateWindow();
         }
 
         public void RerenderBufers()

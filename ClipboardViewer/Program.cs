@@ -13,11 +13,18 @@ using BuferMAN.Clipboard;
 using BuferMAN.Settings;
 using BuferMAN.Infrastructure;
 using BuferMAN.Files;
+using SimpleInjector;
+using System.Collections.Generic;
+using BuferMAN.Infrastructure.Storage;
+using BuferMAN.Form.Window;
+using BuferMAN.Infrastructure.Menu;
 
 namespace ClipboardViewer
 {
 	static class Program
     {
+        static Container Container;
+
         [STAThread]
         static void Main()
         {
@@ -64,28 +71,39 @@ namespace ClipboardViewer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            var comparer = new DataObjectComparer(ClipboardFormats.StringFormats, ClipboardFormats.FileFormats);
-            var clipboardService = new ClipboardBuferService(comparer);
-            var settings = new ProgramSettings();
-            var clipboardWrapper = new ClipboardWrapper();
+            Program.Container = new Container();
+            Program.Container.Register<IProgramSettings, ProgramSettings>(Lifestyle.Singleton);
+            Program.Container.Register<IClipboardWrapper, ClipboardWrapper>(Lifestyle.Singleton);
+            Program.Container.Register<IEqualityComparer<IDataObject>>(() => new DataObjectComparer(ClipboardFormats.StringFormats, ClipboardFormats.FileFormats), Lifestyle.Singleton);
+            Program.Container.Register<IClipboardBuferService, ClipboardBuferService>(Lifestyle.Singleton);
+            Program.Container.Register<IBufersFileParser, JsonFileParser>(Lifestyle.Singleton);
+            Program.Container.Register<IIDataObjectHandler, DataObjectHandler>(Lifestyle.Singleton);
+            Program.Container.Register<ILoadingFileHandler, LoadingFileHandler>(Lifestyle.Singleton);
+            Program.Container.Register<IFileStorage, FileStorage>(Lifestyle.Singleton);
+            Program.Container.Register<IBuferMANHost, BuferAMForm>(Lifestyle.Singleton);
+            Program.Container.Register<BuferMANApplication>(Lifestyle.Singleton);
+            Program.Container.Register<IMenuGenerator, MenuGenerator>(Lifestyle.Singleton);
 
-            IBufersFileParser parser = new SimpleFileParser();
-            parser = new JsonFileParser();
+            Program.Container.Verify();
 
-            var form = new BuferAMForm(comparer, settings);
+            var comparer = Program.Container.GetInstance<IEqualityComparer<IDataObject>>();
+            var clipboardService = Program.Container.GetInstance<IClipboardBuferService>();
+            var settings = Program.Container.GetInstance<IProgramSettings>();
+            var clipboardWrapper = Program.Container.GetInstance<IClipboardWrapper>();
 
-            var dataObjectHandler = new DataObjectHandler(clipboardService, settings);
-            var loadingFileHandler = new LoadingFileHandler(dataObjectHandler, parser, settings);
+            var parser = Program.Container.GetInstance<IBufersFileParser>();
 
-            var app = new BuferMANApplication(form, clipboardService, clipboardWrapper, loadingFileHandler, dataObjectHandler, settings);
+            var app = Program.Container.GetInstance<BuferMANApplication>();
+            var form = Program.Container.GetInstance<IBuferMANHost>() as BuferAMForm;
+
+            var dataObjectHandler = Program.Container.GetInstance<IIDataObjectHandler>();
+            var loadingFileHandler = Program.Container.GetInstance<ILoadingFileHandler>();
+
             app.BuferFocused += form.BuferFocused;
-
-            var menuGenerator = new MenuGenerator(loadingFileHandler, clipboardService, settings, form.NotificationEmitter);
-            form.Menu = menuGenerator.GenerateMenu();
-
             form.KeyDown += app.OnKeyDown;
-
-            WindowLevelContext.SetCurrent(new DefaultWindowLevelContext(form, clipboardService, comparer, clipboardWrapper, settings, new FileStorage()));
+            // TODO remove this 2 creations
+            var renderingHandler = new RenderingHandler(form, clipboardService, comparer, clipboardWrapper, settings, Program.Container.GetInstance<IFileStorage>());
+            WindowLevelContext.SetCurrent(new DefaultWindowLevelContext(form, renderingHandler));
 
             Application.Run(form);
         }

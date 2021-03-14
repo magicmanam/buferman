@@ -25,13 +25,13 @@ namespace BuferMAN.Form
         private readonly ToolTip _focusTooltip = new ToolTip() { OwnerDraw = false };
         private const float IMAGE_SCALE = 0.75f;
 
-        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IDataObject dataObject, Button button, SystemWindowsForm form, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler, IFileStorage fileStorage)
-            : this(clipboardBuferService, new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now }, button, form, clipMenuGenerator, buferSelectionHandler, fileStorage)
+        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IDataObject dataObject, Button button, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler, IFileStorage fileStorage)
+            : this(clipboardBuferService, new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now }, button, clipMenuGenerator, buferSelectionHandler, fileStorage)
         {
 
         }
 
-        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, BuferViewModel buferViewModel, Button button, SystemWindowsForm form, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler, IFileStorage fileStorage)
+        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, BuferViewModel buferViewModel, Button button, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler, IFileStorage fileStorage)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._buferViewModel = buferViewModel;

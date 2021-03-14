@@ -5,17 +5,19 @@ using System.Collections.Generic;
 using System.Drawing;
 using SystemWindowsFormsContextMenu = System.Windows.Forms.ContextMenu;
 using magicmanam.Windows;
-using BuferMAN.Clipboard;
 using System.Security.Principal;
 using magicmanam.Windows.ClipboardViewer;
 using BuferMAN.Infrastructure;
-using BuferMAN.Files;
 using SystemWindowsForm = System.Windows.Forms.Form;
-using BuferMAN.Menu;
 using BuferMAN.Form.Properties;
 using System.Windows.Input;
 using BuferMAN.Application;
 using System.ComponentModel;
+using BuferMAN.Infrastructure.Window;
+using BuferMAN.Form.Window;
+using BuferMAN.Clipboard;
+using BuferMAN.Infrastructure.Storage;
+using BuferMAN.Infrastructure.Menu;
 
 namespace BuferMAN.Form
 {
@@ -24,6 +26,8 @@ namespace BuferMAN.Form
         private readonly IEqualityComparer<IDataObject> _comparer;
         private readonly IDictionary<Guid, Button> _buttonsMap;
         private ClipboardViewer _clipboardViewer;
+        private readonly IRenderingHandler _renderingHandler;
+        private readonly IMenuGenerator _menuGenerator;
         private NotifyIcon TrayIcon;
 
         public INotificationEmitter NotificationEmitter { get; set; }
@@ -34,7 +38,7 @@ namespace BuferMAN.Form
         internal StatusStrip StatusLine { get; set; }
         public ToolStripStatusLabel StatusLabel { get; set; }
 
-        public BuferAMForm(IEqualityComparer<IDataObject> comparer, IProgramSettings settings)
+        public BuferAMForm(IEqualityComparer<IDataObject> comparer, IProgramSettings settings, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, IFileStorage fileStorage, IMenuGenerator menuGenerator)
         {
             InitializeComponent();
             InitializeForm();
@@ -45,6 +49,14 @@ namespace BuferMAN.Form
 
             this._StartTrickTimer(23);
             this.NotificationEmitter.ShowInfoNotification(Resource.NotifyIconStartupText, 1500);
+
+            this._renderingHandler = new RenderingHandler(this, clipboardBuferService, comparer, clipboardWrapper, settings, fileStorage);
+            this._menuGenerator = menuGenerator;
+        }
+
+        public void GenerateMenu()
+        {
+            this.Menu = this._menuGenerator.GenerateMenu(this);
         }
 
         private void InitializeComponent()
@@ -155,6 +167,27 @@ namespace BuferMAN.Form
             this.StatusLine.Update();
         }
 
+        public void ActivateWindow()
+        {
+            this.WindowState = FormWindowState.Normal;
+            this.Visible = true;
+        }
+
+        public void HideWindow()
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
+
+        public void RerenderBufers()
+        {
+            this._renderingHandler.Render();
+        }
+
+        public void Exit()
+        {
+            WindowsFunctions.SendMessage(this.Handle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);
+        }
+
         private void InitializeForm()
         {
             this.components = new System.ComponentModel.Container();
@@ -183,7 +216,7 @@ namespace BuferMAN.Form
             this.TrayIcon = new NotifyIcon() { Text = Resource.NotifyIconStartupText, Icon = new Icon("copy-multi-size.ico") };
             this.TrayIcon.DoubleClick += this._TrayIcon_DoubleClick;
             this.TrayIcon.ContextMenu = new SystemWindowsFormsContextMenu();
-            this.TrayIcon.ContextMenu.MenuItems.Add(new MenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => WindowsFunctions.SendMessage(WindowLevelContext.Current.WindowHandle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero)));
+            this.TrayIcon.ContextMenu.MenuItems.Add(new MenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => this.Exit()));
             this.TrayIcon.Visible = true;
         }
 

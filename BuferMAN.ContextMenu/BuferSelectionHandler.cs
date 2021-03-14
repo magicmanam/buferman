@@ -13,7 +13,7 @@ namespace BuferMAN.ContextMenu
         private readonly IDataObject _dataObject;
         private readonly IClipboardWrapper _clipboardWrapper;
 
-        public BuferSelectionHandler(SystemWindowsForm form, IDataObject dataObject, IClipboardWrapper clipboardWrapper)
+        public BuferSelectionHandler(IDataObject dataObject, IClipboardWrapper clipboardWrapper)
         {
             this._dataObject = dataObject;
             this._clipboardWrapper = clipboardWrapper;

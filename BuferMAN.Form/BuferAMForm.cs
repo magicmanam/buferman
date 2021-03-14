@@ -1,7 +1,7 @@
 ﻿using System;
-using BuferMAN.Application;
 using magicmanam.Windows;
 using BuferMAN.Clipboard;
+using BuferMAN.Infrastructure;
 
 namespace BuferMAN.Form
 {
@@ -11,7 +11,7 @@ namespace BuferMAN.Form
         {
             base.OnClosed(e);
             WindowsFunctions.UnregisterHotKey(this.Handle, 1);// Разобраться нужно ли это?
-            throw new ClipboardMessageException("Do not delete this method if you see this message", new Exception());
+            throw new ClipboardMessageException("Do not delete this method if you see this message: BuferAMForm.OnClosed(EventArgs e)", new Exception());
         }
     }
 }

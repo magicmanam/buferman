@@ -36,7 +36,9 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuferFocusedEventArgs.cs" />
     <Compile Include="ContextMenu\IClipMenuGenerator.cs" />
+    <Compile Include="IBuferMANHost.cs" />
     <Compile Include="IBuferSelectionHandler.cs" />
     <Compile Include="Storage\BufersLoadedEventArgs.cs" />
     <Compile Include="Storage\IBuferItemDataObjectConverter.cs" />
@@ -51,8 +53,6 @@
     <Compile Include="Storage\IPersistentBufersStorage.cs" />
     <Compile Include="WindowLevelContext.cs" />
     <Compile Include="Window\IRenderingHandler.cs" />
-    <Compile Include="Window\IWindowActivationHandler.cs" />
-    <Compile Include="Window\IWindowHidingHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuferMAN.Clipboard\BuferMAN.Clipboard.csproj">

@@ -15,13 +15,13 @@ using BuferMAN.View;
 
 namespace BuferMAN.Form.Window
 {
-	class RenderingHandler : IRenderingHandler
+	public class RenderingHandler : IRenderingHandler
     {
         private readonly BuferAMForm _form;
         private readonly IClipboardBuferService _clipboardBuferService;
 		private readonly IEqualityComparer<IDataObject> _comparer;
         private readonly int _buttonWidth;
-        private readonly Label _persistentClipsDivider;
+        private readonly Label _pinnedClipsDivider;
         private readonly IClipboardWrapper _clipboardWrapper;
         private readonly IProgramSettings _settings;
         private readonly IFileStorage _fileStorage;
@@ -39,9 +39,9 @@ namespace BuferMAN.Form.Window
             this._clipboardBuferService = clipboardBuferService;
 			this._comparer = comparer;
             this._buttonWidth = this._form.ClientRectangle.Width;
-            this._persistentClipsDivider = new Label() { Text = string.Empty, BorderStyle = BorderStyle.FixedSingle, AutoSize = false, Height = 3, BackColor = Color.AliceBlue, Width = this._buttonWidth };
-            this._form.Controls.Add(this._persistentClipsDivider);
-            this._persistentClipsDivider.BringToFront();
+            this._pinnedClipsDivider = new Label() { Text = string.Empty, BorderStyle = BorderStyle.FixedSingle, AutoSize = false, Height = 3, BackColor = Color.AliceBlue, Width = this._buttonWidth };
+            this._form.Controls.Add(this._pinnedClipsDivider);
+            this._pinnedClipsDivider.BringToFront();
             this._clipboardWrapper = clipboardWrapper;
             this._settings = settings;
             this._fileStorage = fileStorage;
@@ -96,11 +96,11 @@ namespace BuferMAN.Form.Window
                 this._DrawButtonsForBufers(temporaryBufers, temporaryBufers.Count * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count - 1);
             }
 
-            this._persistentClipsDivider.Location = new Point(0, temporaryBufers.Count * BUTTON_HEIGHT + 1);
+            this._pinnedClipsDivider.Location = new Point(0, temporaryBufers.Count * BUTTON_HEIGHT + 1);
 
             if (pinnedBufers.Any())
             {
-                this._DrawButtonsForBufers(pinnedBufers.ToList(), this._persistentClipsDivider.Location.Y + this._persistentClipsDivider.Height + 1 + pinnedBufers.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count + pinnedBufers.Count() - 1, true);
+                this._DrawButtonsForBufers(pinnedBufers.ToList(), this._pinnedClipsDivider.Location.Y + this._pinnedClipsDivider.Height + 1 + pinnedBufers.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count + pinnedBufers.Count() - 1, true);
             }
         }
 
@@ -130,9 +130,9 @@ namespace BuferMAN.Form.Window
                         button.GotFocus += Clip_GotFocus;
                         button.LostFocus += Clip_LostFocus;
 
-                        var buferSelectionHandler = new BuferSelectionHandler(this._form, bufer.Clip, this._clipboardWrapper);
+                        var buferSelectionHandler = new BuferSelectionHandler(bufer.Clip, this._clipboardWrapper);
 
-                        new BuferHandlersWrapper(this._clipboardBuferService, bufer, button, this._form, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler, this._settings, this._clipboardWrapper), buferSelectionHandler, this._fileStorage);
+                        new BuferHandlersWrapper(this._clipboardBuferService, bufer, button, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler, this._settings, this._clipboardWrapper), buferSelectionHandler, this._fileStorage);
 
                         this._TryApplyPresentation(bufer.Clip, button);
                     }

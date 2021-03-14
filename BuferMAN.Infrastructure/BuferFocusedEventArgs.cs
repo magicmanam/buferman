@@ -1,7 +1,7 @@
 ﻿using BuferMAN.View;
 using System;
 
-namespace BuferMAN.Application
+namespace BuferMAN.Infrastructure
 {
     public class BuferFocusedEventArgs : EventArgs
     {

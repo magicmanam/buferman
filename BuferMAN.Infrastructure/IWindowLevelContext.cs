@@ -7,6 +7,5 @@ namespace BuferMAN.Infrastructure
         void HideWindow();
         void ActivateWindow();
         void RerenderBufers();
-        IntPtr WindowHandle { get; }
     }
 }

@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using BuferMAN.Clipboard;
 using BuferMAN.Files.Properties;
 using BuferMAN.Infrastructure.Storage;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Linq;
 

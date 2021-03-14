@@ -52,7 +52,6 @@
     <Compile Include="Help\SendFeedbackMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="IMenuGenerator.cs" />
     <Compile Include="MenuGenerator.cs" />
     <Compile Include="MenuItemCollectionExtensions.cs" />
     <Compile Include="Plugins\BatterySaverMenuItem.cs">
@@ -81,6 +80,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuferMAN.Application\BuferMAN.Application.csproj">
+      <Project>{19DFDADA-87FF-4E18-BB5D-692AF8EA4E4C}</Project>
+      <Name>BuferMAN.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BuferMAN.Clipboard\BuferMAN.Clipboard.csproj">
       <Project>{de6fe4d1-5c5a-4069-8d7f-f72c03d6b18a}</Project>
       <Name>BuferMAN.Clipboard</Name>

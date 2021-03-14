@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-using magicmanam.Windows;
 using BuferMAN.Clipboard;
 using System.Diagnostics;
 using System.Deployment.Application;
@@ -12,6 +11,7 @@ using BuferMAN.Infrastructure;
 using BuferMAN.Menu.Properties;
 using BuferMAN.Menu.Plugins;
 using BuferMAN.Infrastructure.Storage;
+using BuferMAN.Infrastructure.Menu;
 
 namespace BuferMAN.Menu
 {
@@ -20,34 +20,32 @@ namespace BuferMAN.Menu
         private readonly ILoadingFileHandler _loadingFileHandler;
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IProgramSettings _settings;
-        private readonly INotificationEmitter _notificationEmitter;
 
-        public MenuGenerator(ILoadingFileHandler loadingFileHandler, IClipboardBuferService clipboardBuferService, IProgramSettings settings, INotificationEmitter notificationEmitter)
+        public MenuGenerator(ILoadingFileHandler loadingFileHandler, IClipboardBuferService clipboardBuferService, IProgramSettings settings)
         {
             this._loadingFileHandler = loadingFileHandler;
             this._clipboardBuferService = clipboardBuferService;
             this._settings = settings;
-            this._notificationEmitter = notificationEmitter;
         }
-        public MainMenu GenerateMenu()
+        public MainMenu GenerateMenu(IBuferMANHost buferManHost)
         {
             var menu = new MainMenu();
-            menu.MenuItems.Add(this._GenerateFileMenu());
+            menu.MenuItems.Add(this._GenerateFileMenu(buferManHost));
             menu.MenuItems.Add(this._GenerateEditMenu());
-            menu.MenuItems.Add(this._GenerateToolsMenu());
+            menu.MenuItems.Add(this._GenerateToolsMenu(buferManHost));
             menu.MenuItems.Add(this._GenerateHelpMenu());
 
             return menu;
         }
 
-        private MenuItem _GenerateFileMenu()
+        private MenuItem _GenerateFileMenu(IBuferMANHost buferManHost)
         {
             var fileMenu = new MenuItem(Resource.MenuFile);
 
             fileMenu.MenuItems.Add(new MenuItem(Resource.MenuFileLoad, this._loadingFileHandler.OnLoadFile));
             fileMenu.MenuItems.Add(new MenuItem(Resource.MenuFileChangeDefault, (object sender, EventArgs args) => Process.Start(this._settings.DefaultBufersFileName)));
             fileMenu.MenuItems.AddSeparator();
-            fileMenu.MenuItems.Add(new MenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => WindowsFunctions.SendMessage(WindowLevelContext.Current.WindowHandle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero)));
+            fileMenu.MenuItems.Add(new MenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => buferManHost.Exit()));
 
             return fileMenu;
         }
@@ -109,17 +107,17 @@ namespace BuferMAN.Menu
             WindowLevelContext.Current.RerenderBufers();
         }
 
-        private MenuItem _GenerateToolsMenu()
+        private MenuItem _GenerateToolsMenu(IBuferMANHost buferManHost)
         {
             var toolsMenu = new MenuItem(Resource.MenuTools);
 
             toolsMenu.MenuItems.Add(new MenuItem(Resource.MenuToolsMemory) { });// 1) Show taken memory; 2) Clear old bufers when memory taken is too much; 3) Number of all bufers (with deleted and not visible)
-            toolsMenu.MenuItems.Add(this._GeneratePluginsMenu());
+            toolsMenu.MenuItems.Add(this._GeneratePluginsMenu(buferManHost));
 
             return toolsMenu;
         }
 
-        private MenuItem _GeneratePluginsMenu()
+        private MenuItem _GeneratePluginsMenu(IBuferMANHost buferManHost)
         {
             var pluginsMenu = new MenuItem(Resource.MenuToolsPlugins);
 
@@ -129,7 +127,7 @@ namespace BuferMAN.Menu
             var status = SystemInformation.PowerStatus;
             if ((status.BatteryChargeStatus & (BatteryChargeStatus.NoSystemBattery | BatteryChargeStatus.Unknown)) != 0)
             {
-                pluginsMenu.MenuItems.Add(new BatterySaverMenuItem(this._notificationEmitter));
+                pluginsMenu.MenuItems.Add(new BatterySaverMenuItem(buferManHost.NotificationEmitter));
             }
 
             return pluginsMenu;
