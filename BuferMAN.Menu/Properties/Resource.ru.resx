@@ -198,6 +198,15 @@
   <data name="MenuTools" xml:space="preserve">
     <value>&amp;Средства</value>
   </data>
+  <data name="MenuToolsLanguage" xml:space="preserve">
+    <value>Язык</value>
+  </data>
+  <data name="MenuToolsLanguageEn" xml:space="preserve">
+    <value>Английский</value>
+  </data>
+  <data name="MenuToolsLanguageRu" xml:space="preserve">
+    <value>Русский</value>
+  </data>
   <data name="MenuToolsMemory" xml:space="preserve">
     <value>Оперативная память</value>
   </data>

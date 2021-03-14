@@ -2,14 +2,18 @@
 
 ******************* sorted ****************
 
-# Release by 1 April 2018
+# Release by 1 June 2021
 2 вектора: уходить от winforms dependencies, поубирать лишние референсы из сборок
 рендеринг оптимизировать:  не всегда нужно перерендеривать все буферы, иногда достаточно просто поменять цвет или что-то другое
 
 Issues to solve:
 - Load all bufers as one action (update UndoRedo nuget)
-- 'Place bufer in clipboard' - reconsider
 - Abstract factory for working with storage (and maybe azure storage)
+
+- Pinned - поменять на закрепить - это в лёгкие коммиты
+
+- 'Place bufer in clipboard' - reconsider. Текущий буфер нельзя так сделать, пункт меню должен быть задизэйблен или скрыть его
+- Помечать буфер, который находится сейчас в клипбоарде курсивом!
 
 - пароль хешировать
 

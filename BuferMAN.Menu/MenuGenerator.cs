@@ -12,6 +12,7 @@ using BuferMAN.Menu.Properties;
 using BuferMAN.Menu.Plugins;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Infrastructure.Menu;
+using System.Threading;
 
 namespace BuferMAN.Menu
 {
@@ -113,6 +114,7 @@ namespace BuferMAN.Menu
 
             toolsMenu.MenuItems.Add(new MenuItem(Resource.MenuToolsMemory) { });// 1) Show taken memory; 2) Clear old bufers when memory taken is too much; 3) Number of all bufers (with deleted and not visible)
             toolsMenu.MenuItems.Add(this._GeneratePluginsMenu(buferManHost));
+            toolsMenu.MenuItems.Add(this._GenerateLanguageMenu(buferManHost));
 
             return toolsMenu;
         }
@@ -131,6 +133,17 @@ namespace BuferMAN.Menu
             }
 
             return pluginsMenu;
+        }
+
+        private MenuItem _GenerateLanguageMenu(IBuferMANHost buferManHost)
+        {
+            var languageMenu = new MenuItem(Resource.MenuToolsLanguage);
+            // Текущий язык выделить (или сделать задизэййбленным)
+            // Main menu, context menu, guide
+            languageMenu.MenuItems.Add(new MenuItem(Resource.MenuToolsLanguageEn, (object sender, EventArgs args) => { Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("en"); }));
+            languageMenu.MenuItems.Add(new MenuItem(Resource.MenuToolsLanguageRu, (object sender, EventArgs args) => { Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("ru"); }));
+
+            return languageMenu;
         }
 
         private MenuItem _GenerateHelpMenu()
