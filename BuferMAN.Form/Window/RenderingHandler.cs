@@ -17,11 +17,11 @@ namespace BuferMAN.Form.Window
 {
 	public class RenderingHandler : IRenderingHandler
     {
-        private readonly BuferAMForm _form;
+        private BuferAMForm _form;
         private readonly IClipboardBuferService _clipboardBuferService;
 		private readonly IEqualityComparer<IDataObject> _comparer;
-        private readonly int _buttonWidth;
-        private readonly Label _pinnedClipsDivider;
+        private int _buttonWidth;
+        private Label _pinnedClipsDivider;
         private readonly IClipboardWrapper _clipboardWrapper;
         private readonly IProgramSettings _settings;
         private readonly IFileStorage _fileStorage;
@@ -33,18 +33,24 @@ namespace BuferMAN.Form.Window
 
         private const int BUTTON_HEIGHT = 23;
 
-        public RenderingHandler(BuferAMForm form, IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IProgramSettings settings, IFileStorage fileStorage)
+        public RenderingHandler(IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IProgramSettings settings, IFileStorage fileStorage)
         {
-            this._form = form;
             this._clipboardBuferService = clipboardBuferService;
-			this._comparer = comparer;
+            this._comparer = comparer;
+            this._clipboardWrapper = clipboardWrapper;
+            this._settings = settings;
+            this._fileStorage = fileStorage;
+        }
+
+        public void SetForm(System.Windows.Forms.Form form)
+        {
+            BuferAMForm f = form as BuferAMForm;
+
+            this._form = f;
             this._buttonWidth = this._form.ClientRectangle.Width;
             this._pinnedClipsDivider = new Label() { Text = string.Empty, BorderStyle = BorderStyle.FixedSingle, AutoSize = false, Height = 3, BackColor = Color.AliceBlue, Width = this._buttonWidth };
             this._form.Controls.Add(this._pinnedClipsDivider);
             this._pinnedClipsDivider.BringToFront();
-            this._clipboardWrapper = clipboardWrapper;
-            this._settings = settings;
-            this._fileStorage = fileStorage;
         }
 
         public void Render()

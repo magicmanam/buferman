@@ -195,4 +195,13 @@
   <data name="MenuCreatedTime" xml:space="preserve">
     <value>Created at {0}</value>
   </data>
+  <data name="DeleteBuferIn10MinutesMenuItem" xml:space="preserve">
+    <value>Delete bufer in 10 minutes</value>
+  </data>
+  <data name="DeleteBuferIn30MinutesMenuItem" xml:space="preserve">
+    <value>Delete bufer in 30 minutes</value>
+  </data>
+  <data name="DeleteBuferNowMenuItem" xml:space="preserve">
+    <value>Delete bufer &amp;now</value>
+  </data>
 </root>

@@ -37,7 +37,7 @@ namespace BuferMAN.Form// TODO: Rename this namespace because 'Form' conflicts w
         internal StatusStrip StatusLine { get; set; }
         public ToolStripStatusLabel StatusLabel { get; set; }
 
-        public BuferAMForm(IEqualityComparer<IDataObject> comparer, IProgramSettings settings, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, IFileStorage fileStorage)
+        public BuferAMForm(IEqualityComparer<IDataObject> comparer, IProgramSettings settings, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, IFileStorage fileStorage, IRenderingHandler renderingHandler)
         {
             System.Windows.Forms.Application.ThreadException += BuferAMForm._Application_ThreadException;//Must be run before Application.Run() //Note
 
@@ -53,7 +53,8 @@ namespace BuferMAN.Form// TODO: Rename this namespace because 'Form' conflicts w
             this._StartTrickTimer(23);
             this.NotificationEmitter.ShowInfoNotification(Resource.NotifyIconStartupText, 1500);
 
-            this._renderingHandler = new RenderingHandler(this, clipboardBuferService, comparer, clipboardWrapper, settings, fileStorage);
+            renderingHandler.SetForm(this);
+            this._renderingHandler = renderingHandler;
         }
 
         public void SetMainMenu(IEnumerable<BuferMANMenuItem> menuItems)
