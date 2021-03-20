@@ -204,4 +204,7 @@
   <data name="DeleteBuferNowMenuItem" xml:space="preserve">
     <value>Удалить буфер сейчас</value>
   </data>
+  <data name="MenuPasteAsText" xml:space="preserve">
+    <value>Вставить текст без форматирования</value>
+  </data>
 </root>

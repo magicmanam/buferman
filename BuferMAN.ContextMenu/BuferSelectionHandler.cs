@@ -4,11 +4,10 @@ using System.Windows.Forms;
 using magicmanam.Windows;
 using BuferMAN.Infrastructure;
 using BuferMAN.Clipboard;
-using SystemWindowsForm = System.Windows.Forms.Form;
 
 namespace BuferMAN.ContextMenu
 {
-	public class BuferSelectionHandler : IBuferSelectionHandler
+	internal class BuferSelectionHandler : IBuferSelectionHandler
     {
         private readonly IDataObject _dataObject;
         private readonly IClipboardWrapper _clipboardWrapper;

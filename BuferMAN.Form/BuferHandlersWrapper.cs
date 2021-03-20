@@ -19,24 +19,24 @@ namespace BuferMAN.Form
         private const int TOOLTIP_DURATION = 2500;
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly BuferViewModel _buferViewModel;
-        private readonly IBuferSelectionHandler _buferSelectionHandler;
+        private readonly IBuferSelectionHandlerFactory _buferSelectionHandlerFactory;
         private readonly IFileStorage _fileStorage;
         private readonly Button _button;
         private readonly ToolTip _focusTooltip = new ToolTip() { OwnerDraw = false };
         private const float IMAGE_SCALE = 0.75f;
 
-        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IDataObject dataObject, Button button, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler, IFileStorage fileStorage)
-            : this(clipboardBuferService, new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now }, button, clipMenuGenerator, buferSelectionHandler, fileStorage)
+        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IDataObject dataObject, Button button, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IFileStorage fileStorage)
+            : this(clipboardBuferService, new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now }, button, clipMenuGenerator, buferSelectionHandlerFactory, fileStorage)
         {
 
         }
 
-        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, BuferViewModel buferViewModel, Button button, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandler buferSelectionHandler, IFileStorage fileStorage)
+        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, BuferViewModel buferViewModel, Button button, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IFileStorage fileStorage)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._buferViewModel = buferViewModel;
             this._button = button;
-            this._buferSelectionHandler = buferSelectionHandler;
+            this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
             this._fileStorage = fileStorage;
 
             var buferTextRepresentation = buferViewModel.Clip.GetData(DataFormats.UnicodeText) as string;
@@ -160,7 +160,8 @@ namespace BuferMAN.Form
             button.GotFocus += Bufer_GotFocus;
             button.LostFocus += Bufer_LostFocus;
 
-            button.Click += this._buferSelectionHandler.DoOnClipSelection;
+            var buferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(this._buferViewModel.Clip);
+            button.Click += buferSelectionHandler.DoOnClipSelection;
 
             button.ContextMenu = clipMenuGenerator.GenerateContextMenu(this._buferViewModel, button, tooltip, isChangeTextAvailable);
         }

@@ -205,6 +205,10 @@
       <Project>{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}</Project>
       <Name>BuferMAN.Clipboard</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.ContextMenu\BuferMAN.ContextMenu.csproj">
+      <Project>{4AB9774F-2BF8-4F4C-9653-610C5C76F8B3}</Project>
+      <Name>BuferMAN.ContextMenu</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BuferMAN.Files\BuferMAN.Files.csproj">
       <Project>{A7DA5919-18BB-4D6F-B492-2D241B3FEF1C}</Project>
       <Name>BuferMAN.Files</Name>

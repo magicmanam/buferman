@@ -12,6 +12,7 @@ using BuferMAN.BuferPresentations;
 using magicmanam.UndoRedo;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.View;
+using BuferMAN.Infrastructure.ContextMenu;
 
 namespace BuferMAN.Form.Window
 {
@@ -19,10 +20,10 @@ namespace BuferMAN.Form.Window
     {
         private BuferAMForm _form;
         private readonly IClipboardBuferService _clipboardBuferService;
-		private readonly IEqualityComparer<IDataObject> _comparer;
+        private readonly IClipMenuGenerator _clipMenuGenerator;
         private int _buttonWidth;
         private Label _pinnedClipsDivider;
-        private readonly IClipboardWrapper _clipboardWrapper;
+        private readonly IBuferSelectionHandlerFactory _buferSelectionHandlerFactory;
         private readonly IProgramSettings _settings;
         private readonly IFileStorage _fileStorage;
         private readonly IDictionary<Guid, Button> _removedButtons = new Dictionary<Guid, Button>();
@@ -33,11 +34,11 @@ namespace BuferMAN.Form.Window
 
         private const int BUTTON_HEIGHT = 23;
 
-        public RenderingHandler(IClipboardBuferService clipboardBuferService, IEqualityComparer<IDataObject> comparer, IClipboardWrapper clipboardWrapper, IProgramSettings settings, IFileStorage fileStorage)
+        public RenderingHandler(IClipboardBuferService clipboardBuferService, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IProgramSettings settings, IFileStorage fileStorage)
         {
             this._clipboardBuferService = clipboardBuferService;
-            this._comparer = comparer;
-            this._clipboardWrapper = clipboardWrapper;
+            this._clipMenuGenerator = clipMenuGenerator;
+            this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
             this._settings = settings;
             this._fileStorage = fileStorage;
         }
@@ -135,10 +136,8 @@ namespace BuferMAN.Form.Window
                         button = new Button() { TextAlign = ContentAlignment.MiddleLeft, Margin = new Padding(0), Width = this._buttonWidth, BackColor = DEFAULT_BUFER_BACK_COLOR };
                         button.GotFocus += Clip_GotFocus;
                         button.LostFocus += Clip_LostFocus;
-
-                        var buferSelectionHandler = new BuferSelectionHandler(bufer.Clip, this._clipboardWrapper);
-
-                        new BuferHandlersWrapper(this._clipboardBuferService, bufer, button, new ClipMenuGenerator(this._clipboardBuferService, buferSelectionHandler, this._settings, this._clipboardWrapper), buferSelectionHandler, this._fileStorage);
+                        
+                        new BuferHandlersWrapper(this._clipboardBuferService, bufer, button, this._clipMenuGenerator, this._buferSelectionHandlerFactory, this._fileStorage);
 
                         this._TryApplyPresentation(bufer.Clip, button);
                     }

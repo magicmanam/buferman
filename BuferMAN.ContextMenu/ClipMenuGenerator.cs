@@ -10,7 +10,6 @@ using SystemWindowsFormsContextMenu = System.Windows.Forms.ContextMenu;
 using magicmanam.Windows;
 using BuferMAN.Menu;
 using BuferMAN.ContextMenu.Properties;
-using System.Drawing;
 using BuferMAN.View;
 
 namespace BuferMAN.ContextMenu
@@ -18,7 +17,7 @@ namespace BuferMAN.ContextMenu
     public class ClipMenuGenerator : IClipMenuGenerator
     {
         private readonly IClipboardBuferService _clipboardBuferService;
-        private readonly IBuferSelectionHandler _buferSelectionHandler;
+        private readonly IBuferSelectionHandlerFactory _buferSelectionHandlerFactory;
         private readonly IProgramSettings _settings;
         private BuferViewModel _buferViewModel;
         private Button _button;
@@ -32,10 +31,10 @@ namespace BuferMAN.ContextMenu
         private ToolTip _mouseOverTooltip;
         private readonly IClipboardWrapper _clipboardWrapper;
 
-        public ClipMenuGenerator(IClipboardBuferService clipboardBuferService, BuferSelectionHandler buferSelectionHandler, IProgramSettings settings, IClipboardWrapper clipboardWrapper)
+        public ClipMenuGenerator(IClipboardBuferService clipboardBuferService, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IProgramSettings settings, IClipboardWrapper clipboardWrapper)
         {
             this._clipboardBuferService = clipboardBuferService;
-            this._buferSelectionHandler = buferSelectionHandler;
+            this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
             this._settings = settings;
             this._clipboardWrapper = clipboardWrapper;
         }
@@ -101,6 +100,18 @@ namespace BuferMAN.ContextMenu
             if (isChangeTextAvailable)
             {
                 contextMenu.MenuItems.AddSeparator();
+                if (formats.Length != 3 || ClipboardFormats.TextFormats.Any(tf => !formats.Contains(tf)))
+                {
+                    contextMenu.MenuItems.Add(new MenuItem(Resource.MenuPasteAsText, (object sender, EventArgs args) =>
+                    {
+                        var textDataObject = new DataObject();
+                        textDataObject.SetText(buferViewModel.OriginBuferText);
+
+                        var buferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(textDataObject);
+                        buferSelectionHandler.DoOnClipSelection(sender, args);
+                    }));
+                }
+
                 contextMenu.MenuItems.Add(new MenuItem(Resource.MenuCharByChar, (object sender, EventArgs args) =>
                 {
                     WindowLevelContext.Current.HideWindow();
@@ -168,7 +179,8 @@ namespace BuferMAN.ContextMenu
             {
                 this._TryPinBufer(sender, e);
             }
-            this._button.Click -= this._buferSelectionHandler.DoOnClipSelection;
+            var buferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(this._buferViewModel.Clip);
+            this._button.Click -= buferSelectionHandler.DoOnClipSelection;
         }
 
         private void _ChangeTextMenuItem_TextChanged(object sender, TextChangedEventArgs e)

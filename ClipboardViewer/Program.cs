@@ -19,6 +19,8 @@ using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Form.Window;
 using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Infrastructure.Window;
+using BuferMAN.ContextMenu;
+using BuferMAN.Infrastructure.ContextMenu;
 
 namespace ClipboardViewer
 {
@@ -76,8 +78,9 @@ namespace ClipboardViewer
             Program.Container.Register<IIDataObjectHandler, DataObjectHandler>(Lifestyle.Singleton);
             Program.Container.Register<ILoadingFileHandler, LoadingFileHandler>(Lifestyle.Singleton);
             Program.Container.Register<IFileStorage, FileStorage>(Lifestyle.Singleton);
-            Program.Container.Register<IBuferMANHost>(() => Program.Container.GetInstance<BuferAMForm>(), Lifestyle.Singleton);
-            Program.Container.Register<BuferAMForm>(Lifestyle.Singleton);// remove this! it is here because RenderingHandler has it in constructor parameter
+            Program.Container.Register<IBuferMANHost, BuferAMForm>(Lifestyle.Singleton);
+            Program.Container.Register<IClipMenuGenerator, ClipMenuGenerator>(Lifestyle.Singleton);
+            Program.Container.Register<IBuferSelectionHandlerFactory, BuferSelectionHandlerFactory>(Lifestyle.Singleton);
             Program.Container.Register<BuferMANApplication>(Lifestyle.Singleton);
             Program.Container.Register<IMenuGenerator, MenuGenerator>(Lifestyle.Singleton);
             Program.Container.Register<IWindowLevelContext, DefaultWindowLevelContext>(Lifestyle.Singleton);
