@@ -163,7 +163,7 @@ namespace BuferMAN.Form
             var buferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(this._buferViewModel.Clip);
             button.Click += buferSelectionHandler.DoOnClipSelection;
 
-            button.ContextMenu = clipMenuGenerator.GenerateContextMenu(this._buferViewModel, button, tooltip, isChangeTextAvailable);
+            button.ContextMenu = clipMenuGenerator.GenerateContextMenu(this._buferViewModel, button, tooltip, isChangeTextAvailable, buferSelectionHandler);
         }
 
         private void _MakeItalicBoldFont(Button button)
