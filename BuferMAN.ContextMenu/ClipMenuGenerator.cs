@@ -42,8 +42,6 @@ namespace BuferMAN.ContextMenu
             model.MarkAsPinnedMenuItem.Click += model.TryPinBufer;
             model.MarkAsPinnedMenuItem.Enabled = !buferViewModel.Pinned;
             contextMenu.MenuItems.Add(model.MarkAsPinnedMenuItem);
-            model.PlaceInBuferMenuItem = new PlaceInBuferMenuItem(this._clipboardWrapper, model.BuferViewModel.Clip);
-            contextMenu.MenuItems.Add(model.PlaceInBuferMenuItem);
 
             var formats = model.BuferViewModel.Clip.GetFormats();
             var formatsMenu = new MenuItem();
@@ -82,32 +80,40 @@ namespace BuferMAN.ContextMenu
             contextMenu.MenuItems.Add(formatsMenu);
             contextMenu.MenuItems.Add(new DeleteClipMenuItem(this._clipboardBuferService, model.BuferViewModel, button));
 
-            model.PasteMenuItem = new MenuItem(Resource.MenuPaste + $" {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
+            model.PasteMenuItem = new MenuItem(Resource.MenuPaste);
+
+            contextMenu.MenuItems.Add(model.PasteMenuItem);
+            model.PasteMenuItem.MenuItems.Add(new MenuItem(Resource.MenuPasteAsIs + $" {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
             {
                 new KeyboardEmulator().PressEnter();
-            });
-            contextMenu.MenuItems.Add(model.PasteMenuItem);
-            
+            }));
+
+            if (formats.Length != 3 || ClipboardFormats.TextFormats.Any(tf => !formats.Contains(tf)))
+            {
+                model.PasteMenuItem.MenuItems.Add(new MenuItem(Resource.MenuPasteAsText, (object sender, EventArgs args) =>
+                {
+                    var textDataObject = new DataObject();
+                    textDataObject.SetText(buferViewModel.OriginBuferText);
+
+                    var textBuferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(textDataObject);
+                    textBuferSelectionHandler.DoOnClipSelection(sender, args);
+                }, Shortcut.CtrlA));
+            }
+
+            model.PasteMenuItem.MenuItems.Add(new MenuItem(Resource.MenuCharByChar, (object sender, EventArgs args) =>
+            {
+                WindowLevelContext.Current.HideWindow();
+                new KeyboardEmulator().TypeText((model.Button.Tag as BuferViewModel).OriginBuferText);
+            }));
+
+            model.PasteMenuItem.MenuItems.AddSeparator();
+
+            model.PlaceInBuferMenuItem = new PlaceInBuferMenuItem(this._clipboardWrapper, model.BuferViewModel.Clip);
+            model.PasteMenuItem.MenuItems.Add(model.PlaceInBuferMenuItem);
+
             if (isChangeTextAvailable)
             {
                 contextMenu.MenuItems.AddSeparator();
-                if (formats.Length != 3 || ClipboardFormats.TextFormats.Any(tf => !formats.Contains(tf)))
-                {
-                    contextMenu.MenuItems.Add(new MenuItem(Resource.MenuPasteAsText, (object sender, EventArgs args) =>
-                    {
-                        var textDataObject = new DataObject();
-                        textDataObject.SetText(buferViewModel.OriginBuferText);
-
-                        var textBuferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(textDataObject);
-                        textBuferSelectionHandler.DoOnClipSelection(sender, args);
-                    }));
-                }
-
-                contextMenu.MenuItems.Add(new MenuItem(Resource.MenuCharByChar, (object sender, EventArgs args) =>
-                {
-                    WindowLevelContext.Current.HideWindow();
-                    new KeyboardEmulator().TypeText((model.Button.Tag as BuferViewModel).OriginBuferText);
-                }));
 
                 model.ReturnTextToInitialMenuItem = new ReturnToInitialTextMenuItem(model.Button, model.MouseOverTooltip);
                 contextMenu.MenuItems.Add(model.ReturnTextToInitialMenuItem);

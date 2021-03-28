@@ -175,7 +175,7 @@
     <value>Hide bufer &amp;text with alias</value>
   </data>
   <data name="MenuCharByChar" xml:space="preserve">
-    <value>Type &amp;char by char (for console)</value>
+    <value>&amp;Char by char (for console)</value>
   </data>
   <data name="MenuFormats" xml:space="preserve">
     <value>&amp;Formats</value>
@@ -205,6 +205,9 @@
     <value>Delete bufer &amp;now</value>
   </data>
   <data name="MenuPasteAsText" xml:space="preserve">
-    <value>Insert text w/o formatting</value>
+    <value>As a text (w/o formatting)</value>
+  </data>
+  <data name="MenuPasteAsIs" xml:space="preserve">
+    <value>AS IS</value>
   </data>
 </root>
