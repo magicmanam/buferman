@@ -20,7 +20,7 @@ namespace BuferMAN.Form.Window
     {
         private BuferAMForm _form;
         private readonly IClipboardBuferService _clipboardBuferService;
-        private readonly IClipMenuGenerator _clipMenuGenerator;
+        private readonly IBuferContextMenuGenerator _clipMenuGenerator;
         private int _buttonWidth;
         private Label _pinnedClipsDivider;
         private readonly IBuferSelectionHandlerFactory _buferSelectionHandlerFactory;
@@ -34,7 +34,7 @@ namespace BuferMAN.Form.Window
 
         private const int BUTTON_HEIGHT = 23;
 
-        public RenderingHandler(IClipboardBuferService clipboardBuferService, IClipMenuGenerator clipMenuGenerator, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IProgramSettings settings, IFileStorage fileStorage)
+        public RenderingHandler(IClipboardBuferService clipboardBuferService, IBuferContextMenuGenerator clipMenuGenerator, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IProgramSettings settings, IFileStorage fileStorage)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._clipMenuGenerator = clipMenuGenerator;

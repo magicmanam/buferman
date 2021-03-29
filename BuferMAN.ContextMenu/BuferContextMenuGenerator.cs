@@ -14,14 +14,14 @@ using BuferMAN.View;
 
 namespace BuferMAN.ContextMenu
 {
-    public class ClipMenuGenerator : IClipMenuGenerator
+    public class BuferContextMenuGenerator : IBuferContextMenuGenerator
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IBuferSelectionHandlerFactory _buferSelectionHandlerFactory;
         private readonly IProgramSettings _settings;
         private readonly IClipboardWrapper _clipboardWrapper;
 
-        public ClipMenuGenerator(IClipboardBuferService clipboardBuferService, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IProgramSettings settings, IClipboardWrapper clipboardWrapper)
+        public BuferContextMenuGenerator(IClipboardBuferService clipboardBuferService, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IProgramSettings settings, IClipboardWrapper clipboardWrapper)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;

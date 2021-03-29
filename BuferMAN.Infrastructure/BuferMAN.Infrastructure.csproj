@@ -37,7 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuferFocusedEventArgs.cs" />
-    <Compile Include="ContextMenu\IClipMenuGenerator.cs" />
+    <Compile Include="ContextMenu\IBuferContextMenuGenerator.cs" />
     <Compile Include="IBuferMANHost.cs" />
     <Compile Include="IBuferSelectionHandlerFactory.cs" />
     <Compile Include="IBuferSelectionHandler.cs" />

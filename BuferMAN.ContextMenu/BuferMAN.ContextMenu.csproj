@@ -55,7 +55,7 @@
     <Compile Include="ChangingTextMenuItemBase.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ClipMenuGenerator.cs" />
+    <Compile Include="BuferContextMenuGenerator.cs" />
     <Compile Include="CreateLoginCredentialsEventArgs.cs" />
     <Compile Include="CreateLoginCredentialsMenuItem.cs">
       <SubType>Component</SubType>

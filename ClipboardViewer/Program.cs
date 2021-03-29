@@ -79,7 +79,7 @@ namespace ClipboardViewer
             Program.Container.Register<ILoadingFileHandler, LoadingFileHandler>(Lifestyle.Singleton);
             Program.Container.Register<IFileStorage, FileStorage>(Lifestyle.Singleton);
             Program.Container.Register<IBuferMANHost, BuferAMForm>(Lifestyle.Singleton);
-            Program.Container.Register<IClipMenuGenerator, ClipMenuGenerator>(Lifestyle.Singleton);
+            Program.Container.Register<IBuferContextMenuGenerator, BuferContextMenuGenerator>(Lifestyle.Singleton);
             Program.Container.Register<IBuferSelectionHandlerFactory, BuferSelectionHandlerFactory>(Lifestyle.Singleton);
             Program.Container.Register<BuferMANApplication>(Lifestyle.Singleton);
             Program.Container.Register<IMenuGenerator, MenuGenerator>(Lifestyle.Singleton);
