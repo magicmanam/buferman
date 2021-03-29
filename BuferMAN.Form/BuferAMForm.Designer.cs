@@ -44,7 +44,8 @@ namespace BuferMAN.Form// TODO: Rename this namespace because 'Form' conflicts w
             System.Windows.Forms.Application.EnableVisualStyles();
 
             InitializeComponent();
-            InitializeForm();
+            var principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+            InitializeForm(principal.IsInRole(WindowsBuiltInRole.Administrator));
 
             this.NotificationEmitter = new NotificationEmitter(this.TrayIcon, Resource.WindowTitle);
             this._comparer = comparer;
@@ -211,11 +212,11 @@ namespace BuferMAN.Form// TODO: Rename this namespace because 'Form' conflicts w
             WindowsFunctions.SendMessage(this.Handle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);
         }
 
-        private void InitializeForm()
+        private void InitializeForm(bool isAdmin)
         {
             this.components = new System.ComponentModel.Container();
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = Resource.WindowTitle;
+            this.Text = isAdmin ? Resource.AdminWindowTitle : Resource.WindowTitle;
             this.Height = 753 + 3 + 1;//+ is divider height + divider margin
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.KeyPreview = true;

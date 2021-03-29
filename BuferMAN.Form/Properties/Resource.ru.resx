@@ -177,4 +177,7 @@
   <data name="FoldersBufer" xml:space="preserve">
     <value>Папки</value>
   </data>
+  <data name="AdminWindowTitle" xml:space="preserve">
+    <value>BuferMAN (Админ)</value>
+  </data>
 </root>

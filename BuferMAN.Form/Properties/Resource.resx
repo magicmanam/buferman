@@ -181,4 +181,7 @@ Hot keys:
   <data name="FoldersBufer" xml:space="preserve">
     <value>Folders</value>
   </data>
+  <data name="AdminWindowTitle" xml:space="preserve">
+    <value>BuferMAN (ADMIN)</value>
+  </data>
 </root>

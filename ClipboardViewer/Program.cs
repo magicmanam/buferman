@@ -35,7 +35,7 @@ namespace ClipboardViewer
             {
                 if (isNew)
                 {
-                    WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+                    var principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
                     if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
                     {
                         var result = MessageBox.Show(Resource.AdminModeConfirmation, Resource.AdminModeConfirmationTitle, MessageBoxButtons.YesNoCancel);
