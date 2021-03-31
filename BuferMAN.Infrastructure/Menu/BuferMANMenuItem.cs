@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace BuferMAN.Infrastructure.Menu
@@ -13,7 +14,9 @@ namespace BuferMAN.Infrastructure.Menu
         public abstract void RemoveOnClickHandler(EventHandler click);
         public abstract void SetOnPopupHandler(EventHandler popup);
         public abstract void RemoveOnPopupHandler(EventHandler popup);
-        public abstract void AddSeparator();
+        public abstract BuferMANMenuItem AddSeparator();
         public abstract void AddMenuItem(BuferMANMenuItem menuItem);
+        public abstract void Remove();
+        public abstract IEnumerable<BuferMANMenuItem> Children { get; }
     }
 }

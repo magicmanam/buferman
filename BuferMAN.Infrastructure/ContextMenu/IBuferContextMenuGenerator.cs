@@ -1,11 +1,12 @@
-﻿using BuferMAN.View;
-using System;
+﻿using BuferMAN.Infrastructure.Menu;
+using BuferMAN.View;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace BuferMAN.Infrastructure.ContextMenu
 {
     public interface IBuferContextMenuGenerator
     {
-        System.Windows.Forms.ContextMenu GenerateContextMenu(BuferViewModel buferViewModel, Button button, ToolTip mouseOverTooltip, bool isChangeTextAvailable, IBuferSelectionHandler buferSelectionHandler, IBuferMANHost buferMANHost);
+        IEnumerable<BuferMANMenuItem> GenerateContextMenu(BuferViewModel buferViewModel, Button button, ToolTip mouseOverTooltip, bool isChangeTextAvailable, IBuferSelectionHandler buferSelectionHandler, IBuferMANHost buferMANHost);
     }
 }

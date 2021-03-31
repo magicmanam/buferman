@@ -1,4 +1,5 @@
 ﻿using BuferMAN.ContextMenu.Properties;
+using BuferMAN.Infrastructure.Menu;
 using BuferMAN.View;
 using Microsoft.VisualBasic;
 using System;
@@ -8,11 +9,10 @@ namespace BuferMAN.ContextMenu
 {
     public class ChangeTextMenuItem : ChangingTextMenuItemBase
     {
-        public ChangeTextMenuItem(Button button, ToolTip mouseOverTooltip) : base(button, mouseOverTooltip)
+        public ChangeTextMenuItem(BuferMANMenuItem menuItem, Button button, ToolTip mouseOverTooltip) : base(menuItem, button, mouseOverTooltip)
         {
-            this.Text = Resource.MenuChange;
-            this.Click += this._ChangeText;
-            this.Shortcut = Shortcut.CtrlH;
+            menuItem.SetOnClickHandler(this._ChangeText);
+            menuItem.ShortCut = Shortcut.CtrlH;
         }
 
         private void _ChangeText(object sender, EventArgs e)

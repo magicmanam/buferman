@@ -131,7 +131,8 @@ namespace BuferMAN.Form.Window
                         button.GotFocus += Clip_GotFocus;
                         button.LostFocus += Clip_LostFocus;
 
-                        this._buferHandlersBinder.Bind(bufer, button, null, buferMANHost);
+                        var buf = new Bufer();
+                        this._buferHandlersBinder.Bind(bufer, button, buf, buferMANHost);
 
                         this._TryApplyPresentation(bufer.Clip, button);
                     }
@@ -142,12 +143,12 @@ namespace BuferMAN.Form.Window
 
                 if (persistent)
                 {
-                    foreach (var item in button.ContextMenu.MenuItems)
+                    for (var i = 0; i < button.ContextMenu.MenuItems.Count; i++)
                     {
-                        var persistentMenuItem = item as MakePinnedMenuItem;
-                        if (persistentMenuItem != null)
+                        var menuItem = button.ContextMenu.MenuItems[i];
+                        if (menuItem.Shortcut == Shortcut.CtrlS)// TODO remove this condition or even the whole block
                         {
-                            persistentMenuItem.Enabled = false;
+                            menuItem.Enabled = false;
                         }
                     }
                 }

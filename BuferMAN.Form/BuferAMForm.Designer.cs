@@ -68,6 +68,11 @@ namespace BuferMAN.Form// TODO: Rename this namespace because 'Form' conflicts w
             return new FormMenuItem(text, eventHandler);
         }
 
+        public BuferMANMenuItem CreateMenuSeparatorItem()
+        {
+            return new FormMenuItem("-");
+        }
+
         private void InitializeComponent()
         {
             ComponentResourceManager resources = new ComponentResourceManager(typeof(BuferAMForm));

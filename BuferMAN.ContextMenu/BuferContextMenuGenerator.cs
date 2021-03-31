@@ -6,11 +6,11 @@ using System;
 using System.Linq;
 using System.IO;
 using System.Windows.Forms;
-using SystemWindowsFormsContextMenu = System.Windows.Forms.ContextMenu;
 using magicmanam.Windows;
-using BuferMAN.Menu;
 using BuferMAN.ContextMenu.Properties;
 using BuferMAN.View;
+using System.Collections.Generic;
+using BuferMAN.Infrastructure.Menu;
 
 namespace BuferMAN.ContextMenu
 {
@@ -29,30 +29,33 @@ namespace BuferMAN.ContextMenu
             this._clipboardWrapper = clipboardWrapper;
         }
 
-        public SystemWindowsFormsContextMenu GenerateContextMenu(BuferViewModel buferViewModel, Button button, ToolTip mouseOverTooltip, bool isChangeTextAvailable, IBuferSelectionHandler buferSelectionHandler, IBuferMANHost buferMANHost)
+        public IEnumerable<BuferMANMenuItem> GenerateContextMenu(BuferViewModel buferViewModel, Button button, ToolTip mouseOverTooltip, bool isChangeTextAvailable, IBuferSelectionHandler buferSelectionHandler, IBuferMANHost buferMANHost)
         {
-            var model = new BuferMenuModel(this._clipboardBuferService, buferSelectionHandler);
-            model.BuferViewModel = buferViewModel;
-            model.Button = button;
-            model.MouseOverTooltip = mouseOverTooltip;
+            var model = new BuferMenuModel(this._clipboardBuferService, buferSelectionHandler)
+            {
+                BuferViewModel = buferViewModel,
+                Button = button,
+                MouseOverTooltip = mouseOverTooltip
+            };
 
-            var contextMenu = new SystemWindowsFormsContextMenu();
+            var menuItems = new List<BuferMANMenuItem>();
 
-            model.MarkAsPinnedMenuItem = new MakePinnedMenuItem();
-            model.MarkAsPinnedMenuItem.Click += model.TryPinBufer;
+            model.MarkAsPinnedMenuItem = buferMANHost.CreateMenuItem(Resource.MenuPin, model.TryPinBufer);
+            model.MarkAsPinnedMenuItem.ShortCut = Shortcut.CtrlS;
             model.MarkAsPinnedMenuItem.Enabled = !buferViewModel.Pinned;
-            contextMenu.MenuItems.Add(model.MarkAsPinnedMenuItem);
+            menuItems.Add(model.MarkAsPinnedMenuItem);
 
             var formats = model.BuferViewModel.Clip.GetFormats();
-            var formatsMenu = new MenuItem();
             var formatsCount = formats.Length;
-            
-            formatsMenu.Shortcut = Shortcut.AltDownArrow;
+
+            var formatsMenuItems = new List<BuferMANMenuItem>();
+
             foreach (var format in formats)
             {
                 if (format != ClipboardFormats.CUSTOM_IMAGE_FORMAT && format != ClipboardFormats.FROM_FILE_FORMAT)
                 {
-                    var particularFormatMenu = new MenuItem(format);
+                    var particularFormatMenu = buferMANHost.CreateMenuItem(format);
+
                     var formatData = model.BuferViewModel.Clip.GetData(format);
 
                     if (formatData is Stream)
@@ -63,11 +66,11 @@ namespace BuferMAN.ContextMenu
                         particularFormatMenu.Text += " (Text)";
                     }
 
-                    particularFormatMenu.Click += (object sender, EventArgs args) =>
+                    particularFormatMenu.SetOnClickHandler((object sender, EventArgs args) =>
                     {
-                        MessageBox.Show(formatData.ToString(), format);
-                    };
-                    formatsMenu.MenuItems.Add(particularFormatMenu);
+                        MessageBox.Show(formatData.ToString(), format);// TODO : remove MessageBox via bufermanhost interface method
+                    });
+                    formatsMenuItems.Add(particularFormatMenu);
                 }
                 else
                 {
@@ -75,66 +78,79 @@ namespace BuferMAN.ContextMenu
                 }
             }
 
-            formatsMenu.Text = Resource.MenuFormats + $" ({formatsCount})";
+            var formatsMenu = buferMANHost.CreateMenuItem(Resource.MenuFormats + $" ({formatsCount})");
+            formatsMenu.ShortCut = Shortcut.AltDownArrow;
             
-            contextMenu.MenuItems.Add(formatsMenu);
-            contextMenu.MenuItems.Add(new DeleteClipMenuItem(this._clipboardBuferService, model.BuferViewModel, model.Button));
+            menuItems.Add(formatsMenu);
+            var deleteBuferMenuItem = buferMANHost.CreateMenuItem(Resource.DeleteClipMenuItem);
+            new DeleteClipMenuItem(deleteBuferMenuItem, this._clipboardBuferService, model.BuferViewModel, model.Button, buferMANHost);
+            menuItems.Add(deleteBuferMenuItem);
 
-            model.PasteMenuItem = new MenuItem(Resource.MenuPaste);
+            model.PasteMenuItem = buferMANHost.CreateMenuItem(Resource.MenuPaste);
 
-            contextMenu.MenuItems.Add(model.PasteMenuItem);
-            model.PasteMenuItem.MenuItems.Add(new MenuItem(Resource.MenuPasteAsIs + $" {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
+            menuItems.Add(model.PasteMenuItem);
+            model.PasteMenuItem.AddMenuItem(buferMANHost.CreateMenuItem(Resource.MenuPasteAsIs + $" {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
             {
                 new KeyboardEmulator().PressEnter();
             }));
 
             if (formats.Length != 3 || ClipboardFormats.TextFormats.Any(tf => !formats.Contains(tf)))
             {
-                model.PasteMenuItem.MenuItems.Add(new MenuItem(Resource.MenuPasteAsText, (object sender, EventArgs args) =>
+                var pasteAsTextMenuItem = buferMANHost.CreateMenuItem(Resource.MenuPasteAsText, (object sender, EventArgs args) =>
                 {
                     var textDataObject = new DataObject();
                     textDataObject.SetText(buferViewModel.OriginBuferText);
 
                     var textBuferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(textDataObject);
                     textBuferSelectionHandler.DoOnClipSelection(sender, args);
-                }, Shortcut.CtrlA));
+                });
+                model.PasteMenuItem.AddMenuItem(pasteAsTextMenuItem);
+
+                pasteAsTextMenuItem.ShortCut = Shortcut.CtrlA;
             }
 
-            model.PasteMenuItem.MenuItems.Add(new MenuItem(Resource.MenuCharByChar, (object sender, EventArgs args) =>
+            model.PasteMenuItem.AddMenuItem(buferMANHost.CreateMenuItem(Resource.MenuCharByChar, (object sender, EventArgs args) =>
             {
                 WindowLevelContext.Current.HideWindow();
                 new KeyboardEmulator().TypeText((model.Button.Tag as BuferViewModel).OriginBuferText);
             }));
 
-            model.PasteMenuItem.MenuItems.AddSeparator();
+            model.PasteMenuItem.AddSeparator();
 
-            model.PlaceInBuferMenuItem = new PlaceInBuferMenuItem(this._clipboardWrapper, model.BuferViewModel.Clip);
-            model.PasteMenuItem.MenuItems.Add(model.PlaceInBuferMenuItem);
+            model.PlaceInBuferMenuItem = buferMANHost.CreateMenuItem(Resource.MenuPlaceInBufer, (object sender, EventArgs e) =>
+            {
+                this._clipboardWrapper.SetDataObject(model.BuferViewModel.Clip);
+            });
+            model.PlaceInBuferMenuItem.ShortCut = Shortcut.CtrlC;
+            model.PasteMenuItem.AddMenuItem(model.PlaceInBuferMenuItem);
 
             if (isChangeTextAvailable)
             {
-                contextMenu.MenuItems.AddSeparator();
+                menuItems.Add(buferMANHost.CreateMenuSeparatorItem());
 
-                model.ReturnTextToInitialMenuItem = new ReturnToInitialTextMenuItem(model.Button, model.MouseOverTooltip);
-                contextMenu.MenuItems.Add(model.ReturnTextToInitialMenuItem);
-                var changeTextMenuItem = new ChangeTextMenuItem(model.Button, model.MouseOverTooltip);
+                var returnTextToInitialMenuItem = buferMANHost.CreateMenuItem(Resource.MenuReturn);
+                new ReturnToInitialTextMenuItem(returnTextToInitialMenuItem, model.Button, model.MouseOverTooltip);
+                model.ReturnTextToInitialMenuItem = returnTextToInitialMenuItem;
+                menuItems.Add(model.ReturnTextToInitialMenuItem);
+                var changeTextMenuItem = buferMANHost.CreateMenuItem(Resource.MenuChange);
+                var ctmi = new ChangeTextMenuItem(changeTextMenuItem, model.Button, model.MouseOverTooltip);
                 if (!string.IsNullOrWhiteSpace(buferViewModel.Alias))
                 {
-                    changeTextMenuItem.TryChangeText(buferViewModel.Alias);
+                    ctmi.TryChangeText(buferViewModel.Alias);
                 }
-                changeTextMenuItem.TextChanged += model.ChangeTextMenuItem_TextChanged;
+                ctmi.TextChanged += model.ChangeTextMenuItem_TextChanged;
                 model.ChangeTextMenuItem = changeTextMenuItem;
-                contextMenu.MenuItems.Add(model.ChangeTextMenuItem);
+                menuItems.Add(model.ChangeTextMenuItem);
 
-                model.AddToFileMenuItem = new MenuItem(Resource.MenuAddToFile);
-                model.AddToFileMenuItem.Shortcut = Shortcut.CtrlF;
+                model.AddToFileMenuItem = buferMANHost.CreateMenuItem(Resource.MenuAddToFile);
+                model.AddToFileMenuItem.ShortCut = Shortcut.CtrlF;
 
                 if (formats.Contains(ClipboardFormats.FROM_FILE_FORMAT))
                 {
                     model.MarkMenuItemAsAddedToFile();
                 } else
                 {
-                    model.AddToFileMenuItem.Click += (object sender, EventArgs args) =>
+                    model.AddToFileMenuItem.SetOnClickHandler((object sender, EventArgs args) =>
                     {
                         using (var sw = new StreamWriter(new FileStream(this._settings.DefaultBufersFileName, FileMode.Append, FileAccess.Write)))
                         {
@@ -142,20 +158,23 @@ namespace BuferMAN.ContextMenu
                             sw.WriteLine((model.Button.Tag as BuferViewModel).OriginBuferText);
                         }
                         model.MarkMenuItemAsAddedToFile();
-                    };
+                    });
                 }
-                contextMenu.MenuItems.Add(model.AddToFileMenuItem);
+                menuItems.Add(model.AddToFileMenuItem);
 
-                var loginCredentialsMenuItem = new CreateLoginCredentialsMenuItem(model.Button, model.MouseOverTooltip);
-                loginCredentialsMenuItem.LoginCreated += model.LoginCredentialsMenuItem_LoginCreated;
+                var loginCredentialsMenuItem = buferMANHost.CreateMenuItem(Resource.CreateCredsMenuItem);
+                var clcmi = new CreateLoginCredentialsMenuItem(loginCredentialsMenuItem, model.Button, model.MouseOverTooltip, buferMANHost);
+                clcmi.LoginCreated += model.LoginCredentialsMenuItem_LoginCreated;
                 model.CreateLoginDataMenuItem = loginCredentialsMenuItem;
-                contextMenu.MenuItems.Add(model.CreateLoginDataMenuItem);
+                menuItems.Add(model.CreateLoginDataMenuItem);
             }
 
-            contextMenu.MenuItems.AddSeparator();
-            contextMenu.MenuItems.Add(new MenuItem(string.Format(Resource.MenuCreatedTime, buferViewModel.CreatedAt)));
+            menuItems.Add(buferMANHost.CreateMenuSeparatorItem());
+            var createdAtMenuItem = buferMANHost.CreateMenuItem(string.Format(Resource.MenuCreatedTime, buferViewModel.CreatedAt));
+            createdAtMenuItem.Enabled = false;
+            menuItems.Add(createdAtMenuItem);
 
-            return contextMenu;
+            return menuItems;
         }
 
         private class BuferMenuModel
@@ -165,13 +184,13 @@ namespace BuferMAN.ContextMenu
 
             public BuferViewModel BuferViewModel;
             public Button Button;
-            public MenuItem ReturnTextToInitialMenuItem;
-            public MenuItem ChangeTextMenuItem;
-            public MenuItem MarkAsPinnedMenuItem;
-            public MenuItem CreateLoginDataMenuItem;
-            public MenuItem AddToFileMenuItem;
-            public MenuItem PasteMenuItem;
-            public MenuItem PlaceInBuferMenuItem;
+            public BuferMANMenuItem ReturnTextToInitialMenuItem;
+            public BuferMANMenuItem ChangeTextMenuItem;
+            public BuferMANMenuItem MarkAsPinnedMenuItem;
+            public BuferMANMenuItem CreateLoginDataMenuItem;
+            public BuferMANMenuItem AddToFileMenuItem;
+            public BuferMANMenuItem PasteMenuItem;
+            public BuferMANMenuItem PlaceInBuferMenuItem;
             public ToolTip MouseOverTooltip;
 
             public BuferMenuModel(IClipboardBuferService clipboardBuferService, IBuferSelectionHandler buferSelectionHandler)

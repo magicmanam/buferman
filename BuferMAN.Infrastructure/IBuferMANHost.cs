@@ -22,5 +22,6 @@ namespace BuferMAN.Infrastructure
         void Start();
         void SetMainMenu(IEnumerable<BuferMANMenuItem> menuItems);
         BuferMANMenuItem CreateMenuItem(string text, EventHandler eventHandler = null);
+        BuferMANMenuItem CreateMenuSeparatorItem();
     }
 }

@@ -4,16 +4,20 @@ using System.Drawing;
 using System.Windows.Forms;
 using magicmanam.Windows;
 using BuferMAN.View;
+using BuferMAN.Infrastructure.Menu;
 
 namespace BuferMAN.ContextMenu
 {
-    public abstract class ChangingTextMenuItemBase : MenuItem
+    public abstract class ChangingTextMenuItemBase
     {
+        protected BuferMANMenuItem MenuItem { get; private set; }
+
         protected Button Button { get; private set; }
         protected ToolTip MouseOverTooltip { get; private set; }
 
-        protected ChangingTextMenuItemBase(Button button, ToolTip mouseOverTooltip)
+        protected ChangingTextMenuItemBase(BuferMANMenuItem menuItem, Button button, ToolTip mouseOverTooltip)
         {
+            this.MenuItem = menuItem;
             this.Button = button;
             this.MouseOverTooltip = mouseOverTooltip;
         }

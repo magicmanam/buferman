@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Windows.Forms;
-using BuferMAN.Form.Menu;
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Menu;
 
@@ -8,11 +7,16 @@ namespace BuferMAN.Form
 {
     public class Bufer : IBufer
     {
-        private Button _button;
+        private Button _button;// TODO add readonly modifier
 
         public Bufer()
         {
             this._button = new Button();
+        }
+
+        public void SetButton(Button button)
+        {
+            this._button = button;
         }
 
         public void SetContextMenu(IEnumerable<BuferMANMenuItem> menuItems)

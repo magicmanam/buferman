@@ -46,26 +46,12 @@
   <ItemGroup>
     <Compile Include="BuferSelectionHandlerFactory.cs" />
     <Compile Include="BuferSelectionHandler.cs" />
-    <Compile Include="MakePinnedMenuItem.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ChangeTextMenuItem.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="ChangingTextMenuItemBase.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="ChangeTextMenuItem.cs" />
+    <Compile Include="ChangingTextMenuItemBase.cs" />
     <Compile Include="BuferContextMenuGenerator.cs" />
     <Compile Include="CreateLoginCredentialsEventArgs.cs" />
-    <Compile Include="CreateLoginCredentialsMenuItem.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="PlaceInBuferMenuItem.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="DeleteClipMenuItem.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="CreateLoginCredentialsMenuItem.cs" />
+    <Compile Include="DeleteClipMenuItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resource.ru.Designer.cs">
       <DependentUpon>Resource.ru.resx</DependentUpon>
@@ -77,9 +63,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="ReturnToInitialTextMenuItem.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="ReturnToInitialTextMenuItem.cs" />
     <Compile Include="TextChangedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>

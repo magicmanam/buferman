@@ -5,28 +5,36 @@ using System;
 using System.Windows.Forms;
 using magicmanam.Windows;
 using BuferMAN.View;
-using BuferMAN.Menu;
+using BuferMAN.Infrastructure.Menu;
 
 namespace BuferMAN.ContextMenu
 {
-    public class DeleteClipMenuItem : MenuItem
+    public class DeleteClipMenuItem
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly BuferViewModel _bufer;
         private readonly Button _button;
+        private readonly BuferMANMenuItem _menuItem;
+        private readonly IBuferMANHost _buferMANHost;
         private Timer _timer = null;
 
-        public DeleteClipMenuItem(IClipboardBuferService clipboardBuferService, BuferViewModel bufer, Button button)
+        private BuferMANMenuItem _separatorItem;
+        private BuferMANMenuItem _cancelDeletionMenuItem;
+
+        public DeleteClipMenuItem(BuferMANMenuItem menuItem, IClipboardBuferService clipboardBuferService, BuferViewModel bufer, Button button, IBuferMANHost buferMANHost)
         {
+            this._buferMANHost = buferMANHost;
+            this._menuItem = menuItem;
             this._clipboardBuferService = clipboardBuferService;
             this._bufer = bufer;
             this._button = button;
-            this.Text = Resource.DeleteClipMenuItem;
 
-            this.MenuItems.Add(new MenuItem(Resource.DeleteBuferNowMenuItem, this._DeleteBuferImmediately, Shortcut.Del));
-            this.MenuItems.Add(new MenuItem(string.Format(Resource.DeleteBuferInNMinutesMenuItem, 1), this._GetDeferredDeleteBuferHandler(1)));
-            this.MenuItems.Add(new MenuItem(string.Format(Resource.DeleteBuferInNMinutesMenuItem, 10), this._GetDeferredDeleteBuferHandler(10)));
-            this.MenuItems.Add(new MenuItem(string.Format(Resource.DeleteBuferInNMinutesMenuItem, 45), this._GetDeferredDeleteBuferHandler(45)));
+            var deleteBuferNowMenuItem = buferMANHost.CreateMenuItem(Resource.DeleteBuferNowMenuItem, this._DeleteBuferImmediately);
+            deleteBuferNowMenuItem.ShortCut = Shortcut.Del;
+            menuItem.AddMenuItem(deleteBuferNowMenuItem);
+            menuItem.AddMenuItem(buferMANHost.CreateMenuItem(string.Format(Resource.DeleteBuferInNMinutesMenuItem, 1), this._GetDeferredDeleteBuferHandler(1)));
+            menuItem.AddMenuItem(buferMANHost.CreateMenuItem(string.Format(Resource.DeleteBuferInNMinutesMenuItem, 10), this._GetDeferredDeleteBuferHandler(10)));
+            menuItem.AddMenuItem(buferMANHost.CreateMenuItem(string.Format(Resource.DeleteBuferInNMinutesMenuItem, 45), this._GetDeferredDeleteBuferHandler(45)));
         }
 
         private void _DeleteBuferImmediately(object sender, EventArgs e)
@@ -49,13 +57,8 @@ namespace BuferMAN.ContextMenu
             this._timer.Dispose();
             this._timer = null;
 
-            this._RemoveCancelDeletionMenuItem();
-        }
-
-        private void _RemoveCancelDeletionMenuItem()
-        {
-            this.MenuItems.RemoveAt(this.MenuItems.Count - 1);
-            this.MenuItems.RemoveAt(this.MenuItems.Count - 1); // Separator
+            this._separatorItem.Remove();
+            this._cancelDeletionMenuItem.Remove();
         }
 
         private void _RemoveBufer()
@@ -109,11 +112,11 @@ namespace BuferMAN.ContextMenu
                 this._timer.Tick += this._OnTimerTick;
                 this._timer.Start();
 
-                foreach(var menuItem in this.MenuItems)
+                foreach(var menuItem in this._menuItem.Children)
                 {
-                    (menuItem as MenuItem).Checked = false;
+                    menuItem.Checked = false;
                 }
-                (sender as MenuItem).Checked = true;
+                (sender as MenuItem).Checked = true;// TODO : sender should be BuferMANMenuItem
 
                 this._AddCancelDeletionMenuItem();
             };
@@ -128,9 +131,12 @@ namespace BuferMAN.ContextMenu
 
         private void _AddCancelDeletionMenuItem()
         {
-            this.MenuItems.AddSeparator();
-            this.MenuItems.Add(new MenuItem(string.Format(Resource.CancelDeferredDeletionMenuItem, DateTime.Now.AddMilliseconds(this._timer.Interval).ToLocalTime()),
-                                            this._CancelDeferredBuferDeletion));
+            this._separatorItem = this._menuItem.AddSeparator();
+            this._cancelDeletionMenuItem = this._buferMANHost
+                .CreateMenuItem(string.Format(Resource.CancelDeferredDeletionMenuItem, DateTime.Now.AddMilliseconds(this._timer.Interval).ToLocalTime()),
+                                this._CancelDeferredBuferDeletion);
+
+            this._menuItem.AddMenuItem(this._cancelDeletionMenuItem);
         }
     }
 }
