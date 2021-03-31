@@ -12,7 +12,6 @@ using BuferMAN.Form.Properties;
 using System.Windows.Input;
 using System.ComponentModel;
 using BuferMAN.Infrastructure.Window;
-using BuferMAN.Form.Window;
 using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Infrastructure.Menu;
@@ -61,11 +60,7 @@ namespace BuferMAN.Form// TODO: Rename this namespace because 'Form' conflicts w
         public void SetMainMenu(IEnumerable<BuferMANMenuItem> menuItems)
         {
             this.Menu = new MainMenu();
-
-            foreach (var menuItem in menuItems)
-            {
-                this.Menu.MenuItems.Add((menuItem as FormMenuItem).GetMenuItem());
-            }
+            this.Menu.PopulateMenuWithItems(menuItems);
         }
 
         public BuferMANMenuItem CreateMenuItem(string text, EventHandler eventHandler = null)
@@ -204,7 +199,7 @@ namespace BuferMAN.Form// TODO: Rename this namespace because 'Form' conflicts w
 
         public void RerenderBufers()
         {
-            this._renderingHandler.Render();
+            this._renderingHandler.Render(this);
         }
 
         public void Exit()

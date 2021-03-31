@@ -6,27 +6,27 @@ namespace BuferMAN.Form
     public class DefaultWindowLevelContext : IWindowLevelContext
     {
         private readonly IRenderingHandler _renderingHandler;// TODO remove from here. Use IBuferMANHost.Rerender instead
-        private readonly IBuferMANHost _buferManHost;
+        private readonly IBuferMANHost _buferMANHost;
 
-        public DefaultWindowLevelContext(IBuferMANHost form, IRenderingHandler renderingHandler)
+        public DefaultWindowLevelContext(IBuferMANHost buferManHost, IRenderingHandler renderingHandler)
         {
             this._renderingHandler = renderingHandler;
-            this._buferManHost = form;
+            this._buferMANHost = buferManHost;
         }
 
         public void HideWindow()
         {
-            this._buferManHost.HideWindow();
+            this._buferMANHost.HideWindow();
         }
 
         public void ActivateWindow()
         {
-            this._buferManHost.ActivateWindow();
+            this._buferMANHost.ActivateWindow();
         }
 
         public void RerenderBufers()
         {
-            this._renderingHandler.Render();
+            this._renderingHandler.Render(this._buferMANHost);
         }
     }
 }

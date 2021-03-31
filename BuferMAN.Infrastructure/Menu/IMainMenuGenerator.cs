@@ -1,6 +1,6 @@
 ﻿namespace BuferMAN.Infrastructure.Menu
 {
-    public interface IMenuGenerator
+    public interface IMainMenuGenerator
     {
         void GenerateMainMenu(IBuferMANHost buferMANHost);
     }

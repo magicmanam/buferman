@@ -49,15 +49,18 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bufer.cs" />
     <Compile Include="BuferAMForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="BuferAMForm.Designer.cs">
       <DependentUpon>BuferAMForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="BuferHandlersBinder.cs" />
     <Compile Include="BuferHandlersWrapper.cs" />
     <Compile Include="DataObjectHandler.cs" />
     <Compile Include="DefaultWindowLevelContext.cs" />
+    <Compile Include="MenuExtensions.cs" />
     <Compile Include="Menu\FormMenuItem.cs" />
     <Compile Include="NotificationEmitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -6,9 +6,7 @@ using System.IO;
 using BuferMAN.Infrastructure.ContextMenu;
 using BuferMAN.Clipboard;
 using BuferMAN.Form.Properties;
-using SystemWindowsForm = System.Windows.Forms.Form;
 using BuferMAN.Infrastructure;
-using BuferMAN.ContextMenu;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.View;
 
@@ -17,7 +15,6 @@ namespace BuferMAN.Form
     public class BuferHandlersWrapper
     {
         private const int TOOLTIP_DURATION = 2500;
-        private readonly IClipboardBuferService _clipboardBuferService;
         private readonly BuferViewModel _buferViewModel;
         private readonly IBuferSelectionHandlerFactory _buferSelectionHandlerFactory;
         private readonly IFileStorage _fileStorage;
@@ -25,15 +22,15 @@ namespace BuferMAN.Form
         private readonly ToolTip _focusTooltip = new ToolTip() { OwnerDraw = false };
         private const float IMAGE_SCALE = 0.75f;
 
-        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, IDataObject dataObject, Button button, IBuferContextMenuGenerator clipMenuGenerator, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IFileStorage fileStorage)
-            : this(clipboardBuferService, new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now }, button, clipMenuGenerator, buferSelectionHandlerFactory, fileStorage)
+        public BuferHandlersWrapper(IDataObject dataObject, Button button, IBuferContextMenuGenerator buferContextMenuGenerator, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IFileStorage fileStorage, IBuferMANHost buferMANHost, IBufer bufer = null)
+            : this(new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now }, button, buferContextMenuGenerator, buferSelectionHandlerFactory, fileStorage, buferMANHost, bufer)
         {
 
         }
 
-        public BuferHandlersWrapper(IClipboardBuferService clipboardBuferService, BuferViewModel buferViewModel, Button button, IBuferContextMenuGenerator clipMenuGenerator, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IFileStorage fileStorage)
+        public BuferHandlersWrapper(BuferViewModel buferViewModel, Button button, IBuferContextMenuGenerator buferContextMenuGenerator, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IFileStorage fileStorage, IBuferMANHost buferMANHost, IBufer bufer = null)
         {
-            this._clipboardBuferService = clipboardBuferService;
+            // TODO : remove Button button parameter
             this._buferViewModel = buferViewModel;
             this._button = button;
             this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
@@ -163,7 +160,8 @@ namespace BuferMAN.Form
             var buferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(this._buferViewModel.Clip);
             button.Click += buferSelectionHandler.DoOnClipSelection;
 
-            button.ContextMenu = clipMenuGenerator.GenerateContextMenu(this._buferViewModel, button, tooltip, isChangeTextAvailable, buferSelectionHandler);
+            //bufer.SetContextMenu(clipMenuGenerator.GenerateContextMenu(this._buferViewModel, button, tooltip, isChangeTextAvailable, buferSelectionHandler));
+            button.ContextMenu = buferContextMenuGenerator.GenerateContextMenu(this._buferViewModel, button, tooltip, isChangeTextAvailable, buferSelectionHandler, buferMANHost);
         }
 
         private void _MakeItalicBoldFont(Button button)

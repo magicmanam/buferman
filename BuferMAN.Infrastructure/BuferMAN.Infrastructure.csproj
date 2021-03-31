@@ -38,6 +38,8 @@
   <ItemGroup>
     <Compile Include="BuferFocusedEventArgs.cs" />
     <Compile Include="ContextMenu\IBuferContextMenuGenerator.cs" />
+    <Compile Include="IBufer.cs" />
+    <Compile Include="IBuferHandlersBinder.cs" />
     <Compile Include="IBuferMANHost.cs" />
     <Compile Include="IBuferSelectionHandlerFactory.cs" />
     <Compile Include="IBuferSelectionHandler.cs" />
@@ -50,7 +52,7 @@
     <Compile Include="INotificationEmitter.cs" />
     <Compile Include="IProgramSettings.cs" />
     <Compile Include="IWindowLevelContext.cs" />
-    <Compile Include="Menu\IMenuGenerator.cs" />
+    <Compile Include="Menu\IMainMenuGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\IPersistentBufersStorage.cs" />
     <Compile Include="WindowLevelContext.cs" />

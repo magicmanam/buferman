@@ -43,7 +43,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MenuGenerator.cs" />
+    <Compile Include="MainMenuGenerator.cs" />
     <Compile Include="MenuItemCollectionExtensions.cs" />
     <Compile Include="Plugins\BatterySaverMenuItemFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

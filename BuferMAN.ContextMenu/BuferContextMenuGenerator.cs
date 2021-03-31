@@ -29,7 +29,7 @@ namespace BuferMAN.ContextMenu
             this._clipboardWrapper = clipboardWrapper;
         }
 
-        public SystemWindowsFormsContextMenu GenerateContextMenu(BuferViewModel buferViewModel, Button button, ToolTip mouseOverTooltip, bool isChangeTextAvailable, IBuferSelectionHandler buferSelectionHandler)
+        public SystemWindowsFormsContextMenu GenerateContextMenu(BuferViewModel buferViewModel, Button button, ToolTip mouseOverTooltip, bool isChangeTextAvailable, IBuferSelectionHandler buferSelectionHandler, IBuferMANHost buferMANHost)
         {
             var model = new BuferMenuModel(this._clipboardBuferService, buferSelectionHandler);
             model.BuferViewModel = buferViewModel;
@@ -78,7 +78,7 @@ namespace BuferMAN.ContextMenu
             formatsMenu.Text = Resource.MenuFormats + $" ({formatsCount})";
             
             contextMenu.MenuItems.Add(formatsMenu);
-            contextMenu.MenuItems.Add(new DeleteClipMenuItem(this._clipboardBuferService, model.BuferViewModel, button));
+            contextMenu.MenuItems.Add(new DeleteClipMenuItem(this._clipboardBuferService, model.BuferViewModel, model.Button));
 
             model.PasteMenuItem = new MenuItem(Resource.MenuPaste);
 

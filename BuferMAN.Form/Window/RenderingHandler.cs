@@ -10,22 +10,18 @@ using BuferMAN.ContextMenu;
 using BuferMAN.Plugins.BuferPresentations;
 using BuferMAN.BuferPresentations;
 using magicmanam.UndoRedo;
-using BuferMAN.Infrastructure.Storage;
 using BuferMAN.View;
-using BuferMAN.Infrastructure.ContextMenu;
 
 namespace BuferMAN.Form.Window
 {
 	public class RenderingHandler : IRenderingHandler
     {
-        private BuferAMForm _form;
+        private BuferAMForm _form;// TODO must be IBuferMANHost
         private readonly IClipboardBuferService _clipboardBuferService;
-        private readonly IBuferContextMenuGenerator _clipMenuGenerator;
         private int _buttonWidth;
         private Label _pinnedClipsDivider;
-        private readonly IBuferSelectionHandlerFactory _buferSelectionHandlerFactory;
+        private readonly IBuferHandlersBinder _buferHandlersBinder;
         private readonly IProgramSettings _settings;
-        private readonly IFileStorage _fileStorage;
         private readonly IDictionary<Guid, Button> _removedButtons = new Dictionary<Guid, Button>();
         private readonly IList<IBuferPresentation> _clipPresentations = new List<IBuferPresentation>() { new SkypeBuferPresentation(), new FileContentsBuferPresentation() };
         private readonly Color FOCUSED_BUFER_BACK_COLOR = Color.LightSteelBlue;
@@ -34,18 +30,16 @@ namespace BuferMAN.Form.Window
 
         private const int BUTTON_HEIGHT = 23;
 
-        public RenderingHandler(IClipboardBuferService clipboardBuferService, IBuferContextMenuGenerator clipMenuGenerator, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IProgramSettings settings, IFileStorage fileStorage)
+        public RenderingHandler(IClipboardBuferService clipboardBuferService, IProgramSettings settings, IBuferHandlersBinder buferHandlersBinder)
         {
             this._clipboardBuferService = clipboardBuferService;
-            this._clipMenuGenerator = clipMenuGenerator;
-            this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
             this._settings = settings;
-            this._fileStorage = fileStorage;
+            this._buferHandlersBinder = buferHandlersBinder;
         }
 
         public void SetForm(System.Windows.Forms.Form form)
         {
-            BuferAMForm f = form as BuferAMForm;
+            BuferAMForm f = form as BuferAMForm;// TODO : remove this assignment
 
             this._form = f;
             this._buttonWidth = this._form.ClientRectangle.Width;
@@ -54,7 +48,7 @@ namespace BuferMAN.Form.Window
             this._pinnedClipsDivider.BringToFront();
         }
 
-        public void Render()
+        public void Render(IBuferMANHost buferMANHost)
         {
             var pinnedBufers = this._clipboardBuferService.GetPinnedBufers();
 
@@ -100,18 +94,18 @@ namespace BuferMAN.Form.Window
 
             if (temporaryBufers.Any())
             {
-                this._DrawButtonsForBufers(temporaryBufers, temporaryBufers.Count * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count - 1);
+                this._DrawButtonsForBufers(buferMANHost, temporaryBufers, temporaryBufers.Count * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count - 1);
             }
 
             this._pinnedClipsDivider.Location = new Point(0, temporaryBufers.Count * BUTTON_HEIGHT + 1);
 
             if (pinnedBufers.Any())
             {
-                this._DrawButtonsForBufers(pinnedBufers.ToList(), this._pinnedClipsDivider.Location.Y + this._pinnedClipsDivider.Height + 1 + pinnedBufers.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count + pinnedBufers.Count() - 1, true);
+                this._DrawButtonsForBufers(buferMANHost, pinnedBufers.ToList(), this._pinnedClipsDivider.Location.Y + this._pinnedClipsDivider.Height + 1 + pinnedBufers.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count + pinnedBufers.Count() - 1, true);
             }
         }
 
-        private void _DrawButtonsForBufers(List<BuferViewModel> bufers, int y, int currentButtonIndex, bool persistent = false)
+        private void _DrawButtonsForBufers(IBuferMANHost buferMANHost, List<BuferViewModel> bufers, int y, int currentButtonIndex, bool persistent = false)
         {
             foreach (var bufer in bufers)
             {
@@ -136,8 +130,8 @@ namespace BuferMAN.Form.Window
                         button = new Button() { TextAlign = ContentAlignment.MiddleLeft, Margin = new Padding(0), Width = this._buttonWidth, BackColor = DEFAULT_BUFER_BACK_COLOR };
                         button.GotFocus += Clip_GotFocus;
                         button.LostFocus += Clip_LostFocus;
-                        
-                        new BuferHandlersWrapper(this._clipboardBuferService, bufer, button, this._clipMenuGenerator, this._buferSelectionHandlerFactory, this._fileStorage);
+
+                        this._buferHandlersBinder.Bind(bufer, button, null, buferMANHost);
 
                         this._TryApplyPresentation(bufer.Clip, button);
                     }

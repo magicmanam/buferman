@@ -16,13 +16,13 @@ using System.Collections.Generic;
 
 namespace BuferMAN.Menu
 {
-    public class MenuGenerator : IMenuGenerator
+    public class MainMenuGenerator : IMainMenuGenerator
     {
         private readonly ILoadingFileHandler _loadingFileHandler;
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IProgramSettings _settings;
 
-        public MenuGenerator(ILoadingFileHandler loadingFileHandler, IClipboardBuferService clipboardBuferService, IProgramSettings settings)
+        public MainMenuGenerator(ILoadingFileHandler loadingFileHandler, IClipboardBuferService clipboardBuferService, IProgramSettings settings)
         {
             this._loadingFileHandler = loadingFileHandler;
             this._clipboardBuferService = clipboardBuferService;

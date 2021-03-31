@@ -27,7 +27,7 @@ namespace BuferMAN.Application
 
         private event EventHandler<BuferFocusedEventArgs> _BuferFocused;
 
-        public BuferMANApplication(IBuferMANHost buferMANHost, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, ILoadingFileHandler loadingFileHandler, IIDataObjectHandler dataObjectHandler, IProgramSettings settings, IMenuGenerator menuGenerator, IWindowLevelContext windowLevelContext)
+        public BuferMANApplication(IBuferMANHost buferMANHost, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, ILoadingFileHandler loadingFileHandler, IIDataObjectHandler dataObjectHandler, IProgramSettings settings, IMainMenuGenerator menuGenerator, IWindowLevelContext windowLevelContext)
         {
             this._buferMANHost = buferMANHost;
             this._clipboardBuferService = clipboardBuferService;
