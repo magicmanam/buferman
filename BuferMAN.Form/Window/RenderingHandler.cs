@@ -105,7 +105,8 @@ namespace BuferMAN.Form.Window
             }
         }
 
-        private void _DrawButtonsForBufers(IBuferMANHost buferMANHost, List<BuferViewModel> bufers, int y, int currentButtonIndex, bool persistent = false)
+        private void _DrawButtonsForBufers(IBuferMANHost buferMANHost, List<BuferViewModel> bufers, int y, int currentButtonIndex,
+            bool persistent = false)// TODO remove this parameter: get from bufers collection, but be careful!!!
         {
             foreach (var bufer in bufers)
             {
@@ -118,7 +119,7 @@ namespace BuferMAN.Form.Window
                 }
                 else
                 {
-                    var equalObjectFromDeleted = this._removedButtons.ContainsKey(bufer.ViewId);
+                    var equalObjectFromDeleted = this._removedButtons.ContainsKey(bufer.ViewId);// TODO now this property (_removedButtons) is not needed - this optimization does not make sense
 
                     if (equalObjectFromDeleted)
                     {
@@ -141,15 +142,12 @@ namespace BuferMAN.Form.Window
                     button.BringToFront();
                 }
 
-                if (persistent)
+                for (var i = 0; i < button.ContextMenu.MenuItems.Count; i++)
                 {
-                    for (var i = 0; i < button.ContextMenu.MenuItems.Count; i++)
+                    var menuItem = button.ContextMenu.MenuItems[i];
+                    if (menuItem.Shortcut == Shortcut.CtrlS)// TODO remove this condition or even the whole block
                     {
-                        var menuItem = button.ContextMenu.MenuItems[i];
-                        if (menuItem.Shortcut == Shortcut.CtrlS)// TODO remove this condition or even the whole block
-                        {
-                            menuItem.Enabled = false;
-                        }
+                        menuItem.Enabled = !persistent;
                     }
                 }
 

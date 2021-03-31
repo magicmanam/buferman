@@ -123,7 +123,9 @@ namespace BuferMAN.Clipboard
         {
             get
             {
-                return new ApplicationStateSnapshot(this._tempObjects.Union(this._pinnedObjects).ToList());
+                return new ApplicationStateSnapshot(this._tempObjects.Union(this._pinnedObjects)
+                    .Select(o => o.ShallowCopy())
+                    .ToList());
             }
             set
             {
@@ -141,7 +143,7 @@ namespace BuferMAN.Clipboard
         }
 
         public bool TryPinBufer(Guid buferViewId)
-		{
+        {
             using (var operation = UndoableContext<ApplicationStateSnapshot>.Current.StartAction(Resource.BuferPinned))
             {
                 var dataObject = this._tempObjects.FirstOrDefault(d => d.ViewId == buferViewId);

@@ -39,9 +39,9 @@ namespace BuferMAN.ContextMenu
 
         private void _DeleteBuferImmediately(object sender, EventArgs e)
         {
-            if (this._timer != null)
+            if (this.IsDeferredDeletionActivated())
             {
-                this._CancelDeferredBuferDeletion(sender, e);
+                this.CancelDeferredBuferDeletion(sender, e);
             }
 
             var tabIndex = this._button.TabIndex;
@@ -51,7 +51,12 @@ namespace BuferMAN.ContextMenu
             this._FocusNextBufer(tabIndex);
         }
 
-        private void _CancelDeferredBuferDeletion(object sender, EventArgs e)
+        public bool IsDeferredDeletionActivated()
+        {
+            return this._timer != null;
+        }
+
+        public void CancelDeferredBuferDeletion(object sender, EventArgs e)
         {
             this._timer.Stop();
             this._timer.Dispose();
@@ -59,6 +64,15 @@ namespace BuferMAN.ContextMenu
 
             this._separatorItem.Remove();
             this._cancelDeletionMenuItem.Remove();
+            this._UncheckAllDeleteOptions();
+        }
+
+        private void _UncheckAllDeleteOptions()
+        {
+            foreach (var menuItem in this._menuItem.Children)
+            {
+                menuItem.Checked = false;
+            }
         }
 
         private void _RemoveBufer()
@@ -100,9 +114,9 @@ namespace BuferMAN.ContextMenu
         {
             return (object sender, EventArgs e) =>
             {
-                if (this._timer != null)
+                if (this.IsDeferredDeletionActivated())
                 {
-                    this._CancelDeferredBuferDeletion(sender, e);
+                    this.CancelDeferredBuferDeletion(sender, e);
                 }
 
                 this._timer = new Timer
@@ -112,11 +126,8 @@ namespace BuferMAN.ContextMenu
                 this._timer.Tick += this._OnTimerTick;
                 this._timer.Start();
 
-                foreach(var menuItem in this._menuItem.Children)
-                {
-                    menuItem.Checked = false;
-                }
-                (sender as MenuItem).Checked = true;// TODO : sender should be BuferMANMenuItem
+                this._UncheckAllDeleteOptions();
+                (sender as MenuItem).Checked = true;// TODO : sender should be BuferMANMenuItem, not MenuItem
 
                 this._AddCancelDeletionMenuItem();
             };
@@ -126,7 +137,7 @@ namespace BuferMAN.ContextMenu
         {
             this._RemoveBufer();
 
-            this._CancelDeferredBuferDeletion(sender, e);
+            this.CancelDeferredBuferDeletion(sender, e);
         }
 
         private void _AddCancelDeletionMenuItem()
@@ -134,7 +145,7 @@ namespace BuferMAN.ContextMenu
             this._separatorItem = this._menuItem.AddSeparator();
             this._cancelDeletionMenuItem = this._buferMANHost
                 .CreateMenuItem(string.Format(Resource.CancelDeferredDeletionMenuItem, DateTime.Now.AddMilliseconds(this._timer.Interval).ToLocalTime()),
-                                this._CancelDeferredBuferDeletion);
+                                this.CancelDeferredBuferDeletion);
 
             this._menuItem.AddMenuItem(this._cancelDeletionMenuItem);
         }

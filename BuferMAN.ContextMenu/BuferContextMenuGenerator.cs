@@ -83,7 +83,7 @@ namespace BuferMAN.ContextMenu
             
             menuItems.Add(formatsMenu);
             var deleteBuferMenuItem = buferMANHost.CreateMenuItem(Resource.DeleteClipMenuItem);
-            new DeleteClipMenuItem(deleteBuferMenuItem, this._clipboardBuferService, model.BuferViewModel, model.Button, buferMANHost);
+            model.DeleteMenuItem = new DeleteClipMenuItem(deleteBuferMenuItem, this._clipboardBuferService, model.BuferViewModel, model.Button, buferMANHost);
             menuItems.Add(deleteBuferMenuItem);
 
             model.PasteMenuItem = buferMANHost.CreateMenuItem(Resource.MenuPaste);
@@ -191,6 +191,7 @@ namespace BuferMAN.ContextMenu
             public BuferMANMenuItem AddToFileMenuItem;
             public BuferMANMenuItem PasteMenuItem;
             public BuferMANMenuItem PlaceInBuferMenuItem;
+            public DeleteClipMenuItem DeleteMenuItem { get; set; }
             public ToolTip MouseOverTooltip;
 
             public BuferMenuModel(IClipboardBuferService clipboardBuferService, IBuferSelectionHandler buferSelectionHandler)
@@ -233,6 +234,11 @@ namespace BuferMAN.ContextMenu
                     this.BuferViewModel.Pinned = true;
                     this.MarkAsPinnedMenuItem.Enabled = false;
                     WindowLevelContext.Current.RerenderBufers();
+
+                    if (this.DeleteMenuItem.IsDeferredDeletionActivated())
+                    {
+                        this.DeleteMenuItem.CancelDeferredBuferDeletion(sender, e);
+                    }
                 }
             }
         }
