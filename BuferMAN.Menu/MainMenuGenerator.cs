@@ -69,7 +69,7 @@ namespace BuferMAN.Menu
             redoMenuItem.Enabled = false;
 
             editMenu.AddMenuItem(redoMenuItem);
-            var deleteAllMenuItem = buferMANHost.CreateMenuItem(Resource.MenuEditDel, this._OnDeleteAll);
+            var deleteAllMenuItem = buferMANHost.CreateMenuItem(Resource.MenuEditDel, this._GetOnDeleteAllHandler(buferMANHost));
 
             editMenu.AddMenuItem(deleteAllMenuItem);
 
@@ -92,27 +92,31 @@ namespace BuferMAN.Menu
             return editMenu;
         }
 
-        private void _OnDeleteAll(object sender, EventArgs args)
+        private EventHandler _GetOnDeleteAllHandler(IBuferMANHost buferMANHost)
         {
-            if (this._clipboardBuferService.GetPinnedBufers().Any())
+            return (object sender, EventArgs args) =>
             {
-                var result = MessageBox.Show(Resource.MenuEditDelText, Resource.MenuEditDelTitle, MessageBoxButtons.YesNoCancel);
+                if (this._clipboardBuferService.GetPinnedBufers().Any())
+                {
+                    var result = buferMANHost.ShowYesNoCancelPopup(Resource.MenuEditDelText, Resource.MenuEditDelTitle);
 
-                if (result == DialogResult.Yes)
+                    switch (result)
+                    {
+                        case true:
+                            this._clipboardBuferService.RemoveTemporaryClips();
+                            break;
+                        case false:
+                            this._clipboardBuferService.RemoveAllBufers();
+                            break;
+                    }
+                }
+                else
                 {
                     this._clipboardBuferService.RemoveTemporaryClips();
                 }
-                else if (result == DialogResult.No)
-                {
-                    this._clipboardBuferService.RemoveAllBufers();
-                }
-            }
-            else
-            {
-                this._clipboardBuferService.RemoveTemporaryClips();
-            }
 
-            WindowLevelContext.Current.RerenderBufers();
+                WindowLevelContext.Current.RerenderBufers();
+            };
         }
 
         private void _OnDeleteAllTemporary(object sender, EventArgs args)
@@ -142,7 +146,7 @@ namespace BuferMAN.Menu
             var status = SystemInformation.PowerStatus;
             if ((status.BatteryChargeStatus & (BatteryChargeStatus.NoSystemBattery | BatteryChargeStatus.Unknown)) != 0)
             {
-                var factory = new BatterySaverMenuItemFactory(buferManHost);// TODO : into DI constructor and implement via plugins 
+                var factory = new BatterySaverMenuItemFactory(buferManHost);// TODO (m) : into DI constructor and implement via plugins 
                 pluginsMenu.AddMenuItem(factory.Create());
             }
 
@@ -195,8 +199,8 @@ namespace BuferMAN.Menu
             var startTime = DateTime.Now;
             helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpSend, (object sender, EventArgs e) =>
                 Process.Start("https://rink.hockeyapp.net/apps/51633746a31f44999eca3bc7b7945e92/feedback/new")));
-            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpStart, (object sender, EventArgs args) => MessageBox.Show(Resource.MenuHelpStartPrefix + $" {startTime}.", Resource.MenuHelpStartTitle)));
-            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpDonate, (object sender, EventArgs args) => MessageBox.Show(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)));
+            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpStart, (object sender, EventArgs args) => buferManHost.ShowPopup(Resource.MenuHelpStartPrefix + $" {startTime}.", Resource.MenuHelpStartTitle)));
+            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpDonate, (object sender, EventArgs args) => buferManHost.ShowPopup(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)));
             helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.DocumentationMenuItem, (object sender, System.EventArgs e) =>
                 Process.Start("Documentation.html")));
             helpMenu.AddMenuItem(buferManHost.CreateMenuItem("-> klopat.by", (object sender, System.EventArgs e) =>
@@ -205,7 +209,7 @@ namespace BuferMAN.Menu
             helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpAbout, (object sender, EventArgs args) => {
                 var version = ApplicationDeployment.IsNetworkDeployed ? ApplicationDeployment.CurrentDeployment.CurrentVersion : Assembly.GetEntryAssembly().GetName().Version;
 
-                MessageBox.Show(Resource.MenuHelpAboutText + " " + version.ToString(), Resource.MenuHelpAboutTitle); }));
+                buferManHost.ShowPopup(Resource.MenuHelpAboutText + " " + version.ToString(), Resource.MenuHelpAboutTitle); }));
 
             return helpMenu;
         }

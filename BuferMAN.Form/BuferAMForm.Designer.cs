@@ -18,7 +18,7 @@ using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Form.Menu;
 using Logging;
 
-namespace BuferMAN.Form// TODO: Rename this namespace because 'Form' conflicts with system namespace. After that remove 'System.Windows.Forms.' prefix in this file
+namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' conflicts with system namespace. After that remove 'System.Windows.Forms.' prefix in this file
 {
     partial class BuferAMForm
     {
@@ -36,7 +36,7 @@ namespace BuferMAN.Form// TODO: Rename this namespace because 'Form' conflicts w
         internal StatusStrip StatusLine { get; set; }
         public ToolStripStatusLabel StatusLabel { get; set; }
 
-        public BuferAMForm(IEqualityComparer<IDataObject> comparer, IProgramSettings settings, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, IFileStorage fileStorage, IRenderingHandler renderingHandler)
+        public BuferAMForm(IEqualityComparer<IDataObject> comparer, IProgramSettings settings, IClipboardBuferService clipboardBuferService, IFileStorage fileStorage, IRenderingHandler renderingHandler)
         {
             System.Windows.Forms.Application.ThreadException += BuferAMForm._Application_ThreadException;//Must be run before Application.Run() //Note
 
@@ -73,6 +73,26 @@ namespace BuferMAN.Form// TODO: Rename this namespace because 'Form' conflicts w
             return new FormMenuItem("-");
         }
 
+        public bool? ShowYesNoCancelPopup(string text, string caption)
+        {
+            var result = MessageBox.Show(text, caption, MessageBoxButtons.YesNoCancel);
+
+            switch (result)
+            {
+                case DialogResult.Yes:
+                    return true;
+                case DialogResult.No:
+                    return false;
+                default:
+                    return null;
+            }
+        }
+
+        public void ShowPopup(string text, string caption)
+        {
+            MessageBox.Show(text, caption);
+        }
+
         private void InitializeComponent()
         {
             ComponentResourceManager resources = new ComponentResourceManager(typeof(BuferAMForm));
@@ -96,7 +116,7 @@ namespace BuferMAN.Form// TODO: Rename this namespace because 'Form' conflicts w
 
         public void OnFullBuferMAN(object sender, EventArgs e)
         {
-            MessageBox.Show(Resource.AllBufersPinned, Resource.TratataTitle);
+            this.ShowPopup(Resource.AllBufersPinned, Resource.TratataTitle);
             // Maybe display a program window if not ?
         }
 

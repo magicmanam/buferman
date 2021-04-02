@@ -68,7 +68,7 @@ namespace BuferMAN.ContextMenu
 
                     particularFormatMenu.SetOnClickHandler((object sender, EventArgs args) =>
                     {
-                        MessageBox.Show(formatData.ToString(), format);// TODO : remove MessageBox via bufermanhost interface method
+                        buferMANHost.ShowPopup(formatData.ToString(), format);
                     });
                     formatsMenuItems.Add(particularFormatMenu);
                 }
@@ -129,11 +129,11 @@ namespace BuferMAN.ContextMenu
                 menuItems.Add(buferMANHost.CreateMenuSeparatorItem());
 
                 var returnTextToInitialMenuItem = buferMANHost.CreateMenuItem(Resource.MenuReturn);
-                new ReturnToInitialTextMenuItem(returnTextToInitialMenuItem, model.Button, model.MouseOverTooltip);
+                new ReturnToInitialTextMenuItem(returnTextToInitialMenuItem, model.Button, model.MouseOverTooltip, buferMANHost);
                 model.ReturnTextToInitialMenuItem = returnTextToInitialMenuItem;
                 menuItems.Add(model.ReturnTextToInitialMenuItem);
                 var changeTextMenuItem = buferMANHost.CreateMenuItem(Resource.MenuChange);
-                var ctmi = new ChangeTextMenuItem(changeTextMenuItem, model.Button, model.MouseOverTooltip);
+                var ctmi = new ChangeTextMenuItem(changeTextMenuItem, model.Button, model.MouseOverTooltip, buferMANHost);
                 if (!string.IsNullOrWhiteSpace(buferViewModel.Alias))
                 {
                     ctmi.TryChangeText(buferViewModel.Alias);

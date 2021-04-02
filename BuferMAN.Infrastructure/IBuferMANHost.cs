@@ -23,5 +23,7 @@ namespace BuferMAN.Infrastructure
         void SetMainMenu(IEnumerable<BuferMANMenuItem> menuItems);
         BuferMANMenuItem CreateMenuItem(string text, EventHandler eventHandler = null);
         BuferMANMenuItem CreateMenuSeparatorItem();
+        bool? ShowYesNoCancelPopup(string text, string caption);
+        void ShowPopup(string text, string caption);
     }
 }

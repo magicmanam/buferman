@@ -5,21 +5,25 @@ using System.Windows.Forms;
 using magicmanam.Windows;
 using BuferMAN.View;
 using BuferMAN.Infrastructure.Menu;
+using BuferMAN.Infrastructure;
 
 namespace BuferMAN.ContextMenu
 {
     public abstract class ChangingTextMenuItemBase
     {
+        protected IBuferMANHost BuferMANHost { get; set; }
+
         protected BuferMANMenuItem MenuItem { get; private set; }
 
         protected Button Button { get; private set; }
         protected ToolTip MouseOverTooltip { get; private set; }
 
-        protected ChangingTextMenuItemBase(BuferMANMenuItem menuItem, Button button, ToolTip mouseOverTooltip)
+        protected ChangingTextMenuItemBase(BuferMANMenuItem menuItem, Button button, ToolTip mouseOverTooltip, IBuferMANHost buferMANHost)
         {
             this.MenuItem = menuItem;
             this.Button = button;
             this.MouseOverTooltip = mouseOverTooltip;
+            this.BuferMANHost = buferMANHost;
         }
 
         public event EventHandler<TextChangedEventArgs> TextChanged;
@@ -38,7 +42,7 @@ namespace BuferMAN.ContextMenu
                 if (isOriginText)
                 {
                     this.Button.Font = new Font(this.Button.Font, FontStyle.Regular);
-                    MessageBox.Show(Resource.BuferAliasReturned, Resource.ChangeTextTitle);
+                    this.BuferMANHost.ShowPopup(Resource.BuferAliasReturned, Resource.ChangeTextTitle);
                 }
                 else
                 {
