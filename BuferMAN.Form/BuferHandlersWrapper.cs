@@ -30,7 +30,7 @@ namespace BuferMAN.Form
 
         public BuferHandlersWrapper(BuferViewModel buferViewModel, Button button, IBuferContextMenuGenerator buferContextMenuGenerator, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IFileStorage fileStorage, IBuferMANHost buferMANHost, IBufer bufer = null)
         {
-            // TODO : remove Button button parameter
+            // TODO (l) : remove Button button parameter
             this._buferViewModel = buferViewModel;
             this._button = button;
             this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;

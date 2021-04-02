@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace BuferMAN.Clipboard
 {
-    public class ApplicationStateSnapshot // TODO: replace from this assembly with ClipboardBuferService
+    public class ApplicationStateSnapshot // TODO (m) : replace from this assembly with ClipboardBuferService
     {
         public ApplicationStateSnapshot(IList<BuferViewModel> bufers)
         {

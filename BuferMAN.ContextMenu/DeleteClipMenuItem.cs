@@ -127,7 +127,7 @@ namespace BuferMAN.ContextMenu
                 this._timer.Start();
 
                 this._UncheckAllDeleteOptions();
-                (sender as MenuItem).Checked = true;// TODO : sender should be BuferMANMenuItem, not MenuItem
+                (sender as MenuItem).Checked = true;// TODO (m) : sender should be BuferMANMenuItem, not MenuItem
 
                 this._AddCancelDeletionMenuItem();
             };

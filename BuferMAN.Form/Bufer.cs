@@ -7,7 +7,7 @@ namespace BuferMAN.Form
 {
     public class Bufer : IBufer
     {
-        private Button _button;// TODO add readonly modifier
+        private Button _button;// TODO (m) add readonly modifier
 
         public Bufer()
         {

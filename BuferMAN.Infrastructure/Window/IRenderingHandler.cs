@@ -6,6 +6,6 @@ namespace BuferMAN.Infrastructure.Window
     {
         void Render(IBuferMANHost buferMANHost);
 
-        void SetForm(Form form);// TODO remove this method from here
+        void SetForm(Form form);// TODO (l) remove this method from here
     }
 }

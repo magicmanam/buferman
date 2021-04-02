@@ -5,6 +5,6 @@ namespace BuferMAN.Infrastructure
 {
     public interface IBuferHandlersBinder
     {
-        void Bind(BuferViewModel buferViewModel, Button button, IBufer bufer, IBuferMANHost buferMANHost);// TODO remove Button parameter (should be IBufer)
+        void Bind(BuferViewModel buferViewModel, Button button, IBufer bufer, IBuferMANHost buferMANHost);// TODO (l) remove Button parameter (should be IBufer)
     }
 }

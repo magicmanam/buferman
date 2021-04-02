@@ -16,7 +16,7 @@ namespace BuferMAN.Form.Window
 {
 	public class RenderingHandler : IRenderingHandler
     {
-        private BuferAMForm _form;// TODO must be IBuferMANHost
+        private BuferAMForm _form;// TODO (m) must be IBuferMANHost
         private readonly IClipboardBuferService _clipboardBuferService;
         private int _buttonWidth;
         private Label _pinnedClipsDivider;
@@ -39,7 +39,7 @@ namespace BuferMAN.Form.Window
 
         public void SetForm(System.Windows.Forms.Form form)
         {
-            BuferAMForm f = form as BuferAMForm;// TODO : remove this assignment
+            BuferAMForm f = form as BuferAMForm;// TODO (l) : remove this assignment
 
             this._form = f;
             this._buttonWidth = this._form.ClientRectangle.Width;
@@ -106,7 +106,7 @@ namespace BuferMAN.Form.Window
         }
 
         private void _DrawButtonsForBufers(IBuferMANHost buferMANHost, List<BuferViewModel> bufers, int y, int currentButtonIndex,
-            bool persistent = false)// TODO remove this parameter: get from bufers collection, but be careful!!!
+            bool persistent = false)// TODO (l) remove this parameter: get from bufers collection, but be careful!!!
         {
             foreach (var bufer in bufers)
             {
@@ -119,7 +119,7 @@ namespace BuferMAN.Form.Window
                 }
                 else
                 {
-                    var equalObjectFromDeleted = this._removedButtons.ContainsKey(bufer.ViewId);// TODO now this property (_removedButtons) is not needed - this optimization does not make sense
+                    var equalObjectFromDeleted = this._removedButtons.ContainsKey(bufer.ViewId);// TODO (s) now this property (_removedButtons) is not needed - this optimization does not make sense
 
                     if (equalObjectFromDeleted)
                     {
@@ -145,7 +145,7 @@ namespace BuferMAN.Form.Window
                 for (var i = 0; i < button.ContextMenu.MenuItems.Count; i++)
                 {
                     var menuItem = button.ContextMenu.MenuItems[i];
-                    if (menuItem.Shortcut == Shortcut.CtrlS)// TODO remove this condition or even the whole block
+                    if (menuItem.Shortcut == Shortcut.CtrlS)// TODO (m) remove this condition or even the whole block
                     {
                         menuItem.Enabled = !persistent;
                     }
