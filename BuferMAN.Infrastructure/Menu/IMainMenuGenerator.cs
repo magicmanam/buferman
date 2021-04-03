@@ -2,6 +2,6 @@
 {
     public interface IMainMenuGenerator
     {
-        void GenerateMainMenu(IBuferMANHost buferMANHost);
+        void GenerateMainMenu(IBufermanHost bufermanHost);
     }
 }

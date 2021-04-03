@@ -11,19 +11,19 @@ namespace BuferMAN.ContextMenu
 {
     public abstract class ChangingTextMenuItemBase
     {
-        protected IBuferMANHost BuferMANHost { get; set; }
+        protected IBufermanHost BufermanHost { get; set; }
 
         protected BuferMANMenuItem MenuItem { get; private set; }
 
         protected Button Button { get; private set; }
         protected ToolTip MouseOverTooltip { get; private set; }
 
-        protected ChangingTextMenuItemBase(BuferMANMenuItem menuItem, Button button, ToolTip mouseOverTooltip, IBuferMANHost buferMANHost)
+        protected ChangingTextMenuItemBase(BuferMANMenuItem menuItem, Button button, ToolTip mouseOverTooltip, IBufermanHost bufermanHost)
         {
             this.MenuItem = menuItem;
             this.Button = button;
             this.MouseOverTooltip = mouseOverTooltip;
-            this.BuferMANHost = buferMANHost;
+            this.BufermanHost = bufermanHost;
         }
 
         public event EventHandler<TextChangedEventArgs> TextChanged;
@@ -42,7 +42,7 @@ namespace BuferMAN.ContextMenu
                 if (isOriginText)
                 {
                     this.Button.Font = new Font(this.Button.Font, FontStyle.Regular);
-                    this.BuferMANHost.UserInteraction.ShowPopup(Resource.BuferAliasReturned, Resource.ChangeTextTitle);
+                    this.BufermanHost.UserInteraction.ShowPopup(Resource.BuferAliasReturned, Resource.ChangeTextTitle);
                 }
                 else
                 {

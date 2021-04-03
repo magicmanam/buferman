@@ -19,7 +19,7 @@ namespace BuferMAN.Application
         private readonly IClipboardWrapper _clipboardWrapper;
         private readonly ILoadingFileHandler _loadingFileHandler;
         private readonly IIDataObjectHandler _dataObjectHandler;
-        private readonly IBuferMANHost _buferMANHost;
+        private readonly IBufermanHost _bufermanHost;
         private readonly IProgramSettings _settings;
         private readonly BuferItemDataObjectConverter _buferItemDataObjectConverter = new BuferItemDataObjectConverter();
         private long _copiesCount = 0;
@@ -27,9 +27,9 @@ namespace BuferMAN.Application
 
         private event EventHandler<BuferFocusedEventArgs> _BuferFocused;
 
-        public BuferMANApplication(IBuferMANHost buferMANHost, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, ILoadingFileHandler loadingFileHandler, IIDataObjectHandler dataObjectHandler, IProgramSettings settings, IMainMenuGenerator menuGenerator, IWindowLevelContext windowLevelContext)
+        public BuferMANApplication(IBufermanHost bufermanHost, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, ILoadingFileHandler loadingFileHandler, IIDataObjectHandler dataObjectHandler, IProgramSettings settings, IMainMenuGenerator menuGenerator, IWindowLevelContext windowLevelContext)
         {
-            this._buferMANHost = buferMANHost;
+            this._bufermanHost = bufermanHost;
             this._clipboardBuferService = clipboardBuferService;
             this._clipboardWrapper = clipboardWrapper;
 
@@ -37,11 +37,11 @@ namespace BuferMAN.Application
             this._loadingFileHandler.BufersLoaded += this._loadingFileHandler_BufersLoaded;
 
             this._dataObjectHandler = dataObjectHandler;
-            this._dataObjectHandler.Full += this._buferMANHost.OnFullBuferMAN;
+            this._dataObjectHandler.Full += this._bufermanHost.OnFullBuferMAN;
             this._dataObjectHandler.Updated += this.Updated;
 
-            this._buferMANHost.WindowActivated += this.OnWindowActivating;
-            this._buferMANHost.ClipbordUpdated += this.ProcessCopyClipboardEvent;
+            this._bufermanHost.WindowActivated += this.OnWindowActivating;
+            this._bufermanHost.ClipbordUpdated += this.ProcessCopyClipboardEvent;
 
             this._settings = settings;
 
@@ -49,15 +49,15 @@ namespace BuferMAN.Application
 
             UndoableContext<ApplicationStateSnapshot>.Current.UndoableAction += (object sender, UndoableActionEventArgs e) =>
             {
-                this._buferMANHost.SetStatusBarText(e.Action);
+                this._bufermanHost.SetStatusBarText(e.Action);
             };
             UndoableContext<ApplicationStateSnapshot>.Current.UndoAction += (object sender, UndoableActionEventArgs e) =>
             {
-                this._buferMANHost.SetStatusBarText(e.Action);
+                this._bufermanHost.SetStatusBarText(e.Action);
             };
             UndoableContext<ApplicationStateSnapshot>.Current.RedoAction += (object sender, UndoableActionEventArgs e) =>
             {
-                this._buferMANHost.SetStatusBarText(e.Action);
+                this._bufermanHost.SetStatusBarText(e.Action);
             };
 
             if (File.Exists(settings.DefaultBufersFileName))
@@ -65,10 +65,10 @@ namespace BuferMAN.Application
                 this.LoadBufersFromStorage();
             }
 
-            menuGenerator.GenerateMainMenu(buferMANHost);
+            menuGenerator.GenerateMainMenu(bufermanHost);
 
-            buferMANHost.SetOnKeyDown(this.OnKeyDown);
-            this._BuferFocused += buferMANHost.BuferFocused;
+            bufermanHost.SetOnKeyDown(this.OnKeyDown);
+            this._BuferFocused += bufermanHost.BuferFocused;
 
             WindowLevelContext.SetCurrent(windowLevelContext);
         }
@@ -85,14 +85,14 @@ namespace BuferMAN.Application
 
                 if (this._copiesCount == 100)
                 {
-                    this._buferMANHost.NotificationEmitter.ShowInfoNotification(Resource.NotifyIcon100Congrats, 2500);
+                    this._bufermanHost.NotificationEmitter.ShowInfoNotification(Resource.NotifyIcon100Congrats, 2500);
                 }
                 else if (this._copiesCount == 1000)
                 {
-                    this._buferMANHost.NotificationEmitter.ShowInfoNotification(Resource.NotifyIcon1000Congrats, 2500);
+                    this._bufermanHost.NotificationEmitter.ShowInfoNotification(Resource.NotifyIcon1000Congrats, 2500);
                 }
 
-                this._buferMANHost.SetStatusBarText(Resource.LastClipboardUpdate + DateTime.Now.ToShortTimeString());//Should be in separate strip label
+                this._bufermanHost.SetStatusBarText(Resource.LastClipboardUpdate + DateTime.Now.ToShortTimeString());//Should be in separate strip label
             }
         }
 
@@ -135,7 +135,7 @@ namespace BuferMAN.Application
                     if (e.Alt)
                     {
                         this._shouldCatchCopies = !this._shouldCatchCopies;
-                        this._buferMANHost.SetStatusBarText(this._shouldCatchCopies ? Resource.ResumedStatus : Resource.PausedStatus);
+                        this._bufermanHost.SetStatusBarText(this._shouldCatchCopies ? Resource.ResumedStatus : Resource.PausedStatus);
                     }
                     break;
             }
@@ -143,9 +143,9 @@ namespace BuferMAN.Application
 
         public void Updated(object sender, EventArgs e)
         {
-            if (this._buferMANHost.IsVisible)
+            if (this._bufermanHost.IsVisible)
             {
-                this._buferMANHost.RerenderBufers();
+                this._bufermanHost.RerenderBufers();
                 this.NeedRerender = false;
             }
             else

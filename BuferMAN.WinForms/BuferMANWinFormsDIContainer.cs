@@ -9,7 +9,7 @@ namespace BuferMAN.WinForms
     {
         public BufermanWinFormsDIContainer()
         {
-            this.Register<IBuferMANHost, BuferAMForm>(Lifestyle.Singleton);
+            this.Register<IBufermanHost, BuferAMForm>(Lifestyle.Singleton);
         }
     }
 }

@@ -8,14 +8,14 @@ namespace BuferMAN.Menu.Plugins
 {
     public class BatterySaverMenuItemFactory
     {
-        private readonly IBuferMANHost _buferManHost;
+        private readonly IBufermanHost _buferManHost;
         private const string NOTIFICATION_TITLE = "Battery saver plugin";
         private const int INTERVAL_IN_SECONDS = 60;
 
         private int _highLimit = 90;
         private int _lowLimit = 25;
 
-        public BatterySaverMenuItemFactory(IBuferMANHost buferManHost)
+        public BatterySaverMenuItemFactory(IBufermanHost buferManHost)
         {
             this._buferManHost = buferManHost;
         }

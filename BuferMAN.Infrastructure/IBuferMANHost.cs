@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace BuferMAN.Infrastructure
 {
-    public interface IBuferMANHost
+    public interface IBufermanHost
     {
         event EventHandler ClipbordUpdated;
         event EventHandler WindowActivated;

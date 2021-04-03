@@ -5,7 +5,7 @@ using BuferMAN.Infrastructure;
 
 namespace BuferMAN.Form
 {
-	public partial class BuferAMForm : System.Windows.Forms.Form, IBuferMANHost
+	public partial class BuferAMForm : System.Windows.Forms.Form, IBufermanHost
     {
         protected override void OnClosed(EventArgs e)
         {

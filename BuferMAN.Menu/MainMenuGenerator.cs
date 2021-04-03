@@ -29,7 +29,7 @@ namespace BuferMAN.Menu
             this._settings = settings;
         }
 
-        public void GenerateMainMenu(IBuferMANHost buferManHost)
+        public void GenerateMainMenu(IBufermanHost buferManHost)
         {
             var items = new List<BuferMANMenuItem>
             {
@@ -42,7 +42,7 @@ namespace BuferMAN.Menu
             buferManHost.SetMainMenu(items);
         }
 
-        private BuferMANMenuItem _GenerateFileMenu(IBuferMANHost buferManHost)
+        private BuferMANMenuItem _GenerateFileMenu(IBufermanHost buferManHost)
         {
             var fileMenu = buferManHost.CreateMenuItem(Resource.MenuFile);
 
@@ -54,26 +54,26 @@ namespace BuferMAN.Menu
             return fileMenu;
         }
 
-        private BuferMANMenuItem _GenerateEditMenu(IBuferMANHost buferMANHost)
+        private BuferMANMenuItem _GenerateEditMenu(IBufermanHost bufermanHost)
         {
-            var editMenu = buferMANHost.CreateMenuItem(Resource.MenuEdit);
+            var editMenu = bufermanHost.CreateMenuItem(Resource.MenuEdit);
 
-            var undoMenuItem = buferMANHost.CreateMenuItem(Resource.MenuEditUndo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Undo(); WindowLevelContext.Current.RerenderBufers(); });
+            var undoMenuItem = bufermanHost.CreateMenuItem(Resource.MenuEditUndo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Undo(); WindowLevelContext.Current.RerenderBufers(); });
             undoMenuItem.ShortCut = Shortcut.CtrlZ;
             undoMenuItem.Enabled = false;
 
             editMenu.AddMenuItem(undoMenuItem);
 
-            var redoMenuItem = buferMANHost.CreateMenuItem(Resource.MenuEditRedo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Redo(); WindowLevelContext.Current.RerenderBufers(); });
+            var redoMenuItem = bufermanHost.CreateMenuItem(Resource.MenuEditRedo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Redo(); WindowLevelContext.Current.RerenderBufers(); });
             redoMenuItem.ShortCut = Shortcut.CtrlY;
             redoMenuItem.Enabled = false;
 
             editMenu.AddMenuItem(redoMenuItem);
-            var deleteAllMenuItem = buferMANHost.CreateMenuItem(Resource.MenuEditDel, this._GetOnDeleteAllHandler(buferMANHost));
+            var deleteAllMenuItem = bufermanHost.CreateMenuItem(Resource.MenuEditDel, this._GetOnDeleteAllHandler(bufermanHost));
 
             editMenu.AddMenuItem(deleteAllMenuItem);
 
-            var deleteTemporaryMenuItem = buferMANHost.CreateMenuItem(Resource.MenuEditDelTemp, this._OnDeleteAllTemporary);
+            var deleteTemporaryMenuItem = bufermanHost.CreateMenuItem(Resource.MenuEditDelTemp, this._OnDeleteAllTemporary);
 
             editMenu.AddMenuItem(deleteTemporaryMenuItem);
 
@@ -92,13 +92,13 @@ namespace BuferMAN.Menu
             return editMenu;
         }
 
-        private EventHandler _GetOnDeleteAllHandler(IBuferMANHost buferMANHost)
+        private EventHandler _GetOnDeleteAllHandler(IBufermanHost bufermanHost)
         {
             return (object sender, EventArgs args) =>
             {
                 if (this._clipboardBuferService.GetPinnedBufers().Any())
                 {
-                    var result = buferMANHost.UserInteraction.ShowYesNoCancelPopup(Resource.MenuEditDelText, Resource.MenuEditDelTitle);
+                    var result = bufermanHost.UserInteraction.ShowYesNoCancelPopup(Resource.MenuEditDelText, Resource.MenuEditDelTitle);
 
                     switch (result)
                     {
@@ -125,7 +125,7 @@ namespace BuferMAN.Menu
             WindowLevelContext.Current.RerenderBufers();
         }
 
-        private BuferMANMenuItem _GenerateToolsMenu(IBuferMANHost buferManHost)
+        private BuferMANMenuItem _GenerateToolsMenu(IBufermanHost buferManHost)
         {
             var toolsMenu = buferManHost.CreateMenuItem(Resource.MenuTools);
 
@@ -136,7 +136,7 @@ namespace BuferMAN.Menu
             return toolsMenu;
         }
 
-        private BuferMANMenuItem _GeneratePluginsMenu(IBuferMANHost buferManHost)
+        private BuferMANMenuItem _GeneratePluginsMenu(IBufermanHost buferManHost)
         {
             var pluginsMenu = buferManHost.CreateMenuItem(Resource.MenuToolsPlugins);
 
@@ -153,7 +153,7 @@ namespace BuferMAN.Menu
             return pluginsMenu;
         }
 
-        private BuferMANMenuItem _GenerateLanguageMenu(IBuferMANHost buferManHost)
+        private BuferMANMenuItem _GenerateLanguageMenu(IBufermanHost buferManHost)
         {
             // во время открытия приложения показывать диалог с выбором языка и сохранять это значение
             var languageMenu = buferManHost.CreateMenuItem(Resource.MenuToolsLanguage);
@@ -182,7 +182,7 @@ namespace BuferMAN.Menu
             return languageMenu;
         }
 
-        private EventHandler _createLanguageEventHandler(string culture, IBuferMANHost buferManHost)
+        private EventHandler _createLanguageEventHandler(string culture, IBufermanHost buferManHost)
         {
             return (object sender, EventArgs args) =>
             {
@@ -193,7 +193,7 @@ namespace BuferMAN.Menu
             };
         }
 
-        private BuferMANMenuItem _GenerateHelpMenu(IBuferMANHost buferManHost)
+        private BuferMANMenuItem _GenerateHelpMenu(IBufermanHost buferManHost)
         {
             var helpMenu = buferManHost.CreateMenuItem(Resource.MenuHelp);
             var startTime = DateTime.Now;

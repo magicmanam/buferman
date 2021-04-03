@@ -22,13 +22,13 @@ namespace BuferMAN.Form
         private readonly ToolTip _focusTooltip = new ToolTip() { OwnerDraw = false };
         private const float IMAGE_SCALE = 0.75f;
 
-        public BuferHandlersWrapper(IDataObject dataObject, Button button, IBuferContextMenuGenerator buferContextMenuGenerator, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IFileStorage fileStorage, IBuferMANHost buferMANHost, IBufer bufer = null)
-            : this(new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now }, button, buferContextMenuGenerator, buferSelectionHandlerFactory, fileStorage, buferMANHost, bufer)
+        public BuferHandlersWrapper(IDataObject dataObject, Button button, IBuferContextMenuGenerator buferContextMenuGenerator, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IFileStorage fileStorage, IBufermanHost bufermanHost, IBufer bufer = null)
+            : this(new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now }, button, buferContextMenuGenerator, buferSelectionHandlerFactory, fileStorage, bufermanHost, bufer)
         {
 
         }
 
-        public BuferHandlersWrapper(BuferViewModel buferViewModel, Button button, IBuferContextMenuGenerator buferContextMenuGenerator, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IFileStorage fileStorage, IBuferMANHost buferMANHost, IBufer bufer = null)
+        public BuferHandlersWrapper(BuferViewModel buferViewModel, Button button, IBuferContextMenuGenerator buferContextMenuGenerator, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IFileStorage fileStorage, IBufermanHost bufermanHost, IBufer bufer = null)
         {
             // TODO (l) : remove Button button parameter
             this._buferViewModel = buferViewModel;
@@ -161,7 +161,7 @@ namespace BuferMAN.Form
             button.Click += buferSelectionHandler.DoOnClipSelection;
 
             bufer.SetButton(button);
-            bufer.SetContextMenu(buferContextMenuGenerator.GenerateContextMenu(this._buferViewModel, button, tooltip, isChangeTextAvailable, buferSelectionHandler, buferMANHost));
+            bufer.SetContextMenu(buferContextMenuGenerator.GenerateContextMenu(this._buferViewModel, button, tooltip, isChangeTextAvailable, buferSelectionHandler, bufermanHost));
         }
 
         private void _MakeItalicBoldFont(Button button)

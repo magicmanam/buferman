@@ -42,7 +42,7 @@
     <Compile Include="Environment\IStarter.cs" />
     <Compile Include="IBufer.cs" />
     <Compile Include="IBuferHandlersBinder.cs" />
-    <Compile Include="IBuferMANHost.cs" />
+    <Compile Include="IBufermanHost.cs" />
     <Compile Include="IBuferSelectionHandlerFactory.cs" />
     <Compile Include="IBuferSelectionHandler.cs" />
     <Compile Include="Menu\BuferMANMenuItem.cs" />

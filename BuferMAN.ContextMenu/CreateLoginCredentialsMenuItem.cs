@@ -12,7 +12,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
 {
     public class CreateLoginCredentialsMenuItem : ChangingTextMenuItemBase
     {
-        public CreateLoginCredentialsMenuItem(BuferMANMenuItem menuItem, Button button, ToolTip mouseOverTooltip, IBuferMANHost buferMANHost) : base(menuItem, button, mouseOverTooltip, buferMANHost)
+        public CreateLoginCredentialsMenuItem(BuferMANMenuItem menuItem, Button button, ToolTip mouseOverTooltip, IBufermanHost bufermanHost) : base(menuItem, button, mouseOverTooltip, bufermanHost)
         {
             menuItem.SetOnClickHandler(this._CreateLoginCredentials);
             menuItem.ShortCut = Shortcut.CtrlL;
@@ -28,7 +28,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                this.BuferMANHost.UserInteraction.ShowPopup(Resource.EmptyPasswordError, Resource.CreateCredsTitle);
+                this.BufermanHost.UserInteraction.ShowPopup(Resource.EmptyPasswordError, Resource.CreateCredsTitle);
             }
             else
             {
@@ -47,7 +47,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
                         .PressEnter();
                 };
 
-                var credsPasswordEnterMenuItem = this.BuferMANHost.CreateMenuItem(Resource.CredsPasswordEnter, (object pastePasswordSender, EventArgs args) =>
+                var credsPasswordEnterMenuItem = this.BufermanHost.CreateMenuItem(Resource.CredsPasswordEnter, (object pastePasswordSender, EventArgs args) =>
                 {
                     WindowLevelContext.Current.HideWindow();
                     new KeyboardEmulator()
@@ -56,7 +56,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
                 });
                 this.MenuItem.AddMenuItem(credsPasswordEnterMenuItem);
 
-                var credsPasswordMenuItem = this.BuferMANHost.CreateMenuItem(Resource.CredsPassword, (object pastePasswordSender, EventArgs args) =>
+                var credsPasswordMenuItem = this.BufermanHost.CreateMenuItem(Resource.CredsPassword, (object pastePasswordSender, EventArgs args) =>
                 {
                     WindowLevelContext.Current.HideWindow();
 
@@ -65,7 +65,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
                 });
                 this.MenuItem.AddMenuItem(credsPasswordMenuItem);
 
-                var credsNameMenuItem = this.BuferMANHost.CreateMenuItem(Resource.CredsName, (object pasteUsernameSender, EventArgs args) =>
+                var credsNameMenuItem = this.BufermanHost.CreateMenuItem(Resource.CredsName, (object pasteUsernameSender, EventArgs args) =>
                 {
                     WindowLevelContext.Current.HideWindow();
 

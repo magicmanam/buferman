@@ -24,7 +24,7 @@ namespace BuferMAN.Form.Tests
             var originText = " Text";
             var data = new DataObject(DataFormats.Text, originText);
             data.SetData(DataFormats.StringFormat, string.Empty);
-            var wrapper = new BuferHandlersWrapper(new BuferViewModel { Clip = data }, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), A.Fake<IFileStorage>(), A.Fake<IBuferMANHost>());
+            var wrapper = new BuferHandlersWrapper(new BuferViewModel { Clip = data }, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), A.Fake<IFileStorage>(), A.Fake<IBufermanHost>());
 
             Assert.AreEqual(originText, (button.Tag as BuferViewModel).Representation);
             Assert.AreEqual(originText.Trim(), button.Text);
@@ -38,7 +38,7 @@ namespace BuferMAN.Form.Tests
             var data = new DataObject(DataFormats.StringFormat, originText);
             data.SetData(DataFormats.Text, " Text");
             data.SetData(DataFormats.UnicodeText, null);
-            var wrapper = new BuferHandlersWrapper(new BuferViewModel { Clip = data }, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), A.Fake<IFileStorage>(), A.Fake<IBuferMANHost>());
+            var wrapper = new BuferHandlersWrapper(new BuferViewModel { Clip = data }, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), A.Fake<IFileStorage>(), A.Fake<IBufermanHost>());
 
             Assert.AreEqual(originText, (button.Tag as BuferViewModel).Representation);
             Assert.AreEqual(originText.Trim(), button.Text);
@@ -52,7 +52,7 @@ namespace BuferMAN.Form.Tests
             var data = new DataObject(DataFormats.UnicodeText, originText);
             data.SetData(DataFormats.Text, " Text");
             data.SetData(DataFormats.StringFormat, " String");
-            var wrapper = new BuferHandlersWrapper(data, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), A.Fake<IFileStorage>(), A.Fake<IBuferMANHost>());
+            var wrapper = new BuferHandlersWrapper(data, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), A.Fake<IFileStorage>(), A.Fake<IBufermanHost>());
 
             Assert.AreEqual(originText, (button.Tag as BuferViewModel).Representation);
             Assert.AreEqual(originText.Trim(), button.Text);
@@ -68,7 +68,7 @@ namespace BuferMAN.Form.Tests
             A.CallTo(() => fileStorage.GetFileAttributes(file)).Returns(FileAttributes.Normal);
             A.CallTo(() => fileStorage.GetFileDirectory(file)).Returns("C:\\");
             A.CallTo(() => fileStorage.GetFileName(file)).Returns("file.txt");
-            var wrapper = new BuferHandlersWrapper(data, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), fileStorage, A.Fake<IBuferMANHost>());
+            var wrapper = new BuferHandlersWrapper(data, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), fileStorage, A.Fake<IBufermanHost>());
 
             Assert.AreEqual($"<< {Resource.FileBufer} >>", button.Text);
             Assert.AreEqual("C:\\" + Environment.NewLine + Environment.NewLine + "file.txt", (button.Tag as BuferViewModel).Representation);
@@ -87,7 +87,7 @@ namespace BuferMAN.Form.Tests
             A.CallTo(() => fileStorage.GetFileName(file1)).Returns("file1.ext");
             A.CallTo(() => fileStorage.GetFileName(file2)).Returns("file2.ext");
 
-            var wrapper = new BuferHandlersWrapper(data, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), fileStorage, A.Fake<IBuferMANHost>());
+            var wrapper = new BuferHandlersWrapper(data, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), fileStorage, A.Fake<IBufermanHost>());
 
             Assert.AreEqual($"<< {Resource.FilesBufer} (2) >>", button.Text);
             Assert.AreEqual("c:\\" + Environment.NewLine + Environment.NewLine + "file1.ext" + Environment.NewLine + "file2.ext", (button.Tag as BuferViewModel).Representation);
@@ -107,7 +107,7 @@ namespace BuferMAN.Form.Tests
             A.CallTo(() => fileStorage.GetFileName(folder)).Returns("folder");
             A.CallTo(() => fileStorage.GetFileAttributes(folder)).Returns(FileAttributes.Directory);
 
-            var wrapper = new BuferHandlersWrapper(data, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), fileStorage, A.Fake<IBuferMANHost>());
+            var wrapper = new BuferHandlersWrapper(data, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), fileStorage, A.Fake<IBufermanHost>());
 
             Assert.AreEqual($"<< {Resource.FilesBufer} (2) >>", button.Text);
             Assert.AreEqual("c:\\" + Environment.NewLine + Environment.NewLine + "file1.ext" + Environment.NewLine + "folder\\", (button.Tag as BuferViewModel).Representation);
@@ -119,7 +119,7 @@ namespace BuferMAN.Form.Tests
             var button = new Button();
             var oldFont = button.Font;
             var data = new DataObject(ClipboardFormats.CUSTOM_IMAGE_FORMAT, new object());
-            var wrapper = new BuferHandlersWrapper(data, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), A.Fake<IFileStorage>(), A.Fake<IBuferMANHost>());
+            var wrapper = new BuferHandlersWrapper(data, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), A.Fake<IFileStorage>(), A.Fake<IBufermanHost>());
 
             Assert.AreEqual($"<< {Resource.ImageBufer} >>", button.Text);
             Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), button.Font);
@@ -131,7 +131,7 @@ namespace BuferMAN.Form.Tests
             var button = new Button();
             var oldFont = button.Font;
             var data = new DataObject(ClipboardFormats.FILE_CONTENTS_FORMAT, new object());
-            var wrapper = new BuferHandlersWrapper(data, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), A.Fake<IFileStorage>(), A.Fake<IBuferMANHost>());
+            var wrapper = new BuferHandlersWrapper(data, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), A.Fake<IFileStorage>(), A.Fake<IBufermanHost>());
 
             Assert.AreEqual($"<< {Resource.FileContentsBufer} >>", button.Text);
             Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), button.Font);
@@ -143,7 +143,7 @@ namespace BuferMAN.Form.Tests
             var button = new Button();
             var oldFont = button.Font;
             var data = new DataObject(DataFormats.UnicodeText, null);
-            var wrapper = new BuferHandlersWrapper(data, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), A.Fake<IFileStorage>(), A.Fake<IBuferMANHost>());
+            var wrapper = new BuferHandlersWrapper(data, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), A.Fake<IFileStorage>(), A.Fake<IBufermanHost>());
 
             Assert.AreEqual($"<< {Resource.NotTextBufer} >>", button.Text);
             Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), button.Font);
@@ -155,7 +155,7 @@ namespace BuferMAN.Form.Tests
             var button = new Button();
             var oldFont = button.Font;
             var data = new DataObject(DataFormats.UnicodeText, "   ");
-            var wrapper = new BuferHandlersWrapper(data, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), A.Fake<IFileStorage>(), A.Fake<IBuferMANHost>());
+            var wrapper = new BuferHandlersWrapper(data, button, A.Fake<IBuferContextMenuGenerator>(), A.Fake<IBuferSelectionHandlerFactory>(), A.Fake<IFileStorage>(), A.Fake<IBufermanHost>());
 
             Assert.AreEqual($"<< 3   {Resource.WhiteSpaces} >>", button.Text);
             Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), button.Font);

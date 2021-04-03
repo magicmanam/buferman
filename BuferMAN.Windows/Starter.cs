@@ -10,9 +10,9 @@ namespace BuferMAN.Windows
     public class Starter : IStarter
     {
         private readonly IUserInteraction _userInteraction;
-        private readonly IBuferMANHost _bufermanHost;
+        private readonly IBufermanHost _bufermanHost;
 
-        public Starter(IUserInteraction userInteraction, IBuferMANHost bufermanHost)
+        public Starter(IUserInteraction userInteraction, IBufermanHost bufermanHost)
         {
             this._userInteraction = userInteraction;
             this._bufermanHost = bufermanHost;

@@ -48,7 +48,7 @@ namespace BuferMAN.Form.Window
             this._pinnedClipsDivider.BringToFront();
         }
 
-        public void Render(IBuferMANHost buferMANHost)
+        public void Render(IBufermanHost bufermanHost)
         {
             var pinnedBufers = this._clipboardBuferService.GetPinnedBufers();
 
@@ -94,18 +94,18 @@ namespace BuferMAN.Form.Window
 
             if (temporaryBufers.Any())
             {
-                this._DrawButtonsForBufers(buferMANHost, temporaryBufers, temporaryBufers.Count * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count - 1);
+                this._DrawButtonsForBufers(bufermanHost, temporaryBufers, temporaryBufers.Count * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count - 1);
             }
 
             this._pinnedClipsDivider.Location = new Point(0, temporaryBufers.Count * BUTTON_HEIGHT + 1);
 
             if (pinnedBufers.Any())
             {
-                this._DrawButtonsForBufers(buferMANHost, pinnedBufers.ToList(), this._pinnedClipsDivider.Location.Y + this._pinnedClipsDivider.Height + 1 + pinnedBufers.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count + pinnedBufers.Count() - 1, true);
+                this._DrawButtonsForBufers(bufermanHost, pinnedBufers.ToList(), this._pinnedClipsDivider.Location.Y + this._pinnedClipsDivider.Height + 1 + pinnedBufers.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count + pinnedBufers.Count() - 1, true);
             }
         }
 
-        private void _DrawButtonsForBufers(IBuferMANHost buferMANHost, List<BuferViewModel> bufers, int y, int currentButtonIndex,
+        private void _DrawButtonsForBufers(IBufermanHost bufermanHost, List<BuferViewModel> bufers, int y, int currentButtonIndex,
             bool persistent = false)// TODO (l) remove this parameter: get from bufers collection, but be careful!!!
         {
             foreach (var bufer in bufers)
@@ -133,7 +133,7 @@ namespace BuferMAN.Form.Window
                         button.LostFocus += Clip_LostFocus;
 
                         var buf = new Bufer();
-                        this._buferHandlersBinder.Bind(bufer, button, buf, buferMANHost);
+                        this._buferHandlersBinder.Bind(bufer, button, buf, bufermanHost);
 
                         this._TryApplyPresentation(bufer.Clip, button);
                     }

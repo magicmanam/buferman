@@ -20,9 +20,9 @@ namespace BuferMAN.Form
             this._fileStorage = fileStorage;
         }
 
-        public void Bind(BuferViewModel buferViewModel, Button button, IBufer bufer, IBuferMANHost buferMANHost)
+        public void Bind(BuferViewModel buferViewModel, Button button, IBufer bufer, IBufermanHost bufermanHost)
         {
-            new BuferHandlersWrapper(buferViewModel, button, this._buferContextMenuGenerator, this._buferSelectionHandlerFactory, this._fileStorage, buferMANHost, bufer);
+            new BuferHandlersWrapper(buferViewModel, button, this._buferContextMenuGenerator, this._buferSelectionHandlerFactory, this._fileStorage, bufermanHost, bufer);
         }
     }
 }
