@@ -68,7 +68,7 @@ namespace BuferMAN.ContextMenu
 
                     particularFormatMenu.SetOnClickHandler((object sender, EventArgs args) =>
                     {
-                        buferMANHost.ShowPopup(formatData.ToString(), format);
+                        buferMANHost.UserInteraction.ShowPopup(formatData.ToString(), format);
                     });
                     formatsMenuItems.Add(particularFormatMenu);
                 }

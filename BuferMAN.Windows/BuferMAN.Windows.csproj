@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{19DFDADA-87FF-4E18-BB5D-692AF8EA4E4C}</ProjectGuid>
+    <ProjectGuid>{D3919A1F-466B-4BF2-84BA-65E11E2AF3CE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BuferMAN.Application</RootNamespace>
-    <AssemblyName>BuferMAN.Application</AssemblyName>
+    <RootNamespace>BuferMAN.Windows</RootNamespace>
+    <AssemblyName>BuferMAN.Windows</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -31,83 +31,57 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="magicmanam.UndoRedo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\magicmanam.UndoRedo.1.0.0.1\lib\net45\magicmanam.UndoRedo.dll</HintPath>
-    </Reference>
-    <Reference Include="magicmanam.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\magicmanam.Windows.1.0.2\lib\net45\magicmanam.Windows.dll</HintPath>
+    <Reference Include="SimpleInjector, Version=5.0.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.5.3.0\lib\net45\SimpleInjector.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuferMANApplication.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resource.ru.Designer.cs">
+    <Compile Include="BufermanWindowsDIContainer.cs" />
+    <Compile Include="Resource.ru.Designer.cs">
       <DependentUpon>Resource.ru.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Properties\Resource.Designer.cs">
+    <Compile Include="Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Starter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserInteraction.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BuferMAN.Clipboard\BuferMAN.Clipboard.csproj">
-      <Project>{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}</Project>
-      <Name>BuferMAN.Clipboard</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BuferMAN.Files\BuferMAN.Files.csproj">
-      <Project>{A7DA5919-18BB-4D6F-B492-2D241B3FEF1C}</Project>
-      <Name>BuferMAN.Files</Name>
+    <ProjectReference Include="..\BuferMAN.DI\BuferMAN.DI.csproj">
+      <Project>{01BC52AE-FF2F-44E3-89F3-22C8AB487690}</Project>
+      <Name>BuferMAN.DI</Name>
     </ProjectReference>
     <ProjectReference Include="..\BuferMAN.Infrastructure\BuferMAN.Infrastructure.csproj">
       <Project>{F14888DE-E3DE-4225-80AA-F836DCBA8E2E}</Project>
       <Name>BuferMAN.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BuferMAN.Models\BuferMAN.Models.csproj">
-      <Project>{E949968B-00F2-4CAA-8C8A-3053CBF79A63}</Project>
-      <Name>BuferMAN.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BuferMAN.Storage\BuferMAN.Storage.csproj">
-      <Project>{4C95D126-7345-4F6A-8BB6-DDE908E37E63}</Project>
-      <Name>BuferMAN.Storage</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BuferMAN.View\BuferMAN.View.csproj">
-      <Project>{60FACDBB-0E8F-4EA9-8E18-99294EF5908A}</Project>
-      <Name>BuferMAN.View</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resource.ru.resx">
+    <EmbeddedResource Include="Resource.ru.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.ru.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resource.resx">
+    <EmbeddedResource Include="Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="copy-multi-size.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Documentation.html">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="folder.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="skype.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

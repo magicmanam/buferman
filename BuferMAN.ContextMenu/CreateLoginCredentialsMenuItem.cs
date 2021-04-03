@@ -28,7 +28,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
 
             if (string.IsNullOrWhiteSpace(password))
             {
-                this.BuferMANHost.ShowPopup(Resource.EmptyPasswordError, Resource.CreateCredsTitle);
+                this.BuferMANHost.UserInteraction.ShowPopup(Resource.EmptyPasswordError, Resource.CreateCredsTitle);
             }
             else
             {

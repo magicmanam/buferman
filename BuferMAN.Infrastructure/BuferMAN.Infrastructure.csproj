@@ -38,6 +38,8 @@
   <ItemGroup>
     <Compile Include="BuferFocusedEventArgs.cs" />
     <Compile Include="ContextMenu\IBuferContextMenuGenerator.cs" />
+    <Compile Include="Environment\IUserInteraction.cs" />
+    <Compile Include="Environment\IStarter.cs" />
     <Compile Include="IBufer.cs" />
     <Compile Include="IBuferHandlersBinder.cs" />
     <Compile Include="IBuferMANHost.cs" />
@@ -72,5 +74,6 @@
       <Name>BuferMAN.View</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

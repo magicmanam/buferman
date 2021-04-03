@@ -17,12 +17,13 @@ using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Form.Menu;
 using Logging;
+using BuferMAN.Infrastructure.Environment;
 
 namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' conflicts with system namespace. After that remove 'System.Windows.Forms.' prefix in this file
 {
     partial class BuferAMForm
     {
-        private readonly IEqualityComparer<IDataObject> _comparer;
+        private readonly IUserInteraction _userInteraction;
         private readonly IDictionary<Guid, Button> _buttonsMap;
         private ClipboardViewer _clipboardViewer;
         private readonly IRenderingHandler _renderingHandler;
@@ -36,25 +37,12 @@ namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' confli
         internal StatusStrip StatusLine { get; set; }
         public ToolStripStatusLabel StatusLabel { get; set; }
 
-        public BuferAMForm(IEqualityComparer<IDataObject> comparer, IProgramSettings settings, IClipboardBuferService clipboardBuferService, IFileStorage fileStorage, IRenderingHandler renderingHandler)
+        public BuferAMForm(IProgramSettings settings, IClipboardBuferService clipboardBuferService, IFileStorage fileStorage, IRenderingHandler renderingHandler, IUserInteraction userInteraction)
         {
-            System.Windows.Forms.Application.ThreadException += BuferAMForm._Application_ThreadException;//Must be run before Application.Run() //Note
-
-            System.Windows.Forms.Application.EnableVisualStyles();
-
-            InitializeComponent();
-            var principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
-            InitializeForm(principal.IsInRole(WindowsBuiltInRole.Administrator));
-
-            this.NotificationEmitter = new NotificationEmitter(this.TrayIcon, Resource.WindowTitle);
-            this._comparer = comparer;
             this._buttonsMap = new Dictionary<Guid, Button>(settings.MaxBufersCount + settings.ExtraBufersCount);
-
-            this._StartTrickTimer(23);
-            this.NotificationEmitter.ShowInfoNotification(Resource.NotifyIconStartupText, 1500);
-
-            renderingHandler.SetForm(this);
             this._renderingHandler = renderingHandler;
+
+            this._userInteraction = userInteraction;
         }
 
         public void SetMainMenu(IEnumerable<BuferMANMenuItem> menuItems)
@@ -71,26 +59,6 @@ namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' confli
         public BuferMANMenuItem CreateMenuSeparatorItem()
         {
             return new FormMenuItem("-");
-        }
-
-        public bool? ShowYesNoCancelPopup(string text, string caption)
-        {
-            var result = MessageBox.Show(text, caption, MessageBoxButtons.YesNoCancel);
-
-            switch (result)
-            {
-                case DialogResult.Yes:
-                    return true;
-                case DialogResult.No:
-                    return false;
-                default:
-                    return null;
-            }
-        }
-
-        public void ShowPopup(string text, string caption)
-        {
-            MessageBox.Show(text, caption);
         }
 
         private void InitializeComponent()
@@ -114,10 +82,18 @@ namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' confli
             this.KeyDown += handler;
         }
 
+        public IUserInteraction UserInteraction
+        {
+            get
+            {
+                return this._userInteraction;
+            }
+        }
+
         public void OnFullBuferMAN(object sender, EventArgs e)
         {
-            this.ShowPopup(Resource.AllBufersPinned, Resource.TratataTitle);
-            // Maybe display a program window if not ?
+            this.UserInteraction.ShowPopup(Resource.AllBufersPinned, Resource.TratataTitle);
+            // Maybe display a program window if not ? For example open Settings window where user can update max bufers count
         }
 
         public bool IsVisible
@@ -130,17 +106,30 @@ namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' confli
 
         public void Start()
         {
+            System.Windows.Forms.Application.ThreadException += BuferAMForm._Application_ThreadException;//Must be run before Application.Run() //Note
+
+            System.Windows.Forms.Application.EnableVisualStyles();
+
+            InitializeComponent();
+            var principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+            InitializeForm(principal.IsInRole(WindowsBuiltInRole.Administrator));
+
+            this.NotificationEmitter = new NotificationEmitter(this.TrayIcon, Resource.WindowTitle);
+
+            this.NotificationEmitter.ShowInfoNotification(Resource.NotifyIconStartupText, 1500);
+
+            this._renderingHandler.SetForm(this);
+
             System.Windows.Forms.Application.Run(this);
         }
 
-        //TODO Find better solution
         private void _StartTrickTimer(int intervalSeconds)
         {
             var trickTimer = new Timer();
             trickTimer.Interval = intervalSeconds * 1000;
             trickTimer.Tick += this._TrickTimer_Tick;
             trickTimer.Start();
-        }
+        }//TODO Find better solution
 
         private void _TrickTimer_Tick(object sender, EventArgs e)
         {
@@ -171,6 +160,8 @@ namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' confli
             {
                 this._clipboardViewer = new ClipboardViewer(this.Handle);
                 WindowsFunctions.RegisterHotKey(this.Handle, 0, 1, (int)Keys.C);
+
+                this._StartTrickTimer(23);
             }
             else if (this._clipboardViewer != null)
             {

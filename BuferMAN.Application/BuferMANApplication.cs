@@ -71,8 +71,6 @@ namespace BuferMAN.Application
             this._BuferFocused += buferMANHost.BuferFocused;
 
             WindowLevelContext.SetCurrent(windowLevelContext);
-
-            buferMANHost.Start();
         }
 
         public bool NeedRerender { get; set; }

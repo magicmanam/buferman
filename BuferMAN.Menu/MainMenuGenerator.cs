@@ -98,7 +98,7 @@ namespace BuferMAN.Menu
             {
                 if (this._clipboardBuferService.GetPinnedBufers().Any())
                 {
-                    var result = buferMANHost.ShowYesNoCancelPopup(Resource.MenuEditDelText, Resource.MenuEditDelTitle);
+                    var result = buferMANHost.UserInteraction.ShowYesNoCancelPopup(Resource.MenuEditDelText, Resource.MenuEditDelTitle);
 
                     switch (result)
                     {
@@ -199,8 +199,8 @@ namespace BuferMAN.Menu
             var startTime = DateTime.Now;
             helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpSend, (object sender, EventArgs e) =>
                 Process.Start("https://rink.hockeyapp.net/apps/51633746a31f44999eca3bc7b7945e92/feedback/new")));
-            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpStart, (object sender, EventArgs args) => buferManHost.ShowPopup(Resource.MenuHelpStartPrefix + $" {startTime}.", Resource.MenuHelpStartTitle)));
-            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpDonate, (object sender, EventArgs args) => buferManHost.ShowPopup(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)));
+            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpStart, (object sender, EventArgs args) => buferManHost.UserInteraction.ShowPopup(Resource.MenuHelpStartPrefix + $" {startTime}.", Resource.MenuHelpStartTitle)));
+            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpDonate, (object sender, EventArgs args) => buferManHost.UserInteraction.ShowPopup(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)));
             helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.DocumentationMenuItem, (object sender, System.EventArgs e) =>
                 Process.Start("Documentation.html")));
             helpMenu.AddMenuItem(buferManHost.CreateMenuItem("-> klopat.by", (object sender, System.EventArgs e) =>
@@ -209,7 +209,7 @@ namespace BuferMAN.Menu
             helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpAbout, (object sender, EventArgs args) => {
                 var version = ApplicationDeployment.IsNetworkDeployed ? ApplicationDeployment.CurrentDeployment.CurrentVersion : Assembly.GetEntryAssembly().GetName().Version;
 
-                buferManHost.ShowPopup(Resource.MenuHelpAboutText + " " + version.ToString(), Resource.MenuHelpAboutTitle); }));
+                buferManHost.UserInteraction.ShowPopup(Resource.MenuHelpAboutText + " " + version.ToString(), Resource.MenuHelpAboutTitle); }));
 
             return helpMenu;
         }

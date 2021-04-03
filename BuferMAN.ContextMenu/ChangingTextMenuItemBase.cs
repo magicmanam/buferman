@@ -42,7 +42,7 @@ namespace BuferMAN.ContextMenu
                 if (isOriginText)
                 {
                     this.Button.Font = new Font(this.Button.Font, FontStyle.Regular);
-                    this.BuferMANHost.ShowPopup(Resource.BuferAliasReturned, Resource.ChangeTextTitle);
+                    this.BuferMANHost.UserInteraction.ShowPopup(Resource.BuferAliasReturned, Resource.ChangeTextTitle);
                 }
                 else
                 {
