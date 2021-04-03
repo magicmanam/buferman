@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("BuferMAN")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Windows clipboard helper")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("magicmanam")]
 [assembly: AssemblyProduct("BuferMAN")]
