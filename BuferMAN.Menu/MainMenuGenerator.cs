@@ -142,13 +142,12 @@ namespace BuferMAN.Menu
         {
             var pluginsMenu = buferManHost.CreateMenuItem(Resource.MenuToolsPlugins);
 
-            pluginsMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuPluginsScripts));
-            pluginsMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuPluginsPCCleaner));
-
             foreach (var plugin in this._plugins)
             {
                 plugin.InitializeMainMenu(pluginsMenu);
             }
+            pluginsMenu.AddSeparator();
+            pluginsMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuPluginsManagement));// Should open a window to enable/disable, change order (in menu items and so on).
 
             return pluginsMenu;
         }

@@ -6,5 +6,6 @@ namespace BuferMAN.Infrastructure.Plugins
     {
         void InitializeMainMenu(BuferMANMenuItem menuItem);
         void InitializeHost(IBufermanHost bufermanHost);
+        string Name { get; }
     }
 }

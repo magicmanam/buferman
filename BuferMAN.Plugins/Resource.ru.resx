@@ -117,7 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MenuPluginsBattery" xml:space="preserve">
+  <data name="BatterySaverPlugin" xml:space="preserve">
     <value>Режим экономии батареи</value>
+  </data>
+  <data name="PCCleanerPlugin" xml:space="preserve">
+    <value>Очистка файлов</value>
+  </data>
+  <data name="ScriptsPlugin" xml:space="preserve">
+    <value>Скрипты</value>
   </data>
 </root>

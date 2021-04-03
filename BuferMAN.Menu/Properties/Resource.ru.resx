@@ -186,11 +186,8 @@
   <data name="MenuHelpStartTitle" xml:space="preserve">
     <value>Время запуска</value>
   </data>
-  <data name="MenuPluginsPCCleaner" xml:space="preserve">
-    <value>Очистка файлов</value>
-  </data>
-  <data name="MenuPluginsScripts" xml:space="preserve">
-    <value>Скрипты</value>
+  <data name="MenuPluginsManagement" xml:space="preserve">
+    <value>Управление плагинами</value>
   </data>
   <data name="MenuTools" xml:space="preserve">
     <value>&amp;Средства</value>
