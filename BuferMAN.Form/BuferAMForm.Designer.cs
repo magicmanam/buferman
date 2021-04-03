@@ -104,15 +104,15 @@ namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' confli
             }
         }
 
-        public void Start()
+        public void Start(bool isAdmin)
         {
             System.Windows.Forms.Application.ThreadException += BuferAMForm._Application_ThreadException;//Must be run before Application.Run() //Note
 
             System.Windows.Forms.Application.EnableVisualStyles();
 
             InitializeComponent();
-            var principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
-            InitializeForm(principal.IsInRole(WindowsBuiltInRole.Administrator));
+
+            InitializeForm(isAdmin);
 
             this.NotificationEmitter = new NotificationEmitter(this.TrayIcon, Resource.WindowTitle);
 

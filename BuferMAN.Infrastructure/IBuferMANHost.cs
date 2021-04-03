@@ -20,7 +20,7 @@ namespace BuferMAN.Infrastructure
         void HideWindow();
         void RerenderBufers();
         void Exit();
-        void Start();
+        void Start(bool isAdmin);
         void SetMainMenu(IEnumerable<BuferMANMenuItem> menuItems);
         BuferMANMenuItem CreateMenuItem(string text, EventHandler eventHandler = null);
         BuferMANMenuItem CreateMenuSeparatorItem();

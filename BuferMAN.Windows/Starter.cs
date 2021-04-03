@@ -25,14 +25,15 @@ namespace BuferMAN.Windows
                 if (isNew)
                 {
                     var principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
-                    if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
+                    var isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
+                    if (!isAdmin)
                     {
                         var result = this._userInteraction.ShowYesNoCancelPopup(Resource.AdminModeConfirmation, Resource.AdminModeConfirmationTitle);
 
                         switch (result)
                         {
                             case true:
-                                this._bufermanHost.Start();
+                                this._bufermanHost.Start(isAdmin);
                                 return;
                             case false:
                                 string arguments = "/select, \"" + Application.ExecutablePath + "\"";
@@ -43,7 +44,7 @@ namespace BuferMAN.Windows
                         }
                     }
 
-                    this._bufermanHost.Start();
+                    this._bufermanHost.Start(isAdmin);
                 }
                 else
                 {
