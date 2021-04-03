@@ -7,9 +7,11 @@ using BuferMAN.Form.Window;
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.ContextMenu;
 using BuferMAN.Infrastructure.Menu;
+using BuferMAN.Infrastructure.Plugins;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Infrastructure.Window;
 using BuferMAN.Menu;
+using BuferMAN.Plugins;
 using BuferMAN.Settings;
 using SimpleInjector;
 using System.Collections.Generic;
@@ -36,6 +38,8 @@ namespace BuferMAN.DI
             this.Register<IWindowLevelContext, DefaultWindowLevelContext>(Lifestyle.Singleton);
             this.Register<IRenderingHandler, RenderingHandler>(Lifestyle.Singleton);
             this.Register<IBuferHandlersBinder, BuferHandlersBinder>(Lifestyle.Singleton);
+
+            this.Collection.Register<IBufermanPlugin>(new[] { typeof(BatterySaverPlugin).Assembly }, Lifestyle.Singleton);
         }
     }
 }

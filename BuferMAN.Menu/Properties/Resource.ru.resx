@@ -186,9 +186,6 @@
   <data name="MenuHelpStartTitle" xml:space="preserve">
     <value>Время запуска</value>
   </data>
-  <data name="MenuPluginsBattery" xml:space="preserve">
-    <value>Режим экономии батареи</value>
-  </data>
   <data name="MenuPluginsPCCleaner" xml:space="preserve">
     <value>Очистка файлов</value>
   </data>

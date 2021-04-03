@@ -2,12 +2,14 @@
 using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Menu;
+using BuferMAN.Infrastructure.Plugins;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Storage;
 using BuferMAN.View;
 using magicmanam.UndoRedo;
 using magicmanam.Windows;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 
@@ -24,14 +26,22 @@ namespace BuferMAN.Application
         private readonly BuferItemDataObjectConverter _buferItemDataObjectConverter = new BuferItemDataObjectConverter();
         private long _copiesCount = 0;
         private bool _shouldCatchCopies = true;
+        private readonly IEnumerable<IBufermanPlugin> _plugins;
 
         private event EventHandler<BuferFocusedEventArgs> _BuferFocused;
 
-        public BuferMANApplication(IBufermanHost bufermanHost, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, ILoadingFileHandler loadingFileHandler, IIDataObjectHandler dataObjectHandler, IProgramSettings settings, IMainMenuGenerator menuGenerator, IWindowLevelContext windowLevelContext)
+        public BuferMANApplication(IBufermanHost bufermanHost, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, ILoadingFileHandler loadingFileHandler, IIDataObjectHandler dataObjectHandler, IProgramSettings settings, IMainMenuGenerator menuGenerator, IWindowLevelContext windowLevelContext,
+            IEnumerable<IBufermanPlugin> plugins)
         {
             this._bufermanHost = bufermanHost;
             this._clipboardBuferService = clipboardBuferService;
             this._clipboardWrapper = clipboardWrapper;
+            this._plugins = plugins;
+
+            foreach (var plugin in this._plugins)
+            {
+                plugin.InitializeHost(this._bufermanHost);
+            }
 
             this._loadingFileHandler = loadingFileHandler;
             this._loadingFileHandler.BufersLoaded += this._loadingFileHandler_BufersLoaded;
@@ -44,7 +54,7 @@ namespace BuferMAN.Application
             this._bufermanHost.ClipbordUpdated += this.ProcessCopyClipboardEvent;
 
             this._settings = settings;
-
+            // TODO (s) relocate the code below into .Start method
             UndoableContext<ApplicationStateSnapshot>.Current = new UndoableContext<ApplicationStateSnapshot>(this._clipboardBuferService);
 
             UndoableContext<ApplicationStateSnapshot>.Current.UndoableAction += (object sender, UndoableActionEventArgs e) =>

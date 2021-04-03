@@ -8,7 +8,7 @@ using System.Reflection;
 using magicmanam.UndoRedo;
 using BuferMAN.Infrastructure;
 using BuferMAN.Menu.Properties;
-using BuferMAN.Menu.Plugins;
+using BuferMAN.Infrastructure.Plugins;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Infrastructure.Menu;
 using System.Threading;
@@ -21,12 +21,14 @@ namespace BuferMAN.Menu
         private readonly ILoadingFileHandler _loadingFileHandler;
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IProgramSettings _settings;
+        private readonly IEnumerable<IBufermanPlugin> _plugins;
 
-        public MainMenuGenerator(ILoadingFileHandler loadingFileHandler, IClipboardBuferService clipboardBuferService, IProgramSettings settings)
+        public MainMenuGenerator(ILoadingFileHandler loadingFileHandler, IClipboardBuferService clipboardBuferService, IProgramSettings settings, IEnumerable<IBufermanPlugin> plugins)
         {
             this._loadingFileHandler = loadingFileHandler;
             this._clipboardBuferService = clipboardBuferService;
             this._settings = settings;
+            this._plugins = plugins;
         }
 
         public void GenerateMainMenu(IBufermanHost buferManHost)
@@ -143,11 +145,9 @@ namespace BuferMAN.Menu
             pluginsMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuPluginsScripts));
             pluginsMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuPluginsPCCleaner));
 
-            var status = SystemInformation.PowerStatus;
-            if ((status.BatteryChargeStatus & (BatteryChargeStatus.NoSystemBattery | BatteryChargeStatus.Unknown)) != 0)
+            foreach (var plugin in this._plugins)
             {
-                var factory = new BatterySaverMenuItemFactory(buferManHost);// TODO (m) : into DI constructor and implement via plugins 
-                pluginsMenu.AddMenuItem(factory.Create());
+                plugin.InitializeMainMenu(pluginsMenu);
             }
 
             return pluginsMenu;

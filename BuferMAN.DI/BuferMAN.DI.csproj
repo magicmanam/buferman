@@ -83,6 +83,10 @@
       <Project>{08184414-67EA-419E-B71B-B764F0F2E578}</Project>
       <Name>BuferMAN.Menu</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.Plugins\BuferMAN.Plugins.csproj">
+      <Project>{2822F743-087D-403A-A8E9-92FBEAC0A3EF}</Project>
+      <Name>BuferMAN.Plugins</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BuferMAN.Settings\BuferMAN.Settings.csproj">
       <Project>{EF659B53-6244-4053-975C-F807859F84D2}</Project>
       <Name>BuferMAN.Settings</Name>

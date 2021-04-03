@@ -1,24 +1,21 @@
 ﻿using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Menu;
-using BuferMAN.Menu.Properties;
+using BuferMAN.Infrastructure.Plugins;
 using System;
 using System.Windows.Forms;
 
-namespace BuferMAN.Menu.Plugins
+namespace BuferMAN.Plugins
 {
-    public class BatterySaverMenuItemFactory
+    public class BatterySaverPlugin : IBufermanPlugin
     {
-        private readonly IBufermanHost _buferManHost;
+        private IBufermanHost _buferManHost;
         private const string NOTIFICATION_TITLE = "Battery saver plugin";
         private const int INTERVAL_IN_SECONDS = 60;
 
         private int _highLimit = 90;
         private int _lowLimit = 25;
 
-        public BatterySaverMenuItemFactory(IBufermanHost buferManHost)
-        {
-            this._buferManHost = buferManHost;
-        }
+        public BatterySaverPlugin() { }
 
         public int HighLimit
         {
@@ -50,7 +47,7 @@ namespace BuferMAN.Menu.Plugins
             }
         }
 
-        public BuferMANMenuItem Create()
+        private BuferMANMenuItem _CreateMainMenuItem()
         {
             var menuItem = this._buferManHost.CreateMenuItem(Resource.MenuPluginsBattery, this.BatterySaverMenuItem_Click);
 
@@ -69,6 +66,7 @@ namespace BuferMAN.Menu.Plugins
             if (status.PowerLineStatus == PowerLineStatus.Offline && status.BatteryLifePercent * 100 < LowLimit)
             {
                 this._buferManHost.NotificationEmitter.ShowWarningNotification($"Please charge your battery ({(status.BatteryLifePercent * 100)}%) in order to save your battery's health.", 2500, NOTIFICATION_TITLE);
+                // TODO (s) text into resources!
             }
 
             if (status.PowerLineStatus == PowerLineStatus.Online && status.BatteryLifePercent * 100 > HighLimit)
@@ -81,6 +79,20 @@ namespace BuferMAN.Menu.Plugins
         {
             // Enable / disable battery saver plugin and open settings window!
             // Show current battery state and history of changes (chart: green if online, red if offline)
+        }
+
+        public void InitializeMainMenu(BuferMANMenuItem menuItem)
+        {
+            var status = SystemInformation.PowerStatus;
+            if ((status.BatteryChargeStatus & (BatteryChargeStatus.NoSystemBattery | BatteryChargeStatus.Unknown)) != 0)
+            {
+                menuItem.AddMenuItem(this._CreateMainMenuItem());
+            }
+        }
+
+        public void InitializeHost(IBufermanHost bufermanHost)
+        {
+            this._buferManHost = bufermanHost;
         }
     }
 }
