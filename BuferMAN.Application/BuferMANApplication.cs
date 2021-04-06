@@ -166,11 +166,11 @@ namespace BuferMAN.Application
 
         public void OnWindowActivating(object sender, EventArgs eventArgs)
         {
-            WindowLevelContext.Current.ActivateWindow();
+            this._bufermanHost.ActivateWindow();
 
             if (this.NeedRerender)
             {
-                WindowLevelContext.Current.RerenderBufers();
+                this._bufermanHost.RerenderBufers();
                 this.NeedRerender = false;
             }
         }

@@ -78,7 +78,7 @@ namespace BuferMAN.ContextMenu
         private void _RemoveBufer()
         {
             this._clipboardBuferService.RemoveBufer(this._bufer.ViewId);
-            WindowLevelContext.Current.RerenderBufers();
+            this._bufermanHost.RerenderBufers();
         }
 
         private void _FocusNextBufer(int tabIndex)

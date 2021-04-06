@@ -3,9 +3,7 @@
 namespace BuferMAN.Infrastructure
 {
     public interface IWindowLevelContext
-    {
+    {// TODO (s) remove this interface
         void HideWindow();
-        void ActivateWindow();
-        void RerenderBufers();
     }
 }

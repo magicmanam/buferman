@@ -31,7 +31,7 @@ namespace BuferMAN.ContextMenu
 
         public IEnumerable<BuferMANMenuItem> GenerateContextMenu(BuferViewModel buferViewModel, Button button, ToolTip mouseOverTooltip, bool isChangeTextAvailable, IBuferSelectionHandler buferSelectionHandler, IBufermanHost bufermanHost)
         {
-            var model = new BuferMenuModel(this._clipboardBuferService, buferSelectionHandler)
+            var model = new BuferMenuModel(this._clipboardBuferService, buferSelectionHandler, bufermanHost)
             {
                 BuferViewModel = buferViewModel,
                 Button = button,
@@ -181,6 +181,7 @@ namespace BuferMAN.ContextMenu
         {
             private readonly IClipboardBuferService _clipboardBuferService;
             private readonly IBuferSelectionHandler _buferSelectionHandler;
+            private readonly IBufermanHost _bufermanHost;
 
             public BuferViewModel BuferViewModel;
             public Button Button;
@@ -194,10 +195,11 @@ namespace BuferMAN.ContextMenu
             public DeleteClipMenuItem DeleteMenuItem { get; set; }
             public ToolTip MouseOverTooltip;
 
-            public BuferMenuModel(IClipboardBuferService clipboardBuferService, IBuferSelectionHandler buferSelectionHandler)
+            public BuferMenuModel(IClipboardBuferService clipboardBuferService, IBuferSelectionHandler buferSelectionHandler, IBufermanHost bufermanHost)
             {
                 this._clipboardBuferService = clipboardBuferService;
                 this._buferSelectionHandler = buferSelectionHandler;
+                this._bufermanHost = bufermanHost;
             }
 
             public void ChangeTextMenuItem_TextChanged(object sender, TextChangedEventArgs e)
@@ -233,7 +235,7 @@ namespace BuferMAN.ContextMenu
                 {
                     this.BuferViewModel.Pinned = true;
                     this.MarkAsPinnedMenuItem.Enabled = false;
-                    WindowLevelContext.Current.RerenderBufers();
+                    this._bufermanHost.RerenderBufers();
 
                     if (this.DeleteMenuItem.IsDeferredDeletionActivated())
                     {

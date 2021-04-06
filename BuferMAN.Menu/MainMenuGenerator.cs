@@ -60,13 +60,13 @@ namespace BuferMAN.Menu
         {
             var editMenu = bufermanHost.CreateMenuItem(Resource.MenuEdit);
 
-            var undoMenuItem = bufermanHost.CreateMenuItem(Resource.MenuEditUndo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Undo(); WindowLevelContext.Current.RerenderBufers(); });
+            var undoMenuItem = bufermanHost.CreateMenuItem(Resource.MenuEditUndo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Undo(); bufermanHost.RerenderBufers(); });
             undoMenuItem.ShortCut = Shortcut.CtrlZ;
             undoMenuItem.Enabled = false;
 
             editMenu.AddMenuItem(undoMenuItem);
 
-            var redoMenuItem = bufermanHost.CreateMenuItem(Resource.MenuEditRedo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Redo(); WindowLevelContext.Current.RerenderBufers(); });
+            var redoMenuItem = bufermanHost.CreateMenuItem(Resource.MenuEditRedo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Redo(); bufermanHost.RerenderBufers(); });
             redoMenuItem.ShortCut = Shortcut.CtrlY;
             redoMenuItem.Enabled = false;
 
@@ -75,7 +75,7 @@ namespace BuferMAN.Menu
 
             editMenu.AddMenuItem(deleteAllMenuItem);
 
-            var deleteTemporaryMenuItem = bufermanHost.CreateMenuItem(Resource.MenuEditDelTemp, this._OnDeleteAllTemporary);
+            var deleteTemporaryMenuItem = bufermanHost.CreateMenuItem(Resource.MenuEditDelTemp, this._OnDeleteAllTemporary(bufermanHost));
 
             editMenu.AddMenuItem(deleteTemporaryMenuItem);
 
@@ -117,14 +117,17 @@ namespace BuferMAN.Menu
                     this._clipboardBuferService.RemoveTemporaryClips();
                 }
 
-                WindowLevelContext.Current.RerenderBufers();
+                bufermanHost.RerenderBufers();
             };
         }
 
-        private void _OnDeleteAllTemporary(object sender, EventArgs args)
+        private EventHandler _OnDeleteAllTemporary(IBufermanHost bufermanHost)
         {
-            this._clipboardBuferService.RemoveTemporaryClips();
-            WindowLevelContext.Current.RerenderBufers();
+           return (object sender, EventArgs args) =>
+        {
+                this._clipboardBuferService.RemoveTemporaryClips();
+                bufermanHost.RerenderBufers();
+            };
         }
 
         private BuferMANMenuItem _GenerateToolsMenu(IBufermanHost buferManHost)
