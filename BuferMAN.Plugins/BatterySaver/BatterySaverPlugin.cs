@@ -82,7 +82,8 @@ namespace BuferMAN.Plugins
         public override void InitializeMainMenu(BuferMANMenuItem menuItem)
         {
             var status = SystemInformation.PowerStatus;
-            if ((status.BatteryChargeStatus & (BatteryChargeStatus.NoSystemBattery | BatteryChargeStatus.Unknown)) != 0)
+            if (status.BatteryChargeStatus != BatteryChargeStatus.Unknown &&
+                status.BatteryChargeStatus != BatteryChargeStatus.NoSystemBattery)
             {
                 menuItem.AddMenuItem(this._CreateMainMenuItem());
             }
