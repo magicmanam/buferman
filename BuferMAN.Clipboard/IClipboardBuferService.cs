@@ -27,7 +27,7 @@ namespace BuferMAN.Clipboard
         BuferViewModel LastTemporaryBufer { get; }
         bool IsLastTemporaryBufer(BuferViewModel bufer);
 
-		bool IsPinned(BuferViewModel bufer);
+		bool IsInPinnedBufers(BuferViewModel bufer, out Guid pinnedBuferViewId);
 
 		BuferViewModel FirstTemporaryBufer { get; }
 

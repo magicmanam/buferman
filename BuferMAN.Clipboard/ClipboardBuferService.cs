@@ -60,9 +60,20 @@ namespace BuferMAN.Clipboard
                 this._comparer.Equals(lastTemporaryBufer?.Clip, bufer.Clip);
         }
 
-        public bool IsPinned(BuferViewModel bufer)
+        public bool IsInPinnedBufers(BuferViewModel bufer, out Guid pinnedBuferViewId)
 		{
-			return this._pinnedObjects.Any(d => this._comparer.Equals(bufer.Clip, d.Clip) && string.Equals(bufer.Alias, d.Alias, StringComparison.CurrentCulture));
+			var pinnedBufer = this._pinnedObjects.FirstOrDefault(d => this._comparer.Equals(bufer.Clip, d.Clip) && string.Equals(bufer.Alias, d.Alias, StringComparison.CurrentCulture));
+
+            if (pinnedBufer != null)
+            {
+                pinnedBuferViewId = pinnedBufer.ViewId;
+                return true;
+            }
+            else
+            {
+                pinnedBuferViewId = Guid.Empty;
+                return false;
+            }
 		}
 
         public BuferViewModel FirstTemporaryBufer

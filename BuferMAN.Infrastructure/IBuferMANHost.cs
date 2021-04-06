@@ -1,5 +1,6 @@
 ﻿using BuferMAN.Infrastructure.Environment;
 using BuferMAN.Infrastructure.Menu;
+using BuferMAN.View;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -19,6 +20,7 @@ namespace BuferMAN.Infrastructure
         void ActivateWindow();
         void HideWindow();
         void RerenderBufers();
+        void SetCurrentBufer(BuferViewModel bufer);
         void Exit();
         void Start(bool isAdmin);
         void SetMainMenu(IEnumerable<BuferMANMenuItem> menuItems);

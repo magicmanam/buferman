@@ -87,23 +87,33 @@ namespace BuferMAN.Application
 
         private void ProcessCopyClipboardEvent(object sender, EventArgs e)
         {
+            var dataObject = this._clipboardWrapper.GetDataObject();
+            var buferViewModel = new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now };
+
             if (this._shouldCatchCopies)
             {
-                this._copiesCount++;
-                var dataObject = this._clipboardWrapper.GetDataObject();
-                this._dataObjectHandler.TryHandleDataObject(new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now });
-
-                if (this._copiesCount == 100)
-                {
-                    this._bufermanHost.NotificationEmitter.ShowInfoNotification(Resource.NotifyIcon100Congrats, 2500);
-                }
-                else if (this._copiesCount == 1000)
-                {
-                    this._bufermanHost.NotificationEmitter.ShowInfoNotification(Resource.NotifyIcon1000Congrats, 2500);
-                }
-
-                this._bufermanHost.SetStatusBarText(Resource.LastClipboardUpdate + DateTime.Now.ToShortTimeString());//Should be in separate strip label
+                this._dataObjectHandler.TryHandleDataObject(buferViewModel);
             }
+            else
+            {
+                using (var action = UndoableContext<ApplicationStateSnapshot>.Current.StartAction())
+                {
+                    this._dataObjectHandler.TryHandleDataObject(buferViewModel);
+
+                    action.Cancel();
+                }// Should be refactored
+            }
+
+            if (++this._copiesCount == 100)
+            {
+                this._bufermanHost.NotificationEmitter.ShowInfoNotification(Resource.NotifyIcon100Congrats, 2500);
+            }
+            else if (this._copiesCount == 1000)
+            {
+                this._bufermanHost.NotificationEmitter.ShowInfoNotification(Resource.NotifyIcon1000Congrats, 2500);
+            }
+
+            this._bufermanHost.SetStatusBarText(Resource.LastClipboardUpdate + DateTime.Now.ToShortTimeString());//Should be in separate strip label
         }
 
         public void LoadBufersFromStorage()
@@ -151,8 +161,10 @@ namespace BuferMAN.Application
             }
         }
 
-        public void Updated(object sender, EventArgs e)
+        public void Updated(object sender, ClipboardUpdatedEventArgs e)
         {
+            this._bufermanHost.SetCurrentBufer(e.Bufer);
+
             if (this._bufermanHost.IsVisible)
             {
                 this._bufermanHost.RerenderBufers();

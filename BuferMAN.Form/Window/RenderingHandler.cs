@@ -6,7 +6,6 @@ using System.Windows.Forms;
 using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Window;
-using BuferMAN.ContextMenu;
 using BuferMAN.Plugins.BuferPresentations;
 using BuferMAN.BuferPresentations;
 using magicmanam.UndoRedo;
@@ -27,6 +26,9 @@ namespace BuferMAN.Form.Window
         private readonly Color FOCUSED_BUFER_BACK_COLOR = Color.LightSteelBlue;
         private readonly Color DEFAULT_BUFER_BACK_COLOR = Color.Silver;
         private readonly Color PINNED_BUFER_BACK_COLOR = Color.LightSlateGray;
+        private readonly Color PINNED_CURRENT_BUFER_BACK_COLOR = Color.LawnGreen;
+        private readonly Color DEFAULT_CURRENT_BUFER_BACK_COLOR = Color.LightGreen;
+        private BuferViewModel _currentBufer;
 
         private const int BUTTON_HEIGHT = 23;
 
@@ -46,6 +48,11 @@ namespace BuferMAN.Form.Window
             this._pinnedClipsDivider = new Label() { Text = string.Empty, BorderStyle = BorderStyle.FixedSingle, AutoSize = false, Height = 3, BackColor = Color.AliceBlue, Width = this._buttonWidth };
             this._form.Controls.Add(this._pinnedClipsDivider);
             this._pinnedClipsDivider.BringToFront();
+        }
+
+        public void SetCurrentBufer(BuferViewModel bufer)
+        {
+            this._currentBufer = bufer;
         }
 
         public void Render(IBufermanHost bufermanHost)
@@ -106,7 +113,7 @@ namespace BuferMAN.Form.Window
         }
 
         private void _DrawButtonsForBufers(IBufermanHost bufermanHost, List<BuferViewModel> bufers, int y, int currentButtonIndex,
-            bool persistent = false)// TODO (l) remove this parameter: get from bufers collection, but be careful!!!
+            bool pinned = false)// TODO (l) remove this parameter: get from bufers collection, but be careful!!!
         {
             foreach (var bufer in bufers)
             {
@@ -145,14 +152,27 @@ namespace BuferMAN.Form.Window
                 for (var i = 0; i < button.ContextMenu.MenuItems.Count; i++)
                 {
                     var menuItem = button.ContextMenu.MenuItems[i];
-                    if (menuItem.Shortcut == Shortcut.CtrlS)// TODO (m) remove this condition or even the whole block
+                    if (menuItem.Shortcut == Shortcut.CtrlS)// TODO (m) remove this condition or even the whole block - via Bufer class or handlers binder
                     {
-                        menuItem.Enabled = !persistent;
+                        menuItem.Enabled = !pinned;
+                    }
+
+                    for (var j = 0; j < menuItem.MenuItems.Count; j++)
+                    {
+                        var nestedMenuItem = menuItem.MenuItems[j];
+                        if (nestedMenuItem.Shortcut == Shortcut.CtrlC)
+                        {
+                            nestedMenuItem.Enabled = bufer.ViewId != this._currentBufer.ViewId;
+                        }
                     }
                 }
 
-                button.BackColor = persistent ? PINNED_BUFER_BACK_COLOR : DEFAULT_BUFER_BACK_COLOR;
-                (button.Tag as BuferViewModel).DefaultBackColor = button.BackColor;
+                var defaultBackColor = bufer.ViewId == this._currentBufer.ViewId ?
+                    (pinned ? PINNED_CURRENT_BUFER_BACK_COLOR : DEFAULT_CURRENT_BUFER_BACK_COLOR) :
+                    (pinned ? PINNED_BUFER_BACK_COLOR : DEFAULT_BUFER_BACK_COLOR);
+
+                button.BackColor = defaultBackColor;
+                (button.Tag as BuferViewModel).DefaultBackColor = defaultBackColor;
 
                 button.TabIndex = currentButtonIndex;
                 button.Location = new Point(0, y);

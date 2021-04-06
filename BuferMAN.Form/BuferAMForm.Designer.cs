@@ -18,6 +18,7 @@ using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Form.Menu;
 using Logging;
 using BuferMAN.Infrastructure.Environment;
+using BuferMAN.View;
 
 namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' conflicts with system namespace. After that remove 'System.Windows.Forms.' prefix in this file
 {
@@ -216,6 +217,11 @@ namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' confli
         public void RerenderBufers()
         {
             this._renderingHandler.Render(this);
+        }
+
+        public void SetCurrentBufer(BuferViewModel bufer)
+        {
+            this._renderingHandler.SetCurrentBufer(bufer);
         }
 
         public void Exit()
