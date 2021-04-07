@@ -204,6 +204,12 @@
   <data name="MenuToolsMemory" xml:space="preserve">
     <value>Оперативная память</value>
   </data>
+  <data name="MenuToolsMemoryCaption" xml:space="preserve">
+    <value>Буфермэн: использование оперативной памяти</value>
+  </data>
+  <data name="MenuToolsMemoryMessageFormat" xml:space="preserve">
+    <value>Буфермэн занимает {0} KB оперативной памяти</value>
+  </data>
   <data name="MenuToolsPlugins" xml:space="preserve">
     <value>Плагины</value>
   </data>

@@ -130,15 +130,33 @@ namespace BuferMAN.Menu
             };
         }
 
-        private BufermanMenuItem _GenerateToolsMenu(IBufermanHost buferManHost)
+        private BufermanMenuItem _GenerateToolsMenu(IBufermanHost bufermanHost)
         {
-            var toolsMenu = buferManHost.CreateMenuItem(Resource.MenuTools);
+            var toolsMenu = bufermanHost.CreateMenuItem(Resource.MenuTools);
 
-            toolsMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuToolsMemory));// 1) Show taken memory; 2) Clear old bufers when memory taken is too much; 3) Number of all bufers (with deleted and not visible)
-            toolsMenu.AddMenuItem(this._GeneratePluginsMenu(buferManHost));
-            toolsMenu.AddMenuItem(this._GenerateLanguageMenu(buferManHost));
+            toolsMenu.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuToolsMemory, this._GetShowMemoryUsageHandler(bufermanHost)));
+            toolsMenu.AddMenuItem(this._GeneratePluginsMenu(bufermanHost));
+            toolsMenu.AddMenuItem(this._GenerateLanguageMenu(bufermanHost));
 
             return toolsMenu;
+        }
+
+        private EventHandler _GetShowMemoryUsageHandler(IBufermanHost bufermanHost)
+        {// 2) Clear old bufers when memory taken is too much; 3) Number of all bufers (with deleted and not visible)
+            return (object sender, EventArgs args) =>
+            {
+                using (var performanceCounter = new PerformanceCounter())
+                {
+                    var proc = Process.GetCurrentProcess();
+                    performanceCounter.CategoryName = "Process";
+                    performanceCounter.CounterName = "Working Set - Private";
+                    performanceCounter.InstanceName = proc.ProcessName;
+                    var memorySize = Convert.ToInt32(performanceCounter.NextValue()) / 1024;
+                    performanceCounter.Close();
+
+                    bufermanHost.UserInteraction.ShowPopup(string.Format(Resource.MenuToolsMemoryMessageFormat, memorySize), Resource.MenuToolsMemoryCaption);
+                }
+            };
         }
 
         private BufermanMenuItem _GeneratePluginsMenu(IBufermanHost buferManHost)

@@ -204,6 +204,12 @@
   <data name="MenuToolsMemory" xml:space="preserve">
     <value>RAM</value>
   </data>
+  <data name="MenuToolsMemoryCaption" xml:space="preserve">
+    <value>BuferMAN: RAM usage</value>
+  </data>
+  <data name="MenuToolsMemoryMessageFormat" xml:space="preserve">
+    <value>BuferMAN takes {0} KB of RAM</value>
+  </data>
   <data name="MenuToolsPlugins" xml:space="preserve">
     <value>Plugins</value>
   </data>

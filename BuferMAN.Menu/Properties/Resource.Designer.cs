@@ -322,6 +322,24 @@ namespace BuferMAN.Menu.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BuferMAN: RAM usage.
+        /// </summary>
+        internal static string MenuToolsMemoryCaption {
+            get {
+                return ResourceManager.GetString("MenuToolsMemoryCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BuferMAN takes {0} KB of RAM.
+        /// </summary>
+        internal static string MenuToolsMemoryMessageFormat {
+            get {
+                return ResourceManager.GetString("MenuToolsMemoryMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plugins.
         /// </summary>
         internal static string MenuToolsPlugins {
