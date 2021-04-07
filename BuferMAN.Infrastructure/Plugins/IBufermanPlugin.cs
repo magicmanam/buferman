@@ -4,7 +4,7 @@ namespace BuferMAN.Infrastructure.Plugins
 {
     public interface IBufermanPlugin
     {
-        void InitializeMainMenu(BuferMANMenuItem menuItem);
+        void InitializeMainMenu(BufermanMenuItem menuItem);
         void InitializeHost(IBufermanHost bufermanHost);
         string Name { get; }
     }

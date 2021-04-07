@@ -8,7 +8,7 @@ namespace BuferMAN.Plugins.PCCleaner
     {
         public PCCleanerPlugin() : base(Resource.PCCleanerPlugin) { }
 
-        public override void InitializeMainMenu(BuferMANMenuItem menuItem)
+        public override void InitializeMainMenu(BufermanMenuItem menuItem)
         {
             menuItem.AddMenuItem(this.BufermanHost.CreateMenuItem(this.Name));
         }

@@ -33,7 +33,7 @@ namespace BuferMAN.Menu
 
         public void GenerateMainMenu(IBufermanHost buferManHost)
         {
-            var items = new List<BuferMANMenuItem>
+            var items = new List<BufermanMenuItem>
             {
                 this._GenerateFileMenu(buferManHost),
                 this._GenerateEditMenu(buferManHost),
@@ -44,7 +44,7 @@ namespace BuferMAN.Menu
             buferManHost.SetMainMenu(items);
         }
 
-        private BuferMANMenuItem _GenerateFileMenu(IBufermanHost buferManHost)
+        private BufermanMenuItem _GenerateFileMenu(IBufermanHost buferManHost)
         {
             var fileMenu = buferManHost.CreateMenuItem(Resource.MenuFile);
 
@@ -56,7 +56,7 @@ namespace BuferMAN.Menu
             return fileMenu;
         }
 
-        private BuferMANMenuItem _GenerateEditMenu(IBufermanHost bufermanHost)
+        private BufermanMenuItem _GenerateEditMenu(IBufermanHost bufermanHost)
         {
             var editMenu = bufermanHost.CreateMenuItem(Resource.MenuEdit);
 
@@ -130,7 +130,7 @@ namespace BuferMAN.Menu
             };
         }
 
-        private BuferMANMenuItem _GenerateToolsMenu(IBufermanHost buferManHost)
+        private BufermanMenuItem _GenerateToolsMenu(IBufermanHost buferManHost)
         {
             var toolsMenu = buferManHost.CreateMenuItem(Resource.MenuTools);
 
@@ -141,7 +141,7 @@ namespace BuferMAN.Menu
             return toolsMenu;
         }
 
-        private BuferMANMenuItem _GeneratePluginsMenu(IBufermanHost buferManHost)
+        private BufermanMenuItem _GeneratePluginsMenu(IBufermanHost buferManHost)
         {
             var pluginsMenu = buferManHost.CreateMenuItem(Resource.MenuToolsPlugins);
 
@@ -155,7 +155,7 @@ namespace BuferMAN.Menu
             return pluginsMenu;
         }
 
-        private BuferMANMenuItem _GenerateLanguageMenu(IBufermanHost buferManHost)
+        private BufermanMenuItem _GenerateLanguageMenu(IBufermanHost buferManHost)
         {
             // во время открытия приложения показывать диалог с выбором языка и сохранять это значение
             var languageMenu = buferManHost.CreateMenuItem(Resource.MenuToolsLanguage);
@@ -195,7 +195,7 @@ namespace BuferMAN.Menu
             };
         }
 
-        private BuferMANMenuItem _GenerateHelpMenu(IBufermanHost buferManHost)
+        private BufermanMenuItem _GenerateHelpMenu(IBufermanHost buferManHost)
         {
             var helpMenu = buferManHost.CreateMenuItem(Resource.MenuHelp);
             var startTime = DateTime.Now;

@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace BuferMAN.Form.Menu
 {
-    class FormMenuItem : BuferMANMenuItem
+    class FormMenuItem : BufermanMenuItem
     {
         private readonly MenuItem _menuItem;
 
@@ -44,11 +44,11 @@ namespace BuferMAN.Form.Menu
 
         public override bool Checked { get => this._menuItem.Checked; set => this._menuItem.Checked = value; }
 
-        public override IEnumerable<BuferMANMenuItem> Children
+        public override IEnumerable<BufermanMenuItem> Children
         {
             get
             {
-                var result = new List<BuferMANMenuItem>();
+                var result = new List<BufermanMenuItem>();
 
                 foreach (var menuItem in this._menuItem.MenuItems)
                 {
@@ -79,12 +79,12 @@ namespace BuferMAN.Form.Menu
             this._menuItem.Popup -= popup;
         }
 
-        public override BuferMANMenuItem AddSeparator()
+        public override BufermanMenuItem AddSeparator()
         {
             return new FormMenuItem(this._menuItem.MenuItems.Add("-"));
         }
 
-        public override void AddMenuItem(BuferMANMenuItem menuItem)
+        public override void AddMenuItem(BufermanMenuItem menuItem)
         {
             this._menuItem.MenuItems.Add((menuItem as FormMenuItem).GetMenuItem());
         }

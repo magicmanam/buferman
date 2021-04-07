@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace BuferMAN.Infrastructure.Menu
 {
-    public abstract class BuferMANMenuItem
+    public abstract class BufermanMenuItem
     {
         public abstract string Text { get; set; }
         public abstract Shortcut ShortCut { get; set; }
@@ -14,9 +14,9 @@ namespace BuferMAN.Infrastructure.Menu
         public abstract void RemoveOnClickHandler(EventHandler click);
         public abstract void SetOnPopupHandler(EventHandler popup);
         public abstract void RemoveOnPopupHandler(EventHandler popup);
-        public abstract BuferMANMenuItem AddSeparator();
-        public abstract void AddMenuItem(BuferMANMenuItem menuItem);
+        public abstract BufermanMenuItem AddSeparator();
+        public abstract void AddMenuItem(BufermanMenuItem menuItem);
         public abstract void Remove();
-        public abstract IEnumerable<BuferMANMenuItem> Children { get; }
+        public abstract IEnumerable<BufermanMenuItem> Children { get; }
     }
 }

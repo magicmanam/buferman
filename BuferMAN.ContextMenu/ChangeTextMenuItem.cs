@@ -10,7 +10,7 @@ namespace BuferMAN.ContextMenu
 {
     public class ChangeTextMenuItem : ChangingTextMenuItemBase
     {
-        public ChangeTextMenuItem(BuferMANMenuItem menuItem, Button button, ToolTip mouseOverTooltip, IBufermanHost bufermanHost) : base(menuItem, button, mouseOverTooltip, bufermanHost)
+        public ChangeTextMenuItem(BufermanMenuItem menuItem, Button button, ToolTip mouseOverTooltip, IBufermanHost bufermanHost) : base(menuItem, button, mouseOverTooltip, bufermanHost)
         {
             menuItem.SetOnClickHandler(this._ChangeText);
             menuItem.ShortCut = Shortcut.CtrlH;

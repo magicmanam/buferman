@@ -45,7 +45,7 @@ namespace BuferMAN.Plugins
             }
         }
 
-        private BuferMANMenuItem _CreateMainMenuItem()
+        private BufermanMenuItem _CreateMainMenuItem()
         {
             var menuItem = this.BufermanHost.CreateMenuItem(this.Name, this.BatterySaverMenuItem_Click);
 
@@ -79,7 +79,7 @@ namespace BuferMAN.Plugins
             // Show current battery state and history of changes (chart: green if online, red if offline)
         }
 
-        public override void InitializeMainMenu(BuferMANMenuItem menuItem)
+        public override void InitializeMainMenu(BufermanMenuItem menuItem)
         {
             var status = SystemInformation.PowerStatus;
             if (status.BatteryChargeStatus != BatteryChargeStatus.Unknown &&

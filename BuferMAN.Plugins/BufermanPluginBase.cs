@@ -20,7 +20,7 @@ namespace BuferMAN.Plugins
             this.BufermanHost = bufermanHost;
         }
 
-        public abstract void InitializeMainMenu(BuferMANMenuItem menuItem);
+        public abstract void InitializeMainMenu(BufermanMenuItem menuItem);
 
         public virtual string Name { get; protected set; }
     }

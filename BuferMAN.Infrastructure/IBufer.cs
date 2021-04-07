@@ -6,7 +6,7 @@ namespace BuferMAN.Infrastructure
 {
     public interface IBufer
     {
-        void SetContextMenu(IEnumerable<BuferMANMenuItem> menuItems);
+        void SetContextMenu(IEnumerable<BufermanMenuItem> menuItems);
         void SetButton(Button button);// TODO (l) remove this method
     }
 }

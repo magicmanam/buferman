@@ -14,14 +14,14 @@ namespace BuferMAN.ContextMenu
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly BuferViewModel _bufer;
         private readonly Button _button;
-        private readonly BuferMANMenuItem _menuItem;
+        private readonly BufermanMenuItem _menuItem;
         private readonly IBufermanHost _bufermanHost;
         private Timer _timer = null;
 
-        private BuferMANMenuItem _separatorItem;
-        private BuferMANMenuItem _cancelDeletionMenuItem;
+        private BufermanMenuItem _separatorItem;
+        private BufermanMenuItem _cancelDeletionMenuItem;
 
-        public DeleteClipMenuItem(BuferMANMenuItem menuItem, IClipboardBuferService clipboardBuferService, BuferViewModel bufer, Button button, IBufermanHost bufermanHost)
+        public DeleteClipMenuItem(BufermanMenuItem menuItem, IClipboardBuferService clipboardBuferService, BuferViewModel bufer, Button button, IBufermanHost bufermanHost)
         {
             this._bufermanHost = bufermanHost;
             this._menuItem = menuItem;

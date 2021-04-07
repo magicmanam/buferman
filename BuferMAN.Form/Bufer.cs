@@ -19,7 +19,7 @@ namespace BuferMAN.Form
             this._button = button;
         }
 
-        public void SetContextMenu(IEnumerable<BuferMANMenuItem> menuItems)
+        public void SetContextMenu(IEnumerable<BufermanMenuItem> menuItems)
         {
             this._button.ContextMenu = new System.Windows.Forms.ContextMenu();
             this._button.ContextMenu.PopulateMenuWithItems(menuItems);

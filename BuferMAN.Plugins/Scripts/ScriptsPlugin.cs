@@ -8,7 +8,7 @@ namespace BuferMAN.Plugins.Scripts
     {
         public ScriptsPlugin() : base(Resource.ScriptsPlugin) { }
 
-        public override void InitializeMainMenu(BuferMANMenuItem menuItem)
+        public override void InitializeMainMenu(BufermanMenuItem menuItem)
         {
             menuItem.AddMenuItem(this.BufermanHost.CreateMenuItem(this.Name));
         }

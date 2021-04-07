@@ -46,18 +46,18 @@ namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' confli
             this._userInteraction = userInteraction;
         }
 
-        public void SetMainMenu(IEnumerable<BuferMANMenuItem> menuItems)
+        public void SetMainMenu(IEnumerable<BufermanMenuItem> menuItems)
         {
             this.Menu = new MainMenu();
             this.Menu.PopulateMenuWithItems(menuItems);
         }
 
-        public BuferMANMenuItem CreateMenuItem(string text, EventHandler eventHandler = null)
+        public BufermanMenuItem CreateMenuItem(string text, EventHandler eventHandler = null)
         {
             return new FormMenuItem(text, eventHandler);
         }
 
-        public BuferMANMenuItem CreateMenuSeparatorItem()
+        public BufermanMenuItem CreateMenuSeparatorItem()
         {
             return new FormMenuItem("-");
         }

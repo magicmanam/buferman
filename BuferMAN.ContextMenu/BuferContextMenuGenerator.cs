@@ -29,7 +29,7 @@ namespace BuferMAN.ContextMenu
             this._clipboardWrapper = clipboardWrapper;
         }
 
-        public IEnumerable<BuferMANMenuItem> GenerateContextMenu(BuferViewModel buferViewModel, Button button, ToolTip mouseOverTooltip, bool isChangeTextAvailable, IBuferSelectionHandler buferSelectionHandler, IBufermanHost bufermanHost)
+        public IEnumerable<BufermanMenuItem> GenerateContextMenu(BuferViewModel buferViewModel, Button button, ToolTip mouseOverTooltip, bool isChangeTextAvailable, IBuferSelectionHandler buferSelectionHandler, IBufermanHost bufermanHost)
         {
             var model = new BuferMenuModel(this._clipboardBuferService, buferSelectionHandler, bufermanHost)
             {
@@ -38,7 +38,7 @@ namespace BuferMAN.ContextMenu
                 MouseOverTooltip = mouseOverTooltip
             };
 
-            var menuItems = new List<BuferMANMenuItem>();
+            var menuItems = new List<BufermanMenuItem>();
 
             model.MarkAsPinnedMenuItem = bufermanHost.CreateMenuItem(Resource.MenuPin, model.TryPinBufer);
             model.MarkAsPinnedMenuItem.ShortCut = Shortcut.CtrlS;
@@ -48,7 +48,7 @@ namespace BuferMAN.ContextMenu
             var formats = model.BuferViewModel.Clip.GetFormats();
             var formatsCount = formats.Length;
 
-            var formatsMenuItems = new List<BuferMANMenuItem>();
+            var formatsMenuItems = new List<BufermanMenuItem>();
 
             foreach (var format in formats)
             {
@@ -185,13 +185,13 @@ namespace BuferMAN.ContextMenu
 
             public BuferViewModel BuferViewModel;
             public Button Button;
-            public BuferMANMenuItem ReturnTextToInitialMenuItem;
-            public BuferMANMenuItem ChangeTextMenuItem;
-            public BuferMANMenuItem MarkAsPinnedMenuItem;
-            public BuferMANMenuItem CreateLoginDataMenuItem;
-            public BuferMANMenuItem AddToFileMenuItem;
-            public BuferMANMenuItem PasteMenuItem;
-            public BuferMANMenuItem PlaceInBuferMenuItem;
+            public BufermanMenuItem ReturnTextToInitialMenuItem;
+            public BufermanMenuItem ChangeTextMenuItem;
+            public BufermanMenuItem MarkAsPinnedMenuItem;
+            public BufermanMenuItem CreateLoginDataMenuItem;
+            public BufermanMenuItem AddToFileMenuItem;
+            public BufermanMenuItem PasteMenuItem;
+            public BufermanMenuItem PlaceInBuferMenuItem;
             public DeleteClipMenuItem DeleteMenuItem { get; set; }
             public ToolTip MouseOverTooltip;
 
