@@ -40,7 +40,7 @@ namespace BuferMAN.Application
 
             foreach (var plugin in this._plugins)
             {
-                plugin.InitializeHost(this._bufermanHost);
+                plugin.Initialize(this._bufermanHost);
             }
 
             this._loadingFileHandler = loadingFileHandler;

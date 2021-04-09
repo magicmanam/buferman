@@ -11,6 +11,7 @@ using BuferMAN.ContextMenu.Properties;
 using BuferMAN.View;
 using System.Collections.Generic;
 using BuferMAN.Infrastructure.Menu;
+using BuferMAN.Infrastructure.Plugins;
 
 namespace BuferMAN.ContextMenu
 {
@@ -20,18 +21,20 @@ namespace BuferMAN.ContextMenu
         private readonly IBuferSelectionHandlerFactory _buferSelectionHandlerFactory;
         private readonly IProgramSettings _settings;
         private readonly IClipboardWrapper _clipboardWrapper;
+        private readonly IEnumerable<IBufermanPlugin> _plugins;
 
-        public BuferContextMenuGenerator(IClipboardBuferService clipboardBuferService, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IProgramSettings settings, IClipboardWrapper clipboardWrapper)
+        public BuferContextMenuGenerator(IClipboardBuferService clipboardBuferService, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IProgramSettings settings, IClipboardWrapper clipboardWrapper, IEnumerable<IBufermanPlugin> plugins)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
             this._settings = settings;
             this._clipboardWrapper = clipboardWrapper;
+            this._plugins = plugins;
         }
 
         public IEnumerable<BufermanMenuItem> GenerateContextMenu(BuferViewModel buferViewModel, Button button, ToolTip mouseOverTooltip, bool isChangeTextAvailable, IBuferSelectionHandler buferSelectionHandler, IBufermanHost bufermanHost)
         {
-            var model = new BuferMenuModel(this._clipboardBuferService, buferSelectionHandler, bufermanHost)
+            var model = new BuferContextMenuModelWrapper(this._clipboardBuferService, buferSelectionHandler, bufermanHost)
             {
                 BuferViewModel = buferViewModel,
                 Button = button,
@@ -169,80 +172,22 @@ namespace BuferMAN.ContextMenu
                 menuItems.Add(model.CreateLoginDataMenuItem);
             }
 
+            foreach (var plugin in this._plugins) if (plugin.Enabled)
+                {
+                    plugin.UpdateBuferContextMenu(model);
+                    var pluginMenuItem = plugin.CreateBuferContextMenuItem();
+                    if (pluginMenuItem != null)
+                    {
+                        menuItems.Add(pluginMenuItem);
+                    }
+                }
+
             menuItems.Add(bufermanHost.CreateMenuSeparatorItem());
             var createdAtMenuItem = bufermanHost.CreateMenuItem(string.Format(Resource.MenuCreatedTime, buferViewModel.CreatedAt));
             createdAtMenuItem.Enabled = false;
             menuItems.Add(createdAtMenuItem);
 
             return menuItems;
-        }
-
-        private class BuferMenuModel
-        {
-            private readonly IClipboardBuferService _clipboardBuferService;
-            private readonly IBuferSelectionHandler _buferSelectionHandler;
-            private readonly IBufermanHost _bufermanHost;
-
-            public BuferViewModel BuferViewModel;
-            public Button Button;
-            public BufermanMenuItem ReturnTextToInitialMenuItem;
-            public BufermanMenuItem ChangeTextMenuItem;
-            public BufermanMenuItem MarkAsPinnedMenuItem;
-            public BufermanMenuItem CreateLoginDataMenuItem;
-            public BufermanMenuItem AddToFileMenuItem;
-            public BufermanMenuItem PasteMenuItem;
-            public BufermanMenuItem PlaceInBuferMenuItem;
-            public DeleteClipMenuItem DeleteMenuItem { get; set; }
-            public ToolTip MouseOverTooltip;
-
-            public BuferMenuModel(IClipboardBuferService clipboardBuferService, IBuferSelectionHandler buferSelectionHandler, IBufermanHost bufermanHost)
-            {
-                this._clipboardBuferService = clipboardBuferService;
-                this._buferSelectionHandler = buferSelectionHandler;
-                this._bufermanHost = bufermanHost;
-            }
-
-            public void ChangeTextMenuItem_TextChanged(object sender, TextChangedEventArgs e)
-            {
-                this.ReturnTextToInitialMenuItem.Enabled = !e.IsOriginText;
-            }
-
-            public void MarkMenuItemAsAddedToFile()
-            {
-                this.AddToFileMenuItem.Text = Resource.MenuAddedToFile;
-                this.AddToFileMenuItem.Enabled = false;
-            }
-
-            public void LoginCredentialsMenuItem_LoginCreated(object sender, CreateLoginCredentialsEventArgs e)
-            {
-                this.PasteMenuItem.Text = $"{Resource.LoginWith} {new String('\t', 2)} Enter";
-
-                this.ReturnTextToInitialMenuItem.Enabled = false;
-                this.PlaceInBuferMenuItem.Enabled = false;
-                this.ChangeTextMenuItem.Enabled = false;
-                this.BuferViewModel.Clip.SetData(ClipboardFormats.PASSWORD_FORMAT, e.Password);
-                if (this.MarkAsPinnedMenuItem.Enabled)
-                {
-                    this.TryPinBufer(sender, e);
-                }
-                
-                this.Button.Click -= this._buferSelectionHandler.DoOnClipSelection;
-            }
-
-            public void TryPinBufer(object sender, EventArgs e)
-            {
-                if (this._clipboardBuferService.TryPinBufer(this.BuferViewModel.ViewId))
-                {
-                    this.BuferViewModel.Pinned = true;
-                    this.MarkAsPinnedMenuItem.Enabled = false;
-                    this._bufermanHost.RerenderBufers();
-
-                    if (this.DeleteMenuItem.IsDeferredDeletionActivated())
-                    {
-                        this.DeleteMenuItem.CancelDeferredBuferDeletion(sender, e);
-                    }
-                }
-            }
         }
     }
 }

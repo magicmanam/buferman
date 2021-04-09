@@ -1,16 +1,19 @@
-﻿using BuferMAN.Infrastructure;
-using BuferMAN.Infrastructure.Menu;
-using BuferMAN.Infrastructure.Plugins;
+﻿using BuferMAN.Infrastructure.Menu;
 
 namespace BuferMAN.Plugins.Scripts
 {
     public class ScriptsPlugin : BufermanPluginBase
     {
-        public ScriptsPlugin() : base(Resource.ScriptsPlugin) { }
-
-        public override void InitializeMainMenu(BufermanMenuItem menuItem)
+        public ScriptsPlugin() : base(Resource.ScriptsPlugin)
         {
-            menuItem.AddMenuItem(this.BufermanHost.CreateMenuItem(this.Name));
+            this.Enabled = true;
+        }
+
+        public override bool Enabled { get; set; }
+
+        public override BufermanMenuItem CreateMainMenuItem()
+        {
+            return this.BufermanHost.CreateMenuItem(this.Name);
         }
     }
 }

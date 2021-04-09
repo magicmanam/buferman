@@ -163,10 +163,14 @@ namespace BuferMAN.Menu
         {
             var pluginsMenu = buferManHost.CreateMenuItem(Resource.MenuToolsPlugins);
 
-            foreach (var plugin in this._plugins)
-            {
-                plugin.InitializeMainMenu(pluginsMenu);
-            }
+            foreach (var plugin in this._plugins) if (plugin.Enabled)
+                {
+                    var pluginMenuItem = plugin.CreateMainMenuItem();
+                    if (pluginMenuItem != null)
+                    {
+                        pluginsMenu.AddMenuItem(pluginMenuItem);
+                    }
+                }
             pluginsMenu.AddSeparator();
             pluginsMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuPluginsManagement));// Should open a window to enable/disable, change order (in menu items and so on).
 

@@ -79,13 +79,17 @@ namespace BuferMAN.Plugins
             // Show current battery state and history of changes (chart: green if online, red if offline)
         }
 
-        public override void InitializeMainMenu(BufermanMenuItem menuItem)
+        public override BufermanMenuItem CreateMainMenuItem()
         {
             var status = SystemInformation.PowerStatus;
             if (status.BatteryChargeStatus != BatteryChargeStatus.Unknown &&
                 status.BatteryChargeStatus != BatteryChargeStatus.NoSystemBattery)
             {
-                menuItem.AddMenuItem(this._CreateMainMenuItem());
+                return this._CreateMainMenuItem();
+            }
+            else
+            {
+                return null;
             }
         }
     }

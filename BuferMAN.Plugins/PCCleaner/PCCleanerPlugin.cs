@@ -1,16 +1,19 @@
-﻿using BuferMAN.Infrastructure;
-using BuferMAN.Infrastructure.Menu;
-using BuferMAN.Infrastructure.Plugins;
+﻿using BuferMAN.Infrastructure.Menu;
 
 namespace BuferMAN.Plugins.PCCleaner
 {
     public class PCCleanerPlugin : BufermanPluginBase
     {
-        public PCCleanerPlugin() : base(Resource.PCCleanerPlugin) { }
-
-        public override void InitializeMainMenu(BufermanMenuItem menuItem)
+        public PCCleanerPlugin() : base(Resource.PCCleanerPlugin)
         {
-            menuItem.AddMenuItem(this.BufermanHost.CreateMenuItem(this.Name));
+            this.Enabled = true;
+        }
+
+        public override bool Enabled { get; set; }
+
+        public override BufermanMenuItem CreateMainMenuItem()
+        {
+            return this.BufermanHost.CreateMenuItem(this.Name);
         }
     }
 }

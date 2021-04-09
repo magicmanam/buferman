@@ -1,11 +1,15 @@
-﻿using BuferMAN.Infrastructure.Menu;
+﻿using BuferMAN.Infrastructure.ContextMenu;
+using BuferMAN.Infrastructure.Menu;
 
 namespace BuferMAN.Infrastructure.Plugins
 {
     public interface IBufermanPlugin
     {
-        void InitializeMainMenu(BufermanMenuItem menuItem);
-        void InitializeHost(IBufermanHost bufermanHost);
+        BufermanMenuItem CreateMainMenuItem();
+        void Initialize(IBufermanHost bufermanHost);
+        BufermanMenuItem CreateBuferContextMenuItem();
+        void UpdateBuferContextMenu(BuferContextMenuModel contextMenuModel);
         string Name { get; }
+        bool Enabled { get; set; }
     }
 }
