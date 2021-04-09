@@ -70,6 +70,24 @@ namespace BuferMAN.Plugins {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please charge your battery ({0}%) in order to save your battery&apos;s health.
+        /// </summary>
+        internal static string BatterySaverPluginChargeNoteFormat {
+            get {
+                return ResourceManager.GetString("BatterySaverPluginChargeNoteFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please uncharge your battery ({0}%) in order to save your battery&apos;s health.
+        /// </summary>
+        internal static string BatterySaverPluginUnchargeNoteFormat {
+            get {
+                return ResourceManager.GetString("BatterySaverPluginUnchargeNoteFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PC cleaner.
         /// </summary>
         internal static string PCCleanerPlugin {

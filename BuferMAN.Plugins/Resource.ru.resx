@@ -120,6 +120,12 @@
   <data name="BatterySaverPlugin" xml:space="preserve">
     <value>Режим экономии батареи</value>
   </data>
+  <data name="BatterySaverPluginChargeNoteFormat" xml:space="preserve">
+    <value>Подзаряди свою батарею ({0}%), чтобы она прослужила дольше</value>
+  </data>
+  <data name="BatterySaverPluginUnchargeNoteFormat" xml:space="preserve">
+    <value>Отключи свою батарею ({0}%) от зарядки, чтобы она прослужила дольше</value>
+  </data>
   <data name="PCCleanerPlugin" xml:space="preserve">
     <value>Очистка файлов</value>
   </data>

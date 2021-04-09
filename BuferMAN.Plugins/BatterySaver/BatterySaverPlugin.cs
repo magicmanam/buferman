@@ -11,9 +11,18 @@ namespace BuferMAN.Plugins
 
         private int _highLimit = 90;
         private int _lowLimit = 25;
+        private bool _enabled;
+
+        private readonly Timer _timer = new Timer();
 
         public BatterySaverPlugin() : base(Resource.BatterySaverPlugin)
-        { }
+        {
+            this._timer.Interval = INTERVAL_IN_SECONDS * 1000;
+            this._timer.Tick += this._BatteryCheckHandler;
+
+            this._enabled = true;
+            this._timer.Start();
+        }
 
         public int HighLimit
         {
@@ -48,35 +57,29 @@ namespace BuferMAN.Plugins
         private BufermanMenuItem _CreateMainMenuItem()
         {
             var menuItem = this.BufermanHost.CreateMenuItem(this.Name, this.BatterySaverMenuItem_Click);
-
-            var trickTimer = new Timer();
-            trickTimer.Interval = INTERVAL_IN_SECONDS * 1000;
-            trickTimer.Tick += BatteryCheckHandler;
-            trickTimer.Start();
-
+            
             return menuItem;
         }
 
-        private void BatteryCheckHandler(object sender, EventArgs e)
+        private void _BatteryCheckHandler(object sender, EventArgs e)
         {
             var status = SystemInformation.PowerStatus;
 
             if (status.PowerLineStatus == PowerLineStatus.Offline && status.BatteryLifePercent * 100 < LowLimit)
             {
-                this.BufermanHost.NotificationEmitter.ShowWarningNotification($"Please charge your battery ({(status.BatteryLifePercent * 100)}%) in order to save your battery's health.", 2500, NOTIFICATION_TITLE);
-                // TODO (s) text into resources!
+                this.BufermanHost.NotificationEmitter.ShowWarningNotification(string.Format(Resource.BatterySaverPluginChargeNoteFormat, status.BatteryLifePercent * 100), 2500, NOTIFICATION_TITLE);
             }
 
             if (status.PowerLineStatus == PowerLineStatus.Online && status.BatteryLifePercent * 100 > HighLimit)
             {
-                this.BufermanHost.NotificationEmitter.ShowWarningNotification($"Please uncharge your battery ({(status.BatteryLifePercent * 100)}%) in order to save your battery's health", 2500, NOTIFICATION_TITLE);
+                this.BufermanHost.NotificationEmitter.ShowWarningNotification(string.Format(Resource.BatterySaverPluginUnchargeNoteFormat, status.BatteryLifePercent * 100), 2500, NOTIFICATION_TITLE);
             }
         }
 
         private void BatterySaverMenuItem_Click(object sender, EventArgs e)
         {
-            // Enable / disable battery saver plugin and open settings window!
-            // Show current battery state and history of changes (chart: green if online, red if offline)
+            this.Enabled = !this.Enabled;
+            // Open settings window: show current battery state and history of changes (chart: green if online, red if offline)
         }
 
         public override BufermanMenuItem CreateMainMenuItem()
@@ -90,6 +93,27 @@ namespace BuferMAN.Plugins
             else
             {
                 return null;
+            }
+        }
+
+        public override bool Enabled
+        {
+            get
+            {
+                return this._enabled;
+            }
+            set
+            {
+                if (value)
+                {
+                    this._timer.Start();
+                }
+                else
+                {
+                    this._timer.Stop();
+                }
+
+                this._enabled = value;
             }
         }
     }

@@ -120,6 +120,12 @@
   <data name="BatterySaverPlugin" xml:space="preserve">
     <value>Battery saver mode</value>
   </data>
+  <data name="BatterySaverPluginChargeNoteFormat" xml:space="preserve">
+    <value>Please charge your battery ({0}%) in order to save your battery's health</value>
+  </data>
+  <data name="BatterySaverPluginUnchargeNoteFormat" xml:space="preserve">
+    <value>Please uncharge your battery ({0}%) in order to save your battery's health</value>
+  </data>
   <data name="PCCleanerPlugin" xml:space="preserve">
     <value>PC cleaner</value>
   </data>
