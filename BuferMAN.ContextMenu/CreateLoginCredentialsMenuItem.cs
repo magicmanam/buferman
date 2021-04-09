@@ -14,7 +14,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
     {
         public CreateLoginCredentialsMenuItem(BufermanMenuItem menuItem, Button button, ToolTip mouseOverTooltip, IBufermanHost bufermanHost) : base(menuItem, button, mouseOverTooltip, bufermanHost)
         {
-            menuItem.SetOnClickHandler(this._CreateLoginCredentials);
+            menuItem.AddOnClickHandler(this._CreateLoginCredentials);
             menuItem.ShortCut = Shortcut.CtrlL;
         }
 

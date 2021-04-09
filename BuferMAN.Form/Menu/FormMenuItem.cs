@@ -9,6 +9,8 @@ namespace BuferMAN.Form.Menu
     {
         private readonly MenuItem _menuItem;
 
+        private readonly IList<EventHandler> _onClickHandlers = new List<EventHandler>();
+
         public FormMenuItem(string text, EventHandler eventHandler = null)
         {
             this._menuItem = new MenuItem(text, eventHandler);
@@ -59,14 +61,23 @@ namespace BuferMAN.Form.Menu
             }
         }
 
-        public override void SetOnClickHandler(EventHandler click)
+        public override void AddOnClickHandler(EventHandler onClick)
         {
-            this._menuItem.Click += click;
+            this._onClickHandlers.Add(onClick);
+            this._menuItem.Click += onClick;
         }
 
-        public override void RemoveOnClickHandler(EventHandler click)
+        public override IEnumerable<EventHandler> GetOnClickHandlers()
         {
-            this._menuItem.Click -= click;
+            return this._onClickHandlers;
+        }
+
+        public override void RemoveOnClickHandler(EventHandler onClick)
+        {
+            if (this._onClickHandlers.Remove(onClick))
+            {
+                this._menuItem.Click -= onClick;
+            }
         }
 
         public override void SetOnPopupHandler(EventHandler popup)

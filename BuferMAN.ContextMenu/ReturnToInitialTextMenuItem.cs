@@ -10,7 +10,7 @@ namespace BuferMAN.ContextMenu
     {
         public ReturnToInitialTextMenuItem(BufermanMenuItem menuItem, Button button, ToolTip mouseOverTooltip, IBufermanHost bufermanHost) : base(menuItem, button, mouseOverTooltip, bufermanHost)
         {
-            menuItem.SetOnClickHandler(this._ReturnTextToInitial);
+            menuItem.AddOnClickHandler(this._ReturnTextToInitial);
             menuItem.ShortCut = Shortcut.CtrlI;
             menuItem.Enabled = false;
         }

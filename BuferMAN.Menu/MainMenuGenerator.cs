@@ -200,8 +200,8 @@ namespace BuferMAN.Menu
                     break;
             }
 
-            englishMenuItem.SetOnClickHandler(this._createLanguageEventHandler("en", buferManHost));
-            russianMenuItem.SetOnClickHandler(this._createLanguageEventHandler("ru", buferManHost));
+            englishMenuItem.AddOnClickHandler(this._createLanguageEventHandler("en", buferManHost));
+            russianMenuItem.AddOnClickHandler(this._createLanguageEventHandler("ru", buferManHost));
 
             return languageMenu;
         }

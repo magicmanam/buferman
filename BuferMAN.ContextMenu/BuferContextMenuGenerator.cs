@@ -69,7 +69,7 @@ namespace BuferMAN.ContextMenu
                         particularFormatMenu.Text += " (Text)";
                     }
 
-                    particularFormatMenu.SetOnClickHandler((object sender, EventArgs args) =>
+                    particularFormatMenu.AddOnClickHandler((object sender, EventArgs args) =>
                     {
                         bufermanHost.UserInteraction.ShowPopup(formatData.ToString(), format);
                     });
@@ -153,7 +153,7 @@ namespace BuferMAN.ContextMenu
                     model.MarkMenuItemAsAddedToFile();
                 } else
                 {
-                    model.AddToFileMenuItem.SetOnClickHandler((object sender, EventArgs args) =>
+                    model.AddToFileMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
                     {
                         using (var sw = new StreamWriter(new FileStream(this._settings.DefaultBufersFileName, FileMode.Append, FileAccess.Write)))
                         {

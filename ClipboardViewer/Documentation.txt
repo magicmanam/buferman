@@ -1,19 +1,11 @@
-﻿Always keep documentation and check list up to date!!!
-
-******************* sorted ****************
+﻿******************* sorted ****************
 
 # Release by 1 June 2021
-2 вектора: уходить от winforms dependencies, поубирать лишние референсы из сборок
 рендеринг оптимизировать:  не всегда нужно перерендеривать все буферы, иногда достаточно просто поменять цвет или что-то другое
 
 Issues to solve:
 - Load all bufers as one action (update UndoRedo nuget)
 - Abstract factory for working with storage (and maybe azure storage)
-
-- Pinned - поменять на закрепить - это в лёгкие коммиты
-
-- 'Place bufer in clipboard' - reconsider. Текущий буфер нельзя так сделать, пункт меню должен быть задизэйблен или скрыть его
-- Помечать буфер, который находится сейчас в клипбоарде курсивом!
 
 - пароль хешировать
 
@@ -78,5 +70,4 @@ Settings:  //Minimalize settings for easy using
   - Max bufers count: *16, 30
   - Show bufers in *one column, *two columns, *three columns
   - Show preview image instead of ordinal text
-  - Change language (EN, RU)
 ?  - History: store current day bufers, only from program start, when amount does not preceeds 100Mb of RAM

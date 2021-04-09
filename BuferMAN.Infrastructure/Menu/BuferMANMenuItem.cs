@@ -10,8 +10,9 @@ namespace BuferMAN.Infrastructure.Menu
         public abstract Shortcut ShortCut { get; set; }
         public abstract bool Enabled { get; set; }
         public abstract bool Checked { get; set; }
-        public abstract void SetOnClickHandler(EventHandler click);
-        public abstract void RemoveOnClickHandler(EventHandler click);
+        public abstract void AddOnClickHandler(EventHandler onClick);
+        public abstract IEnumerable<EventHandler> GetOnClickHandlers();
+        public abstract void RemoveOnClickHandler(EventHandler onClick);
         public abstract void SetOnPopupHandler(EventHandler popup);
         public abstract void RemoveOnPopupHandler(EventHandler popup);
         public abstract BufermanMenuItem AddSeparator();
