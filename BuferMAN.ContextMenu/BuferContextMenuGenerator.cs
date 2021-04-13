@@ -51,7 +51,7 @@ namespace BuferMAN.ContextMenu
             var formats = model.BuferViewModel.Clip.GetFormats();
             var formatsCount = formats.Length;
 
-            var formatsMenuItems = new List<BufermanMenuItem>();
+            var formatsMenuItem = bufermanHost.CreateMenuItem(Resource.MenuFormats + $" ({formatsCount})");
 
             foreach (var format in formats)
             {
@@ -73,18 +73,15 @@ namespace BuferMAN.ContextMenu
                     {
                         bufermanHost.UserInteraction.ShowPopup(formatData.ToString(), format);
                     });
-                    formatsMenuItems.Add(particularFormatMenu);
+                    formatsMenuItem.AddMenuItem(particularFormatMenu);
                 }
                 else
                 {
                     formatsCount -= 1;
                 }
             }
-
-            var formatsMenu = bufermanHost.CreateMenuItem(Resource.MenuFormats + $" ({formatsCount})");
-            formatsMenu.ShortCut = Shortcut.AltDownArrow;
             
-            menuItems.Add(formatsMenu);
+            menuItems.Add(formatsMenuItem);
             var deleteBuferMenuItem = bufermanHost.CreateMenuItem(Resource.DeleteClipMenuItem);
             model.DeleteMenuItem = new DeleteClipMenuItem(deleteBuferMenuItem, this._clipboardBuferService, model.BuferViewModel, model.Button, bufermanHost);
             menuItems.Add(deleteBuferMenuItem);
