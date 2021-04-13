@@ -1,4 +1,5 @@
 ﻿using BuferMAN.Infrastructure.Environment;
+using System;
 using System.Windows.Forms;
 
 namespace BuferMAN.Windows
@@ -7,7 +8,10 @@ namespace BuferMAN.Windows
     {
         public bool? ShowYesNoCancelPopup(string text, string caption)
         {
-            var result = MessageBox.Show(text, caption, MessageBoxButtons.YesNoCancel);
+            var result = this._ShowDialogBoxWithBufermanIcon(() =>
+            {
+                return MessageBox.Show(text, caption, MessageBoxButtons.YesNoCancel);
+            });
 
             switch (result)
             {
@@ -22,7 +26,20 @@ namespace BuferMAN.Windows
 
         public void ShowPopup(string text, string caption)
         {
-            MessageBox.Show(text, caption);
+            this._ShowDialogBoxWithBufermanIcon(() =>
+            {
+                return MessageBox.Show(text, caption);
+            });
+        }
+
+        private DialogResult _ShowDialogBoxWithBufermanIcon(Func<DialogResult> dialogFunc)
+        {
+            using (var ghostForm = new BufermanGhostForm())
+            {
+                ghostForm.Show();
+
+                return dialogFunc();
+            }
         }
     }
 }

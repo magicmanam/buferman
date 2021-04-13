@@ -9,12 +9,10 @@ namespace BuferMAN.Windows
 {
     public class Starter : IStarter
     {
-        private readonly IUserInteraction _userInteraction;
         private readonly IBufermanHost _bufermanHost;
 
-        public Starter(IUserInteraction userInteraction, IBufermanHost bufermanHost)
+        public Starter(IBufermanHost bufermanHost)
         {
-            this._userInteraction = userInteraction;
             this._bufermanHost = bufermanHost;
         }
 
@@ -28,7 +26,7 @@ namespace BuferMAN.Windows
                     var isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
                     if (!isAdmin)
                     {
-                        var result = this._userInteraction.ShowYesNoCancelPopup(Resource.AdminModeConfirmation, Resource.AdminModeConfirmationTitle);
+                        var result = this._bufermanHost.UserInteraction.ShowYesNoCancelPopup(Resource.AdminModeConfirmation, Resource.AdminModeConfirmationTitle);
 
                         switch (result)
                         {
@@ -48,7 +46,7 @@ namespace BuferMAN.Windows
                 }
                 else
                 {
-                    this._userInteraction.ShowPopup(Resource.ProgramLaunched, Application.ProductName);// TODO (s) Application.ProductName ?
+                    this._bufermanHost.UserInteraction.ShowPopup(Resource.ProgramLaunched, Application.ProductName);// TODO (s) Application.ProductName ?
                 }
             }
         }
