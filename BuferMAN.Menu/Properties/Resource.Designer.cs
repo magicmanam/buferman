@@ -241,29 +241,29 @@ namespace BuferMAN.Menu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Start time.
+        ///   Looks up a localized string similar to &amp;Statistics.
         /// </summary>
-        internal static string MenuHelpStart {
+        internal static string MenuHelpStats {
             get {
-                return ResourceManager.GetString("MenuHelpStart", resourceCulture);
+                return ResourceManager.GetString("MenuHelpStats", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Program was started at.
+        ///   Looks up a localized string similar to Program was started at {0}. Copied bufers count: {1}..
         /// </summary>
-        internal static string MenuHelpStartPrefix {
+        internal static string MenuHelpStatsInfo {
             get {
-                return ResourceManager.GetString("MenuHelpStartPrefix", resourceCulture);
+                return ResourceManager.GetString("MenuHelpStatsInfo", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start time.
+        ///   Looks up a localized string similar to Statistics.
         /// </summary>
-        internal static string MenuHelpStartTitle {
+        internal static string MenuHelpStatsTitle {
             get {
-                return ResourceManager.GetString("MenuHelpStartTitle", resourceCulture);
+                return ResourceManager.GetString("MenuHelpStatsTitle", resourceCulture);
             }
         }
         

@@ -24,7 +24,6 @@ namespace BuferMAN.Application
         private readonly IBufermanHost _bufermanHost;
         private readonly IProgramSettings _settings;
         private readonly BuferItemDataObjectConverter _buferItemDataObjectConverter = new BuferItemDataObjectConverter();
-        private long _copiesCount = 0;
         private bool _shouldCatchCopies = true;
         private readonly IEnumerable<IBufermanPlugin> _plugins;
 
@@ -104,16 +103,18 @@ namespace BuferMAN.Application
                 }// Should be refactored
             }
 
-            if (++this._copiesCount == 100)
+            // TODO (s) maybe in a separate event handler (for example stats plugin)
+            if (this._dataObjectHandler.CopiesCount == 100)
             {
                 this._bufermanHost.NotificationEmitter.ShowInfoNotification(Resource.NotifyIcon100Congrats, 2500);
             }
-            else if (this._copiesCount == 1000)
+            else if (this._dataObjectHandler.CopiesCount == 1000)
             {
                 this._bufermanHost.NotificationEmitter.ShowInfoNotification(Resource.NotifyIcon1000Congrats, 2500);
             }
 
             this._bufermanHost.SetStatusBarText(Resource.LastClipboardUpdate + DateTime.Now.ToShortTimeString());//Should be in separate strip label
+            // end of TODO
         }
 
         public void LoadBufersFromStorage()

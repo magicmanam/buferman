@@ -21,6 +21,8 @@ namespace BuferMAN.Form
             this._settings = settings;
         }
 
+        public long CopiesCount { get; private set; } = 0;
+
         // For unit tests:
         // not persistent: last temp ? <nothing> :
         // any temp ? <swap> : 
@@ -32,6 +34,8 @@ namespace BuferMAN.Form
         // (not exist) <add pinned>
         public bool TryHandleDataObject(BuferViewModel buferViewModel)
         {
+            this.CopiesCount++;
+
             var isLastTempBufer = this._clipboardBuferService.IsLastTemporaryBufer(buferViewModel);
 
             if (!buferViewModel.Pinned && isLastTempBufer) // Repeated Ctrl + C operation

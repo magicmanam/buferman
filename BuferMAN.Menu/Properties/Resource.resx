@@ -177,14 +177,14 @@
   <data name="MenuHelpSend" xml:space="preserve">
     <value>Send &amp;feedback/issue</value>
   </data>
-  <data name="MenuHelpStart" xml:space="preserve">
-    <value>&amp;Start time</value>
+  <data name="MenuHelpStats" xml:space="preserve">
+    <value>&amp;Statistics</value>
   </data>
-  <data name="MenuHelpStartPrefix" xml:space="preserve">
-    <value>Program was started at</value>
+  <data name="MenuHelpStatsInfo" xml:space="preserve">
+    <value>Program was started at {0}. Copied bufers count: {1}.</value>
   </data>
-  <data name="MenuHelpStartTitle" xml:space="preserve">
-    <value>Start time</value>
+  <data name="MenuHelpStatsTitle" xml:space="preserve">
+    <value>Statistics</value>
   </data>
   <data name="MenuPluginsManagement" xml:space="preserve">
     <value>Plugins management</value>

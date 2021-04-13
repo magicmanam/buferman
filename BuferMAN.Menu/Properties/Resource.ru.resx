@@ -177,14 +177,14 @@
   <data name="MenuHelpSend" xml:space="preserve">
     <value>Открыть форму обратной связи</value>
   </data>
-  <data name="MenuHelpStart" xml:space="preserve">
-    <value>Время запуска</value>
+  <data name="MenuHelpStats" xml:space="preserve">
+    <value>Статистика</value>
   </data>
-  <data name="MenuHelpStartPrefix" xml:space="preserve">
-    <value>Программа была запущена в</value>
+  <data name="MenuHelpStatsInfo" xml:space="preserve">
+    <value>Программа была запущена в {0}. Сделано копирований: {1}.</value>
   </data>
-  <data name="MenuHelpStartTitle" xml:space="preserve">
-    <value>Время запуска</value>
+  <data name="MenuHelpStatsTitle" xml:space="preserve">
+    <value>Статистика</value>
   </data>
   <data name="MenuPluginsManagement" xml:space="preserve">
     <value>Управление плагинами</value>
