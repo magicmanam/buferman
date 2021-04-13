@@ -1,4 +1,5 @@
-﻿using BuferMAN.Infrastructure.Menu;
+﻿using BuferMAN.Infrastructure;
+using BuferMAN.Infrastructure.Menu;
 using System;
 using System.Windows.Forms;
 
@@ -12,16 +13,28 @@ namespace BuferMAN.Plugins
         private int _highLimit = 90;
         private int _lowLimit = 25;
         private bool _enabled;
+        private readonly bool _batteryAvailable;
 
         private readonly Timer _timer = new Timer();
 
         public BatterySaverPlugin() : base(Resource.BatterySaverPlugin)
         {
-            this._timer.Interval = INTERVAL_IN_SECONDS * 1000;
-            this._timer.Tick += this._BatteryCheckHandler;
+            var status = SystemInformation.PowerStatus;
+            this._batteryAvailable = status.BatteryChargeStatus != BatteryChargeStatus.Unknown &&
+                status.BatteryChargeStatus != BatteryChargeStatus.NoSystemBattery;
 
-            this._enabled = true;
-            this._timer.Start();
+            this.Enabled = true;
+        }
+
+        public override void Initialize(IBufermanHost bufermanHost)
+        {
+            base.Initialize(bufermanHost);
+
+            if (this._batteryAvailable)
+            {
+                this._timer.Interval = INTERVAL_IN_SECONDS * 1000;
+                this._timer.Tick += this._BatteryCheckHandler;
+            }
         }
 
         public int HighLimit
@@ -56,9 +69,14 @@ namespace BuferMAN.Plugins
 
         private BufermanMenuItem _CreateMainMenuItem()
         {
-            var menuItem = this.BufermanHost.CreateMenuItem(this.Name, this.BatterySaverMenuItem_Click);
-            
-            return menuItem;
+            if (this._batteryAvailable)
+            {
+                return this.BufermanHost.CreateMenuItem(this.Name, this.BatterySaverMenuItem_Click);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private void _BatteryCheckHandler(object sender, EventArgs e)
@@ -84,9 +102,7 @@ namespace BuferMAN.Plugins
 
         public override BufermanMenuItem CreateMainMenuItem()
         {
-            var status = SystemInformation.PowerStatus;
-            if (status.BatteryChargeStatus != BatteryChargeStatus.Unknown &&
-                status.BatteryChargeStatus != BatteryChargeStatus.NoSystemBattery)
+            if (this._batteryAvailable)
             {
                 return this._CreateMainMenuItem();
             }
@@ -104,16 +120,19 @@ namespace BuferMAN.Plugins
             }
             set
             {
-                if (value)
+                if (this._batteryAvailable)
                 {
-                    this._timer.Start();
-                }
-                else
-                {
-                    this._timer.Stop();
-                }
+                    if (value)
+                    {
+                        this._timer.Start();
+                    }
+                    else
+                    {
+                        this._timer.Stop();
+                    }
 
-                this._enabled = value;
+                    this._enabled = value;
+                }
             }
         }
     }
