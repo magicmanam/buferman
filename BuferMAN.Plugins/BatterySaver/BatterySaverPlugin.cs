@@ -17,7 +17,7 @@ namespace BuferMAN.Plugins
 
         private readonly Timer _timer = new Timer();
 
-        public BatterySaverPlugin() : base(Resource.BatterySaverPlugin)
+        public BatterySaverPlugin()
         {
             var status = SystemInformation.PowerStatus;
             this._batteryAvailable = status.BatteryChargeStatus != BatteryChargeStatus.Unknown &&
@@ -133,6 +133,14 @@ namespace BuferMAN.Plugins
 
                     this._enabled = value;
                 }
+            }
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return Resource.BatterySaverPlugin;
             }
         }
     }

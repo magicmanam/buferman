@@ -9,12 +9,7 @@ namespace BuferMAN.Plugins
     {
         protected IBufermanHost BufermanHost { get; set; }
 
-        public BufermanPluginBase() { }
-
-        public BufermanPluginBase(string name) : this()
-        {
-            this.Name = name;
-        }
+        public BufermanPluginBase(){ }
 
         public virtual void Initialize(IBufermanHost bufermanHost)
         {
@@ -33,7 +28,7 @@ namespace BuferMAN.Plugins
             return;
         }
 
-        public virtual string Name { get; protected set; }
+        public abstract string Name { get; }
         public abstract bool Enabled { get; set; }
     }
 }

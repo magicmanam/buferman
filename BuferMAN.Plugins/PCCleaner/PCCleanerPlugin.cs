@@ -4,7 +4,7 @@ namespace BuferMAN.Plugins.PCCleaner
 {
     public class PCCleanerPlugin : BufermanPluginBase
     {
-        public PCCleanerPlugin() : base(Resource.PCCleanerPlugin)
+        public PCCleanerPlugin()
         {
             this.Enabled = true;
         }
@@ -14,6 +14,14 @@ namespace BuferMAN.Plugins.PCCleaner
         public override BufermanMenuItem CreateMainMenuItem()
         {
             return this.BufermanHost.CreateMenuItem(this.Name);
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return Resource.PCCleanerPlugin;
+            }
         }
     }
 }

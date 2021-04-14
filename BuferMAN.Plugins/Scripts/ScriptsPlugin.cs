@@ -4,7 +4,7 @@ namespace BuferMAN.Plugins.Scripts
 {
     public class ScriptsPlugin : BufermanPluginBase
     {
-        public ScriptsPlugin() : base(Resource.ScriptsPlugin)
+        public ScriptsPlugin()
         {
             this.Enabled = true;
         }
@@ -14,6 +14,14 @@ namespace BuferMAN.Plugins.Scripts
         public override BufermanMenuItem CreateMainMenuItem()
         {
             return this.BufermanHost.CreateMenuItem(this.Name);
+        }
+
+        public override string Name
+        {
+            get
+            {
+                return Resource.ScriptsPlugin;
+            }
         }
     }
 }
