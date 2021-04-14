@@ -44,6 +44,7 @@ namespace BuferMAN.Form
                 this.Updated?.Invoke(this, new ClipboardUpdatedEventArgs(buferViewModel));
                 return false;
             }
+
             if (this._clipboardBuferService.IsInPinnedBufers(buferViewModel, out Guid pinnedBuferViewId))
             {
                 buferViewModel.ViewId = pinnedBuferViewId;
