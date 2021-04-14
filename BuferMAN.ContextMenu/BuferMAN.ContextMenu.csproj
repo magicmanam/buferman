@@ -36,7 +36,6 @@
     <Reference Include="magicmanam.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\magicmanam.Windows.1.0.2\lib\net45\magicmanam.Windows.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />

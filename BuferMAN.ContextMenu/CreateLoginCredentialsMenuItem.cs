@@ -1,7 +1,6 @@
 ﻿using BuferMAN.ContextMenu;
 using BuferMAN.ContextMenu.Properties;
 using BuferMAN.Infrastructure;
-using Microsoft.VisualBasic;
 using System;
 using System.Windows.Forms;
 using magicmanam.Windows;
@@ -22,7 +21,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
 
         private void _CreateLoginCredentials(object sender, EventArgs e)
         {
-            var password = Interaction.InputBox(Resource.CreateCredsPrefix + $" \"{(this.Button.Tag as BuferViewModel).OriginBuferText}\". " + Resource.CreateCredsPostfix,
+            var password = this.BufermanHost.UserInteraction.PromptPopup(Resource.CreateCredsPrefix + $" \"{(this.Button.Tag as BuferViewModel).OriginBuferText}\". " + Resource.CreateCredsPostfix,
                   Resource.CreateCredsTitle,
                    null);
 
