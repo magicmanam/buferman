@@ -210,4 +210,7 @@
   <data name="CancelDeferredDeletionMenuItem" xml:space="preserve">
     <value>Cancel deletion (at {0})</value>
   </data>
+  <data name="MenuOpenInBrowser" xml:space="preserve">
+    <value>Open in &amp;browser</value>
+  </data>
 </root>

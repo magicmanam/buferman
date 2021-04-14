@@ -12,6 +12,7 @@ using BuferMAN.View;
 using System.Collections.Generic;
 using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Infrastructure.Plugins;
+using System.Diagnostics;
 
 namespace BuferMAN.ContextMenu
 {
@@ -127,6 +128,15 @@ namespace BuferMAN.ContextMenu
             if (isChangeTextAvailable)
             {
                 menuItems.Add(bufermanHost.CreateMenuSeparatorItem());
+
+                if (Uri.TryCreate(buferViewModel.OriginBuferText, UriKind.Absolute, out var uriResult)
+                        && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
+                {
+                    var openInBrowserMenuItem = bufermanHost.CreateMenuItem(Resource.MenuOpenInBrowser, (object sender, EventArgs e) =>
+                                        Process.Start(buferViewModel.OriginBuferText));
+                    openInBrowserMenuItem.ShortCut = Shortcut.CtrlB;
+                    menuItems.Add(openInBrowserMenuItem);
+                }
 
                 var returnTextToInitialMenuItem = bufermanHost.CreateMenuItem(Resource.MenuReturn);
                 new ReturnToInitialTextMenuItem(returnTextToInitialMenuItem, model.Button, model.MouseOverTooltip, bufermanHost);

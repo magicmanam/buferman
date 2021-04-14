@@ -286,6 +286,15 @@ namespace BuferMAN.ContextMenu.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open in &amp;browser.
+        /// </summary>
+        internal static string MenuOpenInBrowser {
+            get {
+                return ResourceManager.GetString("MenuOpenInBrowser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Paste.
         /// </summary>
         internal static string MenuPaste {
