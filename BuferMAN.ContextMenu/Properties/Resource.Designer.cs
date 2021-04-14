@@ -187,20 +187,20 @@ namespace BuferMAN.ContextMenu.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Delete.
+        /// </summary>
+        internal static string DeleteBuferMenuItem {
+            get {
+                return ResourceManager.GetString("DeleteBuferMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete bufer &amp;now.
         /// </summary>
         internal static string DeleteBuferNowMenuItem {
             get {
                 return ResourceManager.GetString("DeleteBuferNowMenuItem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;Delete.
-        /// </summary>
-        internal static string DeleteClipMenuItem {
-            get {
-                return ResourceManager.GetString("DeleteClipMenuItem", resourceCulture);
             }
         }
         

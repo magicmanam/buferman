@@ -130,7 +130,7 @@
     <value>Изменение названия буфера</value>
   </data>
   <data name="CreateCredsMenuItem" xml:space="preserve">
-    <value>Создать логин</value>
+    <value>Создать &amp;логин</value>
   </data>
   <data name="CreateCredsPostfix" xml:space="preserve">
     <value>TAB будет вставлен после логина и перед паролем. После этого будет нажата клавиша Enter.</value>
@@ -153,8 +153,8 @@
   <data name="CredsPrefix" xml:space="preserve">
     <value>Логин для</value>
   </data>
-  <data name="DeleteClipMenuItem" xml:space="preserve">
-    <value>Удалить буфер</value>
+  <data name="DeleteBuferMenuItem" xml:space="preserve">
+    <value>&amp;Удалить буфер</value>
   </data>
   <data name="EmptyPasswordError" xml:space="preserve">
     <value>Пароль не может быть пустым.</value>
@@ -178,19 +178,19 @@
     <value>Посимвольно (в консоли и др.)</value>
   </data>
   <data name="MenuFormats" xml:space="preserve">
-    <value>Форматы</value>
+    <value>&amp;Форматы</value>
   </data>
   <data name="MenuPaste" xml:space="preserve">
-    <value>Вставить</value>
+    <value>&amp;Вставить</value>
   </data>
   <data name="MenuPin" xml:space="preserve">
-    <value>Запинить буфер</value>
+    <value>&amp;Запинить буфер</value>
   </data>
   <data name="MenuPlaceInBufer" xml:space="preserve">
     <value>Поместить в буфер без вставки</value>
   </data>
   <data name="MenuReturn" xml:space="preserve">
-    <value>Вернуть текст к первоначальному</value>
+    <value>Вернуть &amp;текст к первоначальному</value>
   </data>
   <data name="MenuCreatedTime" xml:space="preserve">
     <value>Создано в {0}</value>

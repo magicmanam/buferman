@@ -83,7 +83,7 @@ namespace BuferMAN.ContextMenu
             }
             
             menuItems.Add(formatsMenuItem);
-            var deleteBuferMenuItem = bufermanHost.CreateMenuItem(Resource.DeleteClipMenuItem);
+            var deleteBuferMenuItem = bufermanHost.CreateMenuItem(Resource.DeleteBuferMenuItem);
             model.DeleteMenuItem = new DeleteClipMenuItem(deleteBuferMenuItem, this._clipboardBuferService, model.BuferViewModel, model.Button, bufermanHost);
             menuItems.Add(deleteBuferMenuItem);
 

@@ -153,7 +153,7 @@
   <data name="CredsPrefix" xml:space="preserve">
     <value>Creds for</value>
   </data>
-  <data name="DeleteClipMenuItem" xml:space="preserve">
+  <data name="DeleteBuferMenuItem" xml:space="preserve">
     <value>&amp;Delete</value>
   </data>
   <data name="EmptyPasswordError" xml:space="preserve">
