@@ -97,6 +97,15 @@ namespace BuferMAN.Form.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Read more info in menu: Help -&gt;Documentation.
+        /// </summary>
+        internal static string DocumentationMentioning {
+            get {
+                return ResourceManager.GetString("DocumentationMentioning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
         internal static string FileBufer {
@@ -151,6 +160,15 @@ namespace BuferMAN.Form.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bufer manual.
+        /// </summary>
+        internal static string MenuBuferManual {
+            get {
+                return ResourceManager.GetString("MenuBuferManual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E&amp;xit session.
         /// </summary>
         internal static string MenuFileExit {
@@ -198,8 +216,8 @@ namespace BuferMAN.Form.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click bufer to paste it into active window
-        ///Every bufer has a context menu
+        ///   Looks up a localized string similar to Click bufer to paste it into active window.
+        ///Every bufer has a context menu.
         ///
         ///
         ///Hot keys:

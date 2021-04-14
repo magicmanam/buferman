@@ -139,8 +139,8 @@
     <value>пробел(а,ов)</value>
   </data>
   <data name="UserManual" xml:space="preserve">
-    <value>Выберите буфер, чтобы вставить в активное окно
-Каждый буфер имеет контекстное меню
+    <value>Выберите буфер, чтобы вставить в активное окно.
+Каждый буфер имеет контекстное меню.
 
 Горячие клавиши:
   - Запустить программу: Alt + C
@@ -179,5 +179,11 @@
   </data>
   <data name="AdminWindowTitle" xml:space="preserve">
     <value>BuferMAN (Админ)</value>
+  </data>
+  <data name="DocumentationMentioning" xml:space="preserve">
+    <value>Полное руководство в меню: Помощь -&gt; Документация</value>
+  </data>
+  <data name="MenuBuferManual" xml:space="preserve">
+    <value>Буфероводство</value>
   </data>
 </root>

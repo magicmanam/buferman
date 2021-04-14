@@ -139,8 +139,8 @@
     <value>white spaces</value>
   </data>
   <data name="UserManual" xml:space="preserve">
-    <value>Click bufer to paste it into active window
-Every bufer has a context menu
+    <value>Click bufer to paste it into active window.
+Every bufer has a context menu.
 
 
 Hot keys:
@@ -183,5 +183,11 @@ Hot keys:
   </data>
   <data name="AdminWindowTitle" xml:space="preserve">
     <value>BuferMAN (ADMIN)</value>
+  </data>
+  <data name="DocumentationMentioning" xml:space="preserve">
+    <value>Read more info in menu: Help -&gt;Documentation</value>
+  </data>
+  <data name="MenuBuferManual" xml:space="preserve">
+    <value>Bufer manual</value>
   </data>
 </root>

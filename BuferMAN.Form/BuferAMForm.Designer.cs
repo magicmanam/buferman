@@ -243,7 +243,7 @@ namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' confli
             this.CreateStatusBar();
             this.Activated += this._onFormActivated;
             this.ShowInTaskbar = false;
-            this._CreateUserManualLabel();
+            this._CreateUserManualLabel(isAdmin);
             this._SetupTrayIcon();
         }
 
@@ -256,9 +256,16 @@ namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' confli
         {
             this.TrayIcon = new NotifyIcon() { Text = Resource.NotifyIconStartupText, Icon = new Icon("copy-multi-size.ico") };
             this.TrayIcon.DoubleClick += this._TrayIcon_DoubleClick;
-            this.TrayIcon.ContextMenu = new SystemWindowsFormsContextMenu();
-            this.TrayIcon.ContextMenu.MenuItems.Add(new MenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => this.Exit()));
             this.TrayIcon.Visible = true;
+
+            var trayMenu = new SystemWindowsFormsContextMenu();
+            var trayIconMenuItems = new List<BufermanMenuItem>();
+            trayIconMenuItems.Add(this.CreateMenuItem(Resource.MenuBuferManual, (object sernder, EventArgs args) => this.UserInteraction.ShowPopup(Resource.UserManual + Environment.NewLine + Environment.NewLine + Resource.DocumentationMentioning, Resource.WindowTitle)));
+            trayIconMenuItems.Add(this.CreateMenuSeparatorItem());
+            trayIconMenuItems.Add(this.CreateMenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => this.Exit()));
+            // TODO (s) into BufermanApplication
+            trayMenu.PopulateMenuWithItems(trayIconMenuItems);
+            this.TrayIcon.ContextMenu = trayMenu;
         }
 
         private void _TrayIcon_DoubleClick(object sender, EventArgs e)
@@ -266,12 +273,12 @@ namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' confli
             this.Activate();
         }
 
-        private void _CreateUserManualLabel()
+        private void _CreateUserManualLabel(bool isAdmin)
         {
             var label = new Label() { ForeColor = Color.DarkGray, TabIndex = 1000, Height = 300, Width = 300 };
             label.Text = Resource.UserManual;
-            WindowsPrincipal principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
-            if (!principal.IsInRole(WindowsBuiltInRole.Administrator))
+
+            if (!isAdmin)
             {
                 label.Text = Resource.NotAdminWarning + Resource.UserManual;
             }
@@ -324,4 +331,3 @@ namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' confli
         }
     }
 }
-
