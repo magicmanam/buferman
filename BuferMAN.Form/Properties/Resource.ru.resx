@@ -186,4 +186,7 @@
   <data name="MenuBuferManual" xml:space="preserve">
     <value>Буфероводство</value>
   </data>
+  <data name="TrayMenuOptions" xml:space="preserve">
+    <value>Опции</value>
+  </data>
 </root>

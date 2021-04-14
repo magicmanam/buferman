@@ -210,6 +210,9 @@
   <data name="MenuToolsMemoryMessageFormat" xml:space="preserve">
     <value>BuferMAN takes {0} KB of RAM</value>
   </data>
+  <data name="MenuToolsOptions" xml:space="preserve">
+    <value>Options</value>
+  </data>
   <data name="MenuToolsPlugins" xml:space="preserve">
     <value>&amp;Plugins</value>
   </data>

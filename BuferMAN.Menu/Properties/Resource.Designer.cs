@@ -340,6 +340,15 @@ namespace BuferMAN.Menu.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        internal static string MenuToolsOptions {
+            get {
+                return ResourceManager.GetString("MenuToolsOptions", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Plugins.
         /// </summary>
         internal static string MenuToolsPlugins {

@@ -210,6 +210,9 @@
   <data name="MenuToolsMemoryMessageFormat" xml:space="preserve">
     <value>Буфермэн занимает {0} KB оперативной памяти</value>
   </data>
+  <data name="MenuToolsOptions" xml:space="preserve">
+    <value>Опции</value>
+  </data>
   <data name="MenuToolsPlugins" xml:space="preserve">
     <value>&amp;Плагины</value>
   </data>

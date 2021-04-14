@@ -216,6 +216,15 @@ namespace BuferMAN.Form.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        internal static string TrayMenuOptions {
+            get {
+                return ResourceManager.GetString("TrayMenuOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Click bufer to paste it into active window.
         ///Every bufer has a context menu.
         ///

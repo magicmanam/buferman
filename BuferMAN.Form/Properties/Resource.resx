@@ -190,4 +190,7 @@ Hot keys:
   <data name="MenuBuferManual" xml:space="preserve">
     <value>Bufer manual</value>
   </data>
+  <data name="TrayMenuOptions" xml:space="preserve">
+    <value>Options</value>
+  </data>
 </root>

@@ -146,6 +146,8 @@ namespace BuferMAN.Menu
             toolsMenu.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuToolsMemory, this._GetShowMemoryUsageHandler(bufermanHost)));
             toolsMenu.AddMenuItem(this._GeneratePluginsMenu(bufermanHost));
             toolsMenu.AddMenuItem(this._GenerateLanguageMenu(bufermanHost));
+            toolsMenu.AddMenuItem(bufermanHost.CreateMenuSeparatorItem());
+            toolsMenu.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuToolsOptions));
 
             return toolsMenu;
         }
