@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace BuferMAN.Application
 {
-    public class BuferMANApplication
+    public class BufermanApplication
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IClipboardWrapper _clipboardWrapper;
@@ -29,7 +29,7 @@ namespace BuferMAN.Application
 
         private event EventHandler<BuferFocusedEventArgs> _BuferFocused;
 
-        public BuferMANApplication(IBufermanHost bufermanHost, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, ILoadingFileHandler loadingFileHandler, IIDataObjectHandler dataObjectHandler, IProgramSettings settings, IMainMenuGenerator menuGenerator, IWindowLevelContext windowLevelContext,
+        public BufermanApplication(IBufermanHost bufermanHost, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, ILoadingFileHandler loadingFileHandler, IIDataObjectHandler dataObjectHandler, IProgramSettings settings, IMainMenuGenerator menuGenerator, IWindowLevelContext windowLevelContext,
             IEnumerable<IBufermanPlugin> plugins)
         {
             this._bufermanHost = bufermanHost;

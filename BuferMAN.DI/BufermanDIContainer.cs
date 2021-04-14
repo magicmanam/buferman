@@ -33,7 +33,7 @@ namespace BuferMAN.DI
             this.Register<IFileStorage, FileStorage>(Lifestyle.Singleton);
             this.Register<IBuferContextMenuGenerator, BuferContextMenuGenerator>(Lifestyle.Singleton);
             this.Register<IBuferSelectionHandlerFactory, BuferSelectionHandlerFactory>(Lifestyle.Singleton);
-            this.Register<BuferMANApplication>(Lifestyle.Singleton);
+            this.Register<BufermanApplication>(Lifestyle.Singleton);
             this.Register<IMainMenuGenerator, MainMenuGenerator>(Lifestyle.Singleton);
             this.Register<IWindowLevelContext, DefaultWindowLevelContext>(Lifestyle.Singleton);
             this.Register<IRenderingHandler, RenderingHandler>(Lifestyle.Singleton);
