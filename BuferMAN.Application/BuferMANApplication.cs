@@ -89,10 +89,9 @@ namespace BuferMAN.Application
             var dataObject = this._clipboardWrapper.GetDataObject();
             var buferViewModel = new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now };
 
-            var clip = buferViewModel.Clip;
-            if ((clip.GetData("System.String") as string) != (clip.GetData("Text") as string))
+            if (buferViewModel.Clip.GetData("System.String") as string == "")
             {
-                this._bufermanHost.UserInteraction.ShowPopup($"This bufer should be inspected: string formats are not equal: System.String = {clip.GetData("System.String")}, Text = {clip.GetData("Text")}", "BuferMAN");
+                this._bufermanHost.UserInteraction.ShowPopup($"This bufer should be inspected: System.String format is empty", "BuferMAN");
             }// TODO (s) remove this line at July
 
             if (this._shouldCatchCopies)
