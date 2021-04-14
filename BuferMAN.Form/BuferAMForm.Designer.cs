@@ -263,7 +263,7 @@ namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' confli
             var trayMenu = new SystemWindowsFormsContextMenu();
             var trayIconMenuItems = new List<BufermanMenuItem>();
             trayIconMenuItems.Add(this.CreateMenuItem(Resource.TrayMenuOptions));
-            trayIconMenuItems.Add(this.CreateMenuItem(Resource.MenuBuferManual, (object sernder, EventArgs args) => this.UserInteraction.ShowPopup(Resource.UserManual + Environment.NewLine + Environment.NewLine + Resource.DocumentationMentioning, Resource.WindowTitle)));
+            trayIconMenuItems.Add(this.CreateMenuItem(Resource.TrayMenuBuferManual, (object sernder, EventArgs args) => this.UserInteraction.ShowPopup(Resource.UserManual + Environment.NewLine + Environment.NewLine + Resource.DocumentationMentioning, Resource.WindowTitle)));
             trayIconMenuItems.Add(this.CreateMenuSeparatorItem());
             trayIconMenuItems.Add(this.CreateMenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => this.Exit()));
             // TODO (s) into BufermanApplication

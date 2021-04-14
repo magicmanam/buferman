@@ -160,15 +160,6 @@ namespace BuferMAN.Form.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bufer manual.
-        /// </summary>
-        internal static string MenuBuferManual {
-            get {
-                return ResourceManager.GetString("MenuBuferManual", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to E&amp;xit session.
         /// </summary>
         internal static string MenuFileExit {
@@ -212,6 +203,15 @@ namespace BuferMAN.Form.Properties {
         internal static string TratataTitle {
             get {
                 return ResourceManager.GetString("TratataTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bufer manual.
+        /// </summary>
+        internal static string TrayMenuBuferManual {
+            get {
+                return ResourceManager.GetString("TrayMenuBuferManual", resourceCulture);
             }
         }
         

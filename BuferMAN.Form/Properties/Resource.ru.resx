@@ -183,7 +183,7 @@
   <data name="DocumentationMentioning" xml:space="preserve">
     <value>Полное руководство в меню: Помощь -&gt; Документация</value>
   </data>
-  <data name="MenuBuferManual" xml:space="preserve">
+  <data name="TrayMenuBuferManual" xml:space="preserve">
     <value>Буфероводство</value>
   </data>
   <data name="TrayMenuOptions" xml:space="preserve">

@@ -187,7 +187,7 @@ Hot keys:
   <data name="DocumentationMentioning" xml:space="preserve">
     <value>Read more info in menu: Help -&gt;Documentation</value>
   </data>
-  <data name="MenuBuferManual" xml:space="preserve">
+  <data name="TrayMenuBuferManual" xml:space="preserve">
     <value>Bufer manual</value>
   </data>
   <data name="TrayMenuOptions" xml:space="preserve">
