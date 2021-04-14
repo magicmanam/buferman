@@ -145,13 +145,13 @@
     <value>&amp;File</value>
   </data>
   <data name="MenuFileChangeDefault" xml:space="preserve">
-    <value>Open/update default file</value>
+    <value>&amp;Open/update default file</value>
   </data>
   <data name="MenuFileExit" xml:space="preserve">
-    <value>E&amp;xit session</value>
+    <value>&amp;Exit session</value>
   </data>
   <data name="MenuFileLoad" xml:space="preserve">
-    <value>Lo&amp;ad from file</value>
+    <value>&amp;Load from file</value>
   </data>
   <data name="MenuHelp" xml:space="preserve">
     <value>&amp;Help</value>
@@ -193,7 +193,7 @@
     <value>&amp;Tools</value>
   </data>
   <data name="MenuToolsLanguage" xml:space="preserve">
-    <value>Language</value>
+    <value>&amp;Language</value>
   </data>
   <data name="MenuToolsLanguageEn" xml:space="preserve">
     <value>English</value>
@@ -202,7 +202,7 @@
     <value>Russian</value>
   </data>
   <data name="MenuToolsMemory" xml:space="preserve">
-    <value>RAM</value>
+    <value>&amp;RAM</value>
   </data>
   <data name="MenuToolsMemoryCaption" xml:space="preserve">
     <value>BuferMAN: RAM usage</value>
@@ -211,6 +211,6 @@
     <value>BuferMAN takes {0} KB of RAM</value>
   </data>
   <data name="MenuToolsPlugins" xml:space="preserve">
-    <value>Plugins</value>
+    <value>&amp;Plugins</value>
   </data>
 </root>

@@ -121,13 +121,13 @@
     <value>&amp;Документация</value>
   </data>
   <data name="MenuEdit" xml:space="preserve">
-    <value>Правка</value>
+    <value>П&amp;равка</value>
   </data>
   <data name="MenuEditDel" xml:space="preserve">
-    <value>Удалить все буферы</value>
+    <value>&amp;Удалить все буферы</value>
   </data>
   <data name="MenuEditDelTemp" xml:space="preserve">
-    <value>Удалить только временные буферы</value>
+    <value>Удалить &amp;только временные буферы</value>
   </data>
   <data name="MenuEditDelText" xml:space="preserve">
     <value>В программе сейчас есть запиненные буферы. Если вы хотели удалить только временные буферы, нажмите 'Да'. 'Нет' - удалить все буферы, в том числе и постоянные.</value>
@@ -136,28 +136,28 @@
     <value>Подтверждение удаления запиненных буферов</value>
   </data>
   <data name="MenuEditRedo" xml:space="preserve">
-    <value>Вернуть</value>
+    <value>&amp;Вернуть</value>
   </data>
   <data name="MenuEditUndo" xml:space="preserve">
-    <value>Отменить</value>
+    <value>&amp;Отменить</value>
   </data>
   <data name="MenuFile" xml:space="preserve">
     <value>&amp;Файл</value>
   </data>
   <data name="MenuFileChangeDefault" xml:space="preserve">
-    <value>Открыть/изменить файл по умолчанию</value>
+    <value>&amp;Открыть/изменить файл по умолчанию</value>
   </data>
   <data name="MenuFileExit" xml:space="preserve">
-    <value>Выход из программы</value>
+    <value>&amp;Выход из программы</value>
   </data>
   <data name="MenuFileLoad" xml:space="preserve">
-    <value>Загрузить буферы из файла</value>
+    <value>&amp;Загрузить буферы из файла</value>
   </data>
   <data name="MenuHelp" xml:space="preserve">
-    <value>Помощь</value>
+    <value>&amp;Помощь</value>
   </data>
   <data name="MenuHelpAbout" xml:space="preserve">
-    <value>О проекте</value>
+    <value>О &amp;проекте</value>
   </data>
   <data name="MenuHelpAboutText" xml:space="preserve">
     <value>Помощник в работе с буферами обмена, в который просто нельзя не влюбиться! Текущая версия программы</value>
@@ -166,7 +166,7 @@
     <value>О проекте BuferMAN</value>
   </data>
   <data name="MenuHelpDonate" xml:space="preserve">
-    <value>Сделать мир лучше</value>
+    <value>Сделать &amp;мир лучше</value>
   </data>
   <data name="MenuHelpDonateText" xml:space="preserve">
     <value>Здравствуй, пользователь! Спасибо за проявленный интерес к этой программе! Она призвана помочь людям в их рутинной работе. Самым ценным подарком для меня будет ваша помощь другим людям, нуждающимся в помощи: дети-сироты, инвалиды и другие незащищённые люди. Есть мн-во благотворительных организаций и счетов, через которые им можно помочь, нужно их только найти и желание это сделать! Я буду очень признателен за этот поступок!</value>
@@ -175,10 +175,10 @@
     <value>Помоги ближнему и когда-то помогут тебе!</value>
   </data>
   <data name="MenuHelpSend" xml:space="preserve">
-    <value>Открыть форму обратной связи</value>
+    <value>&amp;Открыть форму обратной связи</value>
   </data>
   <data name="MenuHelpStats" xml:space="preserve">
-    <value>Статистика</value>
+    <value>&amp;Статистика</value>
   </data>
   <data name="MenuHelpStatsInfo" xml:space="preserve">
     <value>Программа была запущена в {0}. Сделано копирований: {1}.</value>
@@ -193,7 +193,7 @@
     <value>&amp;Средства</value>
   </data>
   <data name="MenuToolsLanguage" xml:space="preserve">
-    <value>Язык</value>
+    <value>&amp;Язык</value>
   </data>
   <data name="MenuToolsLanguageEn" xml:space="preserve">
     <value>Английский</value>
@@ -202,7 +202,7 @@
     <value>Русский</value>
   </data>
   <data name="MenuToolsMemory" xml:space="preserve">
-    <value>Оперативная память</value>
+    <value>&amp;Оперативная память</value>
   </data>
   <data name="MenuToolsMemoryCaption" xml:space="preserve">
     <value>Буфермэн: использование оперативной памяти</value>
@@ -211,6 +211,6 @@
     <value>Буфермэн занимает {0} KB оперативной памяти</value>
   </data>
   <data name="MenuToolsPlugins" xml:space="preserve">
-    <value>Плагины</value>
+    <value>&amp;Плагины</value>
   </data>
 </root>

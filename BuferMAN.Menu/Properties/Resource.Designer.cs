@@ -142,7 +142,7 @@ namespace BuferMAN.Menu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open/update default file.
+        ///   Looks up a localized string similar to &amp;Open/update default file.
         /// </summary>
         internal static string MenuFileChangeDefault {
             get {
@@ -151,7 +151,7 @@ namespace BuferMAN.Menu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to E&amp;xit session.
+        ///   Looks up a localized string similar to &amp;Exit session.
         /// </summary>
         internal static string MenuFileExit {
             get {
@@ -160,7 +160,7 @@ namespace BuferMAN.Menu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lo&amp;ad from file.
+        ///   Looks up a localized string similar to &amp;Load from file.
         /// </summary>
         internal static string MenuFileLoad {
             get {
@@ -286,7 +286,7 @@ namespace BuferMAN.Menu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Language.
+        ///   Looks up a localized string similar to &amp;Language.
         /// </summary>
         internal static string MenuToolsLanguage {
             get {
@@ -313,7 +313,7 @@ namespace BuferMAN.Menu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to RAM.
+        ///   Looks up a localized string similar to &amp;RAM.
         /// </summary>
         internal static string MenuToolsMemory {
             get {
@@ -340,7 +340,7 @@ namespace BuferMAN.Menu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Plugins.
+        ///   Looks up a localized string similar to &amp;Plugins.
         /// </summary>
         internal static string MenuToolsPlugins {
             get {
