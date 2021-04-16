@@ -79,7 +79,7 @@ namespace BuferMAN.Files.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Text files (*.txt)|*.txt.
+        ///   Looks up a localized string similar to Text files (*.txt)|*.txt|Json files (*.json)|*.json.
         /// </summary>
         internal static string LoadFileFilter {
             get {

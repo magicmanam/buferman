@@ -124,6 +124,6 @@
     <value>Loading file error</value>
   </data>
   <data name="LoadFileFilter" xml:space="preserve">
-    <value>Text files (*.txt)|*.txt</value>
+    <value>Text files (*.txt)|*.txt|Json files (*.json)|*.json</value>
   </data>
 </root>

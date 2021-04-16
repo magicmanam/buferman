@@ -166,10 +166,10 @@
     <value>Login with creds</value>
   </data>
   <data name="MenuAddedToFile" xml:space="preserve">
-    <value>Added to &amp;bufers.txt file</value>
+    <value>Added to &amp;default file</value>
   </data>
-  <data name="MenuAddToFile" xml:space="preserve">
-    <value>Add to &amp;bufers.txt file</value>
+  <data name="MenuAddToDefaultFile" xml:space="preserve">
+    <value>Default</value>
   </data>
   <data name="MenuChange" xml:space="preserve">
     <value>Hide bufer &amp;text with alias</value>
@@ -212,5 +212,11 @@
   </data>
   <data name="MenuOpenInBrowser" xml:space="preserve">
     <value>Open in &amp;browser</value>
+  </data>
+  <data name="MenuAddToFile" xml:space="preserve">
+    <value>&amp;Add to file</value>
+  </data>
+  <data name="MenuAddToSelectedFile" xml:space="preserve">
+    <value>&amp;Select file...</value>
   </data>
 </root>

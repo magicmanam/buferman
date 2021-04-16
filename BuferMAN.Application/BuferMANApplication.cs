@@ -4,13 +4,11 @@ using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Infrastructure.Plugins;
 using BuferMAN.Infrastructure.Storage;
-using BuferMAN.Storage;
 using BuferMAN.View;
 using magicmanam.UndoRedo;
 using magicmanam.Windows;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows.Forms;
 
 namespace BuferMAN.Application
@@ -19,18 +17,16 @@ namespace BuferMAN.Application
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IClipboardWrapper _clipboardWrapper;
-        private readonly ILoadingFileHandler _loadingFileHandler;
         private readonly IIDataObjectHandler _dataObjectHandler;
         private readonly IBufermanHost _bufermanHost;
         private readonly IProgramSettings _settings;
-        private readonly BuferItemDataObjectConverter _buferItemDataObjectConverter = new BuferItemDataObjectConverter();
         private bool _shouldCatchCopies = true;
         private readonly IEnumerable<IBufermanPlugin> _plugins;
 
         private event EventHandler<BuferFocusedEventArgs> _BuferFocused;
 
-        public BufermanApplication(IBufermanHost bufermanHost, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, ILoadingFileHandler loadingFileHandler, IIDataObjectHandler dataObjectHandler, IProgramSettings settings, IMainMenuGenerator menuGenerator, IWindowLevelContext windowLevelContext,
-            IEnumerable<IBufermanPlugin> plugins)
+        public BufermanApplication(IBufermanHost bufermanHost, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, IIDataObjectHandler dataObjectHandler, IProgramSettings settings, IMainMenuGenerator menuGenerator, IWindowLevelContext windowLevelContext,
+            IEnumerable<IBufermanPlugin> plugins, IBufersStorageFactory bufersStorageFactory)
         {
             this._bufermanHost = bufermanHost;
             this._clipboardBuferService = clipboardBuferService;
@@ -41,10 +37,7 @@ namespace BuferMAN.Application
             {
                 plugin.Initialize(this._bufermanHost);
             }
-
-            this._loadingFileHandler = loadingFileHandler;
-            this._loadingFileHandler.BufersLoaded += this._loadingFileHandler_BufersLoaded;
-
+            
             this._dataObjectHandler = dataObjectHandler;
             this._dataObjectHandler.Full += this._bufermanHost.OnFullBuferMAN;
             this._dataObjectHandler.Updated += this.Updated;
@@ -69,9 +62,10 @@ namespace BuferMAN.Application
                 this._bufermanHost.SetStatusBarText(e.Action);
             };
 
-            if (File.Exists(settings.DefaultBufersFileName))
+            foreach (var storageModel in settings.StoragesToLoadOnStart)
             {
-                this.LoadBufersFromStorage();
+                var storage = bufersStorageFactory.Create(storageModel);
+                storage.LoadBufers();
             }
 
             menuGenerator.GenerateMainMenu(bufermanHost);
@@ -120,11 +114,6 @@ namespace BuferMAN.Application
 
             this._bufermanHost.SetStatusBarText(Resource.LastClipboardUpdate + DateTime.Now.ToShortTimeString());//Should be in separate strip label
             // end of TODO
-        }
-
-        public void LoadBufersFromStorage()
-        {
-            this._loadingFileHandler.LoadBufersFromFile(_settings.DefaultBufersFileName);
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
@@ -190,34 +179,6 @@ namespace BuferMAN.Application
             {
                 this._bufermanHost.RerenderBufers();
                 this.NeedRerender = false;
-            }
-        }
-
-        private void _loadingFileHandler_BufersLoaded(object sender, BufersLoadedEventArgs e)
-        {
-            using (var action = UndoableContext<ApplicationStateSnapshot>.Current.StartAction())
-            {
-                var loaded = false;
-
-                foreach (var bufer in e.Bufers)
-                {
-                    var dataObject = this._buferItemDataObjectConverter.ToDataObject(bufer);
-                    var buferViewModel = new BuferViewModel
-                    {
-                        Clip = dataObject,
-                        Alias = bufer.Alias,
-                        CreatedAt = DateTime.Now,
-                        Pinned = bufer.Pinned
-                    };
-
-                    var tempLoaded = this._dataObjectHandler.TryHandleDataObject(buferViewModel);
-                    loaded = tempLoaded || loaded;
-                }
-
-                if (!loaded)
-                {
-                    action.Cancel();
-                }
             }
         }
     }

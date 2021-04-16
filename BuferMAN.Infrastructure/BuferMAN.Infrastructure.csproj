@@ -51,9 +51,12 @@
     <Compile Include="Plugins\IBufermanPlugin.cs" />
     <Compile Include="Storage\BufersLoadedEventArgs.cs" />
     <Compile Include="Storage\IBuferItemDataObjectConverter.cs" />
+    <Compile Include="Storage\IBufersStorageFactory.cs" />
+    <Compile Include="Storage\IBufersStorageFactoryExtensions.cs" />
     <Compile Include="Storage\IFileStorage.cs" />
     <Compile Include="IIDataObjectHandler.cs" />
-    <Compile Include="Storage\ILoadingFileHandler.cs" />
+    <Compile Include="Storage\ILoadedBuferItemsProcessor.cs" />
+    <Compile Include="Storage\IUserFileSelector.cs" />
     <Compile Include="INotificationEmitter.cs" />
     <Compile Include="IProgramSettings.cs" />
     <Compile Include="IWindowLevelContext.cs" />

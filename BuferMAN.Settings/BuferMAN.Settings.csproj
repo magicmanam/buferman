@@ -45,6 +45,10 @@
       <Project>{f14888de-e3de-4225-80aa-f836dcba8e2e}</Project>
       <Name>BuferMAN.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.Models\BuferMAN.Models.csproj">
+      <Project>{E949968B-00F2-4CAA-8C8A-3053CBF79A63}</Project>
+      <Name>BuferMAN.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

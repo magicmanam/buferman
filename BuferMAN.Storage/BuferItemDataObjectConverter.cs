@@ -16,6 +16,14 @@ namespace BuferMAN.Storage
                 dataObject.SetText(buferItem.Text);
             }
 
+            if (buferItem.Formats != null)
+            {
+                foreach (var format in buferItem.Formats) if (format.Value != null)
+                {
+                    dataObject.SetData(format.Key, format.Value);
+                }
+            }
+
             dataObject.SetData(ClipboardFormats.FROM_FILE_FORMAT, null);
             return dataObject;
         }

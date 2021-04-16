@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="magicmanam.UndoRedo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\magicmanam.UndoRedo.1.0.0.1\lib\net45\magicmanam.UndoRedo.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms" />
@@ -44,12 +47,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuferItemDataObjectConverter.cs" />
+    <Compile Include="BufersStorageFactory.cs" />
+    <Compile Include="LoadedBuferItemsProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuferMAN.Clipboard\BuferMAN.Clipboard.csproj">
       <Project>{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}</Project>
       <Name>BuferMAN.Clipboard</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.Files\BuferMAN.Files.csproj">
+      <Project>{a7da5919-18bb-4d6f-b492-2d241b3fef1c}</Project>
+      <Name>BuferMAN.Files</Name>
     </ProjectReference>
     <ProjectReference Include="..\BuferMAN.Infrastructure\BuferMAN.Infrastructure.csproj">
       <Project>{f14888de-e3de-4225-80aa-f836dcba8e2e}</Project>
@@ -59,6 +68,13 @@
       <Project>{e949968b-00f2-4caa-8c8a-3053cbf79a63}</Project>
       <Name>BuferMAN.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.View\BuferMAN.View.csproj">
+      <Project>{60FACDBB-0E8F-4EA9-8E18-99294EF5908A}</Project>
+      <Name>BuferMAN.View</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

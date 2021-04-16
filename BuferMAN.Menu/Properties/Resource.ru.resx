@@ -145,7 +145,7 @@
     <value>&amp;Файл</value>
   </data>
   <data name="MenuFileChangeDefault" xml:space="preserve">
-    <value>&amp;Открыть/изменить файл по умолчанию</value>
+    <value>&amp;Изменить файл с буферами по умолчанию</value>
   </data>
   <data name="MenuFileExit" xml:space="preserve">
     <value>&amp;Выход из программы</value>

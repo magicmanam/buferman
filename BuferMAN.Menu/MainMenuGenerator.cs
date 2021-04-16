@@ -18,15 +18,15 @@ namespace BuferMAN.Menu
 {
     public class MainMenuGenerator : IMainMenuGenerator
     {
-        private readonly ILoadingFileHandler _loadingFileHandler;
+        private readonly IUserFileSelector _userFileSelector;
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IProgramSettings _settings;
         private readonly IIDataObjectHandler _dataObjectHandler;
         private readonly IEnumerable<IBufermanPlugin> _plugins;
 
-        public MainMenuGenerator(ILoadingFileHandler loadingFileHandler, IClipboardBuferService clipboardBuferService, IProgramSettings settings, IIDataObjectHandler dataObjectHandler, IEnumerable<IBufermanPlugin> plugins)
+        public MainMenuGenerator(IUserFileSelector userFileSelector, IClipboardBuferService clipboardBuferService, IProgramSettings settings, IIDataObjectHandler dataObjectHandler, IEnumerable<IBufermanPlugin> plugins)
         {
-            this._loadingFileHandler = loadingFileHandler;
+            this._userFileSelector = userFileSelector;
             this._clipboardBuferService = clipboardBuferService;
             this._settings = settings;
             this._dataObjectHandler = dataObjectHandler;
@@ -49,9 +49,16 @@ namespace BuferMAN.Menu
         private BufermanMenuItem _GenerateFileMenu(IBufermanHost buferManHost)
         {
             var fileMenu = buferManHost.CreateMenuItem(Resource.MenuFile);
+            // TODO (l) add menu item "Load bufers from storage" - will open dialog with default storage, or list of files, or other options. Also setting: check storage(s) to load on start
+            // Option: reload from storage/file
+            fileMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuFileLoad, (object sender, EventArgs args) => {
+                this._userFileSelector.TrySelectBufersStorage(storage => storage.LoadBufers());
+            }));
+            fileMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuFileChangeDefault, (object sender, EventArgs args) =>
+            {
+                Process.Start(this._settings.DefaultBufersFileName);
+            }));
 
-            fileMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuFileLoad, this._loadingFileHandler.OnLoadFile));
-            fileMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuFileChangeDefault, (object sender, EventArgs args) => Process.Start(this._settings.DefaultBufersFileName)));
             fileMenu.AddSeparator();
             fileMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => buferManHost.Exit()));
 

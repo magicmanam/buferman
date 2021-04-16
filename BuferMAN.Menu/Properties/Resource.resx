@@ -145,13 +145,13 @@
     <value>&amp;File</value>
   </data>
   <data name="MenuFileChangeDefault" xml:space="preserve">
-    <value>&amp;Open/update default file</value>
+    <value>&amp;Update default file</value>
   </data>
   <data name="MenuFileExit" xml:space="preserve">
     <value>&amp;Exit session</value>
   </data>
   <data name="MenuFileLoad" xml:space="preserve">
-    <value>&amp;Load from file</value>
+    <value>&amp;Load bufers from file</value>
   </data>
   <data name="MenuHelp" xml:space="preserve">
     <value>&amp;Help</value>

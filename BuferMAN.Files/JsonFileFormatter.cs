@@ -1,16 +1,14 @@
 ﻿using BuferMAN.Models;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace BuferMAN.Files
 {
-    public class JsonFileParser : IBufersFileParser
+    public class JsonFileFormatter : IBufersFileFormatter
     {
-        public IEnumerable<BuferItem> Parse(StreamReader stream)
+        public IEnumerable<BuferItem> Parse(string content)
         {
-            var content = stream.ReadToEnd();
             if (content == string.Empty)
             {
                 return Enumerable.Empty<BuferItem>();
@@ -19,6 +17,11 @@ namespace BuferMAN.Files
             {
                 return JArray.Parse(content).ToObject<IEnumerable<BuferItem>>();
             }
+        }
+
+        public string ToString(IEnumerable<BuferItem> bufers)
+        {
+            return JArray.FromObject(bufers).ToString();
         }
     }
 }

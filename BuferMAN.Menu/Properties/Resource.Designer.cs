@@ -142,7 +142,7 @@ namespace BuferMAN.Menu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Open/update default file.
+        ///   Looks up a localized string similar to &amp;Update default file.
         /// </summary>
         internal static string MenuFileChangeDefault {
             get {
@@ -160,7 +160,7 @@ namespace BuferMAN.Menu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Load from file.
+        ///   Looks up a localized string similar to &amp;Load bufers from file.
         /// </summary>
         internal static string MenuFileLoad {
             get {

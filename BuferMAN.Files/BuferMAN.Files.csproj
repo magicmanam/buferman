@@ -43,10 +43,10 @@
   <ItemGroup>
     <Compile Include="BufersFileStorage.cs" />
     <Compile Include="FileStorage.cs" />
-    <Compile Include="IBufersFileParser.cs" />
-    <Compile Include="SimpleFileParser.cs" />
-    <Compile Include="JsonFileParser.cs" />
-    <Compile Include="LoadingFileHandler.cs" />
+    <Compile Include="IBufersFileFormatter.cs" />
+    <Compile Include="TxtFileFormatter.cs" />
+    <Compile Include="JsonFileFormatter.cs" />
+    <Compile Include="UserFileStorageSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resource.ru.Designer.cs">
       <DependentUpon>Resource.ru.resx</DependentUpon>
@@ -71,10 +71,6 @@
     <ProjectReference Include="..\BuferMAN.Models\BuferMAN.Models.csproj">
       <Project>{e949968b-00f2-4caa-8c8a-3053cbf79a63}</Project>
       <Name>BuferMAN.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BuferMAN.Storage\BuferMAN.Storage.csproj">
-      <Project>{4c95d126-7345-4f6a-8bb6-dde908e37e63}</Project>
-      <Name>BuferMAN.Storage</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logger\Logging.csproj">
       <Project>{0DEECDC2-CF30-4625-A465-671F851F937E}</Project>

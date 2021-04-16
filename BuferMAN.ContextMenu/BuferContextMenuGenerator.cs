@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Infrastructure.Plugins;
 using System.Diagnostics;
+using BuferMAN.Infrastructure.Storage;
+using BuferMAN.Models;
 
 namespace BuferMAN.ContextMenu
 {
@@ -23,14 +25,19 @@ namespace BuferMAN.ContextMenu
         private readonly IProgramSettings _settings;
         private readonly IClipboardWrapper _clipboardWrapper;
         private readonly IEnumerable<IBufermanPlugin> _plugins;
+        private readonly IBufersStorageFactory _bufersStorageFactory;
+        private readonly IUserFileSelector _userFileSelector;
 
-        public BuferContextMenuGenerator(IClipboardBuferService clipboardBuferService, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IProgramSettings settings, IClipboardWrapper clipboardWrapper, IEnumerable<IBufermanPlugin> plugins)
+        public BuferContextMenuGenerator(IClipboardBuferService clipboardBuferService, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IProgramSettings settings, IClipboardWrapper clipboardWrapper, IEnumerable<IBufermanPlugin> plugins,
+            IBufersStorageFactory bufersStorageFactory, IUserFileSelector userFileSelector)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
             this._settings = settings;
             this._clipboardWrapper = clipboardWrapper;
             this._plugins = plugins;
+            this._bufersStorageFactory = bufersStorageFactory;
+            this._userFileSelector = userFileSelector;
         }
 
         public IEnumerable<BufermanMenuItem> GenerateContextMenu(BuferViewModel buferViewModel, Button button, ToolTip mouseOverTooltip, bool isChangeTextAvailable, IBuferSelectionHandler buferSelectionHandler, IBufermanHost bufermanHost)
@@ -50,9 +57,7 @@ namespace BuferMAN.ContextMenu
             menuItems.Add(model.MarkAsPinnedMenuItem);
 
             var formats = model.BuferViewModel.Clip.GetFormats();
-            var formatsCount = formats.Length;
-
-            var formatsMenuItem = bufermanHost.CreateMenuItem(Resource.MenuFormats + $" ({formatsCount})");
+            var formatsMenuItems = new List<BufermanMenuItem>();
 
             foreach (var format in formats)
             {
@@ -74,14 +79,16 @@ namespace BuferMAN.ContextMenu
                     {
                         bufermanHost.UserInteraction.ShowPopup(formatData.ToString(), format);
                     });
-                    formatsMenuItem.AddMenuItem(particularFormatMenu);
-                }
-                else
-                {
-                    formatsCount -= 1;
+                    formatsMenuItems.Add(particularFormatMenu);
                 }
             }
-            
+
+            var formatsMenuItem = bufermanHost.CreateMenuItem(Resource.MenuFormats + $" ({formatsMenuItems.Count})");
+            foreach (var formatMenuItem in formatsMenuItems)
+            {
+                formatsMenuItem.AddMenuItem(formatMenuItem);
+            }
+
             menuItems.Add(formatsMenuItem);
             var deleteBuferMenuItem = bufermanHost.CreateMenuItem(Resource.DeleteBuferMenuItem);
             model.DeleteMenuItem = new DeleteClipMenuItem(deleteBuferMenuItem, this._clipboardBuferService, model.BuferViewModel, model.Button, bufermanHost);
@@ -153,22 +160,37 @@ namespace BuferMAN.ContextMenu
                 menuItems.Add(model.ChangeTextMenuItem);
 
                 model.AddToFileMenuItem = bufermanHost.CreateMenuItem(Resource.MenuAddToFile);
-                model.AddToFileMenuItem.ShortCut = Shortcut.CtrlF;
 
                 if (formats.Contains(ClipboardFormats.FROM_FILE_FORMAT))
                 {
                     model.MarkMenuItemAsAddedToFile();
                 } else
                 {
-                    model.AddToFileMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
+                    var addToDefaultFileMenuItem = bufermanHost.CreateMenuItem(Resource.MenuAddToDefaultFile, (object sender, EventArgs args) =>
                     {
-                        using (var sw = new StreamWriter(new FileStream(this._settings.DefaultBufersFileName, FileMode.Append, FileAccess.Write)))
-                        {
-                            sw.WriteLine();
-                            sw.WriteLine((model.Button.Tag as BuferViewModel).OriginBuferText);
-                        }
+                        var bufersStorage = this._bufersStorageFactory.CreateStorageByFileExtension(this._settings.DefaultBufersFileName);
+
+                        var buferItem = this._GetBuferItemFromModel(model);
+
+                        bufersStorage.SaveBufer(buferItem);
+
                         model.MarkMenuItemAsAddedToFile();
                     });
+
+                    addToDefaultFileMenuItem.ShortCut = Shortcut.CtrlF;
+                    model.AddToFileMenuItem.AddMenuItem(addToDefaultFileMenuItem);
+
+                    var addToFileMenuItem = bufermanHost.CreateMenuItem(Resource.MenuAddToSelectedFile, (object sender, EventArgs args) =>
+                    {
+                        var buferItem = this._GetBuferItemFromModel(model);
+
+                        this._userFileSelector.TrySelectBufersStorage(storage => storage.SaveBufer(buferItem));
+                    });
+
+                    model.AddToFileMenuItem.AddSeparator();
+                    model.AddToFileMenuItem.AddMenuItem(addToFileMenuItem);
+
+
                 }
                 menuItems.Add(model.AddToFileMenuItem);
 
@@ -195,6 +217,22 @@ namespace BuferMAN.ContextMenu
             menuItems.Add(createdAtMenuItem);
 
             return menuItems;
+        }
+
+        private BuferItem _GetBuferItemFromModel(BuferContextMenuModelWrapper model)
+        {
+            var buferModel = model.Button.Tag as BuferViewModel;
+            var buferItem = new BuferItem()
+            {
+                Pinned = buferModel.Pinned,
+                Alias = buferModel.Alias,
+                Formats = buferModel.Clip
+                                        .GetFormats()
+                                        .ToDictionary(
+                                                 f => f,
+                                                 f => buferModel.Clip.GetData(f))
+            };
+            return buferItem;
         }
     }
 }

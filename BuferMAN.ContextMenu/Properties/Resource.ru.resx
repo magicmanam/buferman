@@ -168,8 +168,8 @@
   <data name="MenuAddedToFile" xml:space="preserve">
     <value>Добавлен в файл с буферами</value>
   </data>
-  <data name="MenuAddToFile" xml:space="preserve">
-    <value>Добавить в файл с буферами по умолчанию</value>
+  <data name="MenuAddToDefaultFile" xml:space="preserve">
+    <value>По умолчанию</value>
   </data>
   <data name="MenuChange" xml:space="preserve">
     <value>Скрыть текст буфера новым лэйблом</value>
@@ -212,5 +212,11 @@
   </data>
   <data name="MenuOpenInBrowser" xml:space="preserve">
     <value>Открыть в &amp;браузере</value>
+  </data>
+  <data name="MenuAddToFile" xml:space="preserve">
+    <value>&amp;Добавить в файл</value>
+  </data>
+  <data name="MenuAddToSelectedFile" xml:space="preserve">
+    <value>&amp;Выбрать файл...</value>
   </data>
 </root>

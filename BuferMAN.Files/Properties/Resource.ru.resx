@@ -124,6 +124,6 @@
     <value>Ошибка при загрузке файла</value>
   </data>
   <data name="LoadFileFilter" xml:space="preserve">
-    <value>Текстовые файлы (*.txt)|*.txt</value>
+    <value>Текстовые файлы (*.txt)|*.txt|JSON файлы (*.json)|*.json</value>
   </data>
 </root>

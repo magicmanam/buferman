@@ -81,6 +81,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="bufers.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <Content Include="copy-multi-size.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

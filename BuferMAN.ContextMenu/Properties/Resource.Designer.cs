@@ -232,7 +232,7 @@ namespace BuferMAN.ContextMenu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Added to &amp;bufers.txt file.
+        ///   Looks up a localized string similar to Added to &amp;default file.
         /// </summary>
         internal static string MenuAddedToFile {
             get {
@@ -241,11 +241,29 @@ namespace BuferMAN.ContextMenu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add to &amp;bufers.txt file.
+        ///   Looks up a localized string similar to Default.
+        /// </summary>
+        internal static string MenuAddToDefaultFile {
+            get {
+                return ResourceManager.GetString("MenuAddToDefaultFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Add to file.
         /// </summary>
         internal static string MenuAddToFile {
             get {
                 return ResourceManager.GetString("MenuAddToFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Select file....
+        /// </summary>
+        internal static string MenuAddToSelectedFile {
+            get {
+                return ResourceManager.GetString("MenuAddToSelectedFile", resourceCulture);
             }
         }
         

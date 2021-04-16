@@ -91,6 +91,10 @@
       <Project>{EF659B53-6244-4053-975C-F807859F84D2}</Project>
       <Name>BuferMAN.Settings</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.Storage\BuferMAN.Storage.csproj">
+      <Project>{4C95D126-7345-4F6A-8BB6-DDE908E37E63}</Project>
+      <Name>BuferMAN.Storage</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

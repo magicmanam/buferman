@@ -103,9 +103,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bufers.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Documentation.txt" />
     <Content Include="CheckList.txt" />
   </ItemGroup>
