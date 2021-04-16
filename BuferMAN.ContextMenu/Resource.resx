@@ -202,10 +202,10 @@
     <value>Delete bufer &amp;now</value>
   </data>
   <data name="MenuPasteAsText" xml:space="preserve">
-    <value>As a text (w/o formatting)</value>
+    <value>W/o formatting (as a text)</value>
   </data>
   <data name="MenuPasteAsIs" xml:space="preserve">
-    <value>AS IS</value>
+    <value>With formatting (AS IS)</value>
   </data>
   <data name="CancelDeferredDeletionMenuItem" xml:space="preserve">
     <value>Cancel deletion (at {0})</value>
