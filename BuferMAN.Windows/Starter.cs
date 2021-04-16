@@ -10,10 +10,12 @@ namespace BuferMAN.Windows
     public class Starter : IStarter
     {
         private readonly IBufermanHost _bufermanHost;
+        private readonly IBufermanApplication _bufermanApp;
 
-        public Starter(IBufermanHost bufermanHost)
+        public Starter(IBufermanHost bufermanHost, IBufermanApplication bufermanApp)
         {
             this._bufermanHost = bufermanHost;
+            this._bufermanApp = bufermanApp;
         }
 
         public void EnsureOneInstanceStart()
@@ -31,7 +33,7 @@ namespace BuferMAN.Windows
                         switch (result)
                         {
                             case true:
-                                this._bufermanHost.Start(isAdmin);
+                                this._bufermanHost.Start(this._bufermanApp, isAdmin);
                                 return;
                             case false:
                                 string arguments = "/select, \"" + Application.ExecutablePath + "\"";
@@ -42,7 +44,7 @@ namespace BuferMAN.Windows
                         }
                     }
 
-                    this._bufermanHost.Start(isAdmin);
+                    this._bufermanHost.Start(this._bufermanApp, isAdmin);
                 }
                 else
                 {

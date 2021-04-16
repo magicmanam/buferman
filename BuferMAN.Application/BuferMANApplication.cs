@@ -13,40 +13,54 @@ using System.Windows.Forms;
 
 namespace BuferMAN.Application
 {
-    public class BufermanApplication
+    public class BufermanApplication : IBufermanApplication
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IClipboardWrapper _clipboardWrapper;
+        private readonly IMainMenuGenerator _mainMenuGenerator;
         private readonly IIDataObjectHandler _dataObjectHandler;
-        private readonly IBufermanHost _bufermanHost;
+        private readonly IBufersStorageFactory _bufersStorageFactory;
+        private readonly IWindowLevelContext _windowLevelContext;
+        private IBufermanHost _bufermanHost;
         private readonly IProgramSettings _settings;
         private bool _shouldCatchCopies = true;
         private readonly IEnumerable<IBufermanPlugin> _plugins;
 
         private event EventHandler<BuferFocusedEventArgs> _BuferFocused;
 
-        public BufermanApplication(IBufermanHost bufermanHost, IClipboardBuferService clipboardBuferService, IClipboardWrapper clipboardWrapper, IIDataObjectHandler dataObjectHandler, IProgramSettings settings, IMainMenuGenerator menuGenerator, IWindowLevelContext windowLevelContext,
-            IEnumerable<IBufermanPlugin> plugins, IBufersStorageFactory bufersStorageFactory)
+        public BufermanApplication(IClipboardBuferService clipboardBuferService,
+            IClipboardWrapper clipboardWrapper,
+            IIDataObjectHandler dataObjectHandler,
+            IProgramSettings settings,
+            IMainMenuGenerator mainMenuGenerator,
+            IWindowLevelContext windowLevelContext,
+            IEnumerable<IBufermanPlugin> plugins,
+            IBufersStorageFactory bufersStorageFactory)
         {
-            this._bufermanHost = bufermanHost;
             this._clipboardBuferService = clipboardBuferService;
             this._clipboardWrapper = clipboardWrapper;
             this._plugins = plugins;
+            this._mainMenuGenerator = mainMenuGenerator;
+            this._dataObjectHandler = dataObjectHandler;
+            this._bufersStorageFactory = bufersStorageFactory;
+            this._windowLevelContext = windowLevelContext;
+            this._settings = settings;
+        }
+
+        public void RunInHost(IBufermanHost bufermanHost)
+        {
+            this._bufermanHost = bufermanHost;
 
             foreach (var plugin in this._plugins)
             {
                 plugin.Initialize(this._bufermanHost);
             }
-            
-            this._dataObjectHandler = dataObjectHandler;
             this._dataObjectHandler.Full += this._bufermanHost.OnFullBuferMAN;
             this._dataObjectHandler.Updated += this.Updated;
 
             this._bufermanHost.WindowActivated += this.OnWindowActivating;
             this._bufermanHost.ClipbordUpdated += this.ProcessCopyClipboardEvent;
 
-            this._settings = settings;
-            // TODO (s) relocate the code below into .Start method
             UndoableContext<ApplicationStateSnapshot>.Current = new UndoableContext<ApplicationStateSnapshot>(this._clipboardBuferService);
 
             UndoableContext<ApplicationStateSnapshot>.Current.UndoableAction += (object sender, UndoableActionEventArgs e) =>
@@ -62,18 +76,18 @@ namespace BuferMAN.Application
                 this._bufermanHost.SetStatusBarText(e.Action);
             };
 
-            foreach (var storageModel in settings.StoragesToLoadOnStart)
+            foreach (var storageModel in this._settings.StoragesToLoadOnStart)
             {
-                var storage = bufersStorageFactory.Create(storageModel);
+                var storage = this._bufersStorageFactory.Create(storageModel);
                 storage.LoadBufers();
             }
 
-            menuGenerator.GenerateMainMenu(bufermanHost);
+            this._mainMenuGenerator.GenerateMainMenu(this._bufermanHost);
 
-            bufermanHost.SetOnKeyDown(this.OnKeyDown);
-            this._BuferFocused += bufermanHost.BuferFocused;
+            this._bufermanHost.SetOnKeyDown(this.OnKeyDown);
+            this._BuferFocused += this._bufermanHost.BuferFocused;
 
-            WindowLevelContext.SetCurrent(windowLevelContext);
+            WindowLevelContext.SetCurrent(this._windowLevelContext);
         }
 
         public bool NeedRerender { get; set; }

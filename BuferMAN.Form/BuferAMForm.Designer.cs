@@ -105,7 +105,7 @@ namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' confli
             }
         }
 
-        public void Start(bool isAdmin)
+        public void Start(IBufermanApplication bufermanApp, bool isAdmin)
         {
             System.Windows.Forms.Application.ThreadException += BuferAMForm._Application_ThreadException;//Must be run before Application.Run() //Note
 
@@ -120,6 +120,8 @@ namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' confli
             this.NotificationEmitter.ShowInfoNotification(Resource.NotifyIconStartupText, 1500);
 
             this._renderingHandler.SetForm(this);
+
+            bufermanApp.RunInHost(this);
 
             System.Windows.Forms.Application.Run(this);
         }

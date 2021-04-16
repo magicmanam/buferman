@@ -22,7 +22,7 @@ namespace BuferMAN.Infrastructure
         void RerenderBufers();
         void SetCurrentBufer(BuferViewModel bufer);
         void Exit();
-        void Start(bool isAdmin);
+        void Start(IBufermanApplication bufermanApp, bool isAdmin);
         void SetMainMenu(IEnumerable<BufermanMenuItem> menuItems);
         BufermanMenuItem CreateMenuItem(string text, EventHandler eventHandler = null);
         BufermanMenuItem CreateMenuSeparatorItem();
