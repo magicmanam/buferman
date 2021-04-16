@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Forms;
-using BuferMAN.Files.Properties;
 using BuferMAN.Infrastructure.Storage;
 
 namespace BuferMAN.Files

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BuferMAN.Clipboard.Properties {
+namespace BuferMAN.Files {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace BuferMAN.Clipboard.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BuferMAN.Clipboard.Properties.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BuferMAN.Files.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,56 +61,29 @@ namespace BuferMAN.Clipboard.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All bufers were deleted.
+        ///   Looks up a localized string similar to There is an error during reading a file.
         /// </summary>
-        internal static string AllDeleted {
+        internal static string LoadFileErrorPrefix {
             get {
-                return ResourceManager.GetString("AllDeleted", resourceCulture);
+                return ResourceManager.GetString("LoadFileErrorPrefix", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New bufer was added.
+        ///   Looks up a localized string similar to Loading file error.
         /// </summary>
-        internal static string BuferAdded {
+        internal static string LoadFileErrorTitle {
             get {
-                return ResourceManager.GetString("BuferAdded", resourceCulture);
+                return ResourceManager.GetString("LoadFileErrorTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bufer was deleted.
+        ///   Looks up a localized string similar to Text files (*.txt)|*.txt|Json files (*.json)|*.json.
         /// </summary>
-        internal static string BuferDeleted {
+        internal static string LoadFileFilter {
             get {
-                return ResourceManager.GetString("BuferDeleted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bufer pinned.
-        /// </summary>
-        internal static string BuferPinned {
-            get {
-                return ResourceManager.GetString("BuferPinned", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pinned bufers deleted.
-        /// </summary>
-        internal static string PinnedBufersDeleted {
-            get {
-                return ResourceManager.GetString("PinnedBufersDeleted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Temporary bufers were deleted.
-        /// </summary>
-        internal static string TemporaryBufersDeleted {
-            get {
-                return ResourceManager.GetString("TemporaryBufersDeleted", resourceCulture);
+                return ResourceManager.GetString("LoadFileFilter", resourceCulture);
             }
         }
     }

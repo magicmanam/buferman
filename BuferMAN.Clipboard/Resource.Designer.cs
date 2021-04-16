@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BuferMAN.Application.Properties {
+namespace BuferMAN.Clipboard {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace BuferMAN.Application.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BuferMAN.Application.Properties.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BuferMAN.Clipboard.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,56 +61,56 @@ namespace BuferMAN.Application.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clipboard last update was at .
+        ///   Looks up a localized string similar to All bufers were deleted.
         /// </summary>
-        internal static string LastClipboardUpdate {
+        internal static string AllDeleted {
             get {
-                return ResourceManager.GetString("LastClipboardUpdate", resourceCulture);
+                return ResourceManager.GetString("AllDeleted", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You copied 1000 times! You are great copypaster ever!.
+        ///   Looks up a localized string similar to New bufer was added.
         /// </summary>
-        internal static string NotifyIcon1000Congrats {
+        internal static string BuferAdded {
             get {
-                return ResourceManager.GetString("NotifyIcon1000Congrats", resourceCulture);
+                return ResourceManager.GetString("BuferAdded", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You copied 100 times! Congrats!.
+        ///   Looks up a localized string similar to Bufer was deleted.
         /// </summary>
-        internal static string NotifyIcon100Congrats {
+        internal static string BuferDeleted {
             get {
-                return ResourceManager.GetString("NotifyIcon100Congrats", resourceCulture);
+                return ResourceManager.GetString("BuferDeleted", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BuferMAN: Alt+C to open.
+        ///   Looks up a localized string similar to Bufer pinned.
         /// </summary>
-        internal static string NotifyIconStartupText {
+        internal static string BuferPinned {
             get {
-                return ResourceManager.GetString("NotifyIconStartupText", resourceCulture);
+                return ResourceManager.GetString("BuferPinned", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BuferMAN is paused. Alt+P to continue.
+        ///   Looks up a localized string similar to Pinned bufers deleted.
         /// </summary>
-        internal static string PausedStatus {
+        internal static string PinnedBufersDeleted {
             get {
-                return ResourceManager.GetString("PausedStatus", resourceCulture);
+                return ResourceManager.GetString("PinnedBufersDeleted", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BuferMAN is resumed. Enjoy copies!.
+        ///   Looks up a localized string similar to Temporary bufers were deleted.
         /// </summary>
-        internal static string ResumedStatus {
+        internal static string TemporaryBufersDeleted {
             get {
-                return ResourceManager.GetString("ResumedStatus", resourceCulture);
+                return ResourceManager.GetString("TemporaryBufersDeleted", resourceCulture);
             }
         }
     }

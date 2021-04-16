@@ -1,5 +1,4 @@
-﻿using BuferMAN.Application.Properties;
-using BuferMAN.Clipboard;
+﻿using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Infrastructure.Plugins;

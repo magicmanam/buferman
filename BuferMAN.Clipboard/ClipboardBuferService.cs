@@ -1,5 +1,4 @@
-﻿using BuferMAN.Clipboard.Properties;
-using BuferMAN.View;
+﻿using BuferMAN.View;
 using magicmanam.UndoRedo;
 using System;
 using System.Collections.Generic;

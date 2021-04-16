@@ -1,5 +1,4 @@
-﻿using BuferMAN.ContextMenu.Properties;
-using BuferMAN.Infrastructure;
+﻿using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Menu;
 using BuferMAN.View;
 using System;

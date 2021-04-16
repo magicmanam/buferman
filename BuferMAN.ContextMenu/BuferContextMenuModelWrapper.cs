@@ -1,5 +1,4 @@
 ﻿using BuferMAN.Clipboard;
-using BuferMAN.ContextMenu.Properties;
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.ContextMenu;
 using BuferMAN.Infrastructure.Menu;

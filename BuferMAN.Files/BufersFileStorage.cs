@@ -1,5 +1,4 @@
 ﻿using BuferMAN.Clipboard;
-using BuferMAN.Files.Properties;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Models;
 using Newtonsoft.Json;

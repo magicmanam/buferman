@@ -7,7 +7,6 @@ using System.Linq;
 using System.IO;
 using System.Windows.Forms;
 using magicmanam.Windows;
-using BuferMAN.ContextMenu.Properties;
 using BuferMAN.View;
 using System.Collections.Generic;
 using BuferMAN.Infrastructure.Menu;

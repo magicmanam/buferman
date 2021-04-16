@@ -1,5 +1,4 @@
 ﻿using BuferMAN.ContextMenu;
-using BuferMAN.ContextMenu.Properties;
 using BuferMAN.Infrastructure;
 using System;
 using System.Windows.Forms;

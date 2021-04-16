@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace BuferMAN.Files.Properties {
+namespace BuferMAN.Application {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace BuferMAN.Files.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BuferMAN.Files.Properties.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("BuferMAN.Application.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,29 +61,47 @@ namespace BuferMAN.Files.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There is an error during reading a file.
+        ///   Looks up a localized string similar to Clipboard last update was at .
         /// </summary>
-        internal static string LoadFileErrorPrefix {
+        internal static string LastClipboardUpdate {
             get {
-                return ResourceManager.GetString("LoadFileErrorPrefix", resourceCulture);
+                return ResourceManager.GetString("LastClipboardUpdate", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loading file error.
+        ///   Looks up a localized string similar to You copied 1000 times! You are great copypaster ever!.
         /// </summary>
-        internal static string LoadFileErrorTitle {
+        internal static string NotifyIcon1000Congrats {
             get {
-                return ResourceManager.GetString("LoadFileErrorTitle", resourceCulture);
+                return ResourceManager.GetString("NotifyIcon1000Congrats", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Text files (*.txt)|*.txt|Json files (*.json)|*.json.
+        ///   Looks up a localized string similar to You copied 100 times! Congrats!.
         /// </summary>
-        internal static string LoadFileFilter {
+        internal static string NotifyIcon100Congrats {
             get {
-                return ResourceManager.GetString("LoadFileFilter", resourceCulture);
+                return ResourceManager.GetString("NotifyIcon100Congrats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BuferMAN is paused. Alt+P to continue.
+        /// </summary>
+        internal static string PausedStatus {
+            get {
+                return ResourceManager.GetString("PausedStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BuferMAN is resumed. Enjoy copies!.
+        /// </summary>
+        internal static string ResumedStatus {
+            get {
+                return ResourceManager.GetString("ResumedStatus", resourceCulture);
             }
         }
     }

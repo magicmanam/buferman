@@ -7,7 +7,6 @@ using System.Deployment.Application;
 using System.Reflection;
 using magicmanam.UndoRedo;
 using BuferMAN.Infrastructure;
-using BuferMAN.Menu.Properties;
 using BuferMAN.Infrastructure.Plugins;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Infrastructure.Menu;

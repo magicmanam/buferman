@@ -8,7 +8,6 @@ using System.Security.Principal;
 using magicmanam.Windows.ClipboardViewer;
 using BuferMAN.Infrastructure;
 using SystemWindowsForm = System.Windows.Forms.Form;
-using BuferMAN.Form.Properties;
 using System.Windows.Input;
 using System.ComponentModel;
 using BuferMAN.Infrastructure.Window;

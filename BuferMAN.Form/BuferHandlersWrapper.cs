@@ -5,7 +5,6 @@ using System.Linq;
 using System.IO;
 using BuferMAN.Infrastructure.ContextMenu;
 using BuferMAN.Clipboard;
-using BuferMAN.Form.Properties;
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.View;
