@@ -212,7 +212,7 @@ namespace BuferMAN.ContextMenu
                 }
 
             menuItems.Add(bufermanHost.CreateMenuSeparatorItem());
-            var createdAtMenuItem = bufermanHost.CreateMenuItem(string.Format(Resource.MenuCreatedTime, buferViewModel.CreatedAt));
+            var createdAtMenuItem = bufermanHost.CreateMenuItem(string.Format(Resource.MenuCopyingTime, buferViewModel.CreatedAt));
             createdAtMenuItem.Enabled = false;
             menuItems.Add(createdAtMenuItem);
 

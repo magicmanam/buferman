@@ -174,6 +174,9 @@
   <data name="MenuHelpDonateTitle" xml:space="preserve">
     <value>Your help is really appreciated</value>
   </data>
+  <data name="MenuHelpReport" xml:space="preserve">
+    <value>Report an issue</value>
+  </data>
   <data name="MenuHelpSend" xml:space="preserve">
     <value>Send &amp;feedback/issue</value>
   </data>
@@ -205,10 +208,10 @@
     <value>&amp;RAM</value>
   </data>
   <data name="MenuToolsMemoryCaption" xml:space="preserve">
-    <value>BuferMAN: RAM usage</value>
+    <value>RAM usage</value>
   </data>
   <data name="MenuToolsMemoryMessageFormat" xml:space="preserve">
-    <value>BuferMAN takes {0} KB of RAM</value>
+    <value>BuferMAN takes {0} KB of RAM.</value>
   </data>
   <data name="MenuToolsOptions" xml:space="preserve">
     <value>Options</value>

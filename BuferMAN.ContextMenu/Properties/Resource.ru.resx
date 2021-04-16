@@ -192,8 +192,8 @@
   <data name="MenuReturn" xml:space="preserve">
     <value>Вернуть &amp;текст к первоначальному</value>
   </data>
-  <data name="MenuCreatedTime" xml:space="preserve">
-    <value>Создано в {0}</value>
+  <data name="MenuCopyingTime" xml:space="preserve">
+    <value>Скопирован в {0}</value>
   </data>
   <data name="DeleteBuferInNMinutesMenuItem" xml:space="preserve">
     <value>Удалить буфер через {0} минут</value>

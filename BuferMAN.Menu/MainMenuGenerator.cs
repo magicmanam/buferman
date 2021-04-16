@@ -240,6 +240,8 @@ namespace BuferMAN.Menu
                 Process.Start("Documentation.html")));
             helpMenu.AddMenuItem(buferManHost.CreateMenuItem("-> klopat.by", (object sender, System.EventArgs e) =>
                 Process.Start("http://www.klopat.by/")));
+            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpReport, (object sender, EventArgs e) =>
+                Process.Start("https://github.com/magicmanam/buferman/issues/new")));
             helpMenu.AddSeparator();
             helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpAbout, (object sender, EventArgs args) => {
                 var version = ApplicationDeployment.IsNetworkDeployed ? ApplicationDeployment.CurrentDeployment.CurrentVersion : Assembly.GetEntryAssembly().GetName().Version;

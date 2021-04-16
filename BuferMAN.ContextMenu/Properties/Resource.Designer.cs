@@ -286,11 +286,11 @@ namespace BuferMAN.ContextMenu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Created at {0}.
+        ///   Looks up a localized string similar to Copied at {0}.
         /// </summary>
-        internal static string MenuCreatedTime {
+        internal static string MenuCopyingTime {
             get {
-                return ResourceManager.GetString("MenuCreatedTime", resourceCulture);
+                return ResourceManager.GetString("MenuCopyingTime", resourceCulture);
             }
         }
         

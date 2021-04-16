@@ -174,6 +174,9 @@
   <data name="MenuHelpDonateTitle" xml:space="preserve">
     <value>Помоги ближнему и когда-то помогут тебе!</value>
   </data>
+  <data name="MenuHelpReport" xml:space="preserve">
+    <value>Сообщить об ошибке</value>
+  </data>
   <data name="MenuHelpSend" xml:space="preserve">
     <value>&amp;Открыть форму обратной связи</value>
   </data>
@@ -205,10 +208,10 @@
     <value>&amp;Оперативная память</value>
   </data>
   <data name="MenuToolsMemoryCaption" xml:space="preserve">
-    <value>Буфермэн: использование оперативной памяти</value>
+    <value>Оперативная память</value>
   </data>
   <data name="MenuToolsMemoryMessageFormat" xml:space="preserve">
-    <value>Буфермэн занимает {0} KB оперативной памяти</value>
+    <value>Буфермэн занимает {0} KB оперативной памяти.</value>
   </data>
   <data name="MenuToolsOptions" xml:space="preserve">
     <value>Опции</value>

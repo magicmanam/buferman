@@ -232,6 +232,15 @@ namespace BuferMAN.Menu.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Report an issue.
+        /// </summary>
+        internal static string MenuHelpReport {
+            get {
+                return ResourceManager.GetString("MenuHelpReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send &amp;feedback/issue.
         /// </summary>
         internal static string MenuHelpSend {
@@ -322,7 +331,7 @@ namespace BuferMAN.Menu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BuferMAN: RAM usage.
+        ///   Looks up a localized string similar to RAM usage.
         /// </summary>
         internal static string MenuToolsMemoryCaption {
             get {
@@ -331,7 +340,7 @@ namespace BuferMAN.Menu.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BuferMAN takes {0} KB of RAM.
+        ///   Looks up a localized string similar to BuferMAN takes {0} KB of RAM..
         /// </summary>
         internal static string MenuToolsMemoryMessageFormat {
             get {
@@ -347,7 +356,7 @@ namespace BuferMAN.Menu.Properties {
                 return ResourceManager.GetString("MenuToolsOptions", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to &amp;Plugins.
         /// </summary>
