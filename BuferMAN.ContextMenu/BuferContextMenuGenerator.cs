@@ -50,9 +50,8 @@ namespace BuferMAN.ContextMenu
 
             var menuItems = new List<BufermanMenuItem>();
 
-            model.MarkAsPinnedMenuItem = bufermanHost.CreateMenuItem(Resource.MenuPin, model.TryPinBufer);
+            model.MarkAsPinnedMenuItem = bufermanHost.CreateMenuItem(buferViewModel.Pinned ? Resource.MenuUnpin : Resource.MenuPin, model.TryTogglePinBufer);
             model.MarkAsPinnedMenuItem.ShortCut = Shortcut.CtrlS;
-            model.MarkAsPinnedMenuItem.Enabled = !buferViewModel.Pinned;
             menuItems.Add(model.MarkAsPinnedMenuItem);
 
             var formats = model.BuferViewModel.Clip.GetFormats();

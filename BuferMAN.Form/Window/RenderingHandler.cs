@@ -152,10 +152,6 @@ namespace BuferMAN.Form.Window
                 for (var i = 0; i < button.ContextMenu.MenuItems.Count; i++)
                 {
                     var menuItem = button.ContextMenu.MenuItems[i];
-                    if (menuItem.Shortcut == Shortcut.CtrlS)// TODO (m) remove this condition or even the whole block - via Bufer class or handlers binder
-                    {
-                        menuItem.Enabled = !pinned;
-                    }
 
                     for (var j = 0; j < menuItem.MenuItems.Count; j++)
                     {

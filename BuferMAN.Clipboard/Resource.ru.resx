@@ -127,10 +127,13 @@
     <value>Буфер удалён</value>
   </data>
   <data name="BuferPinned" xml:space="preserve">
-    <value>Буфер запинен</value>
+    <value>Буфер закреплён</value>
+  </data>
+  <data name="BuferUnpinned" xml:space="preserve">
+    <value>Буфер откреплён</value>
   </data>
   <data name="PinnedBufersDeleted" xml:space="preserve">
-    <value>Запиненные буферы удалены</value>
+    <value>Закреплённые буферы удалены</value>
   </data>
   <data name="TemporaryBufersDeleted" xml:space="preserve">
     <value>Временные буферы удалены</value>

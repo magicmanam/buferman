@@ -340,7 +340,7 @@ namespace BuferMAN.ContextMenu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to P&amp;in.
+        ///   Looks up a localized string similar to P&amp;in bufer.
         /// </summary>
         internal static string MenuPin {
             get {
@@ -363,6 +363,15 @@ namespace BuferMAN.ContextMenu {
         internal static string MenuReturn {
             get {
                 return ResourceManager.GetString("MenuReturn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpin bufer.
+        /// </summary>
+        internal static string MenuUnpin {
+            get {
+                return ResourceManager.GetString("MenuUnpin", resourceCulture);
             }
         }
     }

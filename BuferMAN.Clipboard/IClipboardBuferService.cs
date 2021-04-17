@@ -22,14 +22,15 @@ namespace BuferMAN.Clipboard
 
         void AddTemporaryClip(BuferViewModel bufer);
 
-		bool TryPinBufer(Guid buferViewId);
+        bool TryPinBufer(Guid buferViewId);
+        bool TryUnpinBufer(Guid buferViewId);
 
         BuferViewModel LastTemporaryBufer { get; }
         bool IsLastTemporaryBufer(BuferViewModel bufer);
 
-		bool IsInPinnedBufers(BuferViewModel bufer, out Guid pinnedBuferViewId);
+        bool IsInPinnedBufers(BuferViewModel bufer, out Guid pinnedBuferViewId);
 
-		BuferViewModel FirstTemporaryBufer { get; }
+        BuferViewModel FirstTemporaryBufer { get; }
 
         BuferViewModel FirstPinnedBufer { get; }
 

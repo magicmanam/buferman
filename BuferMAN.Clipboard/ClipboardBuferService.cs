@@ -169,7 +169,26 @@ namespace BuferMAN.Clipboard
                     return false;
                 }
             }
-		}
+        }
+
+        public bool TryUnpinBufer(Guid buferViewId)
+        {
+            using (var operation = UndoableContext<ApplicationStateSnapshot>.Current.StartAction(Resource.BuferUnpinned))
+            {
+                var dataObject = this._pinnedObjects.FirstOrDefault(d => d.ViewId == buferViewId);
+                if (dataObject != null && this._pinnedObjects.Remove(dataObject))
+                {
+                    this._tempObjects.Add(dataObject);
+                    return true;
+
+                }
+                else
+                {
+                    operation.Cancel();
+                    return false;
+                }
+            }
+        }
 
         public IEnumerable<BuferViewModel> GetTemporaryClips()
         {

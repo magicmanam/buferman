@@ -184,7 +184,7 @@
     <value>&amp;Вставить</value>
   </data>
   <data name="MenuPin" xml:space="preserve">
-    <value>&amp;Запинить буфер</value>
+    <value>&amp;Закрепить буфер</value>
   </data>
   <data name="MenuPlaceInBufer" xml:space="preserve">
     <value>Поместить в буфер без вставки</value>
@@ -218,5 +218,8 @@
   </data>
   <data name="MenuAddToSelectedFile" xml:space="preserve">
     <value>&amp;Выбрать файл...</value>
+  </data>
+  <data name="MenuUnpin" xml:space="preserve">
+    <value>Открепить буфер</value>
   </data>
 </root>

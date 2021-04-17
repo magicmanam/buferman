@@ -52,25 +52,37 @@ namespace BuferMAN.ContextMenu
             this.PlaceInBuferMenuItem.Enabled = false;
             this.ChangeTextMenuItem.Enabled = false;
             this.BuferViewModel.Clip.SetData(ClipboardFormats.PASSWORD_FORMAT, e.Password);
-            if (this.MarkAsPinnedMenuItem.Enabled)
+            if (!this.BuferViewModel.Pinned)
             {
-                this.TryPinBufer(sender, e);
+                this.TryTogglePinBufer(sender, e);
             }
 
             this.Button.Click -= this._buferSelectionHandler.DoOnClipSelection;
         }
 
-        public void TryPinBufer(object sender, EventArgs e)
+        public void TryTogglePinBufer(object sender, EventArgs e)
         {
-            if (this._clipboardBuferService.TryPinBufer(this.BuferViewModel.ViewId))
+            if (this.BuferViewModel.Pinned)
             {
-                this.BuferViewModel.Pinned = true;
-                this.MarkAsPinnedMenuItem.Enabled = false;
-                this._bufermanHost.RerenderBufers();
-
-                if (this.DeleteMenuItem.IsDeferredDeletionActivated())
+                if (this._clipboardBuferService.TryUnpinBufer(this.BuferViewModel.ViewId))
                 {
-                    this.DeleteMenuItem.CancelDeferredBuferDeletion(sender, e);
+                    this.BuferViewModel.Pinned = false;
+                    this.MarkAsPinnedMenuItem.Text = Resource.MenuPin;
+                    this._bufermanHost.RerenderBufers();
+                }
+            }
+            else
+            {
+                if (this._clipboardBuferService.TryPinBufer(this.BuferViewModel.ViewId))
+                {
+                    this.BuferViewModel.Pinned = true;
+                    this.MarkAsPinnedMenuItem.Text = Resource.MenuUnpin;
+                    this._bufermanHost.RerenderBufers();
+
+                    if (this.DeleteMenuItem.IsDeferredDeletionActivated())
+                    {
+                        this.DeleteMenuItem.CancelDeferredBuferDeletion(sender, e);
+                    }
                 }
             }
         }

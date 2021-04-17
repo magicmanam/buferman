@@ -97,6 +97,15 @@ namespace BuferMAN.Clipboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bufer unpinned.
+        /// </summary>
+        internal static string BuferUnpinned {
+            get {
+                return ResourceManager.GetString("BuferUnpinned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pinned bufers deleted.
         /// </summary>
         internal static string PinnedBufersDeleted {

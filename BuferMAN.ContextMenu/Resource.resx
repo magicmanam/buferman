@@ -184,7 +184,7 @@
     <value>&amp;Paste</value>
   </data>
   <data name="MenuPin" xml:space="preserve">
-    <value>P&amp;in</value>
+    <value>P&amp;in bufer</value>
   </data>
   <data name="MenuPlaceInBufer" xml:space="preserve">
     <value>Place in bufer without paste</value>
@@ -218,5 +218,8 @@
   </data>
   <data name="MenuAddToSelectedFile" xml:space="preserve">
     <value>&amp;Select file...</value>
+  </data>
+  <data name="MenuUnpin" xml:space="preserve">
+    <value>Unpin bufer</value>
   </data>
 </root>
