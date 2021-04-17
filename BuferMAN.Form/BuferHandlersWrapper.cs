@@ -106,11 +106,11 @@ namespace BuferMAN.Form
             string buttonText = buferTitle ?? buferTextRepresentation;
             if (string.IsNullOrWhiteSpace(buttonText))
             {
-                buttonText = this._MakeSpecialBuferText(buttonText == null ? Resource.NotTextBufer : $"{buttonText.Length}   {Resource.WhiteSpaces}");
                 if (buttonText == null)
-                {// Can I delete this bufer? Check that "clip.GetFormats() == 0"
-                    // Maybe in debug mode I will catch this case and will find more details how it can happens
+                {
+                    // TODO (m) I need more info about such situation. Maybe log some information.
                 }
+                buttonText = this._MakeSpecialBuferText(buttonText == null ? Resource.NotTextBufer : $"{buttonText.Length}   {Resource.WhiteSpaces}");
                 this._MakeItalicBoldFont(button);
                 isChangeTextAvailable = false;
             }
@@ -122,7 +122,7 @@ namespace BuferMAN.Form
 
             string originBuferText = button.Text;
 
-            int maxBuferLength = 2000;// Into settings (not more then 5000 - add validation)
+            int maxBuferLength = 2000;// TODO (m) Into settings (not more then 5000 - add validation)
             if (buferTextRepresentation != null && buferTextRepresentation.Length > maxBuferLength + 300)
             {
                 buferTextRepresentation = buferTextRepresentation.Substring(0, maxBuferLength) + Environment.NewLine + Environment.NewLine + "...";

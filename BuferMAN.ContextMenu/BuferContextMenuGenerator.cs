@@ -69,15 +69,23 @@ namespace BuferMAN.ContextMenu
                     if (formatData is Stream)
                     {
                         particularFormatMenu.Text += " (Stream)";
-                    } else if (formatData is string)
+                    }
+                    else if (formatData is string)
                     {
                         particularFormatMenu.Text += " (Text)";
                     }
 
-                    particularFormatMenu.AddOnClickHandler((object sender, EventArgs args) =>
+                    if (formatData == null)
                     {
-                        bufermanHost.UserInteraction.ShowPopup(formatData.ToString(), format);
-                    });
+                        particularFormatMenu.Enabled = false;
+                    }
+                    else
+                    {
+                        particularFormatMenu.AddOnClickHandler((object sender, EventArgs args) =>
+                        {
+                            bufermanHost.UserInteraction.ShowPopup(formatData.ToString(), format);
+                        });
+                    }
                     formatsMenuItems.Add(particularFormatMenu);
                 }
             }

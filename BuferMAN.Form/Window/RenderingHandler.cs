@@ -62,7 +62,7 @@ namespace BuferMAN.Form.Window
             var emptyClipFound = false;
             foreach(var bufer in pinnedBufers)
             {
-                if (bufer.Clip.GetFormats().Length == 0)
+                if (bufer.Clip.IsEmptyObject())
                 {
                     emptyClipFound = true;
                     this._RemoveClipWithoutTrackingInUndoableContext(bufer);
@@ -84,7 +84,7 @@ namespace BuferMAN.Form.Window
 
                 foreach (var bufer in temporaryBufers)
                 {
-                    if (bufer.Clip.GetFormats().Length == 0)
+                    if (bufer.Clip.IsEmptyObject())
                     {
                         emptyClipFound = true;
                         this._RemoveClipWithoutTrackingInUndoableContext(bufer);
