@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClipboardViewer", "ClipboardViewer\ClipboardViewer.csproj", "{C4258F22-E51F-40DD-8B8A-00A62BC44DCF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logger\Logging.csproj", "{0DEECDC2-CF30-4625-A465-671F851F937E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.Menu", "BuferMAN.Menu\BuferMAN.Menu.csproj", "{08184414-67EA-419E-B71B-B764F0F2E578}"
@@ -51,10 +49,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C4258F22-E51F-40DD-8B8A-00A62BC44DCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C4258F22-E51F-40DD-8B8A-00A62BC44DCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C4258F22-E51F-40DD-8B8A-00A62BC44DCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C4258F22-E51F-40DD-8B8A-00A62BC44DCF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0DEECDC2-CF30-4625-A465-671F851F937E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0DEECDC2-CF30-4625-A465-671F851F937E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DEECDC2-CF30-4625-A465-671F851F937E}.Release|Any CPU.ActiveCfg = Release|Any CPU
