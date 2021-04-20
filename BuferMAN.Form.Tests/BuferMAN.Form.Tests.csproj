@@ -55,7 +55,6 @@
     <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuferHandlersWrapperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -67,10 +66,6 @@
       <Project>{4AB9774F-2BF8-4F4C-9653-610C5C76F8B3}</Project>
       <Name>BuferMAN.ContextMenu</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BuferMAN.Form\BuferMAN.Form.csproj">
-      <Project>{d8c168b4-607d-4fc6-b602-8c744f697ca6}</Project>
-      <Name>BuferMAN.Form</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BuferMAN.Infrastructure\BuferMAN.Infrastructure.csproj">
       <Project>{F14888DE-E3DE-4225-80AA-F836DCBA8E2E}</Project>
       <Name>BuferMAN.Infrastructure</Name>
@@ -78,6 +73,10 @@
     <ProjectReference Include="..\BuferMAN.View\BuferMAN.View.csproj">
       <Project>{60FACDBB-0E8F-4EA9-8E18-99294EF5908A}</Project>
       <Name>BuferMAN.View</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.WinForms\BuferMAN.WinForms.csproj">
+      <Project>{0359c0cd-be4b-4fce-b7d4-5c2bbedb9cac}</Project>
+      <Name>BuferMAN.WinForms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

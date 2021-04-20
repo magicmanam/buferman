@@ -12,24 +12,34 @@ using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Infrastructure.Menu;
 using System.Threading;
 using System.Collections.Generic;
+using BuferMAN.Infrastructure.Settings;
+using BuferMAN.Infrastructure.Files;
 
 namespace BuferMAN.Menu
 {
-    public class MainMenuGenerator : IMainMenuGenerator
+    internal class MainMenuGenerator : IMainMenuGenerator
     {
         private readonly IUserFileSelector _userFileSelector;
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IProgramSettings _settings;
         private readonly IIDataObjectHandler _dataObjectHandler;
         private readonly IEnumerable<IBufermanPlugin> _plugins;
+        private readonly IBufermanOptionsWindowFactory _optionsWindowFactory;
 
-        public MainMenuGenerator(IUserFileSelector userFileSelector, IClipboardBuferService clipboardBuferService, IProgramSettings settings, IIDataObjectHandler dataObjectHandler, IEnumerable<IBufermanPlugin> plugins)
+        public MainMenuGenerator(
+            IUserFileSelector userFileSelector,
+            IClipboardBuferService clipboardBuferService,
+            IProgramSettings settings,
+            IIDataObjectHandler dataObjectHandler,
+            IEnumerable<IBufermanPlugin> plugins,
+            IBufermanOptionsWindowFactory optionsWindowFactory)
         {
             this._userFileSelector = userFileSelector;
             this._clipboardBuferService = clipboardBuferService;
             this._settings = settings;
             this._dataObjectHandler = dataObjectHandler;
             this._plugins = plugins;
+            this._optionsWindowFactory = optionsWindowFactory;
         }
 
         public void GenerateMainMenu(IBufermanHost buferManHost)
@@ -146,13 +156,13 @@ namespace BuferMAN.Menu
             toolsMenu.AddMenuItem(this._GeneratePluginsMenu(bufermanHost));
             toolsMenu.AddMenuItem(this._GenerateLanguageMenu(bufermanHost));
             toolsMenu.AddMenuItem(bufermanHost.CreateMenuSeparatorItem());
-            toolsMenu.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuToolsOptions));
+            toolsMenu.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuToolsOptions, (object sender, EventArgs args) => this._optionsWindowFactory.Create().Open()));
 
             return toolsMenu;
         }
 
         private EventHandler _GetShowMemoryUsageHandler(IBufermanHost bufermanHost)
-        {// 2) Clear old bufers when memory taken is too much; 3) Number of all bufers (with deleted and not visible)
+        {// 1) Clear old bufers when memory taken is too much (can be a settings);
             return (object sender, EventArgs args) =>
             {
                 using (var performanceCounter = new PerformanceCounter())
@@ -233,7 +243,7 @@ namespace BuferMAN.Menu
             var startTime = DateTime.Now;
             helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpSend, (object sender, EventArgs e) =>
                 Process.Start("https://rink.hockeyapp.net/apps/51633746a31f44999eca3bc7b7945e92/feedback/new")));
-            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpStats, (object sender, EventArgs args) => buferManHost.UserInteraction.ShowPopup(string.Format(Resource.MenuHelpStatsInfo, startTime, this._dataObjectHandler.CopiesCount), Resource.MenuHelpStatsTitle)));
+            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpStats, (object sender, EventArgs args) => buferManHost.UserInteraction.ShowPopup(string.Format(Resource.MenuHelpStatsInfo, startTime, this._dataObjectHandler.CopiesCount, this._dataObjectHandler.CurrentDayCopiesCount), Resource.MenuHelpStatsTitle)));
             helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpDonate, (object sender, EventArgs args) => buferManHost.UserInteraction.ShowPopup(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)));
             helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.DocumentationMenuItem, (object sender, EventArgs e) =>
                 Process.Start("Documentation.html")));

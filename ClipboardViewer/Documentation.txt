@@ -5,7 +5,6 @@
 
 Issues to solve:
 - Load all bufers as one action (update UndoRedo nuget)
-- Abstract factory for working with storage (and maybe azure storage)
 
 - пароль хешировать
 
@@ -14,8 +13,6 @@ Issues to solve:
 При открытии файла если вылетает ошибка, она проглатывается
 При сохранении персистент-буфера в файл он должен сохраниться как персистент
 Меню "Сохранить в файл" - убрать Ctrl + F - выбирать нужный файл/сторадж
-
-Загрузка / сохранение в файл одинаковым сериализатором
 
 Book:
 - MAX_STATUS_LENGTH = 55 as well as other magic numbers/strings - in scope of StatusStrip
@@ -48,7 +45,7 @@ Hard:
 - Add menu with unknown file formats
 - Corporative & personal versions with private message.
 - Site with users -> from menu by unique link
-- Add some AI strategies based on user behaviour (Ctrl+C - TAB - Ctrl+V - TAB - Ctrl+C)
+- Add some AI strategies based on user behaviour (Ctrl+C - TAB - Ctrl+V - TAB - Ctrl+C) (for example suggest to pin bufer or save into some storage) - via plugins
 - Improve Performance (try different tools)
 - Alt-C + P - Opens Paint + other shortcuts
 - There is a new bufers.txt file on every program update.
@@ -61,13 +58,8 @@ Hard:
 //MessageBox.Show("Available only in Free Pro version.", "Just copy&paste")
 
 Settings:  //Minimalize settings for easy using
-  - Clip colors: default, focused, pinned
   - Bufer's width: 300 by default
-  - Toolip duration (2500 by default)
-  - Show tooltip when bufer gets focus (arrows keys or Tab). Set up time of tooltip
-  - Show tooltip when mouse is over bufer
   - Show confirmation dialog on delete
   - Max bufers count: *16, 30
   - Show bufers in *one column, *two columns, *three columns
   - Show preview image instead of ordinal text
-?  - History: store current day bufers, only from program start, when amount does not preceeds 100Mb of RAM

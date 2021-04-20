@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
+using BuferMAN.Infrastructure.Files;
 using BuferMAN.Infrastructure.Storage;
 
 namespace BuferMAN.Files
 {
-    public class UserFileStorageSelector : IUserFileSelector
+    internal class UserFileStorageSelector : IUserFileSelector
     {
         private readonly OpenFileDialog _dialog = new OpenFileDialog();
         private readonly IBufersStorageFactory _bufersStorageFactory;

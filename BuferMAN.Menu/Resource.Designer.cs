@@ -259,7 +259,7 @@ namespace BuferMAN.Menu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Program was started at {0}. Copied bufers count: {1}..
+        ///   Looks up a localized string similar to Program was started at {0}. Copied bufers count: {1} ({2} for today)..
         /// </summary>
         internal static string MenuHelpStatsInfo {
             get {
@@ -349,7 +349,7 @@ namespace BuferMAN.Menu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Options.
+        ///   Looks up a localized string similar to &amp;Options.
         /// </summary>
         internal static string MenuToolsOptions {
             get {

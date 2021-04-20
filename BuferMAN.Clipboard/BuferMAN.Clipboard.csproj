@@ -34,6 +34,9 @@
       <HintPath>..\packages\magicmanam.UndoRedo.1.0.0.1\lib\net45\magicmanam.UndoRedo.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
+    <Reference Include="SimpleInjector, Version=5.0.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.5.3.0\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,6 +49,7 @@
     <Compile Include="ClipboardFormats.cs" />
     <Compile Include="ClipboardMessageException.cs" />
     <Compile Include="ClipboardWrapper.cs" />
+    <Compile Include="ContainerExtensions.cs" />
     <Compile Include="DataObjectComparer.cs" />
     <Compile Include="IClipboardBuferService.cs" />
     <Compile Include="IClipboardWrapper.cs" />

@@ -71,10 +71,6 @@
       <Project>{A7DA5919-18BB-4D6F-B492-2D241B3FEF1C}</Project>
       <Name>BuferMAN.Files</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BuferMAN.Form\BuferMAN.Form.csproj">
-      <Project>{D8C168B4-607D-4FC6-B602-8C744F697CA6}</Project>
-      <Name>BuferMAN.Form</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BuferMAN.Infrastructure\BuferMAN.Infrastructure.csproj">
       <Project>{F14888DE-E3DE-4225-80AA-F836DCBA8E2E}</Project>
       <Name>BuferMAN.Infrastructure</Name>
@@ -95,6 +91,9 @@
       <Project>{4C95D126-7345-4F6A-8BB6-DDE908E37E63}</Project>
       <Name>BuferMAN.Storage</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace BuferMAN.Storage
 {
-    public class LoadedBuferItemsProcessor : ILoadedBuferItemsProcessor
+    internal class LoadedBuferItemsProcessor : ILoadedBuferItemsProcessor
     {
         private readonly IBuferItemDataObjectConverter _buferItemDataObjectConverter;
         private readonly IIDataObjectHandler _dataObjectHandler;

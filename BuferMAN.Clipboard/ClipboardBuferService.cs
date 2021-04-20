@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace BuferMAN.Clipboard
 {
-    public class ClipboardBuferService : IClipboardBuferService
+    internal class ClipboardBuferService : IClipboardBuferService
     {
         private IList<BuferViewModel> _tempObjects = new List<BuferViewModel>();
 		private IList<BuferViewModel> _pinnedObjects = new List<BuferViewModel>();

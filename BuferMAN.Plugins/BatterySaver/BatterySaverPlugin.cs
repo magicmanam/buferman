@@ -3,15 +3,13 @@ using BuferMAN.Infrastructure.Menu;
 using System;
 using System.Windows.Forms;
 
-namespace BuferMAN.Plugins
+namespace BuferMAN.Plugins.BatterySaver
 {
     public class BatterySaverPlugin : BufermanPluginBase
     {
         private const string NOTIFICATION_TITLE = "Battery saver plugin";
-        private const int INTERVAL_IN_SECONDS = 60;
+        private readonly BatterySaverPluginSettings _settings = new BatterySaverPluginSettings();
 
-        private int _highLimit = 90;
-        private int _lowLimit = 25;
         private bool _enabled;
         private readonly bool _batteryAvailable;
 
@@ -32,38 +30,8 @@ namespace BuferMAN.Plugins
 
             if (this._batteryAvailable)
             {
-                this._timer.Interval = INTERVAL_IN_SECONDS * 1000;
+                this._timer.Interval = this._settings.IntervalInSeconds * 1000;
                 this._timer.Tick += this._BatteryCheckHandler;
-            }
-        }
-
-        public int HighLimit
-        {
-            get
-            {
-                return _highLimit;
-            }
-            set
-            {
-                if (value < 100 || value > LowLimit)
-                {
-                    _highLimit = value;
-                }
-            }
-        }
-
-        public int LowLimit
-        {
-            get
-            {
-                return _lowLimit;
-            }
-            set
-            {
-                if (value > 9 && value < HighLimit)
-                {
-                    _lowLimit = value;
-                }
             }
         }
 
@@ -83,12 +51,12 @@ namespace BuferMAN.Plugins
         {
             var status = SystemInformation.PowerStatus;
 
-            if (status.PowerLineStatus == PowerLineStatus.Offline && status.BatteryLifePercent * 100 < LowLimit)
+            if (status.PowerLineStatus == PowerLineStatus.Offline && status.BatteryLifePercent * 100 < this._settings.LowLimitPercent)
             {
                 this.BufermanHost.NotificationEmitter.ShowWarningNotification(string.Format(Resource.BatterySaverPluginChargeNoteFormat, status.BatteryLifePercent * 100), 2500, NOTIFICATION_TITLE);
             }
 
-            if (status.PowerLineStatus == PowerLineStatus.Online && status.BatteryLifePercent * 100 > HighLimit)
+            if (status.PowerLineStatus == PowerLineStatus.Online && status.BatteryLifePercent * 100 > this._settings.HighLimitPercent)
             {
                 this.BufermanHost.NotificationEmitter.ShowWarningNotification(string.Format(Resource.BatterySaverPluginUnchargeNoteFormat, status.BatteryLifePercent * 100), 2500, NOTIFICATION_TITLE);
             }

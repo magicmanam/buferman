@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace BuferMAN.Storage
 {
-    public class BuferItemDataObjectConverter : IBuferItemDataObjectConverter
+    internal class BuferItemDataObjectConverter : IBuferItemDataObjectConverter
     {
         public IDataObject ToDataObject(BuferItem buferItem)
         {

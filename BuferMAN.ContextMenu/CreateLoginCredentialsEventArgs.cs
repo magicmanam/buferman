@@ -2,7 +2,7 @@
 
 namespace BuferMAN.ContextMenu
 {
-    public class CreateLoginCredentialsEventArgs : EventArgs
+    internal class CreateLoginCredentialsEventArgs : EventArgs
     {
         public string Password { get; private set; }
 

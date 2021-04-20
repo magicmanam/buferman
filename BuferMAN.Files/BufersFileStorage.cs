@@ -10,7 +10,7 @@ using System.Text;
 
 namespace BuferMAN.Files
 {
-    public class BufersFileStorage : IPersistentBufersStorage
+    internal class BufersFileStorage : IPersistentBufersStorage
     {
         private readonly string _filePath;
         private readonly IBufersFileFormatter _fileFormatter;

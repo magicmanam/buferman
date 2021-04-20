@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SimpleInjector, Version=5.0.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.5.3.0\lib\net45\SimpleInjector.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -40,10 +43,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BatterySaver\BatterySaverPlugin.cs" />
+    <Compile Include="BatterySaver\BatterySaverPluginSettings.cs" />
     <Compile Include="BufermanPluginBase.cs" />
     <Compile Include="BuferPresentations\FolderIconBuferPresentationBase.cs" />
     <Compile Include="BuferPresentations\IBuferPresentation.cs" />
     <Compile Include="BuferPresentations\IconBuferPresentationBase.cs" />
+    <Compile Include="ContainerExtensions.cs" />
     <Compile Include="PCCleaner\PCCleanerPlugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.Designer.cs">
@@ -69,6 +74,8 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

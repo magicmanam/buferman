@@ -4,7 +4,7 @@ using BuferMAN.Clipboard;
 
 namespace BuferMAN.ContextMenu
 {
-	public class BuferSelectionHandlerFactory : IBuferSelectionHandlerFactory
+    internal class BuferSelectionHandlerFactory : IBuferSelectionHandlerFactory
     {
         private readonly IClipboardWrapper _clipboardWrapper;
 

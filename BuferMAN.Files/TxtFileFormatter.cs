@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BuferMAN.Files
 {
-    public class TxtFileFormatter : IBufersFileFormatter
+    internal class TxtFileFormatter : IBufersFileFormatter
     {
         public IEnumerable<BuferItem> Parse(string content)
         {

@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace BuferMAN.Files
 {
-    public class JsonFileFormatter : IBufersFileFormatter
+    internal class JsonFileFormatter : IBufersFileFormatter
     {
         public IEnumerable<BuferItem> Parse(string content)
         {

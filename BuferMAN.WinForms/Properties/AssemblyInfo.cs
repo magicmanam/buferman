@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("BuferMAN.WinForms")]
@@ -9,6 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("magicmanam")]
 [assembly: AssemblyCulture("")]
+[assembly: InternalsVisibleTo("BuferMAN.WinForms.Tests")]
 
 [assembly: ComVisible(false)]
 

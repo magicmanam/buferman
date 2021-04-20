@@ -184,7 +184,7 @@
     <value>&amp;Статистика</value>
   </data>
   <data name="MenuHelpStatsInfo" xml:space="preserve">
-    <value>Программа была запущена в {0}. Сделано копирований: {1}.</value>
+    <value>Программа была запущена в {0}. Сделано копирований: {1} ({2} за сегодня).</value>
   </data>
   <data name="MenuHelpStatsTitle" xml:space="preserve">
     <value>Статистика</value>
@@ -214,7 +214,7 @@
     <value>Буфермэн занимает {0} KB оперативной памяти.</value>
   </data>
   <data name="MenuToolsOptions" xml:space="preserve">
-    <value>Опции</value>
+    <value>&amp;Опции</value>
   </data>
   <data name="MenuToolsPlugins" xml:space="preserve">
     <value>&amp;Плагины</value>

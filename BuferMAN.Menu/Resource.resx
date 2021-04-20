@@ -184,7 +184,7 @@
     <value>&amp;Statistics</value>
   </data>
   <data name="MenuHelpStatsInfo" xml:space="preserve">
-    <value>Program was started at {0}. Copied bufers count: {1}.</value>
+    <value>Program was started at {0}. Copied bufers count: {1} ({2} for today).</value>
   </data>
   <data name="MenuHelpStatsTitle" xml:space="preserve">
     <value>Statistics</value>
@@ -214,7 +214,7 @@
     <value>BuferMAN takes {0} KB of RAM.</value>
   </data>
   <data name="MenuToolsOptions" xml:space="preserve">
-    <value>Options</value>
+    <value>&amp;Options</value>
   </data>
   <data name="MenuToolsPlugins" xml:space="preserve">
     <value>&amp;Plugins</value>

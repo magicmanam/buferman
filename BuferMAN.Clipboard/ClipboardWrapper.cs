@@ -1,16 +1,17 @@
 ﻿using System.Runtime.InteropServices;
 using Logging;
 using System.Windows.Forms;
+using WindowsClipboard = System.Windows.Forms.Clipboard;
 
 namespace BuferMAN.Clipboard
 {
-    public class ClipboardWrapper : IClipboardWrapper
+    internal class ClipboardWrapper : IClipboardWrapper
     {
         public IDataObject GetDataObject()
         {
             try
             {
-                IDataObject dataObject = System.Windows.Forms.Clipboard.GetDataObject();
+                var dataObject = WindowsClipboard.GetDataObject();
 
                 var copy = new DataObject();
                 foreach (var format in dataObject.GetFormats())
@@ -32,9 +33,9 @@ namespace BuferMAN.Clipboard
                     }
                 }
 
-                if (System.Windows.Forms.Clipboard.ContainsImage())
+                if (WindowsClipboard.ContainsImage())
                 {
-                    copy.SetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT, System.Windows.Forms.Clipboard.GetImage());
+                    copy.SetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT, WindowsClipboard.GetImage());
                 }
 
                 return copy;
@@ -48,7 +49,7 @@ namespace BuferMAN.Clipboard
 
         public void SetDataObject(IDataObject dataObject)
         {
-            System.Windows.Forms.Clipboard.SetDataObject(dataObject);
+            WindowsClipboard.SetDataObject(dataObject);
         }
     }
 }

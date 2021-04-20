@@ -1,9 +1,9 @@
-﻿using BuferMAN.Infrastructure.Storage;
+﻿using BuferMAN.Infrastructure.Files;
 using System.IO;
 
 namespace BuferMAN.Files
 {
-    public class FileStorage : IFileStorage
+    internal class FileStorage : IFileStorage
     {
         public string GetFileDirectory(string filePath)
         {

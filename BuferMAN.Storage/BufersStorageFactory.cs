@@ -1,17 +1,20 @@
 ﻿using BuferMAN.Files;
+using BuferMAN.Infrastructure.Files;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Models;
 using System;
 
 namespace BuferMAN.Storage
 {
-    public class BufersStorageFactory : IBufersStorageFactory
+    internal class BufersStorageFactory : IBufersStorageFactory
     {
         private readonly ILoadedBuferItemsProcessor _loadedBuferItemsProcessor;
+        private readonly IBufersFileStorageFactory _filesStorageFactory;
 
-        public BufersStorageFactory(ILoadedBuferItemsProcessor loadedBuferItemsProcessor)
+        public BufersStorageFactory(ILoadedBuferItemsProcessor loadedBuferItemsProcessor, IBufersFileStorageFactory filesStorageFactory)
         {
             this._loadedBuferItemsProcessor = loadedBuferItemsProcessor;
+            this._filesStorageFactory = filesStorageFactory;
         }
 
         public IPersistentBufersStorage Create(BufersStorageModel model)
@@ -21,15 +24,13 @@ namespace BuferMAN.Storage
 
         public IPersistentBufersStorage Create(BufersStorageType storageType, string address)
         {
-            BufersFileStorage storage;
+            IPersistentBufersStorage storage;
 
             switch (storageType)
             {
                 case BufersStorageType.TxtFile:
-                    storage = new BufersFileStorage(new TxtFileFormatter(), address);
-                    break;
                 case BufersStorageType.JsonFile:
-                    storage = new BufersFileStorage(new JsonFileFormatter(), address);
+                    storage = this._filesStorageFactory.Create(storageType, address);
                     break;
                 default:
                     throw new NotImplementedException();

@@ -14,10 +14,12 @@ using BuferMAN.Infrastructure.Plugins;
 using System.Diagnostics;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Models;
+using BuferMAN.Infrastructure.Settings;
+using BuferMAN.Infrastructure.Files;
 
 namespace BuferMAN.ContextMenu
 {
-    public class BuferContextMenuGenerator : IBuferContextMenuGenerator
+    internal class BuferContextMenuGenerator : IBuferContextMenuGenerator
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IBuferSelectionHandlerFactory _buferSelectionHandlerFactory;

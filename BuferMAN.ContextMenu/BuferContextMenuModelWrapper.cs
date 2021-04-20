@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace BuferMAN.ContextMenu
 {
-    public class BuferContextMenuModelWrapper : BuferContextMenuModel
+    internal class BuferContextMenuModelWrapper : BuferContextMenuModel
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IBuferSelectionHandler _buferSelectionHandler;

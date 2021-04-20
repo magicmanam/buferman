@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace BuferMAN.Windows
 {
-    public class UserInteraction : IUserInteraction
+    internal class UserInteraction : IUserInteraction
     {
         public bool? ShowYesNoCancelPopup(string text, string caption)
         {

@@ -9,5 +9,6 @@ namespace BuferMAN.Infrastructure
         event EventHandler<ClipboardUpdatedEventArgs> Updated;
         bool TryHandleDataObject(BuferViewModel buferViewModel);
         long CopiesCount { get; }
+        long CurrentDayCopiesCount { get; }
     }
 }

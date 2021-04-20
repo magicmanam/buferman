@@ -8,7 +8,7 @@ using BuferMAN.Infrastructure.Menu;
 
 namespace ClipboardViewerForm.ClipMenu.Items
 {
-    public class CreateLoginCredentialsMenuItem : ChangingTextMenuItemBase
+    internal class CreateLoginCredentialsMenuItem : ChangingTextMenuItemBase
     {
         public CreateLoginCredentialsMenuItem(BufermanMenuItem menuItem, Button button, ToolTip mouseOverTooltip, IBufermanHost bufermanHost) : base(menuItem, button, mouseOverTooltip, bufermanHost)
         {

@@ -1,5 +1,6 @@
 ﻿using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Environment;
+using BuferMAN.Infrastructure.Settings;
 using System.Diagnostics;
 using System.Security.Principal;
 using System.Threading;
@@ -7,15 +8,18 @@ using System.Windows.Forms;
 
 namespace BuferMAN.Windows
 {
-    public class Starter : IStarter
+    internal class Starter : IStarter
     {
         private readonly IBufermanHost _bufermanHost;
         private readonly IBufermanApplication _bufermanApp;
+        private readonly IProgramSettings _settings;
 
-        public Starter(IBufermanHost bufermanHost, IBufermanApplication bufermanApp)
+        public Starter(IBufermanHost bufermanHost, IBufermanApplication bufermanApp,
+            IProgramSettings settings)
         {
             this._bufermanHost = bufermanHost;
             this._bufermanApp = bufermanApp;
+            this._settings = settings;
         }
 
         public void EnsureOneInstanceStart()
@@ -26,7 +30,7 @@ namespace BuferMAN.Windows
                 {
                     var principal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
                     var isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
-                    if (!isAdmin)
+                    if (!isAdmin && this._settings.ShowUserModeNotification)
                     {
                         var result = this._bufermanHost.UserInteraction.ShowYesNoCancelPopup(Resource.AdminModeConfirmation, Resource.AdminModeConfirmationTitle);
 

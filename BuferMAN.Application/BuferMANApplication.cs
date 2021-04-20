@@ -2,6 +2,7 @@
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Infrastructure.Plugins;
+using BuferMAN.Infrastructure.Settings;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.View;
 using magicmanam.UndoRedo;
@@ -12,7 +13,7 @@ using System.Windows.Forms;
 
 namespace BuferMAN.Application
 {
-    public class BufermanApplication : IBufermanApplication
+    internal class BufermanApplication : IBufermanApplication
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IClipboardWrapper _clipboardWrapper;

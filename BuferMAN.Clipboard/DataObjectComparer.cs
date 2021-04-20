@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace BuferMAN.Clipboard
 {
-	public class DataObjectComparer : IEqualityComparer<IDataObject>
+	internal class DataObjectComparer : IEqualityComparer<IDataObject>
     {
         private readonly IList<string> _stringFormats;
         private readonly IList<string> _arrayFormats;
