@@ -178,7 +178,7 @@ namespace BuferMAN.ContextMenu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete bufer in {0} minutes.
+        ///   Looks up a localized string similar to In {0} minutes.
         /// </summary>
         internal static string DeleteBuferInNMinutesMenuItem {
             get {
@@ -187,7 +187,7 @@ namespace BuferMAN.ContextMenu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Delete.
+        ///   Looks up a localized string similar to &amp;Delete bufer.
         /// </summary>
         internal static string DeleteBuferMenuItem {
             get {
@@ -196,7 +196,7 @@ namespace BuferMAN.ContextMenu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delete bufer &amp;now.
+        ///   Looks up a localized string similar to &amp;Now.
         /// </summary>
         internal static string DeleteBuferNowMenuItem {
             get {
