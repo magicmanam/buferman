@@ -66,6 +66,10 @@
     <Compile Include="UserInteraction.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuferMAN.Assets\BuferMAN.Assets.csproj">
+      <Project>{F414504B-8C46-42A6-9508-C1133CC947A7}</Project>
+      <Name>BuferMAN.Assets</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BuferMAN.DI\BuferMAN.DI.csproj">
       <Project>{01BC52AE-FF2F-44E3-89F3-22C8AB487690}</Project>
       <Name>BuferMAN.DI</Name>

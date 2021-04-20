@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using BuferMAN.Assets;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace BuferMAN.Windows
@@ -7,7 +8,7 @@ namespace BuferMAN.Windows
     {
         public BufermanGhostForm()
         {
-            Icon = new Icon("copy-multi-size.ico");// TODO (s) new Icon("copy-multi-size.ico") - into a separate class
+            Icon = Icons.Buferman;
             TopMost = true;
             FormBorderStyle = FormBorderStyle.None;
             Size = new Size(0, 0);

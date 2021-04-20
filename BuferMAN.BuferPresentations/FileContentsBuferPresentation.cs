@@ -5,9 +5,9 @@ using System.Windows.Forms;
 
 namespace BuferMAN.BuferPresentations
 {
-    public class FileContentsBuferPresentation : IconBuferPresentationBase
+    public class FileContentsBuferPresentation : FolderIconBuferPresentationBase
     {
-        public FileContentsBuferPresentation() : base("folder.ico") { }
+        public FileContentsBuferPresentation() { }
 
         public override bool IsCompatibleWithBufer(IDataObject data)
         {

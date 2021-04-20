@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN", "BuferMAN\BuferM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.WinForms", "BuferMAN.WinForms\BuferMAN.WinForms.csproj", "{0359C0CD-BE4B-4FCE-B7D4-5C2BBEDB9CAC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.Assets", "BuferMAN.Assets\BuferMAN.Assets.csproj", "{F414504B-8C46-42A6-9508-C1133CC947A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +137,10 @@ Global
 		{0359C0CD-BE4B-4FCE-B7D4-5C2BBEDB9CAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0359C0CD-BE4B-4FCE-B7D4-5C2BBEDB9CAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0359C0CD-BE4B-4FCE-B7D4-5C2BBEDB9CAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F414504B-8C46-42A6-9508-C1133CC947A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F414504B-8C46-42A6-9508-C1133CC947A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F414504B-8C46-42A6-9508-C1133CC947A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F414504B-8C46-42A6-9508-C1133CC947A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -82,6 +82,10 @@
       <Project>{19DFDADA-87FF-4E18-BB5D-692AF8EA4E4C}</Project>
       <Name>BuferMAN.Application</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.Assets\BuferMAN.Assets.csproj">
+      <Project>{f414504b-8c46-42a6-9508-c1133cc947a7}</Project>
+      <Name>BuferMAN.Assets</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BuferMAN.Clipboard\BuferMAN.Clipboard.csproj">
       <Project>{de6fe4d1-5c5a-4069-8d7f-f72c03d6b18a}</Project>
       <Name>BuferMAN.Clipboard</Name>
@@ -128,9 +132,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="BuferAMForm.resx">
-      <DependentUpon>BuferAMForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Resource.resx">
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>

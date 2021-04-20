@@ -59,6 +59,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuferMAN.Assets\BuferMAN.Assets.csproj">
+      <Project>{f414504b-8c46-42a6-9508-c1133cc947a7}</Project>
+      <Name>BuferMAN.Assets</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BuferMAN.DI\BuferMAN.DI.csproj">
       <Project>{01BC52AE-FF2F-44E3-89F3-22C8AB487690}</Project>
       <Name>BuferMAN.DI</Name>
@@ -84,15 +88,6 @@
     <None Include="bufers.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="copy-multi-size.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="folder.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="skype.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using SystemWindowsFormsContextMenu = System.Windows.Forms.ContextMenu;
 using magicmanam.Windows;
-using System.Security.Principal;
+using BuferMAN.Assets;
 using magicmanam.Windows.ClipboardViewer;
 using BuferMAN.Infrastructure;
 using SystemWindowsForm = System.Windows.Forms.Form;
@@ -68,7 +68,7 @@ namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' confli
 
             this.ClientSize = new Size(282, 253);
             this.DoubleBuffered = true;
-            this.Icon = resources.GetObject("$this.Icon") as Icon;
+            this.Icon = Icons.Buferman;
             this.ResumeLayout(false);
         }
 
@@ -255,7 +255,10 @@ namespace BuferMAN.Form// TODO (m) : Rename this namespace because 'Form' confli
 
         private void _SetupTrayIcon()
         {
-            this.TrayIcon = new NotifyIcon() { Text = Resource.NotifyIconStartupText, Icon = new Icon("copy-multi-size.ico") };
+            this.TrayIcon = new NotifyIcon() {
+                Text = Resource.NotifyIconStartupText,
+                Icon = Icons.Buferman
+            };
             this.TrayIcon.DoubleClick += this._TrayIcon_DoubleClick;
             this.TrayIcon.Visible = true;
 

@@ -1,4 +1,5 @@
-﻿using BuferMAN.Infrastructure;
+﻿using System;
+using BuferMAN.Infrastructure;
 using System.Windows.Forms;
 
 namespace BuferMAN.Form
@@ -30,7 +31,7 @@ namespace BuferMAN.Form
             //this._notifyIcon.BalloonTipClicked += _notifyIcon_BalloonTipClicked;
         }
 
-        private void _notifyIcon_BalloonTipClicked(object sender, System.EventArgs e)
+        private void _notifyIcon_BalloonTipClicked(object sender, EventArgs e)
         {
             this._notifyIcon.BalloonTipClicked -= _notifyIcon_BalloonTipClicked;
             // Open plugin settings window.

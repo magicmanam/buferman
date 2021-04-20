@@ -235,9 +235,9 @@ namespace BuferMAN.Menu
                 Process.Start("https://rink.hockeyapp.net/apps/51633746a31f44999eca3bc7b7945e92/feedback/new")));
             helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpStats, (object sender, EventArgs args) => buferManHost.UserInteraction.ShowPopup(string.Format(Resource.MenuHelpStatsInfo, startTime, this._dataObjectHandler.CopiesCount), Resource.MenuHelpStatsTitle)));
             helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpDonate, (object sender, EventArgs args) => buferManHost.UserInteraction.ShowPopup(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)));
-            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.DocumentationMenuItem, (object sender, System.EventArgs e) =>
+            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.DocumentationMenuItem, (object sender, EventArgs e) =>
                 Process.Start("Documentation.html")));
-            helpMenu.AddMenuItem(buferManHost.CreateMenuItem("-> klopat.by", (object sender, System.EventArgs e) =>
+            helpMenu.AddMenuItem(buferManHost.CreateMenuItem("-> klopat.by", (object sender, EventArgs e) =>
                 Process.Start("http://www.klopat.by/")));
             helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpReport, (object sender, EventArgs e) =>
                 Process.Start("https://github.com/magicmanam/buferman/issues/new")));
