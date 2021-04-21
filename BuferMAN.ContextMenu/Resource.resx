@@ -120,11 +120,11 @@
   <data name="BuferAliasReturned" xml:space="preserve">
     <value>Bufer alias was returned to its primary value</value>
   </data>
-  <data name="ChangeTextPostfix" xml:space="preserve">
-    <value>If you need save login/password pair, just use 'Create login credentials menu'.</value>
+  <data name="ChangeBigText" xml:space="preserve">
+    <value>Enter a new text for this bufer. It can be useful to hide copied passwords or alias some enourmous text. If you need save login/password pair, just use 'Create login credentials menu'.</value>
   </data>
-  <data name="ChangeTextPrefix" xml:space="preserve">
-    <value>Enter a new text for this bufer. It can be useful to hide copied passwords or alias some enourmous text. Primary button value was</value>
+  <data name="ChangeText" xml:space="preserve">
+    <value>Enter a new text for this bufer. It can be useful to hide copied passwords or alias some enourmous text. Primary button value was "{0}". If you need save login/password pair, just use 'Create login credentials menu'.</value>
   </data>
   <data name="ChangeTextTitle" xml:space="preserve">
     <value>Change bufer's text</value>

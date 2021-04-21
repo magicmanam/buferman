@@ -16,7 +16,12 @@ namespace BuferMAN.ContextMenu
 
         private void _ChangeText(object sender, EventArgs e)
         {
-            var newText = this.BufermanHost.UserInteraction.PromptPopup(Resource.ChangeTextPrefix + $" \"{(this.Button.Tag as BuferViewModel).OriginBuferText}\". " + Resource.ChangeTextPostfix,
+            var buferText = (this.Button.Tag as BuferViewModel).OriginBuferText;
+            var promptText = buferText.Length < 100 ? // TODO (s) into settings? Just consider
+                string.Format(Resource.ChangeText, buferText) :
+                Resource.ChangeBigText;
+
+            var newText = this.BufermanHost.UserInteraction.PromptPopup(promptText,
                    Resource.ChangeTextTitle,
                    this.Button.Text);
 

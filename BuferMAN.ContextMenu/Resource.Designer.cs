@@ -79,20 +79,20 @@ namespace BuferMAN.ContextMenu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you need save login/password pair, just use &apos;Create login credentials menu&apos;..
+        ///   Looks up a localized string similar to Enter a new text for this bufer. It can be useful to hide copied passwords or alias some enourmous text. If you need save login/password pair, just use &apos;Create login credentials menu&apos;..
         /// </summary>
-        internal static string ChangeTextPostfix {
+        internal static string ChangeBigText {
             get {
-                return ResourceManager.GetString("ChangeTextPostfix", resourceCulture);
+                return ResourceManager.GetString("ChangeBigText", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter a new text for this bufer. It can be useful to hide copied passwords or alias some enourmous text. Primary button value was.
+        ///   Looks up a localized string similar to Enter a new text for this bufer. It can be useful to hide copied passwords or alias some enourmous text. Primary button value was &quot;{0}&quot;. If you need save login/password pair, just use &apos;Create login credentials menu&apos;..
         /// </summary>
-        internal static string ChangeTextPrefix {
+        internal static string ChangeText {
             get {
-                return ResourceManager.GetString("ChangeTextPrefix", resourceCulture);
+                return ResourceManager.GetString("ChangeText", resourceCulture);
             }
         }
         
