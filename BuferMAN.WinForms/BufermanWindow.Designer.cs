@@ -231,6 +231,8 @@ namespace BuferMAN.WinForms
             WindowsFunctions.SendMessage(this.Handle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);
         }
 
+        public BuferViewModel LatestFocusedBufer { get; set; }
+
         private void _InitializeForm(bool isAdmin)
         {
             this.SuspendLayout();

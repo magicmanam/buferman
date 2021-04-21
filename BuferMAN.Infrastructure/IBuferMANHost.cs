@@ -27,5 +27,6 @@ namespace BuferMAN.Infrastructure
         BufermanMenuItem CreateMenuItem(string text, EventHandler eventHandler = null);
         BufermanMenuItem CreateMenuSeparatorItem();
         IUserInteraction UserInteraction { get; }
+        BuferViewModel LatestFocusedBufer { get; set; }
     }
 }

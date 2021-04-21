@@ -18,6 +18,7 @@ namespace BuferMAN.WinForms
         private readonly BuferViewModel _buferViewModel;
         private readonly IBuferSelectionHandlerFactory _buferSelectionHandlerFactory;
         private readonly IFileStorage _fileStorage;
+        private readonly IBufermanHost _bufermanHost;
         private readonly Button _button;
         private readonly ToolTip _focusTooltip = new ToolTip() { OwnerDraw = false };
         private const float IMAGE_SCALE = 0.75f;
@@ -49,6 +50,7 @@ namespace BuferMAN.WinForms
             this._settings = settings;
 
             // TODO (l) : remove Button button parameter
+            this._bufermanHost = bufermanHost;
             this._buferViewModel = buferViewModel;
             this._button = button;
             this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
@@ -108,7 +110,7 @@ namespace BuferMAN.WinForms
                     {
                         isChangeTextAvailable = false;
                         buferTextRepresentation = this._MakeSpecialBuferText(Resource.ImageBufer);
-                        this._MakeItalicBoldFont(button);
+                        this._button.Font = this._MakeItalicBoldFont(this._button.Font);
                     }
                     else
                     {
@@ -116,7 +118,7 @@ namespace BuferMAN.WinForms
                         {
                             isChangeTextAvailable = false;
                             buferTextRepresentation = this._MakeSpecialBuferText(Resource.FileContentsBufer);
-                            this._MakeItalicBoldFont(button);
+                            this._button.Font = this._MakeItalicBoldFont(this._button.Font);
                         }
                     }
                 }
@@ -127,17 +129,16 @@ namespace BuferMAN.WinForms
             {
                 if (buttonText == null)
                 {
-                    // TODO (m) I need more info about such situation. Maybe log some information.
+                    // TODO (m) I need more info about such situation. Maybe log some information. VS project items copied - this situation
                 }
                 buttonText = this._MakeSpecialBuferText(buttonText == null ? Resource.NotTextBufer : $"{buttonText.Length}   {Resource.WhiteSpaces}");
-                this._MakeItalicBoldFont(button);
+                this._button.Font = this._MakeItalicBoldFont(this._button.Font);
                 isChangeTextAvailable = false;
             }
-            buferViewModel.DefaultBackColor = button.BackColor;
-            buferViewModel.Representation = buferTextRepresentation;
-            button.Tag = buferViewModel;
-            button.Text = buttonText.Trim();
-            buferViewModel.OriginBuferText = button.Text;
+            buferViewModel.DefaultBackColor = this._button.BackColor;
+            this._button.Tag = buferViewModel;
+            this._button.Text = buttonText.Trim();
+            buferViewModel.OriginBuferText = this._button.Text;
 
             int maxBuferLength = this._settings.MaxBuferPresentationLength;
             if (isChangeTextAvailable && buferTextRepresentation != null && buferTextRepresentation.Length > maxBuferLength)
@@ -150,9 +151,10 @@ namespace BuferMAN.WinForms
                 }
             }
 
+            buferViewModel.Representation = buferTextRepresentation;// Maybe store original presentation as well ?
             var tooltip = new ToolTip() { InitialDelay = 0 };
             tooltip.IsBalloon = true;
-            tooltip.SetToolTip(button, buferTextRepresentation);
+            tooltip.SetToolTip(this._button, buferTextRepresentation);// TODO (s) an issue here: on alias change this tooltip will show wront tooltip
             tooltipTitle = tooltipTitle ?? buferTitle;
 
             if (!string.IsNullOrWhiteSpace(tooltipTitle))
@@ -170,19 +172,19 @@ namespace BuferMAN.WinForms
                 tooltip.Draw += Tooltip_Draw;
             }
 
-            button.GotFocus += Bufer_GotFocus;
-            button.LostFocus += Bufer_LostFocus;
+            this._button.GotFocus += Bufer_GotFocus;
+            this._button.LostFocus += Bufer_LostFocus;
 
             var buferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(this._buferViewModel.Clip);
-            button.Click += buferSelectionHandler.DoOnClipSelection;
+            this._button.Click += buferSelectionHandler.DoOnClipSelection;
 
-            bufer.SetButton(button);
-            bufer.SetContextMenu(buferContextMenuGenerator.GenerateContextMenu(this._buferViewModel, button, tooltip, isChangeTextAvailable, buferSelectionHandler, bufermanHost));
+            bufer.SetButton(this._button);
+            bufer.SetContextMenu(buferContextMenuGenerator.GenerateContextMenu(this._buferViewModel, this._button, tooltip, isChangeTextAvailable, buferSelectionHandler, bufermanHost));
         }
 
-        private void _MakeItalicBoldFont(Button button)
+        private Font _MakeItalicBoldFont(Font font)
         {
-            button.Font = new Font(button.Font, FontStyle.Italic | FontStyle.Bold);
+            return new Font(font, FontStyle.Italic | FontStyle.Bold);
         }
 
         private string _MakeSpecialBuferText(string baseString)
@@ -192,27 +194,23 @@ namespace BuferMAN.WinForms
 
         private void Tooltip_Draw(object sender, DrawToolTipEventArgs e)
         {
-            // to set the tag for each button or object
-            Control parent = e.AssociatedControl;
-            var preview = (parent.Tag as BuferViewModel).Representation as Image;
+            var preview = this._buferViewModel.Representation as Image;
 
             if (preview != null)
             {
-                Graphics g = e.Graphics;
+                using (var b = new TextureBrush(new Bitmap(preview)))
+                {
+                    b.ScaleTransform(IMAGE_SCALE, IMAGE_SCALE);
 
-                //create your own custom brush to fill the background with the image
-                TextureBrush b = new TextureBrush(new Bitmap(preview));
-                b.ScaleTransform(IMAGE_SCALE, IMAGE_SCALE);
-
-                g.FillRectangle(b, e.Bounds);
-                b.Dispose();
+                    var g = e.Graphics;
+                    g.FillRectangle(b, e.Bounds);
+                }
             }
         }
 
         private void Tooltip_Popup(object sender, PopupEventArgs e)
         {
-            Control parent = e.AssociatedControl;
-            var previewImage = (parent.Tag as BuferViewModel).Representation as Image;
+            var previewImage = this._buferViewModel.Representation as Image;
 
             if (previewImage != null)
             {
@@ -222,7 +220,13 @@ namespace BuferMAN.WinForms
 
         private void Bufer_GotFocus(object sender, EventArgs e)
         {
-            this._focusTooltip.Show((this._button.Tag as BuferViewModel).Representation as string, this._button, this._settings.BuferTooltipDuration);
+            var buferViewModel = this._buferViewModel;
+
+            if (buferViewModel != this._bufermanHost.LatestFocusedBufer)
+            {
+                this._bufermanHost.LatestFocusedBufer = buferViewModel;
+                this._focusTooltip.Show(buferViewModel.Representation as string, this._button, this._settings.BuferTooltipDuration);
+            }
         }
 
         private void Bufer_LostFocus(object sender, EventArgs e)
