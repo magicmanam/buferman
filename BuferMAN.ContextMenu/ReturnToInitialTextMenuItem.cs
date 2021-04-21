@@ -1,6 +1,5 @@
 ﻿using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Menu;
-using BuferMAN.View;
 using System;
 using System.Windows.Forms;
 
@@ -8,7 +7,7 @@ namespace BuferMAN.ContextMenu
 {
     public class ReturnToInitialTextMenuItem : ChangingTextMenuItemBase
     {
-        public ReturnToInitialTextMenuItem(BufermanMenuItem menuItem, Button button, ToolTip mouseOverTooltip, IBufermanHost bufermanHost) : base(menuItem, button, mouseOverTooltip, bufermanHost)
+        public ReturnToInitialTextMenuItem(BufermanMenuItem menuItem, IBufer bufer, IBufermanHost bufermanHost) : base(menuItem, bufer, bufermanHost)
         {
             menuItem.AddOnClickHandler(this._ReturnTextToInitial);
             menuItem.ShortCut = Shortcut.CtrlI;
@@ -17,7 +16,7 @@ namespace BuferMAN.ContextMenu
 
         private void _ReturnTextToInitial(object sender, EventArgs e)
         {
-            this.TryChangeText((this.Button.Tag as BuferViewModel).OriginBuferText);
+            this.TryChangeText(this.Bufer.ViewModel.OriginBuferText);
             this.MenuItem.Enabled = false;
         }
     }

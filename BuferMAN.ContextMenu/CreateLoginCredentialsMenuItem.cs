@@ -3,14 +3,13 @@ using BuferMAN.Infrastructure;
 using System;
 using System.Windows.Forms;
 using magicmanam.Windows;
-using BuferMAN.View;
 using BuferMAN.Infrastructure.Menu;
 
 namespace ClipboardViewerForm.ClipMenu.Items
 {
     internal class CreateLoginCredentialsMenuItem : ChangingTextMenuItemBase
     {
-        public CreateLoginCredentialsMenuItem(BufermanMenuItem menuItem, Button button, ToolTip mouseOverTooltip, IBufermanHost bufermanHost) : base(menuItem, button, mouseOverTooltip, bufermanHost)
+        public CreateLoginCredentialsMenuItem(BufermanMenuItem menuItem, IBufer bufer, IBufermanHost bufermanHost) : base(menuItem, bufer, bufermanHost)
         {
             menuItem.AddOnClickHandler(this._CreateLoginCredentials);
             menuItem.ShortCut = Shortcut.CtrlL;
@@ -20,7 +19,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
 
         private void _CreateLoginCredentials(object sender, EventArgs e)
         {
-            var password = this.BufermanHost.UserInteraction.PromptPopup(Resource.CreateCredsPrefix + $" \"{(this.Button.Tag as BuferViewModel).OriginBuferText}\". " + Resource.CreateCredsPostfix,
+            var password = this.BufermanHost.UserInteraction.PromptPopup(Resource.CreateCredsPrefix + $" \"{this.Bufer.ViewModel.OriginBuferText}\". " + Resource.CreateCredsPostfix,
                   Resource.CreateCredsTitle,
                    null);
 
@@ -32,18 +31,18 @@ namespace ClipboardViewerForm.ClipMenu.Items
             {
                 this.MenuItem.Text = Resource.LoginCreds;
                 this.LoginCreated?.Invoke(this, new CreateLoginCredentialsEventArgs(password));
-                this.TryChangeText(Resource.CredsPrefix + $" {this.Button.Text}");
+                this.TryChangeText(Resource.CredsPrefix + $" {this.Bufer.Text}");
 
-                this.Button.Click += (object pasteCredsSender, EventArgs args) =>
+                this.Bufer.AddOnClickHandler((object pasteCredsSender, EventArgs args) =>
                 {
                     WindowLevelContext.Current.HideWindow();
 
                     new KeyboardEmulator()
-                        .TypeText((this.Button.Tag as BuferViewModel).OriginBuferText)
+                        .TypeText(this.Bufer.ViewModel.OriginBuferText)
                         .PressTab()
                         .TypeText(password)
                         .PressEnter();
-                };
+                });
 
                 var credsPasswordEnterMenuItem = this.BufermanHost.CreateMenuItem(Resource.CredsPasswordEnter, (object pastePasswordSender, EventArgs args) =>
                 {
@@ -68,7 +67,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
                     WindowLevelContext.Current.HideWindow();
 
                     new KeyboardEmulator()
-                        .TypeText((this.Button.Tag as BuferViewModel).OriginBuferText);
+                        .TypeText(this.Bufer.ViewModel.OriginBuferText);
                 });
                 this.MenuItem.AddMenuItem(credsNameMenuItem);
             }

@@ -2,8 +2,6 @@
 using BuferMAN.Infrastructure.ContextMenu;
 using BuferMAN.Infrastructure.Settings;
 using BuferMAN.Infrastructure.Files;
-using BuferMAN.View;
-using System.Windows.Forms;
 
 namespace BuferMAN.WinForms
 {
@@ -26,9 +24,9 @@ namespace BuferMAN.WinForms
             this._settings = settings;
         }
 
-        public void Bind(BuferViewModel buferViewModel, Button button, IBufer bufer, IBufermanHost bufermanHost)
+        public void Bind(IBufer bufer, IBufermanHost bufermanHost)
         {
-            new BuferHandlersWrapper(buferViewModel, button, this._buferContextMenuGenerator, this._buferSelectionHandlerFactory, this._fileStorage, bufermanHost, this._settings, bufer);
+            new BuferHandlersWrapper(this._buferContextMenuGenerator, this._buferSelectionHandlerFactory, this._fileStorage, bufermanHost, this._settings, bufer);
         }
     }
 }

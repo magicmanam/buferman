@@ -2,9 +2,7 @@
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.ContextMenu;
 using BuferMAN.Infrastructure.Menu;
-using BuferMAN.View;
 using System;
-using System.Windows.Forms;
 
 namespace BuferMAN.ContextMenu
 {
@@ -14,8 +12,7 @@ namespace BuferMAN.ContextMenu
         private readonly IBuferSelectionHandler _buferSelectionHandler;
         private readonly IBufermanHost _bufermanHost;
 
-        public BuferViewModel BuferViewModel;
-        public Button Button;
+        public IBufer Bufer;
         public BufermanMenuItem ReturnTextToInitialMenuItem;
         public BufermanMenuItem ChangeTextMenuItem;
         public BufermanMenuItem MarkAsPinnedMenuItem;
@@ -24,7 +21,6 @@ namespace BuferMAN.ContextMenu
         public BufermanMenuItem PasteMenuItem;
         public BufermanMenuItem PlaceInBuferMenuItem;
         public DeleteClipMenuItem DeleteMenuItem { get; set; }
-        public ToolTip MouseOverTooltip;
 
         public BuferContextMenuModelWrapper(IClipboardBuferService clipboardBuferService, IBuferSelectionHandler buferSelectionHandler, IBufermanHost bufermanHost)
         {
@@ -51,31 +47,31 @@ namespace BuferMAN.ContextMenu
             this.ReturnTextToInitialMenuItem.Enabled = false;
             this.PlaceInBuferMenuItem.Enabled = false;
             this.ChangeTextMenuItem.Enabled = false;
-            this.BuferViewModel.Clip.SetData(ClipboardFormats.PASSWORD_FORMAT, e.Password);
-            if (!this.BuferViewModel.Pinned)
+            this.Bufer.ViewModel.Clip.SetData(ClipboardFormats.PASSWORD_FORMAT, e.Password);
+            if (!this.Bufer.ViewModel.Pinned)
             {
                 this.TryTogglePinBufer(sender, e);
             }
 
-            this.Button.Click -= this._buferSelectionHandler.DoOnClipSelection;
+            this.Bufer.RemoveOnClickHandler(this._buferSelectionHandler.DoOnClipSelection);
         }
 
         public void TryTogglePinBufer(object sender, EventArgs e)
         {
-            if (this.BuferViewModel.Pinned)
+            if (this.Bufer.ViewModel.Pinned)
             {
-                if (this._clipboardBuferService.TryUnpinBufer(this.BuferViewModel.ViewId))
+                if (this._clipboardBuferService.TryUnpinBufer(this.Bufer.ViewModel.ViewId))
                 {
-                    this.BuferViewModel.Pinned = false;
+                    this.Bufer.ViewModel.Pinned = false;
                     this.MarkAsPinnedMenuItem.Text = Resource.MenuPin;
                     this._bufermanHost.RerenderBufers();
                 }
             }
             else
             {
-                if (this._clipboardBuferService.TryPinBufer(this.BuferViewModel.ViewId))
+                if (this._clipboardBuferService.TryPinBufer(this.Bufer.ViewModel.ViewId))
                 {
-                    this.BuferViewModel.Pinned = true;
+                    this.Bufer.ViewModel.Pinned = true;
                     this.MarkAsPinnedMenuItem.Text = Resource.MenuUnpin;
                     this._bufermanHost.RerenderBufers();
 

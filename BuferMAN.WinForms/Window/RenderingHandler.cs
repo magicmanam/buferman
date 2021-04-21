@@ -115,36 +115,43 @@ namespace BuferMAN.WinForms.Window
         private void _DrawButtonsForBufers(IBufermanHost bufermanHost, List<BuferViewModel> bufers, int y, int currentButtonIndex,
             bool pinned = false)// TODO (l) remove this parameter: get from bufers collection, but be careful!!!
         {
-            foreach (var bufer in bufers)
+            foreach (var buferViewModel in bufers)
             {
                 Button button;
-                var equalObject = this._form.ButtonsMap.ContainsKey(bufer.ViewId);
+                var equalObject = this._form.ButtonsMap.ContainsKey(buferViewModel.ViewId);
 
                 if (equalObject)
                 {
-                    button = this._form.ButtonsMap[bufer.ViewId];
+                    button = this._form.ButtonsMap[buferViewModel.ViewId];
                 }
                 else
                 {
-                    var equalObjectFromDeleted = this._removedButtons.ContainsKey(bufer.ViewId);// TODO (s) now this property (_removedButtons) is not needed - this optimization does not make sense
+                    var equalObjectFromDeleted = this._removedButtons.ContainsKey(buferViewModel.ViewId);// TODO (s) now this property (_removedButtons) is not needed - this optimization does not make sense
 
                     if (equalObjectFromDeleted)
                     {
-                        button = this._removedButtons[bufer.ViewId];
-                        this._removedButtons.Remove(bufer.ViewId);
+                        button = this._removedButtons[buferViewModel.ViewId];
+                        this._removedButtons.Remove(buferViewModel.ViewId);
                     }
                     else
                     {
-                        button = new Button() { TextAlign = ContentAlignment.MiddleLeft, Margin = new Padding(0), Width = this._buttonWidth, BackColor = this._settings.BuferDefaultBackColor };
-                        button.GotFocus += Clip_GotFocus;
-                        button.LostFocus += Clip_LostFocus;
+                        var bufer = new Bufer()
+                        {
+                            Width = this._buttonWidth,
+                            BackColor = this._settings.BuferDefaultBackColor
+                        };
+                        
+                        bufer.AddOnFocusHandler(this._Clip_GotFocus);
+                        bufer.AddOnUnfocusHandler(this._Clip_LostFocus);
 
-                        var buf = new Bufer();
-                        this._buferHandlersBinder.Bind(bufer, button, buf, bufermanHost);
+                        bufer.ViewModel = buferViewModel;
+                        this._buferHandlersBinder.Bind(bufer, bufermanHost);
 
-                        this._TryApplyPresentation(bufer.Clip, button);
+                        button = bufer.GetButton();
+                        button.Tag = bufer;// TODO (m) remove Tag usage!
+                        this._TryApplyPresentation(buferViewModel.Clip, button);
                     }
-                    this._form.ButtonsMap.Add(bufer.ViewId, button);
+                    this._form.ButtonsMap.Add(buferViewModel.ViewId, button);
                     this._form.Controls.Add(button);
                     button.BringToFront();
                 }
@@ -158,17 +165,17 @@ namespace BuferMAN.WinForms.Window
                         var nestedMenuItem = menuItem.MenuItems[j];
                         if (nestedMenuItem.Shortcut == Shortcut.CtrlC)
                         {
-                            nestedMenuItem.Enabled = bufer.ViewId != this._currentBufer.ViewId;
+                            nestedMenuItem.Enabled = buferViewModel.ViewId != this._currentBufer.ViewId;
                         }
                     }
                 }
 
-                var defaultBackColor = bufer.ViewId == this._currentBufer.ViewId ?
+                var defaultBackColor = buferViewModel.ViewId == this._currentBufer.ViewId ?
                     (pinned ? this._settings.PinnedCurrentBuferBackColor : this._settings.CurrentBuferBackColor) :
                     (pinned ? this._settings.PinnedBuferBackColor : this._settings.BuferDefaultBackColor);
 
                 button.BackColor = defaultBackColor;
-                (button.Tag as BuferViewModel).DefaultBackColor = defaultBackColor;
+                (button.Tag as IBufer).ViewModel.DefaultBackColor = defaultBackColor;
 
                 button.TabIndex = currentButtonIndex;
                 button.Location = new Point(0, y);
@@ -178,16 +185,16 @@ namespace BuferMAN.WinForms.Window
             }
         }
                 
-        private void Clip_GotFocus(object sender, EventArgs e)
+        private void _Clip_GotFocus(object sender, EventArgs e)
         {
             var button = sender as Button;
             button.BackColor = this._settings.FocusedBuferBackColor;
         }
 
-        private void Clip_LostFocus(object sender, EventArgs e)
+        private void _Clip_LostFocus(object sender, EventArgs e)
         {
             var button = sender as Button;
-            button.BackColor = (button.Tag as BuferViewModel).DefaultBackColor;
+            button.BackColor = (button.Tag as IBufer).ViewModel.DefaultBackColor;
         }
 
         private void _RemoveClipWithoutTrackingInUndoableContext(BuferViewModel bufer)

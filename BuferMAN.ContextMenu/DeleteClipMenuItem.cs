@@ -3,7 +3,6 @@ using BuferMAN.Infrastructure;
 using System;
 using System.Windows.Forms;
 using magicmanam.Windows;
-using BuferMAN.View;
 using BuferMAN.Infrastructure.Menu;
 
 namespace BuferMAN.ContextMenu
@@ -11,8 +10,7 @@ namespace BuferMAN.ContextMenu
     public class DeleteClipMenuItem
     {
         private readonly IClipboardBuferService _clipboardBuferService;
-        private readonly BuferViewModel _bufer;
-        private readonly Button _button;
+        private readonly IBufer _bufer;
         private readonly BufermanMenuItem _menuItem;
         private readonly IBufermanHost _bufermanHost;
         private Timer _timer = null;
@@ -20,13 +18,12 @@ namespace BuferMAN.ContextMenu
         private BufermanMenuItem _separatorItem;
         private BufermanMenuItem _cancelDeletionMenuItem;
 
-        public DeleteClipMenuItem(BufermanMenuItem menuItem, IClipboardBuferService clipboardBuferService, BuferViewModel bufer, Button button, IBufermanHost bufermanHost)
+        public DeleteClipMenuItem(BufermanMenuItem menuItem, IClipboardBuferService clipboardBuferService, IBufer bufer, IBufermanHost bufermanHost)
         {
             this._bufermanHost = bufermanHost;
             this._menuItem = menuItem;
             this._clipboardBuferService = clipboardBuferService;
             this._bufer = bufer;
-            this._button = button;
 
             var deleteBuferNowMenuItem = bufermanHost.CreateMenuItem(Resource.DeleteBuferNowMenuItem, this._DeleteBuferImmediately);
             deleteBuferNowMenuItem.ShortCut = Shortcut.Del;
@@ -43,7 +40,7 @@ namespace BuferMAN.ContextMenu
                 this.CancelDeferredBuferDeletion(sender, e);
             }
 
-            var tabIndex = this._button.TabIndex;
+            var tabIndex = this._bufer.TabIndex;
 
             this._RemoveBufer();
 
@@ -76,7 +73,7 @@ namespace BuferMAN.ContextMenu
 
         private void _RemoveBufer()
         {
-            this._clipboardBuferService.RemoveBufer(this._bufer.ViewId);
+            this._clipboardBuferService.RemoveBufer(this._bufer.ViewModel.ViewId);
             this._bufermanHost.RerenderBufers();
         }
 
