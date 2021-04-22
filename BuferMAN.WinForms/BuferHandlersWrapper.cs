@@ -43,7 +43,6 @@ namespace BuferMAN.WinForms
         {
             this._settings = settings;
 
-            // TODO (l) : remove Button button parameter
             this._bufermanHost = bufermanHost;
             this._bufer = bufer;
             this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
@@ -103,7 +102,7 @@ namespace BuferMAN.WinForms
                     {
                         isChangeTextAvailable = false;
                         buferTextRepresentation = this._MakeSpecialBuferText(Resource.ImageBufer);
-                        this._bufer.ApplyFontStyle(this._GetItalicBoldFontStyle());
+                        this._bufer.ApplyFontStyle(FontStyle.Italic | FontStyle.Bold);
                     }
                     else
                     {
@@ -111,7 +110,7 @@ namespace BuferMAN.WinForms
                         {
                             isChangeTextAvailable = false;
                             buferTextRepresentation = this._MakeSpecialBuferText(Resource.FileContentsBufer);
-                            this._bufer.ApplyFontStyle(this._GetItalicBoldFontStyle());
+                            this._bufer.ApplyFontStyle(FontStyle.Italic | FontStyle.Bold);
                         }
                     }
                 }
@@ -125,7 +124,7 @@ namespace BuferMAN.WinForms
                     // TODO (m) I need more info about such situation. Maybe log some information. VS project items copied - this situation
                 }
                 buttonText = this._MakeSpecialBuferText(buttonText == null ? Resource.NotTextBufer : $"{buttonText.Length}   {Resource.WhiteSpaces}");
-                this._bufer.ApplyFontStyle(this._GetItalicBoldFontStyle());
+                this._bufer.ApplyFontStyle(FontStyle.Italic | FontStyle.Bold);
                 isChangeTextAvailable = false;
             }
             this._bufer.ViewModel.DefaultBackColor = this._bufer.BackColor;
@@ -171,11 +170,6 @@ namespace BuferMAN.WinForms
             bufer.SetContextMenu(buferContextMenuGenerator.GenerateContextMenu(this._bufer, isChangeTextAvailable, buferSelectionHandler, bufermanHost));
         }
 
-        private FontStyle _GetItalicBoldFontStyle()
-        {
-            return FontStyle.Italic | FontStyle.Bold;
-        }
-
         private string _MakeSpecialBuferText(string baseString)
         {
             return $"<< {baseString} >>";
@@ -211,6 +205,8 @@ namespace BuferMAN.WinForms
         {
             var buferViewModel = this._bufer.ViewModel;
 
+            this._bufer.BackColor = this._settings.FocusedBuferBackColor;
+
             if (buferViewModel != this._bufermanHost.LatestFocusedBufer)
             {
                 this._bufermanHost.LatestFocusedBufer = buferViewModel;
@@ -220,6 +216,8 @@ namespace BuferMAN.WinForms
 
         private void _Bufer_LostFocus(object sender, EventArgs e)
         {
+            this._bufer.BackColor = this._bufer.ViewModel.DefaultBackColor;
+
             this._bufer.HideFocusTooltip();
         }
     }

@@ -8,7 +8,7 @@ using BuferMAN.View;
 
 namespace BuferMAN.WinForms
 {
-    public class Bufer : IBufer
+    internal class Bufer : IBufer
     {
         private readonly Button _button;
         private readonly ToolTip _focusTooltip;
@@ -26,8 +26,8 @@ namespace BuferMAN.WinForms
             };
             this._focusTooltip = new ToolTip()
             {
-                OwnerDraw = false }
-            ;
+                OwnerDraw = false
+            };
             this._mouseOverTooltip = new ToolTip()
             {
                 InitialDelay = 0,
@@ -108,7 +108,7 @@ namespace BuferMAN.WinForms
         public void AddOnUnfocusHandler(EventHandler onUnfocus)
         {
             this._onUnfocusHandlers.Add(onUnfocus);
-            this._button.GotFocus += onUnfocus;
+            this._button.LostFocus += onUnfocus;
         }
 
         public IEnumerable<EventHandler> GetOnUnfocusHandlers()
@@ -122,11 +122,6 @@ namespace BuferMAN.WinForms
             {
                 this._button.LostFocus -= onUnfocus;
             }
-        }
-
-        public void SetToolTip(string text)
-        {
-            this.MouseOverTooltip.SetToolTip(this._button, text);
         }
 
         public Color BackColor
@@ -145,7 +140,7 @@ namespace BuferMAN.WinForms
         {
             get
             {
-                return _focusTooltip;
+                return this._focusTooltip;
             }
         }
 
@@ -153,7 +148,7 @@ namespace BuferMAN.WinForms
         {
             get
             {
-                return _mouseOverTooltip;
+                return this._mouseOverTooltip;
             }
         }
 

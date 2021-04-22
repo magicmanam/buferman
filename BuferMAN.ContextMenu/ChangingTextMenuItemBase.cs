@@ -44,7 +44,7 @@ namespace BuferMAN.ContextMenu
                 }
 
                 this.TextChanged?.Invoke(this, new TextChangedEventArgs(isOriginText));
-                this.Bufer.SetToolTip(newText);
+                this.Bufer.SetMouseOverToolTip(newText);
             }
         }
 

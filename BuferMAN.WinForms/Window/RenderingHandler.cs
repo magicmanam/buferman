@@ -138,13 +138,9 @@ namespace BuferMAN.WinForms.Window
                         var bufer = new Bufer()
                         {
                             Width = this._buttonWidth,
-                            BackColor = this._settings.BuferDefaultBackColor
+                            BackColor = this._settings.BuferDefaultBackColor,
+                            ViewModel = buferViewModel
                         };
-                        
-                        bufer.AddOnFocusHandler(this._Clip_GotFocus);
-                        bufer.AddOnUnfocusHandler(this._Clip_LostFocus);
-
-                        bufer.ViewModel = buferViewModel;
                         this._buferHandlersBinder.Bind(bufer, bufermanHost);
 
                         button = bufer.GetButton();
@@ -183,18 +179,6 @@ namespace BuferMAN.WinForms.Window
                 currentButtonIndex -= 1;
                 y -= BUTTON_HEIGHT;
             }
-        }
-                
-        private void _Clip_GotFocus(object sender, EventArgs e)
-        {
-            var button = sender as Button;
-            button.BackColor = this._settings.FocusedBuferBackColor;
-        }
-
-        private void _Clip_LostFocus(object sender, EventArgs e)
-        {
-            var button = sender as Button;
-            button.BackColor = (button.Tag as IBufer).ViewModel.DefaultBackColor;
         }
 
         private void _RemoveClipWithoutTrackingInUndoableContext(BuferViewModel bufer)
