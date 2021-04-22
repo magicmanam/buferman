@@ -153,6 +153,12 @@
   <data name="MenuFileLoad" xml:space="preserve">
     <value>&amp;Load bufers from file</value>
   </data>
+  <data name="MenuFilePause" xml:space="preserve">
+    <value>&amp;Pause bufers catching</value>
+  </data>
+  <data name="MenuFileResume" xml:space="preserve">
+    <value>&amp;Resume bufers catching</value>
+  </data>
   <data name="MenuHelp" xml:space="preserve">
     <value>&amp;Help</value>
   </data>

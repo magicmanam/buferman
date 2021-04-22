@@ -8,7 +8,6 @@ using System.Reflection;
 using magicmanam.UndoRedo;
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Plugins;
-using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Infrastructure.Menu;
 using System.Threading;
 using System.Collections.Generic;
@@ -42,36 +41,51 @@ namespace BuferMAN.Menu
             this._optionsWindowFactory = optionsWindowFactory;
         }
 
-        public void GenerateMainMenu(IBufermanHost buferManHost)
+        public void GenerateMainMenu(IBufermanApplication bufermanApplication)
         {
             var items = new List<BufermanMenuItem>
             {
-                this._GenerateFileMenu(buferManHost),
-                this._GenerateEditMenu(buferManHost),
-                this._GenerateToolsMenu(buferManHost),
-                this._GenerateHelpMenu(buferManHost)
+                this._GenerateFileMenu(bufermanApplication),
+                this._GenerateEditMenu(bufermanApplication.Host),
+                this._GenerateToolsMenu(bufermanApplication),
+                this._GenerateHelpMenu(bufermanApplication.Host)
             };
 
-            buferManHost.SetMainMenu(items);
+            bufermanApplication.Host.SetMainMenu(items);
         }
 
-        private BufermanMenuItem _GenerateFileMenu(IBufermanHost buferManHost)
+        private BufermanMenuItem _GenerateFileMenu(IBufermanApplication bufermanApplication)
         {
-            var fileMenu = buferManHost.CreateMenuItem(Resource.MenuFile);
+            var bufermanHost = bufermanApplication.Host;
+
+            var fileMenu = bufermanHost.CreateMenuItem(Resource.MenuFile);
             // TODO (l) add menu item "Load bufers from storage" - will open dialog with default storage, or list of files, or other options. Also setting: check storage(s) to load on start
             // Option: reload from storage/file
-            fileMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuFileLoad, (object sender, EventArgs args) => {
+            fileMenu.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuFileLoad, (object sender, EventArgs args) => {
                 this._userFileSelector.TrySelectBufersStorage(storage => storage.LoadBufers());
             }));
-            fileMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuFileChangeDefault, (object sender, EventArgs args) =>
+            fileMenu.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuFileChangeDefault, (object sender, EventArgs args) =>
             {
                 Process.Start(this._settings.DefaultBufersFileName);
             }));
 
+            var pauseResumeMenuItem = bufermanHost.CreateMenuItem(this._GetPauseResumeMenuItemText(bufermanApplication));
+            pauseResumeMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
+                {
+                    bufermanApplication.ShouldCatchCopies = !bufermanApplication.ShouldCatchCopies;
+                    pauseResumeMenuItem.Text = this._GetPauseResumeMenuItemText(bufermanApplication);
+                });
+
+            fileMenu.AddMenuItem(pauseResumeMenuItem);
             fileMenu.AddSeparator();
-            fileMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => buferManHost.Exit()));
+            fileMenu.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => bufermanHost.Exit()));
 
             return fileMenu;
+        }
+
+        private string _GetPauseResumeMenuItemText(IBufermanApplication bufermanApplication)
+        {
+            return (bufermanApplication.ShouldCatchCopies ? Resource.MenuFilePause : Resource.MenuFileResume) + "    (Alt + P)";
         }
 
         private BufermanMenuItem _GenerateEditMenu(IBufermanHost bufermanHost)
@@ -148,13 +162,15 @@ namespace BuferMAN.Menu
             };
         }
 
-        private BufermanMenuItem _GenerateToolsMenu(IBufermanHost bufermanHost)
+        private BufermanMenuItem _GenerateToolsMenu(IBufermanApplication bufermanApplication)
         {
+            var bufermanHost = bufermanApplication.Host;
+
             var toolsMenu = bufermanHost.CreateMenuItem(Resource.MenuTools);
 
             toolsMenu.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuToolsMemory, this._GetShowMemoryUsageHandler(bufermanHost)));
             toolsMenu.AddMenuItem(this._GeneratePluginsMenu(bufermanHost));
-            toolsMenu.AddMenuItem(this._GenerateLanguageMenu(bufermanHost));
+            toolsMenu.AddMenuItem(this._GenerateLanguageMenu(bufermanApplication));
             toolsMenu.AddMenuItem(bufermanHost.CreateMenuSeparatorItem());
             toolsMenu.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuToolsOptions, (object sender, EventArgs args) => this._optionsWindowFactory.Create().Open()));
 
@@ -197,15 +213,16 @@ namespace BuferMAN.Menu
             return pluginsMenu;
         }
 
-        private BufermanMenuItem _GenerateLanguageMenu(IBufermanHost buferManHost)
+        private BufermanMenuItem _GenerateLanguageMenu(IBufermanApplication bufermanApplication)
         {
+            var bufermanHost = bufermanApplication.Host;
             // во время открытия приложения показывать диалог с выбором языка и сохранять это значение
-            var languageMenu = buferManHost.CreateMenuItem(Resource.MenuToolsLanguage);
+            var languageMenu = bufermanHost.CreateMenuItem(Resource.MenuToolsLanguage);
             
-            var englishMenuItem = buferManHost.CreateMenuItem(Resource.MenuToolsLanguageEn);
+            var englishMenuItem = bufermanHost.CreateMenuItem(Resource.MenuToolsLanguageEn);
             languageMenu.AddMenuItem(englishMenuItem);
 
-            var russianMenuItem = buferManHost.CreateMenuItem(Resource.MenuToolsLanguageRu);
+            var russianMenuItem = bufermanHost.CreateMenuItem(Resource.MenuToolsLanguageRu);
             languageMenu.AddMenuItem(russianMenuItem);
 
             switch(Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName)
@@ -220,19 +237,19 @@ namespace BuferMAN.Menu
                     break;
             }
 
-            englishMenuItem.AddOnClickHandler(this._createLanguageEventHandler("en", buferManHost));
-            russianMenuItem.AddOnClickHandler(this._createLanguageEventHandler("ru", buferManHost));
+            englishMenuItem.AddOnClickHandler(this._createLanguageEventHandler("en", bufermanApplication));
+            russianMenuItem.AddOnClickHandler(this._createLanguageEventHandler("ru", bufermanApplication));
 
             return languageMenu;
         }
 
-        private EventHandler _createLanguageEventHandler(string culture, IBufermanHost buferManHost)
+        private EventHandler _createLanguageEventHandler(string culture, IBufermanApplication bufermanApplication)
         {
             return (object sender, EventArgs args) =>
             {
                 Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(culture);
 
-                this.GenerateMainMenu(buferManHost);
+                this.GenerateMainMenu(bufermanApplication);
                 // TODO (m) rerender context menu for bufers + short guide at the bottom of main window + tray icon menu
             };
         }

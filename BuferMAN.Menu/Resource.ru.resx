@@ -153,6 +153,12 @@
   <data name="MenuFileLoad" xml:space="preserve">
     <value>&amp;Загрузить буферы из файла</value>
   </data>
+  <data name="MenuFilePause" xml:space="preserve">
+    <value>&amp;Приостановить перехват буферов</value>
+  </data>
+  <data name="MenuFileResume" xml:space="preserve">
+    <value>&amp;Возобновить перехват буферов</value>
+  </data>
   <data name="MenuHelp" xml:space="preserve">
     <value>&amp;Помощь</value>
   </data>

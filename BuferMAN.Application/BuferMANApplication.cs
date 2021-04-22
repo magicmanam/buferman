@@ -82,7 +82,7 @@ namespace BuferMAN.Application
                 storage.LoadBufers();
             }
 
-            this._mainMenuGenerator.GenerateMainMenu(this._bufermanHost);
+            this._mainMenuGenerator.GenerateMainMenu(this);
 
             this._bufermanHost.SetOnKeyDown(this.OnKeyDown);
             this._BuferFocused += this._bufermanHost.BuferFocused;
@@ -102,7 +102,7 @@ namespace BuferMAN.Application
                 this._bufermanHost.UserInteraction.ShowPopup($"This bufer should be inspected: System.String format is empty", "BuferMAN");
             }// TODO (s) remove this line at July
 
-            if (this._shouldCatchCopies)
+            if (this.ShouldCatchCopies)
             {
                 this._dataObjectHandler.TryHandleDataObject(buferViewModel);
             }
@@ -163,8 +163,8 @@ namespace BuferMAN.Application
                 case Keys.P:
                     if (e.Alt)
                     {
-                        this._shouldCatchCopies = !this._shouldCatchCopies;
-                        this._bufermanHost.SetStatusBarText(this._shouldCatchCopies ? Resource.ResumedStatus : Resource.PausedStatus);
+                        this.ShouldCatchCopies = !this.ShouldCatchCopies;
+                        this._mainMenuGenerator.GenerateMainMenu(this);
                     }
                     break;
             }
@@ -193,6 +193,30 @@ namespace BuferMAN.Application
             {
                 this._bufermanHost.RerenderBufers();
                 this.NeedRerender = false;
+            }
+        }
+
+        public bool ShouldCatchCopies
+        {
+            get
+            {
+                return this._shouldCatchCopies;
+            }
+            set
+            {
+                if (this._shouldCatchCopies != value)
+                {
+                    this._shouldCatchCopies = value;
+                    this._bufermanHost.SetStatusBarText(this._shouldCatchCopies ? Resource.ResumedStatus : Resource.PausedStatus);
+                }
+            }
+        }
+
+        public IBufermanHost Host
+        {
+            get
+            {
+                return this._bufermanHost;
             }
         }
     }

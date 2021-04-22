@@ -169,6 +169,24 @@ namespace BuferMAN.Menu {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Pause bufers catching.
+        /// </summary>
+        internal static string MenuFilePause {
+            get {
+                return ResourceManager.GetString("MenuFilePause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Resume bufers catching.
+        /// </summary>
+        internal static string MenuFileResume {
+            get {
+                return ResourceManager.GetString("MenuFileResume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Help.
         /// </summary>
         internal static string MenuHelp {
