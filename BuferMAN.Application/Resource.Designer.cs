@@ -88,7 +88,7 @@ namespace BuferMAN.Application {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BuferMAN is paused. Alt+P to continue.
+        ///   Looks up a localized string similar to BuferMAN is paused. Alt+P to resume.
         /// </summary>
         internal static string PausedStatus {
             get {

@@ -63,6 +63,7 @@ namespace BuferMAN.WinForms
             var isChangeTextAvailable = true;
             string buferTitle = null;
             string tooltipTitle = null;
+            string buferText = null;
             if (buferTextRepresentation == null)
             {
                 var files = this._bufer.ViewModel.Clip.GetData(DataFormats.FileDrop) as string[];
@@ -75,7 +76,7 @@ namespace BuferMAN.WinForms
 
                     if (files.Length == 1)
                     {
-                        var buferText = onlyFolders ? Resource.FolderBufer : Resource.FileBufer;
+                        buferText = onlyFolders ? Resource.FolderBufer : Resource.FileBufer;
 
                         const int MAX_FILE_LENGTH_FOR_BUFER_TITLE = 50;
                         if (firstFile.Length < MAX_FILE_LENGTH_FOR_BUFER_TITLE)
@@ -87,7 +88,7 @@ namespace BuferMAN.WinForms
                     }
                     else
                     {
-                        var buferText = onlyFolders ? Resource.FoldersBufer : Resource.FilesBufer;
+                        buferText = onlyFolders ? Resource.FoldersBufer : Resource.FilesBufer;
                         buferTitle = this._MakeSpecialBuferText($"{buferText} ({files.Length})");
                     }
 
@@ -116,19 +117,30 @@ namespace BuferMAN.WinForms
                 }
             }
             
-            string buttonText = buferTitle ?? buferTextRepresentation;
-            if (string.IsNullOrWhiteSpace(buttonText))
+            buferText = buferTitle ?? buferTextRepresentation;
+            if (string.IsNullOrWhiteSpace(buferText))
             {
-                if (buttonText == null)
-                {
-                    // TODO (m) I need more info about such situation. Maybe log some information. VS project items copied - this situation
-                }
-                buttonText = this._MakeSpecialBuferText(buttonText == null ? Resource.NotTextBufer : $"{buttonText.Length}   {Resource.WhiteSpaces}");
                 this._bufer.ApplyFontStyle(FontStyle.Italic | FontStyle.Bold);
                 isChangeTextAvailable = false;
+
+                if (buferText == null)
+                {
+                    if (formats.Any(f => string.Equals(f, ClipboardFormats.VISUAL_STUDIO_PROJECT_ITEMS, StringComparison.InvariantCultureIgnoreCase)))
+                    {
+                        buferText = this._MakeSpecialBuferText("VISUAL STUDIO project items");
+                    }
+                    else
+                    {
+                        buferText = this._MakeSpecialBuferText(Resource.NotTextBufer);
+                    }
+                }
+                else
+                {
+                    buferText = this._MakeSpecialBuferText($"{buferText.Length}   {Resource.WhiteSpaces}");
+                }
             }
             this._bufer.ViewModel.DefaultBackColor = this._bufer.BackColor;
-            this._bufer.Text = buttonText.Trim();
+            this._bufer.Text = buferText.Trim();
             this._bufer.ViewModel.OriginBuferText = this._bufer.Text;
 
             int maxBuferLength = this._settings.MaxBuferPresentationLength;

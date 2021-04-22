@@ -127,7 +127,7 @@
     <value>Вы скопировали 100 раз! Поздравляем!</value>
   </data>
   <data name="PausedStatus" xml:space="preserve">
-    <value>BuferMAN на отдыхе. Alt+P - продолжить</value>
+    <value>BuferMAN на отдыхе. Alt+P - возобновить</value>
   </data>
   <data name="ResumedStatus" xml:space="preserve">
     <value>BuferMAN возобновил работу</value>

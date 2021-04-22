@@ -127,7 +127,7 @@
     <value>You copied 100 times! Congrats!</value>
   </data>
   <data name="PausedStatus" xml:space="preserve">
-    <value>BuferMAN is paused. Alt+P to continue</value>
+    <value>BuferMAN is paused. Alt+P to resume</value>
   </data>
   <data name="ResumedStatus" xml:space="preserve">
     <value>BuferMAN is resumed. Enjoy copies!</value>

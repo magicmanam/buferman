@@ -17,6 +17,7 @@ namespace BuferMAN.Clipboard
         public const string SKYPE_FORMAT = "SkypeMessageFragment";
         public const string FTP_FILE_FORMAT = "FtpPrivateData";
         public const string FILE_CONTENTS_FORMAT = "FileContents";
+        public const string VISUAL_STUDIO_PROJECT_ITEMS = "CV_VSSTGProjectitems";
 
     }
 }
