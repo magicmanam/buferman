@@ -205,7 +205,7 @@
     <value>Без форматирования (как текст)</value>
   </data>
   <data name="MenuPasteAsIs" xml:space="preserve">
-    <value>С форматированием (как есть)</value>
+    <value>Как есть</value>
   </data>
   <data name="CancelDeferredDeletionMenuItem" xml:space="preserve">
     <value>Отменить удаление (в {0})</value>

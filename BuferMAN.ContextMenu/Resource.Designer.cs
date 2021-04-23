@@ -331,7 +331,7 @@ namespace BuferMAN.ContextMenu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to With formatting (AS IS).
+        ///   Looks up a localized string similar to AS IS.
         /// </summary>
         internal static string MenuPasteAsIs {
             get {

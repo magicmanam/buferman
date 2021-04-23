@@ -205,7 +205,7 @@
     <value>W/o formatting (as a text)</value>
   </data>
   <data name="MenuPasteAsIs" xml:space="preserve">
-    <value>With formatting (AS IS)</value>
+    <value>AS IS</value>
   </data>
   <data name="CancelDeferredDeletionMenuItem" xml:space="preserve">
     <value>Cancel deletion (at {0})</value>
