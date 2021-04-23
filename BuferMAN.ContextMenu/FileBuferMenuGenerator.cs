@@ -4,6 +4,7 @@ using BuferMAN.Infrastructure.Menu;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace BuferMAN.ContextMenu
 {
@@ -18,11 +19,14 @@ namespace BuferMAN.ContextMenu
 
         public IList<BufermanMenuItem> Generate(IList<BufermanMenuItem> menuItems, IBufermanHost bufermanHost)
         {
-            menuItems.Add(bufermanHost.CreateMenuItem(Resource.MenuOpenFileLocation, (object sender, EventArgs args) =>
+            var openFileLocationMenuItem = bufermanHost.CreateMenuItem(Resource.MenuOpenFileLocation, (object sender, EventArgs args) =>
             {
                 var arguments = $"/select, \"{this._filePath}\"";
                 Process.Start("explorer.exe", arguments).WaitForInputIdle();
-            }));
+            });
+            openFileLocationMenuItem.ShortCut = Shortcut.CtrlShiftF;
+
+            menuItems.Add(openFileLocationMenuItem);
 
             return menuItems;
         }
