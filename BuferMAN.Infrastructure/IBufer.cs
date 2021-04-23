@@ -23,8 +23,8 @@ namespace BuferMAN.Infrastructure
         IEnumerable<EventHandler> GetOnUnfocusHandlers();
         void RemoveOnUnfocusHandler(EventHandler onUnfocus);
         Color BackColor { get; set; }
-        ToolTip FocusTooltip { get; }// TODO (s) check that it needs more
-        ToolTip MouseOverTooltip { get; }// TODO (s) check that it needs more
+        ToolTip FocusTooltip { get; }
+        ToolTip MouseOverTooltip { get; }
         int Width { get; set; }
         void SetMouseOverToolTip(string tooltipText);
         void ShowFocusTooltip(string tooltipText, int durationInMilliseconds);

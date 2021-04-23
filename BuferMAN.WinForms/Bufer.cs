@@ -166,17 +166,17 @@ namespace BuferMAN.WinForms
 
         public void SetMouseOverToolTip(string tooltipText)
         {
-            this.MouseOverTooltip.SetToolTip(this._button, tooltipText);
+            this._mouseOverTooltip.SetToolTip(this._button, tooltipText);
         }
 
         public void ShowFocusTooltip(string tooltipText, int durationInMilliseconds)
         {
-            this.FocusTooltip.Show(tooltipText, this._button, durationInMilliseconds);
+            this._focusTooltip.Show(tooltipText, this._button, durationInMilliseconds);
         }
 
         public void HideFocusTooltip()
         {
-            this.FocusTooltip.Hide(this._button);
+            this._focusTooltip.Hide(this._button);
         }
 
         public int TabIndex
