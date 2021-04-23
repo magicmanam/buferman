@@ -304,6 +304,15 @@ namespace BuferMAN.ContextMenu {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open location in File Explorer.
+        /// </summary>
+        internal static string MenuOpenFileLocation {
+            get {
+                return ResourceManager.GetString("MenuOpenFileLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open in &amp;browser.
         /// </summary>
         internal static string MenuOpenInBrowser {

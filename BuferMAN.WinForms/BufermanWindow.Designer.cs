@@ -269,7 +269,7 @@ namespace BuferMAN.WinForms
         {
             this.TrayIcon.DoubleClick += this._TrayIcon_DoubleClick;
             
-            var trayMenu = new ContextMenu();
+            var trayMenu = new System.Windows.Forms.ContextMenu();
             var trayIconMenuItems = new List<BufermanMenuItem>();
             trayIconMenuItems.Add(this.CreateMenuItem(Resource.TrayMenuOptions, (object sender, EventArgs args) => this._optionsWindowFactory.Create().Open()));
             trayIconMenuItems.Add(this.CreateMenuItem(Resource.TrayMenuBuferManual, (object sernder, EventArgs args) => this.UserInteraction.ShowPopup(Resource.UserManual + Environment.NewLine + Environment.NewLine + Resource.DocumentationMentioning, Resource.WindowTitle)));

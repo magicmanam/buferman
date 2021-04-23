@@ -42,7 +42,7 @@ namespace BuferMAN.WinForms
 
         public void SetContextMenu(IEnumerable<BufermanMenuItem> menuItems)
         {
-            this._button.ContextMenu = new ContextMenu();
+            this._button.ContextMenu = new System.Windows.Forms.ContextMenu();
             this._button.ContextMenu.PopulateMenuWithItems(menuItems);
         }
 

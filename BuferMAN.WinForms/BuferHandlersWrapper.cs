@@ -8,6 +8,7 @@ using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Files;
 using BuferMAN.Infrastructure.Settings;
+using BuferMAN.ContextMenu;
 
 namespace BuferMAN.WinForms
 {
@@ -25,8 +26,8 @@ namespace BuferMAN.WinForms
             IBuferContextMenuGenerator buferContextMenuGenerator,
             IBuferSelectionHandlerFactory buferSelectionHandlerFactory,
             IFileStorage fileStorage,
-            IBufermanHost bufermanHost, 
-            IProgramSettings settings, 
+            IBufermanHost bufermanHost,
+            IProgramSettings settings,
             IBufer bufer)
             : this(buferContextMenuGenerator, buferSelectionHandlerFactory, fileStorage, bufermanHost, settings, bufer)
         {
@@ -35,10 +36,10 @@ namespace BuferMAN.WinForms
 
         public BuferHandlersWrapper(
             IBuferContextMenuGenerator buferContextMenuGenerator,
-            IBuferSelectionHandlerFactory buferSelectionHandlerFactory, 
-            IFileStorage fileStorage, 
-            IBufermanHost bufermanHost, 
-            IProgramSettings settings, 
+            IBuferSelectionHandlerFactory buferSelectionHandlerFactory,
+            IFileStorage fileStorage,
+            IBufermanHost bufermanHost,
+            IProgramSettings settings,
             IBufer bufer)
         {
             this._settings = settings;
@@ -61,6 +62,7 @@ namespace BuferMAN.WinForms
             var formats = this._bufer.ViewModel.Clip.GetFormats();
 
             var isChangeTextAvailable = true;
+            IBuferTypeMenuGenerator buferTypeGenerator = null;
             string buferTitle = null;
             string tooltipTitle = null;
             string buferText = null;
@@ -78,13 +80,15 @@ namespace BuferMAN.WinForms
                     {
                         buferText = onlyFolders ? Resource.FolderBufer : Resource.FileBufer;
 
-                        const int MAX_FILE_LENGTH_FOR_BUFER_TITLE = 50;
+                        const int MAX_FILE_LENGTH_FOR_BUFER_TITLE = 50;// TODO (m) into settings
                         if (firstFile.Length < MAX_FILE_LENGTH_FOR_BUFER_TITLE)
                         {
                             tooltipTitle = this._MakeSpecialBuferText(buferText);
                         }
 
                         buferTitle = this._MakeSpecialBuferText(firstFile.Length < MAX_FILE_LENGTH_FOR_BUFER_TITLE ? firstFile : buferText);
+
+                        buferTypeGenerator = new FileBuferMenuGenerator(firstFile);
                     }
                     else
                     {
@@ -116,7 +120,7 @@ namespace BuferMAN.WinForms
                     }
                 }
             }
-            
+
             buferText = buferTitle ?? buferTextRepresentation;
             if (string.IsNullOrWhiteSpace(buferText))
             {
@@ -163,7 +167,7 @@ namespace BuferMAN.WinForms
                 this._bufer.MouseOverTooltip.ToolTipTitle = tooltipTitle;
                 this._bufer.FocusTooltip.ToolTipTitle = tooltipTitle;
             }
-            
+
             if (formats.Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT))
             {
                 this._bufer.ViewModel.Representation = this._bufer.ViewModel.Clip.GetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT) as Image;
@@ -179,7 +183,7 @@ namespace BuferMAN.WinForms
             var buferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(this._bufer.ViewModel.Clip);
             this._bufer.AddOnClickHandler(buferSelectionHandler.DoOnClipSelection);
 
-            bufer.SetContextMenu(buferContextMenuGenerator.GenerateContextMenu(this._bufer, isChangeTextAvailable, buferSelectionHandler, bufermanHost));
+            bufer.SetContextMenu(buferContextMenuGenerator.GenerateContextMenuItems(this._bufer, isChangeTextAvailable, buferSelectionHandler, bufermanHost, buferTypeGenerator));
         }
 
         private string _MakeSpecialBuferText(string baseString)
@@ -209,7 +213,7 @@ namespace BuferMAN.WinForms
 
             if (previewImage != null)
             {
-                e.ToolTipSize = new Size((int) (previewImage.Width * IMAGE_SCALE), (int)(previewImage.Height * IMAGE_SCALE));
+                e.ToolTipSize = new Size((int)(previewImage.Width * IMAGE_SCALE), (int)(previewImage.Height * IMAGE_SCALE));
             }
         }
 
@@ -233,4 +237,4 @@ namespace BuferMAN.WinForms
             this._bufer.HideFocusTooltip();
         }
     }
-}
+}// TODO (m) relocate from this assembly

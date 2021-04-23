@@ -7,7 +7,6 @@ using System.Linq;
 using System.IO;
 using System.Windows.Forms;
 using magicmanam.Windows;
-using BuferMAN.View;
 using System.Collections.Generic;
 using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Infrastructure.Plugins;
@@ -29,8 +28,13 @@ namespace BuferMAN.ContextMenu
         private readonly IBufersStorageFactory _bufersStorageFactory;
         private readonly IUserFileSelector _userFileSelector;
 
-        public BuferContextMenuGenerator(IClipboardBuferService clipboardBuferService, IBuferSelectionHandlerFactory buferSelectionHandlerFactory, IProgramSettings settings, IClipboardWrapper clipboardWrapper, IEnumerable<IBufermanPlugin> plugins,
-            IBufersStorageFactory bufersStorageFactory, IUserFileSelector userFileSelector)
+        public BuferContextMenuGenerator(IClipboardBuferService clipboardBuferService,
+            IBuferSelectionHandlerFactory buferSelectionHandlerFactory,
+            IProgramSettings settings,
+            IClipboardWrapper clipboardWrapper,
+            IEnumerable<IBufermanPlugin> plugins,
+            IBufersStorageFactory bufersStorageFactory, 
+            IUserFileSelector userFileSelector)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
@@ -41,7 +45,11 @@ namespace BuferMAN.ContextMenu
             this._userFileSelector = userFileSelector;
         }
 
-        public IEnumerable<BufermanMenuItem> GenerateContextMenu(IBufer bufer, bool isChangeTextAvailable, IBuferSelectionHandler buferSelectionHandler, IBufermanHost bufermanHost)
+        public IEnumerable<BufermanMenuItem> GenerateContextMenuItems(IBufer bufer,
+            bool isChangeTextAvailable,
+            IBuferSelectionHandler buferSelectionHandler,
+            IBufermanHost bufermanHost,
+            IBuferTypeMenuGenerator buferTypeMenuGenerator)
         {
             var model = new BuferContextMenuModelWrapper(this._clipboardBuferService, buferSelectionHandler, bufermanHost)
             {
@@ -49,7 +57,7 @@ namespace BuferMAN.ContextMenu
             };
             var buferViewModel = bufer.ViewModel;
 
-            var menuItems = new List<BufermanMenuItem>();
+            IList<BufermanMenuItem> menuItems = new List<BufermanMenuItem>();
 
             model.MarkAsPinnedMenuItem = bufermanHost.CreateMenuItem(bufer.ViewModel.Pinned ? Resource.MenuUnpin : Resource.MenuPin, model.TryTogglePinBufer);
             model.MarkAsPinnedMenuItem.ShortCut = Shortcut.CtrlS;
@@ -196,8 +204,6 @@ namespace BuferMAN.ContextMenu
 
                     model.AddToFileMenuItem.AddSeparator();
                     model.AddToFileMenuItem.AddMenuItem(addToFileMenuItem);
-
-
                 }
                 menuItems.Add(model.AddToFileMenuItem);
 
@@ -206,6 +212,11 @@ namespace BuferMAN.ContextMenu
                 clcmi.LoginCreated += model.LoginCredentialsMenuItem_LoginCreated;
                 model.CreateLoginDataMenuItem = loginCredentialsMenuItem;
                 menuItems.Add(model.CreateLoginDataMenuItem);
+            }
+
+            if (buferTypeMenuGenerator != null)
+            {
+                menuItems = buferTypeMenuGenerator.Generate(menuItems, bufermanHost);
             }
 
             foreach (var plugin in this._plugins) if (plugin.Enabled)

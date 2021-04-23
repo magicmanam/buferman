@@ -39,8 +39,8 @@
   <ItemGroup>
     <Compile Include="BuferFocusedEventArgs.cs" />
     <Compile Include="ClipboardUpdatedEventArgs.cs" />
-    <Compile Include="ContextMenu\BuferContextMenuModel.cs" />
     <Compile Include="ContextMenu\IBuferContextMenuGenerator.cs" />
+    <Compile Include="ContextMenu\IBuferTypeMenuGenerator.cs" />
     <Compile Include="Environment\IUserInteraction.cs" />
     <Compile Include="Environment\IStarter.cs" />
     <Compile Include="Files\IBufersFileStorageFactory.cs" />

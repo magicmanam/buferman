@@ -1,4 +1,4 @@
-﻿using BuferMAN.Infrastructure.ContextMenu;
+﻿using BuferMAN.Models;
 using BuferMAN.Infrastructure.Menu;
 
 namespace BuferMAN.Infrastructure.Plugins

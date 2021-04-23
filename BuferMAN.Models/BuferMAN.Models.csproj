@@ -36,6 +36,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuferContextMenuModel.cs" />
     <Compile Include="BuferItem.cs" />
     <Compile Include="BufersStorageModel.cs" />
     <Compile Include="BufersStorageType.cs" />

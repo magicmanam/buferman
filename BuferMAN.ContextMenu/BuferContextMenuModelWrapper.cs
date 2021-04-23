@@ -1,6 +1,6 @@
 ﻿using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure;
-using BuferMAN.Infrastructure.ContextMenu;
+using BuferMAN.Models;
 using BuferMAN.Infrastructure.Menu;
 using System;
 

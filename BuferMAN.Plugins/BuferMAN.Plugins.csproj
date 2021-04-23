@@ -63,6 +63,10 @@
       <Project>{F14888DE-E3DE-4225-80AA-F836DCBA8E2E}</Project>
       <Name>BuferMAN.Infrastructure</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.Models\BuferMAN.Models.csproj">
+      <Project>{E949968B-00F2-4CAA-8C8A-3053CBF79A63}</Project>
+      <Name>BuferMAN.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resource.resx">

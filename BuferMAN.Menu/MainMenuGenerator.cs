@@ -85,7 +85,7 @@ namespace BuferMAN.Menu
 
         private string _GetPauseResumeMenuItemText(IBufermanApplication bufermanApplication)
         {
-            return (bufermanApplication.ShouldCatchCopies ? Resource.MenuFilePause : Resource.MenuFileResume) + "    (Alt + P)";
+            return (bufermanApplication.ShouldCatchCopies ? Resource.MenuFilePause : Resource.MenuFileResume) + $" {new String('\t', 1)} Alt+P";
         }
 
         private BufermanMenuItem _GenerateEditMenu(IBufermanHost bufermanHost)

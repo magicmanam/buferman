@@ -222,4 +222,7 @@
   <data name="MenuUnpin" xml:space="preserve">
     <value>Открепить буфер</value>
   </data>
+  <data name="MenuOpenFileLocation" xml:space="preserve">
+    <value>Открыть в файловом обозревателе</value>
+  </data>
 </root>

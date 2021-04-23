@@ -222,4 +222,7 @@
   <data name="MenuUnpin" xml:space="preserve">
     <value>Unpin bufer</value>
   </data>
+  <data name="MenuOpenFileLocation" xml:space="preserve">
+    <value>Open location in File Explorer</value>
+  </data>
 </root>

@@ -1,5 +1,4 @@
 ﻿using BuferMAN.View;
-using System;
 using System.Windows.Forms;
 
 namespace BuferMAN.Infrastructure.Window

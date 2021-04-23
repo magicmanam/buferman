@@ -40,7 +40,7 @@ namespace BuferMAN.Windows
                                 this._bufermanHost.Start(this._bufermanApp, isAdmin);
                                 return;
                             case false:
-                                string arguments = "/select, \"" + Application.ExecutablePath + "\"";
+                                var arguments = $"/select, \"{Application.ExecutablePath}\"";
                                 Process.Start("explorer.exe", arguments).WaitForInputIdle();
                                 return;
                             default:

@@ -5,6 +5,10 @@ namespace BuferMAN.Infrastructure.ContextMenu
 {
     public interface IBuferContextMenuGenerator
     {
-        IEnumerable<BufermanMenuItem> GenerateContextMenu(IBufer bufer, bool isChangeTextAvailable, IBuferSelectionHandler buferSelectionHandler, IBufermanHost bufermanHost);
+        IEnumerable<BufermanMenuItem> GenerateContextMenuItems(IBufer bufer,
+            bool isChangeTextAvailable,
+            IBuferSelectionHandler buferSelectionHandler,
+            IBufermanHost bufermanHost,
+            IBuferTypeMenuGenerator buferTypeGenerator);
     }
 }
