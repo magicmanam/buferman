@@ -129,7 +129,7 @@ namespace BuferMAN.WinForms
 
         private void _Application_Idle(object sender, EventArgs e)
         {
-            
+            // TODO (s) check that bufermanApp needs to rerender and just do it!
         }
 
         private void _StartTrickTimer(int intervalSeconds)

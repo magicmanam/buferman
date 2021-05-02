@@ -27,6 +27,8 @@ namespace BuferMAN.ContextMenu
             openFileLocationMenuItem.ShortCut = Shortcut.CtrlShiftF;
 
             menuItems.Add(openFileLocationMenuItem);
+            //menuItems.Add(MenuItem to copy file path); // TODO (m)
+            //menuItems.Add(MenuItem to copy folder's files); - as a part of plugin
 
             return menuItems;
         }
