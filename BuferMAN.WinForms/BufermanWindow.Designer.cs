@@ -38,7 +38,7 @@ namespace BuferMAN.WinForms
         public ToolStripStatusLabel StatusLabel { get; set; }
 
         public BufermanWindow(
-            IProgramSettings settings,
+            IProgramSettingsGetter settings,
             IClipboardBuferService clipboardBuferService,
             IFileStorage fileStorage,
             IRenderingHandler renderingHandler,

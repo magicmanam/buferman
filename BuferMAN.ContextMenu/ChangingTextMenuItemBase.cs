@@ -8,7 +8,7 @@ namespace BuferMAN.ContextMenu
 {
     public abstract class ChangingTextMenuItemBase
     {
-        protected IBufermanHost BufermanHost { get; set; }
+        protected IBufermanHost BufermanHost { get; private set; }
 
         protected BufermanMenuItem MenuItem { get; private set; }
 

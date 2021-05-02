@@ -14,7 +14,7 @@ namespace BuferMAN.WinForms
 {
     internal class BuferHandlersWrapper
     {
-        private readonly IProgramSettings _settings;
+        private readonly IProgramSettingsGetter _settings;
         private readonly IBuferSelectionHandlerFactory _buferSelectionHandlerFactory;
         private readonly IFileStorage _fileStorage;
         private readonly IBufermanHost _bufermanHost;
@@ -27,7 +27,7 @@ namespace BuferMAN.WinForms
             IBuferSelectionHandlerFactory buferSelectionHandlerFactory,
             IFileStorage fileStorage,
             IBufermanHost bufermanHost,
-            IProgramSettings settings,
+            IProgramSettingsGetter settings,
             IBufer bufer)
             : this(buferContextMenuGenerator, buferSelectionHandlerFactory, fileStorage, bufermanHost, settings, bufer)
         {
@@ -39,7 +39,7 @@ namespace BuferMAN.WinForms
             IBuferSelectionHandlerFactory buferSelectionHandlerFactory,
             IFileStorage fileStorage,
             IBufermanHost bufermanHost,
-            IProgramSettings settings,
+            IProgramSettingsGetter settings,
             IBufer bufer)
         {
             this._settings = settings;
@@ -221,12 +221,16 @@ namespace BuferMAN.WinForms
         {
             var buferViewModel = this._bufer.ViewModel;
 
-            this._bufer.BackColor = this._settings.FocusedBuferBackColor;
+            this._bufer.BackColor = this._settings.FocusedBuferBackgroundColor;
 
             if (buferViewModel != this._bufermanHost.LatestFocusedBufer)
             {
                 this._bufermanHost.LatestFocusedBufer = buferViewModel;
-                this._bufer.ShowFocusTooltip(buferViewModel.Representation as string, this._settings.BuferTooltipDuration);
+
+                if (this._settings.ShowFocusTooltip)
+                {
+                    this._bufer.ShowFocusTooltip(buferViewModel.Representation as string, this._settings.FocusTooltipDuration);
+                }
             }
         }
 
@@ -234,7 +238,10 @@ namespace BuferMAN.WinForms
         {
             this._bufer.BackColor = this._bufer.ViewModel.DefaultBackColor;
 
-            this._bufer.HideFocusTooltip();
+            if (this._settings.ShowFocusTooltip)
+            {
+                this._bufer.HideFocusTooltip();
+            }
         }
     }
 }// TODO (m) relocate from this assembly

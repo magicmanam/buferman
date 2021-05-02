@@ -11,12 +11,12 @@ namespace BuferMAN.Application
 	internal class DataObjectHandler : IIDataObjectHandler
     {
         private readonly IClipboardBuferService _clipboardBuferService;
-		private readonly IProgramSettings _settings;
+		private readonly IProgramSettingsGetter _settings;
 
         public event EventHandler<ClipboardUpdatedEventArgs> Updated;
         public event EventHandler Full;
 
-        public DataObjectHandler(IClipboardBuferService clipboardBuferService, IProgramSettings settings)
+        public DataObjectHandler(IClipboardBuferService clipboardBuferService, IProgramSettingsGetter settings)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._settings = settings;

@@ -12,10 +12,10 @@ namespace BuferMAN.Windows
     {
         private readonly IBufermanHost _bufermanHost;
         private readonly IBufermanApplication _bufermanApp;
-        private readonly IProgramSettings _settings;
+        private readonly IProgramSettingsGetter _settings;
 
         public Starter(IBufermanHost bufermanHost, IBufermanApplication bufermanApp,
-            IProgramSettings settings)
+            IProgramSettingsGetter settings)
         {
             this._bufermanHost = bufermanHost;
             this._bufermanApp = bufermanApp;

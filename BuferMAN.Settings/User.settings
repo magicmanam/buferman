@@ -1,0 +1,24 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BuferMAN.Settings" GeneratedClassName="User">
+  <Profiles />
+  <Settings>
+    <Setting Name="ShowUserModeNotification" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="CurrentBuferBackgroundColor" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="BuferDefaultBackgroundColor" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="PinnedBuferBackgroundColor" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">-8943463</Value>
+    </Setting>
+    <Setting Name="FocusTooltipDuration" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2500</Value>
+    </Setting>
+    <Setting Name="ShowFocusTooltip" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

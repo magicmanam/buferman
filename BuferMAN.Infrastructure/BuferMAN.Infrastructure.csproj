@@ -54,6 +54,7 @@
     <Compile Include="Plugins\IBufermanPlugin.cs" />
     <Compile Include="Settings\IBufermanOptionsWindow.cs" />
     <Compile Include="Settings\IBufermanOptionsWindowFactory.cs" />
+    <Compile Include="Settings\IProgramSettingsSetter.cs" />
     <Compile Include="Storage\BufersLoadedEventArgs.cs" />
     <Compile Include="Storage\IBuferItemDataObjectConverter.cs" />
     <Compile Include="Storage\IBufersStorageFactory.cs" />
@@ -63,7 +64,7 @@
     <Compile Include="Storage\ILoadedBuferItemsProcessor.cs" />
     <Compile Include="Files\IUserFileSelector.cs" />
     <Compile Include="INotificationEmitter.cs" />
-    <Compile Include="Settings\IProgramSettings.cs" />
+    <Compile Include="Settings\IProgramSettingsGetter.cs" />
     <Compile Include="IWindowLevelContext.cs" />
     <Compile Include="Menu\IMainMenuGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

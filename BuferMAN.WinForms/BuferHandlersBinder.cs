@@ -10,13 +10,13 @@ namespace BuferMAN.WinForms
         private readonly IBuferContextMenuGenerator _buferContextMenuGenerator;
         private readonly IBuferSelectionHandlerFactory _buferSelectionHandlerFactory;
         private readonly IFileStorage _fileStorage;
-        private readonly IProgramSettings _settings;
+        private readonly IProgramSettingsGetter _settings;
 
         public BuferHandlersBinder(
             IBuferContextMenuGenerator buferContextMenuGenerator,
             IBuferSelectionHandlerFactory buferSelectionHandlerFactory,
             IFileStorage fileStorage,
-            IProgramSettings settings)
+            IProgramSettingsGetter settings)
         {
             this._buferContextMenuGenerator = buferContextMenuGenerator;
             this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;

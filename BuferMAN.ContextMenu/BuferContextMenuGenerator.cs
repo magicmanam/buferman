@@ -22,7 +22,7 @@ namespace BuferMAN.ContextMenu
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IBuferSelectionHandlerFactory _buferSelectionHandlerFactory;
-        private readonly IProgramSettings _settings;
+        private readonly IProgramSettingsGetter _settings;
         private readonly IClipboardWrapper _clipboardWrapper;
         private readonly IEnumerable<IBufermanPlugin> _plugins;
         private readonly IBufersStorageFactory _bufersStorageFactory;
@@ -30,7 +30,7 @@ namespace BuferMAN.ContextMenu
 
         public BuferContextMenuGenerator(IClipboardBuferService clipboardBuferService,
             IBuferSelectionHandlerFactory buferSelectionHandlerFactory,
-            IProgramSettings settings,
+            IProgramSettingsGetter settings,
             IClipboardWrapper clipboardWrapper,
             IEnumerable<IBufermanPlugin> plugins,
             IBufersStorageFactory bufersStorageFactory, 

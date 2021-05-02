@@ -7,7 +7,10 @@ namespace BuferMAN.Settings
     {
         public static Container RegisterSettingsPart(this Container container)
         {
-            container.Register<IProgramSettings, ProgramSettings>(Lifestyle.Singleton);
+            var registration = Lifestyle.Singleton.CreateRegistration<ProgramSettings>(container);
+
+            container.AddRegistration(typeof(IProgramSettingsGetter), registration);
+            container.AddRegistration(typeof(IProgramSettingsSetter), registration);
 
             return container;
         }

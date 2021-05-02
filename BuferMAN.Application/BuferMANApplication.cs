@@ -22,7 +22,7 @@ namespace BuferMAN.Application
         private readonly IBufersStorageFactory _bufersStorageFactory;
         private readonly IWindowLevelContext _windowLevelContext;
         private IBufermanHost _bufermanHost;
-        private readonly IProgramSettings _settings;
+        private readonly IProgramSettingsGetter _settings;
         private bool _shouldCatchCopies = true;
         private readonly IEnumerable<IBufermanPlugin> _plugins;
 
@@ -31,7 +31,7 @@ namespace BuferMAN.Application
         public BufermanApplication(IClipboardBuferService clipboardBuferService,
             IClipboardWrapper clipboardWrapper,
             IIDataObjectHandler dataObjectHandler,
-            IProgramSettings settings,
+            IProgramSettingsGetter settings,
             IMainMenuGenerator mainMenuGenerator,
             IWindowLevelContext windowLevelContext,
             IEnumerable<IBufermanPlugin> plugins,

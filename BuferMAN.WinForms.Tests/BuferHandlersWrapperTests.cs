@@ -16,7 +16,7 @@ namespace BuferMAN.WinForms.Tests
     [TestClass]
     public class BuferHandlersWrapperTests
     {
-        private readonly Fake<IProgramSettings> _settings = new Fake<IProgramSettings>();
+        private readonly Fake<IProgramSettingsGetter> _settings = new Fake<IProgramSettingsGetter>();
 
         [TestMethod]
         public void On_Text_format_button_has_data_as_tag_and_text_trimmed()
@@ -139,7 +139,7 @@ namespace BuferMAN.WinForms.Tests
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 fileStorage.FakedObject,
                 A.Fake<IBufermanHost>(),
-                A.Fake<IProgramSettings>(),
+                A.Fake<IProgramSettingsGetter>(),
                 bufer);
 
             // Assert
@@ -174,7 +174,7 @@ namespace BuferMAN.WinForms.Tests
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 fileStorage.FakedObject,
                 A.Fake<IBufermanHost>(),
-                A.Fake<IProgramSettings>(),
+                A.Fake<IProgramSettingsGetter>(),
                 bufer);
 
             // Assert
@@ -210,7 +210,7 @@ namespace BuferMAN.WinForms.Tests
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 fileStorage.FakedObject,
                 A.Fake<IBufermanHost>(),
-                A.Fake<IProgramSettings>(),
+                A.Fake<IProgramSettingsGetter>(),
                 bufer);
 
             // Assert
@@ -239,7 +239,7 @@ namespace BuferMAN.WinForms.Tests
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 A.Fake<IFileStorage>(),
                 A.Fake<IBufermanHost>(),
-                A.Fake<IProgramSettings>(),
+                A.Fake<IProgramSettingsGetter>(),
                 bufer);
 
             // Assert
@@ -268,7 +268,7 @@ namespace BuferMAN.WinForms.Tests
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 A.Fake<IFileStorage>(),
                 A.Fake<IBufermanHost>(),
-                A.Fake<IProgramSettings>(),
+                A.Fake<IProgramSettingsGetter>(),
                 bufer);
 
             // Assert
@@ -297,7 +297,7 @@ namespace BuferMAN.WinForms.Tests
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 A.Fake<IFileStorage>(),
                 A.Fake<IBufermanHost>(),
-                A.Fake<IProgramSettings>(),
+                A.Fake<IProgramSettingsGetter>(),
                 bufer);
 
             // Assert
@@ -326,7 +326,7 @@ namespace BuferMAN.WinForms.Tests
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 A.Fake<IFileStorage>(),
                 A.Fake<IBufermanHost>(),
-                A.Fake<IProgramSettings>(),
+                A.Fake<IProgramSettingsGetter>(),
                 bufer);
 
             // Assert

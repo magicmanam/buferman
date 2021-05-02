@@ -20,7 +20,7 @@ namespace BuferMAN.Menu
     {
         private readonly IUserFileSelector _userFileSelector;
         private readonly IClipboardBuferService _clipboardBuferService;
-        private readonly IProgramSettings _settings;
+        private readonly IProgramSettingsGetter _settings;
         private readonly IIDataObjectHandler _dataObjectHandler;
         private readonly IEnumerable<IBufermanPlugin> _plugins;
         private readonly IBufermanOptionsWindowFactory _optionsWindowFactory;
@@ -28,7 +28,7 @@ namespace BuferMAN.Menu
         public MainMenuGenerator(
             IUserFileSelector userFileSelector,
             IClipboardBuferService clipboardBuferService,
-            IProgramSettings settings,
+            IProgramSettingsGetter settings,
             IIDataObjectHandler dataObjectHandler,
             IEnumerable<IBufermanPlugin> plugins,
             IBufermanOptionsWindowFactory optionsWindowFactory)

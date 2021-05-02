@@ -21,14 +21,14 @@ namespace BuferMAN.WinForms.Window
         private int _buttonWidth;
         private Label _pinnedClipsDivider;// TODO (m) replace with Split Container (along with scrolling bufers feature and pinned area)
         private readonly IBuferHandlersBinder _buferHandlersBinder;
-        private readonly IProgramSettings _settings;
+        private readonly IProgramSettingsGetter _settings;
         private readonly IDictionary<Guid, Button> _removedButtons = new Dictionary<Guid, Button>();
         private readonly IList<IBuferPresentation> _clipPresentations = new List<IBuferPresentation>() { new SkypeBuferPresentation(), new FileContentsBuferPresentation() };
         private BuferViewModel _currentBufer;
 
         private const int BUTTON_HEIGHT = 23;
 
-        public RenderingHandler(IClipboardBuferService clipboardBuferService, IProgramSettings settings, IBuferHandlersBinder buferHandlersBinder)
+        public RenderingHandler(IClipboardBuferService clipboardBuferService, IProgramSettingsGetter settings, IBuferHandlersBinder buferHandlersBinder)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._settings = settings;
@@ -138,7 +138,7 @@ namespace BuferMAN.WinForms.Window
                         var bufer = new Bufer()
                         {
                             Width = this._buttonWidth,
-                            BackColor = this._settings.BuferDefaultBackColor,
+                            BackColor = this._settings.BuferDefaultBackgroundColor,
                             ViewModel = buferViewModel
                         };
                         this._buferHandlersBinder.Bind(bufer, bufermanHost);
@@ -167,8 +167,8 @@ namespace BuferMAN.WinForms.Window
                 }
 
                 var defaultBackColor = buferViewModel.ViewId == this._currentBufer.ViewId ?
-                    (pinned ? this._settings.PinnedCurrentBuferBackColor : this._settings.CurrentBuferBackColor) :
-                    (pinned ? this._settings.PinnedBuferBackColor : this._settings.BuferDefaultBackColor);
+                    (pinned ? this._settings.PinnedCurrentBuferBackColor : this._settings.CurrentBuferBackgroundColor) :
+                    (pinned ? this._settings.PinnedBuferBackgroundColor : this._settings.BuferDefaultBackgroundColor);
 
                 button.BackColor = defaultBackColor;
                 (button.Tag as IBufer).ViewModel.DefaultBackColor = defaultBackColor;
