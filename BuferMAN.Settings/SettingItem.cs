@@ -1,12 +1,18 @@
-﻿namespace BuferMAN.Settings
+﻿using System;
+
+namespace BuferMAN.Settings
 {
-    public class SettingItem<T> where T : struct
+    public class SettingItem<T> : ISettingItem where T : struct
     {
-        public SettingItem(T defaultValue, T savedValue)
+        private readonly Action<T> _saveFn;
+
+        public SettingItem(T defaultValue, T savedValue, Action<T> saveFn)
         {
             this.DefaultValue = defaultValue;
             this.SavedValue = savedValue;
             this.CurrentValue = savedValue;
+
+            this._saveFn = saveFn;
         }
 
         public bool IsDirty
@@ -36,11 +42,10 @@
         {
             this.CurrentValue = this.DefaultValue;
         }
-        public SettingItem<T> Save()
+        public void Save()
         {
             this.SavedValue = this.CurrentValue;
-
-            return this;
+            this._saveFn(this.SavedValue);
         }
     }
 }

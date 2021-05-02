@@ -2,27 +2,62 @@
 using BuferMAN.Models;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace BuferMAN.Settings
 {
     internal class ProgramSettings : IProgramSettingsGetter, IProgramSettingsSetter
     {
-        //private Dictionary<string, ISettingItem> _settingItems = new Dictionary<string, ISettingItem>();
-        private SettingItem<int> _buferDefaultBackgroundColorSetting;
+        private IList<ISettingItem> _settingItems;
+
         private SettingItem<bool> _showUserModeNotificationSetting;
         private SettingItem<bool> _showFocusTooltipSetting;
-        private Color _pinnedBuferBackgroundColor;
-        private Color _currentBuferBackgroundColor;
-        private int _focusTooltipDuration;
+        private SettingItem<int> _pinnedBuferBackgroundColorSetting;
+        private SettingItem<int> _buferDefaultBackgroundColorSetting;
+        private SettingItem<int> _currentBuferBackgroundColorSetting;
+        private SettingItem<int> _focusTooltipDurationSetting;
 
         public ProgramSettings()
         {
-            this._buferDefaultBackgroundColorSetting = new SettingItem<int>(Color.Silver.ToArgb(), User.Default.BuferDefaultBackgroundColor);
-            this._showUserModeNotificationSetting = new SettingItem<bool>(true, User.Default.ShowUserModeNotification);
-            this._pinnedBuferBackgroundColor = this.PinnedBuferBackgroundColor;
-            this._currentBuferBackgroundColor = this.CurrentBuferBackgroundColor;
-            this._focusTooltipDuration = this.FocusTooltipDuration;
-            this._showFocusTooltipSetting = new SettingItem<bool>(true, User.Default.ShowFocusTooltip);
+            this._buferDefaultBackgroundColorSetting = new SettingItem<int>(
+                Color.Silver.ToArgb(),
+                User.Default.BuferDefaultBackgroundColor,
+                (value) => { User.Default.BuferDefaultBackgroundColor = value; });
+
+            this._showUserModeNotificationSetting = new SettingItem<bool>(
+                true,
+                User.Default.ShowUserModeNotification,
+                (value) => { User.Default.ShowUserModeNotification = value; });
+
+            this._pinnedBuferBackgroundColorSetting = new SettingItem<int>(
+                Color.LightSlateGray.ToArgb(),
+                User.Default.PinnedBuferBackgroundColor,
+                (value) => { User.Default.PinnedBuferBackgroundColor = value; });
+
+            this._currentBuferBackgroundColorSetting = new SettingItem<int>(
+                Color.Silver.ToArgb(), // TODO (s) Consider new color: Color.LightGreen
+                User.Default.CurrentBuferBackgroundColor,
+                (value) => { User.Default.CurrentBuferBackgroundColor = value; });
+
+            this._focusTooltipDurationSetting = new SettingItem<int>(
+                2500,
+                User.Default.FocusTooltipDuration,
+                (value) => { User.Default.FocusTooltipDuration = value; });
+
+            this._showFocusTooltipSetting = new SettingItem<bool>(
+                true,
+                User.Default.ShowFocusTooltip,
+                (value) => { User.Default.ShowFocusTooltip = value; });
+
+            this._settingItems = new List<ISettingItem>
+            {
+                this._buferDefaultBackgroundColorSetting,
+                this._showUserModeNotificationSetting,
+                this._showFocusTooltipSetting,
+                this._focusTooltipDurationSetting,
+                this._pinnedBuferBackgroundColorSetting,
+                this._currentBuferBackgroundColorSetting
+            };
         }
 
         public IEnumerable<BufersStorageModel> StoragesToLoadOnStart =>
@@ -58,11 +93,11 @@ namespace BuferMAN.Settings
         {
             get
             {
-                return Color.FromArgb(User.Default.CurrentBuferBackgroundColor);
+                return Color.FromArgb(this._currentBuferBackgroundColorSetting.SavedValue);
             }
             set
             {
-                this._currentBuferBackgroundColor = value;
+                this._currentBuferBackgroundColorSetting.CurrentValue = value.ToArgb();
             }
         }
 
@@ -78,11 +113,11 @@ namespace BuferMAN.Settings
         {
             get
             {
-                return Color.FromArgb(User.Default.PinnedBuferBackgroundColor);// Color.LightSlateGray;
+                return Color.FromArgb(this._pinnedBuferBackgroundColorSetting.SavedValue);
             }
             set
             {
-                this._pinnedBuferBackgroundColor = value;
+                this._pinnedBuferBackgroundColorSetting.CurrentValue = value.ToArgb();
             }
         }
 
@@ -110,11 +145,11 @@ namespace BuferMAN.Settings
         {
             get
             {
-                return User.Default.FocusTooltipDuration;
+                return this._focusTooltipDurationSetting.SavedValue;
             }
             set
             {
-                this._focusTooltipDuration = value;
+                this._focusTooltipDurationSetting.CurrentValue = value;
             }
         }
 
@@ -132,36 +167,26 @@ namespace BuferMAN.Settings
 
         public void RestoreDefault()
         {
-            this._showUserModeNotificationSetting.RestoreDefault();
-            this._buferDefaultBackgroundColorSetting.RestoreDefault();
-            this._showFocusTooltipSetting.RestoreDefault();
-            this._pinnedBuferBackgroundColor = Color.LightSlateGray;
-            this._currentBuferBackgroundColor = Color.FromArgb(User.Default.BuferDefaultBackgroundColor);//Or Color.LightGreen
-            this._focusTooltipDuration = 2500;
+            foreach (var setting in this._settingItems)
+            {
+                setting.RestoreDefault();
+            }
         }
 
         public bool IsDefault
         {
             get
             {
-                return User.Default.ShowFocusTooltip == true &&
-                       User.Default.FocusTooltipDuration == 2500 &&
-                       this._showUserModeNotificationSetting.IsSavedValueDefault &&
-                       User.Default.PinnedBuferBackgroundColor == Color.LightSlateGray.ToArgb() &&
-                       User.Default.CurrentBuferBackgroundColor == User.Default.BuferDefaultBackgroundColor &&
-                       this._buferDefaultBackgroundColorSetting.IsSavedValueDefault;
+                return this._settingItems.All(s => s.IsSavedValueDefault);
             }
         }
 
         public void Save()
         {
-            User.Default.BuferDefaultBackgroundColor = this._buferDefaultBackgroundColorSetting.Save().CurrentValue;
-            User.Default.ShowUserModeNotification = this._showUserModeNotificationSetting.Save().CurrentValue;
-            User.Default.PinnedBuferBackgroundColor = this._pinnedBuferBackgroundColor.ToArgb();
-            User.Default.CurrentBuferBackgroundColor = this._currentBuferBackgroundColor.ToArgb();
-
-            User.Default.FocusTooltipDuration = this._focusTooltipDuration;
-            User.Default.ShowFocusTooltip = this._showFocusTooltipSetting.Save().CurrentValue;
+            foreach (var setting in this._settingItems)
+            {
+                setting.Save();
+            }
 
             User.Default.Save();
         }
@@ -170,12 +195,7 @@ namespace BuferMAN.Settings
         {
             get
             {
-                return this._showFocusTooltipSetting.IsDirty ||
-                       User.Default.FocusTooltipDuration != this._focusTooltipDuration ||
-                       this._showUserModeNotificationSetting.IsDirty ||
-                       User.Default.PinnedBuferBackgroundColor != this._pinnedBuferBackgroundColor.ToArgb() ||
-                       User.Default.CurrentBuferBackgroundColor != this._currentBuferBackgroundColor.ToArgb() ||
-                       this._buferDefaultBackgroundColorSetting.IsDirty;
+                return this._settingItems.Any(s => s.IsDirty);
             }
         }
     }
