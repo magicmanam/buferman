@@ -85,7 +85,7 @@ namespace BuferMAN.WinForms
                 Text = "Restore default && Save",
                 AutoSize = true,
                 Parent = controlPanel,
-                Enabled = this._settingsSetter.IsDefault
+                Enabled = !this._settingsSetter.IsDefault
             };
             this._restoreButton.Click += (object sender, EventArgs args) =>
             {
@@ -174,7 +174,7 @@ namespace BuferMAN.WinForms
                 tooltipDurationInput.Enabled = focusTooltipCheckbox.Checked;
 
                 this._saveButton.Enabled = this._settingsSetter.IsDirty;
-                this._restoreButton.Enabled = this._settingsSetter.IsDefault;
+                this._restoreButton.Enabled = !this._settingsSetter.IsDefault;
             };
             var tooltipDurationLabel = new Label
             {
@@ -190,7 +190,7 @@ namespace BuferMAN.WinForms
                 this._settingsSetter.FocusTooltipDuration = (int)tooltipDurationInput.Value;
 
                 this._saveButton.Enabled = this._settingsSetter.IsDirty;
-                this._restoreButton.Enabled = this._settingsSetter.IsDefault;
+                this._restoreButton.Enabled = !this._settingsSetter.IsDefault;
             };
         }
 
@@ -234,7 +234,7 @@ namespace BuferMAN.WinForms
                 this._settingsSetter.ShowUserModeNotification = showUserModeNotificationCheckbox.Checked;
 
                 this._saveButton.Enabled = this._settingsSetter.IsDirty;
-                this._restoreButton.Enabled = this._settingsSetter.IsDefault;
+                this._restoreButton.Enabled = !this._settingsSetter.IsDefault;
             };
         }
 
@@ -269,7 +269,7 @@ namespace BuferMAN.WinForms
                     this._settingsSetter.BuferDefaultBackgroundColor = colorDialog.Color;
 
                     this._saveButton.Enabled = this._settingsSetter.IsDirty;
-                    this._restoreButton.Enabled = this._settingsSetter.IsDefault;
+                    this._restoreButton.Enabled = !this._settingsSetter.IsDefault;
                 }
             };
 
@@ -291,7 +291,7 @@ namespace BuferMAN.WinForms
                     this._settingsSetter.PinnedBuferBackgroundColor = colorDialog.Color;
 
                     this._saveButton.Enabled = this._settingsSetter.IsDirty;
-                    this._restoreButton.Enabled = this._settingsSetter.IsDefault;
+                    this._restoreButton.Enabled = !this._settingsSetter.IsDefault;
                 }
             };
 
@@ -313,7 +313,7 @@ namespace BuferMAN.WinForms
                     this._settingsSetter.CurrentBuferBackgroundColor = colorDialog.Color;
 
                     this._saveButton.Enabled = this._settingsSetter.IsDirty;
-                    this._restoreButton.Enabled = this._settingsSetter.IsDefault;
+                    this._restoreButton.Enabled = !this._settingsSetter.IsDefault;
                 }
             };
 
