@@ -153,18 +153,25 @@ namespace BuferMAN.WinForms.Window
                 }
 
                 for (var i = 0; i < button.ContextMenu.MenuItems.Count; i++)
-                {
+                {// TODO (m) remove this shit
                     var menuItem = button.ContextMenu.MenuItems[i];
 
-                    for (var j = 0; j < menuItem.MenuItems.Count; j++)
+                    if (menuItem.Shortcut == Shortcut.CtrlC)
                     {
-                        var nestedMenuItem = menuItem.MenuItems[j];
-                        if (nestedMenuItem.Shortcut == Shortcut.CtrlC)
+                        menuItem.Enabled = buferViewModel.ViewId != this._currentBufer.ViewId;
+                    }
+                    else
+                    {
+                        for (var j = 0; j < menuItem.MenuItems.Count; j++)
                         {
-                            nestedMenuItem.Enabled = buferViewModel.ViewId != this._currentBufer.ViewId;
+                            var nestedMenuItem = menuItem.MenuItems[j];
+                            if (nestedMenuItem.Shortcut == Shortcut.CtrlC)
+                            {
+                                nestedMenuItem.Enabled = buferViewModel.ViewId != this._currentBufer.ViewId;
+                            }
                         }
                     }
-                }
+                }// TODO (l) maybe remove this menu item if bufer is current? I can do this if rerender context menu on every change in clipboard service
 
                 var defaultBackColor = buferViewModel.ViewId == this._currentBufer.ViewId ?
                     (pinned ? this._settings.PinnedCurrentBuferBackColor : this._settings.CurrentBuferBackgroundColor) :
