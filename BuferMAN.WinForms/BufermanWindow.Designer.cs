@@ -28,6 +28,8 @@ namespace BuferMAN.WinForms
         private readonly IRenderingHandler _renderingHandler;
         private readonly IBufermanOptionsWindowFactory _optionsWindowFactory;
         private NotifyIcon TrayIcon;
+        private Label _userManualLabel;
+        private bool _isAdmin;
 
         public INotificationEmitter NotificationEmitter { get; set; }
         public event EventHandler ClipbordUpdated;
@@ -101,6 +103,8 @@ namespace BuferMAN.WinForms
 
         public void Start(IBufermanApplication bufermanApp, bool isAdmin)
         {
+            this._isAdmin = isAdmin;
+
             Application.ThreadException += BufermanWindow._Application_ThreadException;//Must be run before Application.Run() //Note
 
             Application.EnableVisualStyles();
@@ -287,18 +291,31 @@ namespace BuferMAN.WinForms
 
         private void _CreateUserManualLabel(bool isAdmin)
         {
-            var label = new Label() { ForeColor = Color.DarkGray, TabIndex = 1000, Height = 300, Width = 300 };
-            label.Text = Resource.UserManual;
+            this._userManualLabel = new Label() {
+                ForeColor = Color.DarkGray,
+                TabIndex = 1000,
+                Height = 300,
+                Width = 300,
+                Text = this._GetUserManualText(),
+                Parent = this
+            };
 
-            if (!isAdmin)
-            {
-                label.Text = Resource.NotAdminWarning + Resource.UserManual;
-            }
+            this._userManualLabel.Location = new Point(0, 430);
+            this._userManualLabel.Padding = new Padding(10);
 
-            label.Location = new Point(0, 430);
-            label.Padding = new Padding(10);
+            //this.Controls.Add(this._userManualLabel);
+        }
 
-            this.Controls.Add(label);
+        private string _GetUserManualText()
+        {
+            return this._isAdmin ?
+                Resource.UserManual :
+                Resource.NotAdminWarning + Resource.UserManual;
+        }
+
+        public void RerenderUserManual()
+        {
+            this._userManualLabel.Text = this._GetUserManualText();
         }
 
         private void _CreateStatusBar()

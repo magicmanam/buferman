@@ -20,6 +20,7 @@ namespace BuferMAN.Infrastructure
         void ActivateWindow();
         void HideWindow();
         void RerenderBufers();
+        void RerenderUserManual();
         void SetCurrentBufer(BuferViewModel bufer);
         void Exit();
         void Start(IBufermanApplication bufermanApp, bool isAdmin);

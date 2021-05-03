@@ -250,7 +250,9 @@ namespace BuferMAN.Menu
                 Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(culture);
 
                 this.GenerateMainMenu(bufermanApplication);
-                // TODO (m) rerender context menu for bufers + short guide at the bottom of main window + tray icon menu
+                bufermanApplication.Host.RerenderBufers();
+                bufermanApplication.Host.RerenderUserManual();
+                // TODO (m) tray icon menu
             };
         }
 
