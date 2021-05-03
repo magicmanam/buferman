@@ -25,6 +25,7 @@ namespace BuferMAN.Application
         private readonly IProgramSettingsGetter _settings;
         private bool _shouldCatchCopies = true;
         private readonly IEnumerable<IBufermanPlugin> _plugins;
+        private readonly IBufermanOptionsWindowFactory _optionsWindowFactory;
 
         private event EventHandler<BuferFocusedEventArgs> _BuferFocused;
 
@@ -35,7 +36,8 @@ namespace BuferMAN.Application
             IMainMenuGenerator mainMenuGenerator,
             IWindowLevelContext windowLevelContext,
             IEnumerable<IBufermanPlugin> plugins,
-            IBufersStorageFactory bufersStorageFactory)
+            IBufersStorageFactory bufersStorageFactory,
+            IBufermanOptionsWindowFactory optionsWindowFactory)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._clipboardWrapper = clipboardWrapper;
@@ -45,6 +47,7 @@ namespace BuferMAN.Application
             this._bufersStorageFactory = bufersStorageFactory;
             this._windowLevelContext = windowLevelContext;
             this._settings = settings;
+            this._optionsWindowFactory = optionsWindowFactory;
         }
 
         public void RunInHost(IBufermanHost bufermanHost)
@@ -83,6 +86,7 @@ namespace BuferMAN.Application
             }
 
             this._mainMenuGenerator.GenerateMainMenu(this);
+            this.Host.SetTrayMenu(this.GetTrayMenuItems());
 
             this._bufermanHost.SetOnKeyDown(this.OnKeyDown);
             this._BuferFocused += this._bufermanHost.BuferFocused;
@@ -218,6 +222,17 @@ namespace BuferMAN.Application
             {
                 return this._bufermanHost;
             }
+        }
+
+        public IEnumerable<BufermanMenuItem> GetTrayMenuItems()
+        {
+            var trayIconMenuItems = new List<BufermanMenuItem>();
+            trayIconMenuItems.Add(this.Host.CreateMenuItem(Resource.TrayMenuOptions, (object sender, EventArgs args) => this._optionsWindowFactory.Create().Open()));
+            //trayIconMenuItems.Add(this.Host.CreateMenuItem(Resource.TrayMenuBuferManual, (object sernder, EventArgs args) => this.Host.UserInteraction.ShowPopup(Resource.UserManual + Environment.NewLine + Environment.NewLine + Resource.DocumentationMentioning, Resource.WindowTitle)));
+            trayIconMenuItems.Add(this.Host.CreateMenuSeparatorItem());
+            trayIconMenuItems.Add(this.Host.CreateMenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => this.Host.Exit()));
+
+            return trayIconMenuItems;
         }
     }
 }

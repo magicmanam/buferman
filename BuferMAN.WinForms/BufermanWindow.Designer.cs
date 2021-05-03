@@ -26,7 +26,6 @@ namespace BuferMAN.WinForms
         private readonly IDictionary<Guid, Button> _buttonsMap;
         private ClipboardViewer _clipboardViewer;
         private readonly IRenderingHandler _renderingHandler;
-        private readonly IBufermanOptionsWindowFactory _optionsWindowFactory;
         private NotifyIcon TrayIcon;
         private Label _userManualLabel;
         private bool _isAdmin;
@@ -44,14 +43,12 @@ namespace BuferMAN.WinForms
             IClipboardBuferService clipboardBuferService,
             IFileStorage fileStorage,
             IRenderingHandler renderingHandler,
-            IUserInteraction userInteraction,
-            IBufermanOptionsWindowFactory optionsWindowFactory)
+            IUserInteraction userInteraction)
         {
             this._buttonsMap = new Dictionary<Guid, Button>(settings.MaxBufersCount + settings.ExtraBufersCount);
             this._renderingHandler = renderingHandler;
 
             this._userInteraction = userInteraction;
-            this._optionsWindowFactory = optionsWindowFactory;
         }
 
         public void SetMainMenu(IEnumerable<BufermanMenuItem> menuItems)
@@ -115,11 +112,11 @@ namespace BuferMAN.WinForms
                 Icon = Icons.Buferman,
                 Visible = true
             };
+            this.TrayIcon.DoubleClick += this._TrayIcon_DoubleClick;
 
             this.NotificationEmitter = new NotificationEmitter(this.TrayIcon, Resource.WindowTitle);
             this.NotificationEmitter.ShowInfoNotification(Resource.NotifyIconStartupText, 1500);
 
-            this._SetupTrayIcon();
             this._InitializeForm(isAdmin);
 
             this._renderingHandler.SetForm(this);
@@ -269,18 +266,11 @@ namespace BuferMAN.WinForms
             this.WindowActivated?.Invoke(this, EventArgs.Empty);
         }
 
-        private void _SetupTrayIcon()
+        public void SetTrayMenu(IEnumerable<BufermanMenuItem> menuItems)
         {
-            this.TrayIcon.DoubleClick += this._TrayIcon_DoubleClick;
-            
             var trayMenu = new System.Windows.Forms.ContextMenu();
-            var trayIconMenuItems = new List<BufermanMenuItem>();
-            trayIconMenuItems.Add(this.CreateMenuItem(Resource.TrayMenuOptions, (object sender, EventArgs args) => this._optionsWindowFactory.Create().Open()));
-            trayIconMenuItems.Add(this.CreateMenuItem(Resource.TrayMenuBuferManual, (object sernder, EventArgs args) => this.UserInteraction.ShowPopup(Resource.UserManual + Environment.NewLine + Environment.NewLine + Resource.DocumentationMentioning, Resource.WindowTitle)));
-            trayIconMenuItems.Add(this.CreateMenuSeparatorItem());
-            trayIconMenuItems.Add(this.CreateMenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => this.Exit()));
-            // TODO (s) into BufermanApplication
-            trayMenu.PopulateMenuWithItems(trayIconMenuItems);
+            trayMenu.PopulateMenuWithItems(menuItems);
+
             this.TrayIcon.ContextMenu = trayMenu;
         }
 
@@ -302,8 +292,6 @@ namespace BuferMAN.WinForms
 
             this._userManualLabel.Location = new Point(0, 430);
             this._userManualLabel.Padding = new Padding(10);
-
-            //this.Controls.Add(this._userManualLabel);
         }
 
         private string _GetUserManualText()

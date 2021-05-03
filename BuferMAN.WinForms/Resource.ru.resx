@@ -159,9 +159,6 @@
   <data name="NotifyIconStartupText" xml:space="preserve">
     <value>BuferMAN: Alt+C чтобы открыть</value>
   </data>
-  <data name="MenuFileExit" xml:space="preserve">
-    <value>Выход из программы</value>
-  </data>
   <data name="FileContentsBufer" xml:space="preserve">
     <value>В буфере файлы</value>
   </data>
@@ -179,15 +176,6 @@
   </data>
   <data name="AdminWindowTitle" xml:space="preserve">
     <value>BuferMAN (Админ)</value>
-  </data>
-  <data name="DocumentationMentioning" xml:space="preserve">
-    <value>Полное руководство в меню: Помощь -&gt; Документация</value>
-  </data>
-  <data name="TrayMenuBuferManual" xml:space="preserve">
-    <value>Буфероводство</value>
-  </data>
-  <data name="TrayMenuOptions" xml:space="preserve">
-    <value>Опции</value>
   </data>
   <data name="OptionsCommonTabName" xml:space="preserve">
     <value>Общие</value>

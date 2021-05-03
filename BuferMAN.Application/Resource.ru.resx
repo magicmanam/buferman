@@ -117,8 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="DocumentationMentioning" xml:space="preserve">
+    <value>Полное руководство в меню: Помощь -&gt; Документация</value>
+  </data>
   <data name="LastClipboardUpdate" xml:space="preserve">
     <value>Последнее обновление буфера в </value>
+  </data>
+  <data name="MenuFileExit" xml:space="preserve">
+    <value>Выход из программы</value>
   </data>
   <data name="NotifyIcon1000Congrats" xml:space="preserve">
     <value>Вы скопировали 1000 раз! Из вас получился отличный копипастер!</value>
@@ -131,5 +137,11 @@
   </data>
   <data name="ResumedStatus" xml:space="preserve">
     <value>BuferMAN возобновил работу</value>
+  </data>
+  <data name="TrayMenuBuferManual" xml:space="preserve">
+    <value>Буфероводство</value>
+  </data>
+  <data name="TrayMenuOptions" xml:space="preserve">
+    <value>Опции</value>
   </data>
 </root>

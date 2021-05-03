@@ -250,9 +250,9 @@ namespace BuferMAN.Menu
                 Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(culture);
 
                 this.GenerateMainMenu(bufermanApplication);
-                bufermanApplication.Host.RerenderBufers();
+                bufermanApplication.Host.RerenderBufers();// TODO (l) this line will work only if I do not use cached button and will recreate all bufers !!!
                 bufermanApplication.Host.RerenderUserManual();
-                // TODO (m) tray icon menu
+                bufermanApplication.Host.SetTrayMenu(bufermanApplication.GetTrayMenuItems());
             };
         }
 

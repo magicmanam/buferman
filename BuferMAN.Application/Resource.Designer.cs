@@ -61,11 +61,29 @@ namespace BuferMAN.Application {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Read more info in menu: Help -&gt;Documentation.
+        /// </summary>
+        internal static string DocumentationMentioning {
+            get {
+                return ResourceManager.GetString("DocumentationMentioning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clipboard last update was at .
         /// </summary>
         internal static string LastClipboardUpdate {
             get {
                 return ResourceManager.GetString("LastClipboardUpdate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E&amp;xit session.
+        /// </summary>
+        internal static string MenuFileExit {
+            get {
+                return ResourceManager.GetString("MenuFileExit", resourceCulture);
             }
         }
         
@@ -102,6 +120,24 @@ namespace BuferMAN.Application {
         internal static string ResumedStatus {
             get {
                 return ResourceManager.GetString("ResumedStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bufer manual.
+        /// </summary>
+        internal static string TrayMenuBuferManual {
+            get {
+                return ResourceManager.GetString("TrayMenuBuferManual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        internal static string TrayMenuOptions {
+            get {
+                return ResourceManager.GetString("TrayMenuOptions", resourceCulture);
             }
         }
     }

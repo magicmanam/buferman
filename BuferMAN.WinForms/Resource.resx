@@ -163,9 +163,6 @@ Hot keys:
   <data name="WindowTitle" xml:space="preserve">
     <value>BuferMAN</value>
   </data>
-  <data name="MenuFileExit" xml:space="preserve">
-    <value>E&amp;xit session</value>
-  </data>
   <data name="FileContentsBufer" xml:space="preserve">
     <value>File Content</value>
   </data>
@@ -183,15 +180,6 @@ Hot keys:
   </data>
   <data name="AdminWindowTitle" xml:space="preserve">
     <value>BuferMAN (ADMIN)</value>
-  </data>
-  <data name="DocumentationMentioning" xml:space="preserve">
-    <value>Read more info in menu: Help -&gt;Documentation</value>
-  </data>
-  <data name="TrayMenuBuferManual" xml:space="preserve">
-    <value>Bufer manual</value>
-  </data>
-  <data name="TrayMenuOptions" xml:space="preserve">
-    <value>Options</value>
   </data>
   <data name="OptionsCommonTabName" xml:space="preserve">
     <value>Common</value>

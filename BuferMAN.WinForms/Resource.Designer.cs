@@ -97,15 +97,6 @@ namespace BuferMAN.WinForms {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Read more info in menu: Help -&gt;Documentation.
-        /// </summary>
-        internal static string DocumentationMentioning {
-            get {
-                return ResourceManager.GetString("DocumentationMentioning", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
         internal static string FileBufer {
@@ -156,15 +147,6 @@ namespace BuferMAN.WinForms {
         internal static string ImageBufer {
             get {
                 return ResourceManager.GetString("ImageBufer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to E&amp;xit session.
-        /// </summary>
-        internal static string MenuFileExit {
-            get {
-                return ResourceManager.GetString("MenuFileExit", resourceCulture);
             }
         }
         
@@ -239,24 +221,6 @@ namespace BuferMAN.WinForms {
         internal static string TratataTitle {
             get {
                 return ResourceManager.GetString("TratataTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bufer manual.
-        /// </summary>
-        internal static string TrayMenuBuferManual {
-            get {
-                return ResourceManager.GetString("TrayMenuBuferManual", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Options.
-        /// </summary>
-        internal static string TrayMenuOptions {
-            get {
-                return ResourceManager.GetString("TrayMenuOptions", resourceCulture);
             }
         }
         
