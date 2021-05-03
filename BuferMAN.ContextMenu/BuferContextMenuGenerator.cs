@@ -112,13 +112,20 @@ namespace BuferMAN.ContextMenu
             model.PasteMenuItem = bufermanHost.CreateMenuItem(Resource.MenuPaste);
 
             menuItems.Add(model.PasteMenuItem);
-            model.PasteMenuItem.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuPasteAsIs + $" {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
+
+            model.PlaceInBuferMenuItem = bufermanHost.CreateMenuItem(Resource.MenuPlaceInBufer, (object sender, EventArgs e) =>
             {
-                new KeyboardEmulator().PressEnter();
-            }));
+                this._clipboardWrapper.SetDataObject(model.Bufer.ViewModel.Clip);
+            });
+            model.PlaceInBuferMenuItem.ShortCut = Shortcut.CtrlC;
 
             if (isChangeTextAvailable)
             {
+                model.PasteMenuItem.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuPasteAsIs + $" {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
+                {
+                    new KeyboardEmulator().PressEnter();
+                }));
+
                 if (formats.Length != 3 || ClipboardFormats.TextFormats.Any(tf => !formats.Contains(tf)))
                 {
                     var pasteAsTextMenuItem = bufermanHost.CreateMenuItem(Resource.MenuPasteAsText, (object sender, EventArgs args) =>
@@ -203,16 +210,21 @@ namespace BuferMAN.ContextMenu
                 clcmi.LoginCreated += model.LoginCredentialsMenuItem_LoginCreated;
                 model.CreateLoginDataMenuItem = loginCredentialsMenuItem;
                 menuItems.Add(model.CreateLoginDataMenuItem);
+
+                model.PasteMenuItem.AddSeparator();
+
+                model.PasteMenuItem.AddMenuItem(model.PlaceInBuferMenuItem);
             }
-
-            model.PasteMenuItem.AddSeparator();
-
-            model.PlaceInBuferMenuItem = bufermanHost.CreateMenuItem(Resource.MenuPlaceInBufer, (object sender, EventArgs e) =>
+            else
             {
-                this._clipboardWrapper.SetDataObject(model.Bufer.ViewModel.Clip);
-            });
-            model.PlaceInBuferMenuItem.ShortCut = Shortcut.CtrlC;
-            model.PasteMenuItem.AddMenuItem(model.PlaceInBuferMenuItem);
+                model.PasteMenuItem.Text += $" {new String('\t', 4)} Enter";
+                model.PasteMenuItem.AddOnClickHandler((object sender, EventArgs ars) =>
+                {
+                    new KeyboardEmulator().PressEnter();
+                });
+
+                menuItems.Add(model.PlaceInBuferMenuItem);
+            }
 
             if (buferTypeMenuGenerator != null)
             {

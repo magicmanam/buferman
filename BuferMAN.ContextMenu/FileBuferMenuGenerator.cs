@@ -19,6 +19,8 @@ namespace BuferMAN.ContextMenu
 
         public IList<BufermanMenuItem> Generate(IList<BufermanMenuItem> menuItems, IBufermanHost bufermanHost)
         {
+            menuItems.Add(bufermanHost.CreateMenuSeparatorItem());
+
             var openFileLocationMenuItem = bufermanHost.CreateMenuItem(Resource.MenuOpenFileLocation, (object sender, EventArgs args) =>
             {
                 var arguments = $"/select, \"{this._filePath}\"";
