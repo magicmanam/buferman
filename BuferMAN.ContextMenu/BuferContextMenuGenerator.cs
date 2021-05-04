@@ -161,7 +161,6 @@ namespace BuferMAN.ContextMenu
                 var returnTextToInitialMenuItem = bufermanHost.CreateMenuItem(Resource.MenuReturn);
                 new ReturnToInitialTextMenuItem(returnTextToInitialMenuItem, model.Bufer, bufermanHost);
                 model.ReturnTextToInitialMenuItem = returnTextToInitialMenuItem;
-                menuItems.Add(model.ReturnTextToInitialMenuItem);
                 var changeTextMenuItem = bufermanHost.CreateMenuItem(Resource.MenuChange);
                 var ctmi = new ChangeTextMenuItem(changeTextMenuItem, model.Bufer, bufermanHost);
                 if (!string.IsNullOrWhiteSpace(buferViewModel.Alias))
@@ -171,6 +170,7 @@ namespace BuferMAN.ContextMenu
                 ctmi.TextChanged += model.ChangeTextMenuItem_TextChanged;
                 model.ChangeTextMenuItem = changeTextMenuItem;
                 menuItems.Add(model.ChangeTextMenuItem);
+                menuItems.Add(model.ReturnTextToInitialMenuItem);
 
                 model.AddToFileMenuItem = bufermanHost.CreateMenuItem(Resource.MenuAddToFile);
 
