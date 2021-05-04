@@ -9,5 +9,6 @@ namespace BuferMAN.Infrastructure
         bool ShouldCatchCopies { get; set; }
         IBufermanHost Host { get; }
         IEnumerable<BufermanMenuItem> GetTrayMenuItems();
+        bool NeedRerender { get; set; }
     }
 }

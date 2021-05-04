@@ -123,14 +123,16 @@ namespace BuferMAN.WinForms
 
             bufermanApp.RunInHost(this);
 
-            Application.Idle += this._Application_Idle;
+            Application.Idle += (object sender, EventArgs args) =>
+            {
+                if (bufermanApp.NeedRerender)
+                {
+                    this.RerenderBufers();
+                    bufermanApp.NeedRerender = false;// TODO (m) maybe this assignment must be a part of RerenderBufers calls above?
+                }
+            };
 
             Application.Run(this);
-        }
-
-        private void _Application_Idle(object sender, EventArgs e)
-        {
-            // TODO (s) check that bufermanApp needs to rerender and just do it!
         }
 
         private void _StartTrickTimer(int intervalSeconds)
