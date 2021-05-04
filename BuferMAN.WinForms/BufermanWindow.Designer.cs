@@ -29,6 +29,7 @@ namespace BuferMAN.WinForms
         private NotifyIcon TrayIcon;
         private Label _userManualLabel;
         private bool _isAdmin;
+        private IBufermanApplication _bufermanApp;
 
         public INotificationEmitter NotificationEmitter { get; set; }
         public event EventHandler ClipbordUpdated;
@@ -101,6 +102,7 @@ namespace BuferMAN.WinForms
         public void Start(IBufermanApplication bufermanApp, bool isAdmin)
         {
             this._isAdmin = isAdmin;
+            this._bufermanApp = bufermanApp;
 
             Application.ThreadException += BufermanWindow._Application_ThreadException;//Must be run before Application.Run() //Note
 
@@ -114,10 +116,13 @@ namespace BuferMAN.WinForms
             };
             this.TrayIcon.DoubleClick += this._TrayIcon_DoubleClick;
 
-            this.NotificationEmitter = new NotificationEmitter(this.TrayIcon, Resource.WindowTitle);
+            this.NotificationEmitter = new NotificationEmitter(this.TrayIcon, bufermanApp.GetBufermanTitle());
             this.NotificationEmitter.ShowInfoNotification(Resource.NotifyIconStartupText, 1500);
 
-            this._InitializeForm(isAdmin);
+            this._InitializeForm();
+            this.Text = isAdmin ?
+                bufermanApp.GetBufermanAdminTitle() : 
+                bufermanApp.GetBufermanTitle();
 
             this._renderingHandler.SetForm(this);
 
@@ -236,7 +241,7 @@ namespace BuferMAN.WinForms
 
         public BuferViewModel LatestFocusedBufer { get; set; }
 
-        private void _InitializeForm(bool isAdmin)
+        private void _InitializeForm()
         {
             this.SuspendLayout();
 
@@ -247,14 +252,14 @@ namespace BuferMAN.WinForms
             this.Icon = Icons.Buferman;
 
             this.AutoScaleMode = AutoScaleMode.Font;
-            this.Text = isAdmin ? Resource.AdminWindowTitle : Resource.WindowTitle;
             this.Height = 753 + 3 + 1;//+ is divider height + divider margin
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.WindowState = FormWindowState.Minimized;
             this._CreateStatusBar();
-            this._CreateUserManualLabel(isAdmin);
+            this._CreateUserManualLabel();
+            this._userManualLabel.Text = this._GetUserManualText();
 
             this.ResumeLayout(false);
 
@@ -281,14 +286,13 @@ namespace BuferMAN.WinForms
             this.Activate();
         }
 
-        private void _CreateUserManualLabel(bool isAdmin)
+        private void _CreateUserManualLabel()
         {
             this._userManualLabel = new Label() {
                 ForeColor = Color.DarkGray,
                 TabIndex = 1000,
                 Height = 300,
                 Width = 300,
-                Text = this._GetUserManualText(),
                 Parent = this
             };
 
@@ -299,8 +303,8 @@ namespace BuferMAN.WinForms
         private string _GetUserManualText()
         {
             return this._isAdmin ?
-                Resource.UserManual :
-                Resource.NotAdminWarning + Resource.UserManual;
+                this._bufermanApp.GetUserManualText() :
+                Resource.NotAdminWarning + this._bufermanApp.GetUserManualText();
         }
 
         public void RerenderUserManual()

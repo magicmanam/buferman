@@ -138,19 +138,6 @@
   <data name="WhiteSpaces" xml:space="preserve">
     <value>пробел(а,ов)</value>
   </data>
-  <data name="UserManual" xml:space="preserve">
-    <value>Выберите буфер, чтобы вставить в активное окно.
-Каждый буфер имеет контекстное меню.
-
-Горячие клавиши:
-  - Запустить программу: Alt + C
-  - Перейти к первому буферу: X (Home)
-  - Перейти к последнему буферу: V (End)
-  - Сместиться на 3 буфера: C  
-  - Отменить/вернуть действие: Ctrl+Z / Ctrl+Y 
-
--&gt; Копируйте на здоровье!</value>
-  </data>
   <data name="NotAdminWarning" xml:space="preserve">
     <value>Программа запущена в пользовательском режиме. Вы не сможете копировать буферы в программы, запущенные в режиме администратора!
 
@@ -173,9 +160,6 @@
   </data>
   <data name="FoldersBufer" xml:space="preserve">
     <value>Папки</value>
-  </data>
-  <data name="AdminWindowTitle" xml:space="preserve">
-    <value>BuferMAN (Админ)</value>
   </data>
   <data name="OptionsCommonTabName" xml:space="preserve">
     <value>Общие</value>

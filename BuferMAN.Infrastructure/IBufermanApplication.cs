@@ -10,5 +10,8 @@ namespace BuferMAN.Infrastructure
         IBufermanHost Host { get; }
         IEnumerable<BufermanMenuItem> GetTrayMenuItems();
         bool NeedRerender { get; set; }
+        string GetBufermanTitle();
+        string GetBufermanAdminTitle();
+        string GetUserManualText();
     }
 }

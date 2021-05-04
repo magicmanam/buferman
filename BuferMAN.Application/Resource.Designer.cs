@@ -61,6 +61,24 @@ namespace BuferMAN.Application {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BuferMAN (ADMIN).
+        /// </summary>
+        internal static string AdminApplicationTitle {
+            get {
+                return ResourceManager.GetString("AdminApplicationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BuferMAN.
+        /// </summary>
+        internal static string ApplicationTitle {
+            get {
+                return ResourceManager.GetString("ApplicationTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Read more info in menu: Help -&gt;Documentation.
         /// </summary>
         internal static string DocumentationMentioning {
@@ -138,6 +156,26 @@ namespace BuferMAN.Application {
         internal static string TrayMenuOptions {
             get {
                 return ResourceManager.GetString("TrayMenuOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Click bufer to paste it into active window.
+        ///Every bufer has a context menu.
+        ///
+        ///
+        ///Hot keys:
+        ///  - Launch the program: Alt + C
+        ///  - Go to the first bufer: X (Home)
+        ///  - Go to the last bufer: V (End)
+        ///  - Tabify through 3 bufers: C
+        ///  - Undo/Redo an action: Ctrl + Z, Ctrl + Y
+        ///
+        ///-&gt; Paste your nice copies!.
+        /// </summary>
+        internal static string UserManual {
+            get {
+                return ResourceManager.GetString("UserManual", resourceCulture);
             }
         }
     }

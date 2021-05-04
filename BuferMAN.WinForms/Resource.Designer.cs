@@ -61,15 +61,6 @@ namespace BuferMAN.WinForms {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BuferMAN (ADMIN).
-        /// </summary>
-        internal static string AdminWindowTitle {
-            get {
-                return ResourceManager.GetString("AdminWindowTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to All your bufers pinned. Please remove some of them and then try to copy again....
         /// </summary>
         internal static string AllBufersPinned {
@@ -225,40 +216,11 @@ namespace BuferMAN.WinForms {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click bufer to paste it into active window.
-        ///Every bufer has a context menu.
-        ///
-        ///
-        ///Hot keys:
-        ///  - Launch the program: Alt + C
-        ///  - Go to the first bufer: X (Home)
-        ///  - Go to the last bufer: V (End)
-        ///  - Tabify through 3 bufers: C
-        ///  - Undo/Redo an action: Ctrl + Z, Ctrl + Y
-        ///
-        ///-&gt; Paste your nice copies!.
-        /// </summary>
-        internal static string UserManual {
-            get {
-                return ResourceManager.GetString("UserManual", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to white spaces.
         /// </summary>
         internal static string WhiteSpaces {
             get {
                 return ResourceManager.GetString("WhiteSpaces", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to BuferMAN.
-        /// </summary>
-        internal static string WindowTitle {
-            get {
-                return ResourceManager.GetString("WindowTitle", resourceCulture);
             }
         }
     }

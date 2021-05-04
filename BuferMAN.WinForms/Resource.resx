@@ -138,20 +138,6 @@
   <data name="WhiteSpaces" xml:space="preserve">
     <value>white spaces</value>
   </data>
-  <data name="UserManual" xml:space="preserve">
-    <value>Click bufer to paste it into active window.
-Every bufer has a context menu.
-
-
-Hot keys:
-  - Launch the program: Alt + C
-  - Go to the first bufer: X (Home)
-  - Go to the last bufer: V (End)
-  - Tabify through 3 bufers: C
-  - Undo/Redo an action: Ctrl + Z, Ctrl + Y
-
--&gt; Paste your nice copies!</value>
-  </data>
   <data name="NotAdminWarning" xml:space="preserve">
     <value>Program is launched in not administrator mode. You can not paste bufers into windows launched in admin mode!
 
@@ -159,9 +145,6 @@ Hot keys:
   </data>
   <data name="NotifyIconStartupText" xml:space="preserve">
     <value>BuferMAN: Alt+C to open</value>
-  </data>
-  <data name="WindowTitle" xml:space="preserve">
-    <value>BuferMAN</value>
   </data>
   <data name="FileContentsBufer" xml:space="preserve">
     <value>File Content</value>
@@ -177,9 +160,6 @@ Hot keys:
   </data>
   <data name="FoldersBufer" xml:space="preserve">
     <value>Folders</value>
-  </data>
-  <data name="AdminWindowTitle" xml:space="preserve">
-    <value>BuferMAN (ADMIN)</value>
   </data>
   <data name="OptionsCommonTabName" xml:space="preserve">
     <value>Common</value>

@@ -228,11 +228,26 @@ namespace BuferMAN.Application
         {
             var trayIconMenuItems = new List<BufermanMenuItem>();
             trayIconMenuItems.Add(this.Host.CreateMenuItem(Resource.TrayMenuOptions, (object sender, EventArgs args) => this._optionsWindowFactory.Create().Open()));
-            //trayIconMenuItems.Add(this.Host.CreateMenuItem(Resource.TrayMenuBuferManual, (object sernder, EventArgs args) => this.Host.UserInteraction.ShowPopup(Resource.UserManual + Environment.NewLine + Environment.NewLine + Resource.DocumentationMentioning, Resource.WindowTitle)));
+            trayIconMenuItems.Add(this.Host.CreateMenuItem(Resource.TrayMenuBuferManual, (object sernder, EventArgs args) => this.Host.UserInteraction.ShowPopup(Resource.UserManual + Environment.NewLine + Environment.NewLine + Resource.DocumentationMentioning, Resource.ApplicationTitle)));
             trayIconMenuItems.Add(this.Host.CreateMenuSeparatorItem());
             trayIconMenuItems.Add(this.Host.CreateMenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => this.Host.Exit()));
 
             return trayIconMenuItems;
+        }
+
+        public string GetBufermanTitle()
+        {
+            return Resource.ApplicationTitle;
+        }
+
+        public string GetBufermanAdminTitle()
+        {
+            return Resource.AdminApplicationTitle;
+        }
+
+        public string GetUserManualText()
+        {
+            return Resource.UserManual;
         }
     }
 }

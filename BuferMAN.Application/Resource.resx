@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdminApplicationTitle" xml:space="preserve">
+    <value>BuferMAN (ADMIN)</value>
+  </data>
+  <data name="ApplicationTitle" xml:space="preserve">
+    <value>BuferMAN</value>
+  </data>
   <data name="DocumentationMentioning" xml:space="preserve">
     <value>Read more info in menu: Help -&gt;Documentation</value>
   </data>
@@ -143,5 +149,19 @@
   </data>
   <data name="TrayMenuOptions" xml:space="preserve">
     <value>Options</value>
+  </data>
+  <data name="UserManual" xml:space="preserve">
+    <value>Click bufer to paste it into active window.
+Every bufer has a context menu.
+
+
+Hot keys:
+  - Launch the program: Alt + C
+  - Go to the first bufer: X (Home)
+  - Go to the last bufer: V (End)
+  - Tabify through 3 bufers: C
+  - Undo/Redo an action: Ctrl + Z, Ctrl + Y
+
+-&gt; Paste your nice copies!</value>
   </data>
 </root>

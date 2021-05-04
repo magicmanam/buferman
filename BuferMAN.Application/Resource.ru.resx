@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AdminWindowTitle" xml:space="preserve">
+    <value>BuferMAN (Админ)</value>
+  </data>
   <data name="DocumentationMentioning" xml:space="preserve">
     <value>Полное руководство в меню: Помощь -&gt; Документация</value>
   </data>
@@ -143,5 +146,18 @@
   </data>
   <data name="TrayMenuOptions" xml:space="preserve">
     <value>Опции</value>
+  </data>
+  <data name="UserManual" xml:space="preserve">
+    <value>Выберите буфер, чтобы вставить в активное окно.
+Каждый буфер имеет контекстное меню.
+
+Горячие клавиши:
+  - Запустить программу: Alt + C
+  - Перейти к первому буферу: X (Home)
+  - Перейти к последнему буферу: V (End)
+  - Сместиться на 3 буфера: C  
+  - Отменить/вернуть действие: Ctrl+Z / Ctrl+Y 
+
+-&gt; Копируйте на здоровье!</value>
   </data>
 </root>
