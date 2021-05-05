@@ -14,7 +14,7 @@ namespace BuferMAN.Clipboard
 		/// <returns></returns>
         IEnumerable<IDataObject> GetClips(bool persistentFirst = false);
 
-        IEnumerable<BuferViewModel> GetTemporaryClips();
+        IEnumerable<BuferViewModel> GetTemporaryBufers();
 
         IEnumerable<BuferViewModel> GetPinnedBufers();
 

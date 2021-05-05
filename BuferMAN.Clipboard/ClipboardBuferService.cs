@@ -190,7 +190,7 @@ namespace BuferMAN.Clipboard
             }
         }
 
-        public IEnumerable<BuferViewModel> GetTemporaryClips()
+        public IEnumerable<BuferViewModel> GetTemporaryBufers()
         {
             return this._tempObjects.ToList();
         }

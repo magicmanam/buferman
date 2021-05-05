@@ -19,5 +19,15 @@ namespace BuferMAN.Files
         {
             return File.GetAttributes(filePath);
         }
+
+        public void CreateFile(string filePath)
+        {
+            File.Create(filePath).Close();
+        }
+
+        public bool FileExists(string filePath)
+        {
+            return File.Exists(filePath);
+        }
     }
 }

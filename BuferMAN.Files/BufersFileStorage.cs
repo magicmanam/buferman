@@ -1,4 +1,5 @@
 ﻿using BuferMAN.Clipboard;
+using BuferMAN.Infrastructure.Files;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Models;
 using Newtonsoft.Json;
@@ -14,18 +15,20 @@ namespace BuferMAN.Files
     {
         private readonly string _filePath;
         private readonly IBufersFileFormatter _fileFormatter;
+        private readonly IFileStorage _fileStorage;
 
-        public BufersFileStorage(IBufersFileFormatter fileFormatter, string filePath)
+        public BufersFileStorage(IBufersFileFormatter fileFormatter, string filePath, IFileStorage fileStorage)
         {
             this._fileFormatter = fileFormatter;
             this._filePath = filePath;
+            this._fileStorage = fileStorage;
         }
 
         public event EventHandler<BufersLoadedEventArgs> BufersLoaded;
 
         public void LoadBufers()
         {
-            if (File.Exists(this._filePath))
+            if (this._fileStorage.FileExists(this._filePath))
             {
                 try
                 {
@@ -54,35 +57,45 @@ namespace BuferMAN.Files
 
         public void SaveBufer(BuferItem buferItem)
         {
-            if (File.Exists(this._filePath))
+            this.SaveBufers(new List<BuferItem> { buferItem });
+        }
+
+        public void SaveBufers(IEnumerable<BuferItem> buferItems)
+        {
+            if (!this._fileStorage.FileExists(this._filePath))
             {
-                try
+                this._fileStorage.CreateFile(this._filePath);
+            }
+
+            try
+            {
+                List<BuferItem> bufers;
+
+                using (var fileReader = BufersFileStorage.GetMultiLanguageFileReader(this._filePath))
                 {
-                    List<BuferItem> bufers;
+                    bufers = this._fileFormatter.Parse(fileReader.ReadToEnd()).ToList();
+                }
 
-                    using (var fileReader = BufersFileStorage.GetMultiLanguageFileReader(this._filePath))
-                    {
-                        bufers = this._fileFormatter.Parse(fileReader.ReadToEnd()).ToList();
-                    }
-
+                foreach (var buferItem in buferItems)
+                {
                     bufers.Add(buferItem);
+                }
 
-                    using (var fileWriter = BufersFileStorage.GetMultiLanguageFileWriter(this._filePath))
-                    {
-                        fileWriter.Write(this._fileFormatter.ToString(bufers));
-                    }
-                }
-                catch (IOException exc)
+                using (var fileWriter = BufersFileStorage.GetMultiLanguageFileWriter(this._filePath))
                 {
-                    throw new ClipboardMessageException(Resource.LoadFileErrorPrefix + $" {this._filePath}:\n\n {exc.Message}", exc)
-                    {
-                        Title = Resource.LoadFileErrorTitle
-                    };
+                    fileWriter.Write(this._fileFormatter.ToString(bufers));
                 }
-                catch (JsonReaderException exc)
+            }
+            catch (IOException exc)
+            {
+                throw new ClipboardMessageException(Resource.LoadFileErrorPrefix + $" {this._filePath}:\n\n {exc.Message}", exc)
                 {
-                    throw new ClipboardMessageException(exc.Message, exc);
-                }
+                    Title = Resource.LoadFileErrorTitle
+                };
+            }
+            catch (JsonReaderException exc)
+            {
+                throw new ClipboardMessageException(exc.Message, exc);
             }
         }
 

@@ -199,7 +199,14 @@ namespace BuferMAN.WinForms
             {
                 this.TrayIcon.Visible = false;
                 WindowsFunctions.UnregisterHotKey(this.Handle, 0);
-                Application.Exit();//Note
+
+                if (this._bufermanApp != null)
+                {
+                    this._bufermanApp.SaveSession();
+                    this._bufermanApp = null;
+                }
+
+                //Application.Exit();//Note
             }
 
             base.WndProc(ref m);

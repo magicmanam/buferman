@@ -27,6 +27,7 @@ namespace BuferMAN.ContextMenu
         private readonly IEnumerable<IBufermanPlugin> _plugins;
         private readonly IBufersStorageFactory _bufersStorageFactory;
         private readonly IUserFileSelector _userFileSelector;
+        private readonly IMapper _mapper;
 
         public BuferContextMenuGenerator(IClipboardBuferService clipboardBuferService,
             IBuferSelectionHandlerFactory buferSelectionHandlerFactory,
@@ -34,7 +35,8 @@ namespace BuferMAN.ContextMenu
             IClipboardWrapper clipboardWrapper,
             IEnumerable<IBufermanPlugin> plugins,
             IBufersStorageFactory bufersStorageFactory, 
-            IUserFileSelector userFileSelector)
+            IUserFileSelector userFileSelector,
+            IMapper mapper)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
@@ -43,6 +45,7 @@ namespace BuferMAN.ContextMenu
             this._plugins = plugins;
             this._bufersStorageFactory = bufersStorageFactory;
             this._userFileSelector = userFileSelector;
+            this._mapper = mapper;
         }
 
         public IEnumerable<BufermanMenuItem> GenerateContextMenuItems(IBufer bufer,
@@ -252,17 +255,8 @@ namespace BuferMAN.ContextMenu
         private BuferItem _GetBuferItemFromModel(BuferContextMenuModelWrapper model)
         {
             var buferViewModel = model.Bufer.ViewModel;
-            var buferItem = new BuferItem()
-            {
-                Pinned = buferViewModel.Pinned,
-                Alias = buferViewModel.Alias,
-                Formats = buferViewModel.Clip
-                                        .GetFormats()
-                                        .ToDictionary(
-                                                 f => f,
-                                                 f => buferViewModel.Clip.GetData(f))
-            };
-            return buferItem;
+
+            return this._mapper.Map(buferViewModel);
         }
     }
 }

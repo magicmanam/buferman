@@ -113,7 +113,7 @@ namespace BuferMAN.Menu
 
             editMenu.SetOnPopupHandler((object sender, EventArgs args) =>
             {
-                deleteTemporaryMenuItem.Enabled = this._clipboardBuferService.GetTemporaryClips().Count() > 0;
+                deleteTemporaryMenuItem.Enabled = this._clipboardBuferService.GetTemporaryBufers().Count() > 0;
                 deleteAllMenuItem.Enabled = deleteTemporaryMenuItem.Enabled || this._clipboardBuferService.GetPinnedBufers().Count() > 0;
             });
 
@@ -251,7 +251,7 @@ namespace BuferMAN.Menu
 
                 this.GenerateMainMenu(bufermanApplication);
                 bufermanApplication.Host.RerenderBufers();// TODO (l) this line will work only if I do not use cached button and will recreate all bufers !!!
-                bufermanApplication.Host.RerenderUserManual();
+                bufermanApplication.Host.RerenderUserManual();// TODO (l) make all this rerendering as one method of buferman host object
                 bufermanApplication.Host.SetTrayMenu(bufermanApplication.GetTrayMenuItems());
             };
         }

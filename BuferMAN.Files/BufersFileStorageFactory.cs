@@ -7,8 +7,11 @@ namespace BuferMAN.Files
 {
     internal class BufersFileStorageFactory : IBufersFileStorageFactory
     {
-        public BufersFileStorageFactory()
+        private readonly IFileStorage _fileStorage;
+
+        public BufersFileStorageFactory(IFileStorage fileStorage)
         {
+            this._fileStorage = fileStorage;
         }
 
         public IPersistentBufersStorage Create(BufersStorageModel model)
@@ -21,9 +24,9 @@ namespace BuferMAN.Files
             switch (storageType)
             {
                 case BufersStorageType.TxtFile:
-                    return new BufersFileStorage(new TxtFileFormatter(), address);
+                    return new BufersFileStorage(new TxtFileFormatter(), address, this._fileStorage);
                 case BufersStorageType.JsonFile:
-                    return new BufersFileStorage(new JsonFileFormatter(), address);
+                    return new BufersFileStorage(new JsonFileFormatter(), address, this._fileStorage);
                 default:
                     throw new NotImplementedException();
             }

@@ -9,6 +9,7 @@ using magicmanam.UndoRedo;
 using magicmanam.Windows;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace BuferMAN.Application
@@ -26,6 +27,7 @@ namespace BuferMAN.Application
         private bool _shouldCatchCopies = true;
         private readonly IEnumerable<IBufermanPlugin> _plugins;
         private readonly IBufermanOptionsWindowFactory _optionsWindowFactory;
+        private readonly IMapper _mapper;
 
         private event EventHandler<BuferFocusedEventArgs> _BuferFocused;
 
@@ -37,7 +39,8 @@ namespace BuferMAN.Application
             IWindowLevelContext windowLevelContext,
             IEnumerable<IBufermanPlugin> plugins,
             IBufersStorageFactory bufersStorageFactory,
-            IBufermanOptionsWindowFactory optionsWindowFactory)
+            IBufermanOptionsWindowFactory optionsWindowFactory,
+            IMapper mapper)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._clipboardWrapper = clipboardWrapper;
@@ -48,6 +51,7 @@ namespace BuferMAN.Application
             this._windowLevelContext = windowLevelContext;
             this._settings = settings;
             this._optionsWindowFactory = optionsWindowFactory;
+            this._mapper = mapper;
         }
 
         public void RunInHost(IBufermanHost bufermanHost)
@@ -248,6 +252,25 @@ namespace BuferMAN.Application
         public string GetUserManualText()
         {
             return Resource.UserManual;
+        }
+
+        public void SaveSession()
+        {
+            var buferItems = this._clipboardBuferService.GetTemporaryBufers()
+                .Where(b => b.Clip.GetFormats().Any(f => ClipboardFormats.TextFormats.Contains(f)))
+                .Select(b => this._mapper.Map(b))
+                .Union(this._clipboardBuferService
+                                   .GetPinnedBufers()
+                                   .Where(b => b.Clip.GetFormats().Any(f => ClipboardFormats.TextFormats.Contains(f)))
+                                   .Select(b => this._mapper.Map(b)));
+
+            if (buferItems.Any())
+            {
+                var now = DateTime.Now;
+                var storage = this._bufersStorageFactory.CreateStorageByFileExtension($"session_state_{now.Year}_{now.Month}_{now.Day}_{now.Hour}_{now.Minute}_{now.Second}_{now.Millisecond}.json");
+
+                storage.SaveBufers(buferItems);
+            }
         }
     }
 }

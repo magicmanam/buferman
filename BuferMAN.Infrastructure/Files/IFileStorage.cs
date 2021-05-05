@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 
 namespace BuferMAN.Infrastructure.Files
 {
@@ -14,5 +9,9 @@ namespace BuferMAN.Infrastructure.Files
         string GetFileName(string filePath);
 
         FileAttributes GetFileAttributes(string filePath);
+
+        void CreateFile(string filePath);
+
+        bool FileExists(string filePath);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BuferMAN.Models;
 using System;
+using System.Collections.Generic;
 
 namespace BuferMAN.Infrastructure.Storage
 {
@@ -10,5 +11,7 @@ namespace BuferMAN.Infrastructure.Storage
         void LoadBufers();
 
         void SaveBufer(BuferItem buferItem);
+
+        void SaveBufers(IEnumerable<BuferItem> buferItems);
     }
 }

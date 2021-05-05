@@ -13,5 +13,6 @@ namespace BuferMAN.Infrastructure
         string GetBufermanTitle();
         string GetBufermanAdminTitle();
         string GetUserManualText();
+        void SaveSession();
     }
 }

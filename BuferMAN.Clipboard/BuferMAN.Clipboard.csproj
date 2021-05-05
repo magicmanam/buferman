@@ -53,6 +53,7 @@
     <Compile Include="DataObjectComparer.cs" />
     <Compile Include="IClipboardBuferService.cs" />
     <Compile Include="IClipboardWrapper.cs" />
+    <Compile Include="IDataObjectExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.Designer.cs">
       <DependentUpon>Resource.resx</DependentUpon>

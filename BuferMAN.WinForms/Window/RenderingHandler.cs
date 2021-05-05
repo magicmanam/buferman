@@ -69,7 +69,7 @@ namespace BuferMAN.WinForms.Window
                 pinnedBufers = this._clipboardBuferService.GetPinnedBufers();
             }
 
-            var temporaryBufers = this._clipboardBuferService.GetTemporaryClips().ToList();
+            var temporaryBufers = this._clipboardBuferService.GetTemporaryBufers().ToList();
 
             do
             {
@@ -88,7 +88,7 @@ namespace BuferMAN.WinForms.Window
 
                 if (emptyClipFound)
                 {
-                    temporaryBufers = this._clipboardBuferService.GetTemporaryClips().ToList();
+                    temporaryBufers = this._clipboardBuferService.GetTemporaryBufers().ToList();
                 }
             } while (emptyClipFound);
 
