@@ -1,9 +1,11 @@
 ﻿using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure;
+using BuferMAN.Infrastructure.Files;
 using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Infrastructure.Plugins;
 using BuferMAN.Infrastructure.Settings;
 using BuferMAN.Infrastructure.Storage;
+using BuferMAN.Models;
 using BuferMAN.View;
 using magicmanam.UndoRedo;
 using magicmanam.Windows;
@@ -28,6 +30,8 @@ namespace BuferMAN.Application
         private readonly IEnumerable<IBufermanPlugin> _plugins;
         private readonly IBufermanOptionsWindowFactory _optionsWindowFactory;
         private readonly IMapper _mapper;
+        private readonly IFileStorage _fileStorage;
+        private const string SESSION_FILE_PREFIX = "session_state";
 
         private event EventHandler<BuferFocusedEventArgs> _BuferFocused;
 
@@ -40,7 +44,8 @@ namespace BuferMAN.Application
             IEnumerable<IBufermanPlugin> plugins,
             IBufersStorageFactory bufersStorageFactory,
             IBufermanOptionsWindowFactory optionsWindowFactory,
-            IMapper mapper)
+            IMapper mapper,
+            IFileStorage fileStorage)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._clipboardWrapper = clipboardWrapper;
@@ -52,6 +57,7 @@ namespace BuferMAN.Application
             this._settings = settings;
             this._optionsWindowFactory = optionsWindowFactory;
             this._mapper = mapper;
+            this._fileStorage = fileStorage;
         }
 
         public void RunInHost(IBufermanHost bufermanHost)
@@ -267,10 +273,28 @@ namespace BuferMAN.Application
             if (buferItems.Any())
             {
                 var now = DateTime.Now;
-                var storage = this._bufersStorageFactory.CreateStorageByFileExtension($"session_state_{now.Year}_{now.Month}_{now.Day}_{now.Hour}_{now.Minute}_{now.Second}_{now.Millisecond}.json");
+                var sessionFile = this._settings.SessionsRootDirectory + $"{BufermanApplication.SESSION_FILE_PREFIX}_{now.Year}_{now.Month}_{now.Day}_{now.Hour}_{now.Minute}_{now.Second}_{now.Millisecond}.json";
+
+                var storage = this._bufersStorageFactory.CreateStorageByFileExtension(sessionFile);
 
                 storage.SaveBufers(buferItems);
             }
+        }
+
+        public bool IsLatestSessionSaved()
+        {
+            return this._GetLatestSessionSavedFilePath() != null;
+        }
+
+        private string _GetLatestSessionSavedFilePath()
+        {
+            return this._fileStorage.GetFiles(this._settings.SessionsRootDirectory, $"{BufermanApplication.SESSION_FILE_PREFIX}_*.json").Max();
+        }
+
+        public void RestoreSession()
+        {
+            var storage = this._bufersStorageFactory.Create(BufersStorageType.JsonFile, this._GetLatestSessionSavedFilePath());
+            storage.LoadBufers();
         }
     }
 }

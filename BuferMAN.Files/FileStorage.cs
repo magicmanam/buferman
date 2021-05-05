@@ -1,5 +1,7 @@
 ﻿using BuferMAN.Infrastructure.Files;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace BuferMAN.Files
 {
@@ -28,6 +30,11 @@ namespace BuferMAN.Files
         public bool FileExists(string filePath)
         {
             return File.Exists(filePath);
+        }
+
+        public IEnumerable<string> GetFiles(string baseDirectory, string searchPattern = "*")
+        {
+            return Directory.GetFiles(baseDirectory, searchPattern).ToList();
         }
     }
 }

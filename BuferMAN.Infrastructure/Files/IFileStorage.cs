@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Collections.Generic;
+using System.IO;
 
 namespace BuferMAN.Infrastructure.Files
 {
@@ -13,5 +14,7 @@ namespace BuferMAN.Infrastructure.Files
         void CreateFile(string filePath);
 
         bool FileExists(string filePath);
+
+        IEnumerable<string> GetFiles(string baseDirectory, string searchPattern = "*");
     }
 }

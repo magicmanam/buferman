@@ -13,6 +13,7 @@ using System.Threading;
 using System.Collections.Generic;
 using BuferMAN.Infrastructure.Settings;
 using BuferMAN.Infrastructure.Files;
+using BuferMAN.Infrastructure.Storage;
 
 namespace BuferMAN.Menu
 {
@@ -24,6 +25,7 @@ namespace BuferMAN.Menu
         private readonly IIDataObjectHandler _dataObjectHandler;
         private readonly IEnumerable<IBufermanPlugin> _plugins;
         private readonly IBufermanOptionsWindowFactory _optionsWindowFactory;
+        private readonly IBufersStorageFactory _bufersStorageFactory;
 
         public MainMenuGenerator(
             IUserFileSelector userFileSelector,
@@ -31,7 +33,8 @@ namespace BuferMAN.Menu
             IProgramSettingsGetter settings,
             IIDataObjectHandler dataObjectHandler,
             IEnumerable<IBufermanPlugin> plugins,
-            IBufermanOptionsWindowFactory optionsWindowFactory)
+            IBufermanOptionsWindowFactory optionsWindowFactory,
+            IBufersStorageFactory bufersStorageFactory)
         {
             this._userFileSelector = userFileSelector;
             this._clipboardBuferService = clipboardBuferService;
@@ -39,6 +42,7 @@ namespace BuferMAN.Menu
             this._dataObjectHandler = dataObjectHandler;
             this._plugins = plugins;
             this._optionsWindowFactory = optionsWindowFactory;
+            this._bufersStorageFactory = bufersStorageFactory;
         }
 
         public void GenerateMainMenu(IBufermanApplication bufermanApplication)
@@ -77,6 +81,20 @@ namespace BuferMAN.Menu
                 });
 
             fileMenu.AddMenuItem(pauseResumeMenuItem);
+
+            if (bufermanApplication.IsLatestSessionSaved())
+            {// TODO (s) Maybe show dialog to ask user to restore previous session? Can be a setting
+                var restoreSessionMenuItem = bufermanHost.CreateMenuItem(Resource.MenuFileRestoreSession);
+                restoreSessionMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
+                {
+                    restoreSessionMenuItem.Enabled = false;
+
+                    bufermanApplication.RestoreSession();
+                });
+                restoreSessionMenuItem.ShortCut = Shortcut.CtrlR;
+
+                fileMenu.AddMenuItem(restoreSessionMenuItem);
+            }
             fileMenu.AddSeparator();
             fileMenu.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => bufermanHost.Exit()));
 

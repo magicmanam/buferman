@@ -2,6 +2,7 @@
 using BuferMAN.Models;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 
 namespace BuferMAN.Settings
@@ -196,6 +197,14 @@ namespace BuferMAN.Settings
             get
             {
                 return this._settingItems.Any(s => s.IsDirty);
+            }
+        }
+
+        public string SessionsRootDirectory
+        {
+            get
+            {
+                return Directory.GetCurrentDirectory();
             }
         }
     }

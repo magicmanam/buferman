@@ -156,6 +156,9 @@
   <data name="MenuFilePause" xml:space="preserve">
     <value>&amp;Приостановить перехват буферов</value>
   </data>
+  <data name="MenuFileRestoreSession" xml:space="preserve">
+    <value>&amp;Восстановить последнюю сессию</value>
+  </data>
   <data name="MenuFileResume" xml:space="preserve">
     <value>&amp;Возобновить перехват буферов</value>
   </data>

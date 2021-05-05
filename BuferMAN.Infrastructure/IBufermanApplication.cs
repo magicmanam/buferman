@@ -14,5 +14,7 @@ namespace BuferMAN.Infrastructure
         string GetBufermanAdminTitle();
         string GetUserManualText();
         void SaveSession();
+        bool IsLatestSessionSaved();
+        void RestoreSession();
     }
 }

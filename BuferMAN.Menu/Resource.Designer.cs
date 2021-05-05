@@ -178,6 +178,15 @@ namespace BuferMAN.Menu {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &amp;Restore the latest session.
+        /// </summary>
+        internal static string MenuFileRestoreSession {
+            get {
+                return ResourceManager.GetString("MenuFileRestoreSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Resume bufers catching.
         /// </summary>
         internal static string MenuFileResume {
