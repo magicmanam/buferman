@@ -188,26 +188,12 @@ namespace BuferMAN.Application
         {
             this._bufermanHost.SetCurrentBufer(e.Bufer);
 
-            if (this._bufermanHost.IsVisible)
-            {
-                this._bufermanHost.RerenderBufers();
-                this.NeedRerender = false;
-            }
-            else
-            {
-                this.NeedRerender = true;
-            }
+            this.NeedRerender = true;
         }
 
         public void OnWindowActivating(object sender, EventArgs eventArgs)
         {
             this._bufermanHost.ActivateWindow();
-
-            if (this.NeedRerender)
-            {
-                this._bufermanHost.RerenderBufers();
-                this.NeedRerender = false;
-            }
         }
 
         public bool ShouldCatchCopies
@@ -301,6 +287,58 @@ namespace BuferMAN.Application
         {
             this.SaveSession();
             this._bufermanHost.Exit();
+        }
+
+        public void ClearEmptyBufers()
+        {
+            var pinnedBufers = this._clipboardBuferService.GetPinnedBufers();
+
+            var emptyClipFound = false;
+            foreach (var bufer in pinnedBufers)
+            {
+                if (bufer.Clip.IsEmptyObject())
+                {
+                    emptyClipFound = true;
+                    this._RemoveClipWithoutTrackingInUndoableContext(bufer);
+                }
+            }
+
+            if (emptyClipFound)
+            {
+                pinnedBufers = this._clipboardBuferService.GetPinnedBufers();
+            }
+
+            var temporaryBufers = this._clipboardBuferService.GetTemporaryBufers().ToList();
+
+            do
+            {
+                emptyClipFound = false;
+                var extraTemporaryClipsCount = Math.Max(this._clipboardBuferService.BufersCount - this._settings.MaxBufersCount, 0);
+                temporaryBufers = temporaryBufers.Skip(extraTemporaryClipsCount).ToList();
+
+                foreach (var bufer in temporaryBufers)
+                {
+                    if (bufer.Clip.IsEmptyObject())
+                    {
+                        emptyClipFound = true;
+                        this._RemoveClipWithoutTrackingInUndoableContext(bufer);
+                    }
+                }
+
+                if (emptyClipFound)
+                {
+                    temporaryBufers = this._clipboardBuferService.GetTemporaryBufers().ToList();
+                }
+            } while (emptyClipFound);
+        }
+
+        private void _RemoveClipWithoutTrackingInUndoableContext(BuferViewModel bufer)
+        {
+            using (var action = UndoableContext<ApplicationStateSnapshot>.Current.StartAction())
+            {
+                this._clipboardBuferService.RemoveBufer(bufer.ViewId);
+                action.Cancel();
+            }
         }
     }
 }

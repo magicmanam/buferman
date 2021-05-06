@@ -31,7 +31,7 @@ namespace BuferMAN.WinForms
         private bool _isAdmin;
         private IBufermanApplication _bufermanApp;
 
-        public INotificationEmitter NotificationEmitter { get; set; }
+        public INotificationEmitter NotificationEmitter { get; private set; }
         public event EventHandler ClipbordUpdated;
         public event EventHandler WindowActivated;
 
@@ -41,8 +41,6 @@ namespace BuferMAN.WinForms
 
         public BufermanWindow(
             IProgramSettingsGetter settings,
-            IClipboardBuferService clipboardBuferService,
-            IFileStorage fileStorage,
             IRenderingHandler renderingHandler,
             IUserInteraction userInteraction)
         {
@@ -132,8 +130,10 @@ namespace BuferMAN.WinForms
             {
                 if (bufermanApp.NeedRerender)
                 {
-                    this.RerenderBufers();
-                    bufermanApp.NeedRerender = false;// TODO (m) maybe this assignment must be a part of RerenderBufers calls above?
+                   bufermanApp.ClearEmptyBufers();
+
+                   this.RerenderBufers();
+                   bufermanApp.NeedRerender = false;
                 }
             };
 

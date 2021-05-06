@@ -17,5 +17,10 @@ namespace BuferMAN.Infrastructure
         bool IsLatestSessionSaved();
         void RestoreSession();
         void Exit();
+
+        /// <summary>
+        /// Clear bufers that do not contain any data (operation system releases data objects sometimes).
+        /// </summary>
+        void ClearEmptyBufers();
     }
 }

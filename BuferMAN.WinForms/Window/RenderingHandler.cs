@@ -53,44 +53,7 @@ namespace BuferMAN.WinForms.Window
         public void Render(IBufermanHost bufermanHost)
         {
             var pinnedBufers = this._clipboardBuferService.GetPinnedBufers();
-
-            var emptyClipFound = false;
-            foreach(var bufer in pinnedBufers)
-            {
-                if (bufer.Clip.IsEmptyObject())
-                {
-                    emptyClipFound = true;
-                    this._RemoveClipWithoutTrackingInUndoableContext(bufer);
-                }
-            }
-
-            if (emptyClipFound)
-            {
-                pinnedBufers = this._clipboardBuferService.GetPinnedBufers();
-            }
-
             var temporaryBufers = this._clipboardBuferService.GetTemporaryBufers().ToList();
-
-            do
-            {
-                emptyClipFound = false;
-                var extraTemporaryClipsCount = Math.Max(this._clipboardBuferService.BufersCount - this._settings.MaxBufersCount, 0);
-                temporaryBufers = temporaryBufers.Skip(extraTemporaryClipsCount).ToList();
-
-                foreach (var bufer in temporaryBufers)
-                {
-                    if (bufer.Clip.IsEmptyObject())
-                    {
-                        emptyClipFound = true;
-                        this._RemoveClipWithoutTrackingInUndoableContext(bufer);
-                    }
-                }
-
-                if (emptyClipFound)
-                {
-                    temporaryBufers = this._clipboardBuferService.GetTemporaryBufers().ToList();
-                }
-            } while (emptyClipFound);
 
             this._form.SuspendLayout();
 
@@ -175,15 +138,6 @@ namespace BuferMAN.WinForms.Window
 
                 currentButtonIndex -= 1;
                 y -= BUTTON_HEIGHT;
-            }
-        }
-
-        private void _RemoveClipWithoutTrackingInUndoableContext(BuferViewModel bufer)
-        {
-            using (var action = UndoableContext<ApplicationStateSnapshot>.Current.StartAction())
-            {
-                this._clipboardBuferService.RemoveBufer(bufer.ViewId);
-                action.Cancel();
             }
         }
 
