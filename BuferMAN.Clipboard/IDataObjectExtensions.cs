@@ -10,9 +10,9 @@ namespace BuferMAN.Clipboard
             return !dataObject.GetFormats().Any(f => dataObject.GetData(f) != null);
         }
 
-        public static bool IsTextObject(this IDataObject dataObject)
+        public static bool IsStringObject(this IDataObject dataObject)
         {
-            return dataObject.GetFormats().Any(f => ClipboardFormats.TextFormats.Any(tf => tf == f));
+            return dataObject.GetFormats().All(f => ClipboardFormats.StringFormats.Contains(f));
         }
     }
 }

@@ -263,11 +263,11 @@ namespace BuferMAN.Application
         public void SaveSession()
         {
             var buferItems = this._clipboardBuferService.GetTemporaryBufers()
-                .Where(b => b.Clip.GetFormats().Any(f => ClipboardFormats.TextFormats.Contains(f)))
+                .Where(b => b.Clip.IsStringObject())
                 .Select(b => this._mapper.Map(b))
                 .Union(this._clipboardBuferService
                                    .GetPinnedBufers()
-                                   .Where(b => b.Clip.GetFormats().Any(f => ClipboardFormats.TextFormats.Contains(f)))
+                                   .Where(b => b.Clip.IsStringObject())
                                    .Select(b => this._mapper.Map(b)));
 
             if (buferItems.Any())
