@@ -6,7 +6,7 @@ namespace BuferMAN.Plugins.Scripts
     {
         public ScriptsPlugin()
         {
-            this.Enabled = true;
+            this.Enabled = false;
         }
 
         public override bool Enabled { get; set; }

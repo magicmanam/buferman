@@ -48,7 +48,7 @@ namespace BuferMAN.WinForms
 
             tabs.TabPages.Add(this._CreateCommonTab());
             tabs.TabPages.Add(this._CreateUITab());
-            tabs.TabPages.Add(this._CreatePluginsTab());
+            //tabs.TabPages.Add(this._CreatePluginsTab());
 
             var controlPanel = new FlowLayoutPanel()
             {

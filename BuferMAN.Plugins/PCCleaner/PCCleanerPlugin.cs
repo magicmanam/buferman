@@ -6,7 +6,7 @@ namespace BuferMAN.Plugins.PCCleaner
     {
         public PCCleanerPlugin()
         {
-            this.Enabled = true;
+            this.Enabled = false;
         }
 
         public override bool Enabled { get; set; }
