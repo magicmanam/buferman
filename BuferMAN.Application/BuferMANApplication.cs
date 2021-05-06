@@ -240,7 +240,7 @@ namespace BuferMAN.Application
             trayIconMenuItems.Add(this.Host.CreateMenuItem(Resource.TrayMenuOptions, (object sender, EventArgs args) => this._optionsWindowFactory.Create().Open()));
             trayIconMenuItems.Add(this.Host.CreateMenuItem(Resource.TrayMenuBuferManual, (object sernder, EventArgs args) => this.Host.UserInteraction.ShowPopup(Resource.UserManual + Environment.NewLine + Environment.NewLine + Resource.DocumentationMentioning, Resource.ApplicationTitle)));
             trayIconMenuItems.Add(this.Host.CreateMenuSeparatorItem());
-            trayIconMenuItems.Add(this.Host.CreateMenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => this.Host.Exit()));
+            trayIconMenuItems.Add(this.Host.CreateMenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => this.Exit()));
 
             return trayIconMenuItems;
         }
@@ -295,6 +295,12 @@ namespace BuferMAN.Application
         {
             var storage = this._bufersStorageFactory.Create(BufersStorageType.JsonFile, this._GetLatestSessionSavedFilePath());
             storage.LoadBufers();
+        }
+
+        public void Exit()
+        {
+            this.SaveSession();
+            this._bufermanHost.Exit();
         }
     }
 }

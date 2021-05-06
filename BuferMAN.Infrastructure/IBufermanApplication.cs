@@ -16,5 +16,6 @@ namespace BuferMAN.Infrastructure
         void SaveSession();
         bool IsLatestSessionSaved();
         void RestoreSession();
+        void Exit();
     }
 }

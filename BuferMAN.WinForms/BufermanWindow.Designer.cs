@@ -195,20 +195,6 @@ namespace BuferMAN.WinForms
                 }
             }
 
-            if (m.Msg == Messages.WM_DESTROY)
-            {
-                this.TrayIcon.Visible = false;
-                WindowsFunctions.UnregisterHotKey(this.Handle, 0);
-
-                if (this._bufermanApp != null)
-                {
-                    this._bufermanApp.SaveSession();
-                    this._bufermanApp = null;
-                }
-
-                //Application.Exit();//Note
-            }
-
             base.WndProc(ref m);
         }
 
@@ -243,7 +229,11 @@ namespace BuferMAN.WinForms
 
         public void Exit()
         {
-            WindowsFunctions.SendMessage(this.Handle, Messages.WM_DESTROY, IntPtr.Zero, IntPtr.Zero);
+            this.TrayIcon.Visible = false;
+            WindowsFunctions.UnregisterHotKey(this.Handle, 0);
+            this._bufermanApp = null;
+
+            Application.Exit();
         }
 
         public BuferViewModel LatestFocusedBufer { get; set; }
@@ -344,9 +334,12 @@ namespace BuferMAN.WinForms
 
         private void _OnWindowClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = true;
-            var form = (Form) sender;
-            form.WindowState = FormWindowState.Minimized;
+            if (this._bufermanApp != null)
+            {
+                e.Cancel = true;
+                var form = (Form)sender;
+                form.WindowState = FormWindowState.Minimized;
+            }
         }
 
         private static void _Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)

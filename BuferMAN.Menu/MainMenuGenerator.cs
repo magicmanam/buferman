@@ -96,7 +96,7 @@ namespace BuferMAN.Menu
                 fileMenu.AddMenuItem(restoreSessionMenuItem);
             }
             fileMenu.AddSeparator();
-            fileMenu.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => bufermanHost.Exit()));
+            fileMenu.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => bufermanApplication.Exit()));
 
             return fileMenu;
         }
