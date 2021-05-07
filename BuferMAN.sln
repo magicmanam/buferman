@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.Assets", "BuferMAN
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.WinForms.Tests", "BuferMAN.WinForms.Tests\BuferMAN.WinForms.Tests.csproj", "{730458B7-D205-4D83-86FF-6EC10AA00CBC}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BuferMAN.Installer", "BuferMAN.Installer\BuferMAN.Installer.vdproj", "{87E5FD4D-BB8C-4F2D-A7AB-3B3CE954F3EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,9 @@ Global
 		{730458B7-D205-4D83-86FF-6EC10AA00CBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{730458B7-D205-4D83-86FF-6EC10AA00CBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{730458B7-D205-4D83-86FF-6EC10AA00CBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87E5FD4D-BB8C-4F2D-A7AB-3B3CE954F3EE}.Debug|Any CPU.ActiveCfg = Debug
+		{87E5FD4D-BB8C-4F2D-A7AB-3B3CE954F3EE}.Release|Any CPU.ActiveCfg = Release
+		{87E5FD4D-BB8C-4F2D-A7AB-3B3CE954F3EE}.Release|Any CPU.Build.0 = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
