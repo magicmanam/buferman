@@ -5,7 +5,7 @@ using System.Windows.Forms;
 namespace BuferMAN.Windows
 {
     public class BufermanGhostForm : Form
-    {
+    {// TODO (m) into BuferMAN.WinForms project
         public BufermanGhostForm()
         {
             this.Icon = Icons.Buferman;

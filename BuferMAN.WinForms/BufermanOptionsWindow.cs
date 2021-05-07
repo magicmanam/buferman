@@ -260,8 +260,10 @@ namespace BuferMAN.WinForms
             };
             buferDefaultBackgroundColorButton.Click += (object sender, EventArgs args) =>
             {
-                var colorDialog = new ColorDialog();
-                colorDialog.Color = buferDefaultBackgroundColorButton.BackColor;
+                var colorDialog = new ColorDialog
+                {
+                    Color = buferDefaultBackgroundColorButton.BackColor
+                };
 
                 if (colorDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -282,8 +284,10 @@ namespace BuferMAN.WinForms
             };
             pinnedBuferBackgroundColorButton.Click += (object sender, EventArgs args) =>
             {
-                var colorDialog = new ColorDialog();
-                colorDialog.Color = pinnedBuferBackgroundColorButton.BackColor;
+                var colorDialog = new ColorDialog
+                {
+                    Color = pinnedBuferBackgroundColorButton.BackColor
+                };
 
                 if (colorDialog.ShowDialog() == DialogResult.OK)
                 {
@@ -304,8 +308,10 @@ namespace BuferMAN.WinForms
             };
             currentBuferBackgroundColorButton.Click += (object sender, EventArgs args) =>
             {
-                var colorDialog = new ColorDialog();
-                colorDialog.Color = currentBuferBackgroundColorButton.BackColor;
+                var colorDialog = new ColorDialog
+                {
+                    Color = currentBuferBackgroundColorButton.BackColor
+                };
 
                 if (colorDialog.ShowDialog() == DialogResult.OK)
                 {

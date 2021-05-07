@@ -222,11 +222,13 @@ namespace BuferMAN.Application
 
         public IEnumerable<BufermanMenuItem> GetTrayMenuItems()
         {
-            var trayIconMenuItems = new List<BufermanMenuItem>();
-            trayIconMenuItems.Add(this.Host.CreateMenuItem(Resource.TrayMenuOptions, (object sender, EventArgs args) => this._optionsWindowFactory.Create().Open()));
-            trayIconMenuItems.Add(this.Host.CreateMenuItem(Resource.TrayMenuBuferManual, (object sernder, EventArgs args) => this.Host.UserInteraction.ShowPopup(Resource.UserManual + Environment.NewLine + Environment.NewLine + Resource.DocumentationMentioning, Resource.ApplicationTitle)));
-            trayIconMenuItems.Add(this.Host.CreateMenuSeparatorItem());
-            trayIconMenuItems.Add(this.Host.CreateMenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => this.Exit()));
+            var trayIconMenuItems = new List<BufermanMenuItem>
+            {
+                this.Host.CreateMenuItem(Resource.TrayMenuOptions, (object sender, EventArgs args) => this._optionsWindowFactory.Create().Open()),
+                this.Host.CreateMenuItem(Resource.TrayMenuBuferManual, (object sernder, EventArgs args) => this.Host.UserInteraction.ShowPopup(Resource.UserManual + Environment.NewLine + Environment.NewLine + Resource.DocumentationMentioning, Resource.ApplicationTitle)),
+                this.Host.CreateMenuSeparatorItem(),
+                this.Host.CreateMenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => this.Exit())
+            };
 
             return trayIconMenuItems;
         }
@@ -259,7 +261,7 @@ namespace BuferMAN.Application
             if (buferItems.Any())
             {
                 var now = DateTime.Now;
-                var sessionFile = this._settings.SessionsRootDirectory + $"{BufermanApplication.SESSION_FILE_PREFIX}_{now.Year}_{now.Month}_{now.Day}_{now.Hour}_{now.Minute}_{now.Second}_{now.Millisecond}.json";
+                var sessionFile = this._settings.SessionsRootDirectory + $"\\{BufermanApplication.SESSION_FILE_PREFIX}_{now.Year}_{now.Month}_{now.Day}_{now.Hour}_{now.Minute}_{now.Second}_{now.Millisecond}_{buferItems.Count()}.json";
 
                 var storage = this._bufersStorageFactory.CreateStorageByFileExtension(sessionFile);
 
