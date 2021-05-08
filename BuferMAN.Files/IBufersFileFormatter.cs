@@ -6,6 +6,6 @@ namespace BuferMAN.Files
     public interface IBufersFileFormatter
     {
         IEnumerable<BuferItem> Parse(string content);
-        string ToString(IEnumerable<BuferItem> bufers);
+        string ToString(IEnumerable<BuferItem> buferItems);
     }
 }

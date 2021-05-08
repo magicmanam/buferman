@@ -9,14 +9,14 @@ namespace BuferMAN.Settings
 {
     internal class ProgramSettings : IProgramSettingsGetter, IProgramSettingsSetter
     {
-        private IList<ISettingItem> _settingItems;
+        private readonly IList<ISettingItem> _settingItems;
 
-        private SettingItem<bool> _showUserModeNotificationSetting;
-        private SettingItem<bool> _showFocusTooltipSetting;
-        private SettingItem<int> _pinnedBuferBackgroundColorSetting;
-        private SettingItem<int> _buferDefaultBackgroundColorSetting;
-        private SettingItem<int> _currentBuferBackgroundColorSetting;
-        private SettingItem<int> _focusTooltipDurationSetting;
+        private readonly SettingItem<bool> _showUserModeNotificationSetting;
+        private readonly SettingItem<bool> _showFocusTooltipSetting;
+        private readonly SettingItem<int> _pinnedBuferBackgroundColorSetting;
+        private readonly SettingItem<int> _buferDefaultBackgroundColorSetting;
+        private readonly SettingItem<int> _currentBuferBackgroundColorSetting;
+        private readonly SettingItem<int> _focusTooltipDurationSetting;
 
         public ProgramSettings()
         {
@@ -204,7 +204,7 @@ namespace BuferMAN.Settings
         {
             get
             {
-                return Directory.GetCurrentDirectory();
+                return Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "session" + Path.DirectorySeparatorChar;
             }
         }
     }

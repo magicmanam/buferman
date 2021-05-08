@@ -12,7 +12,7 @@ namespace BuferMAN.Clipboard
 
         public static bool IsStringObject(this IDataObject dataObject)
         {
-            return dataObject.GetFormats().All(f => ClipboardFormats.StringFormats.Contains(f));
+            return dataObject.GetFormats().Any(f => ClipboardFormats.StringFormats.Contains(f));
         }
     }
 }

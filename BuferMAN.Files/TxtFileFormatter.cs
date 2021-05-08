@@ -15,13 +15,13 @@ namespace BuferMAN.Files
             }
         }
 
-        public string ToString(IEnumerable<BuferItem> bufers)
+        public string ToString(IEnumerable<BuferItem> buferItems)
         {
             var result = new StringBuilder();
 
-            foreach (var bufer in bufers)
+            foreach (var buferItem in buferItems)
             {
-                result.Append(bufer.Text + "\r\n");
+                result.Append(buferItem.Text + "\r\n");
             }
 
             return result.ToString();

@@ -157,7 +157,7 @@
     <value>&amp;Pause bufers catching</value>
   </data>
   <data name="MenuFileRestoreSession" xml:space="preserve">
-    <value>&amp;Restore the latest session</value>
+    <value>&amp;Restore recent session</value>
   </data>
   <data name="MenuFileResume" xml:space="preserve">
     <value>&amp;Resume bufers catching</value>

@@ -1,4 +1,5 @@
-﻿using BuferMAN.Models;
+﻿using BuferMAN.Clipboard;
+using BuferMAN.Models;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,24 @@ namespace BuferMAN.Files
             }
         }
 
-        public string ToString(IEnumerable<BuferItem> bufers)
+        public string ToString(IEnumerable<BuferItem> buferItems)
         {
-            return JArray.FromObject(bufers).ToString();
+            buferItems = buferItems.ToList();
+
+            foreach (var buferItem in buferItems)
+            {
+                var formats = buferItem.Formats.Keys;
+
+                foreach (var format in formats.ToList())
+                {
+                    if (!ClipboardFormats.StringFormats.Contains(format))
+                    {
+                        buferItem.Formats.Remove(format);
+                    }
+                }
+            }
+
+            return JArray.FromObject(buferItems).ToString();
         }
     }
 }

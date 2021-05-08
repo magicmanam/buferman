@@ -256,7 +256,8 @@ namespace BuferMAN.Application
                 .Union(this._clipboardBuferService
                                    .GetPinnedBufers()
                                    .Where(b => b.Clip.IsStringObject())
-                                   .Select(b => this._mapper.Map(b)));
+                                   .Select(b => this._mapper.Map(b)))
+                .ToList();
 
             if (buferItems.Any())
             {
@@ -276,7 +277,14 @@ namespace BuferMAN.Application
 
         private string _GetLatestSessionSavedFilePath()
         {
-            return this._fileStorage.GetFiles(this._settings.SessionsRootDirectory, $"{BufermanApplication.SESSION_FILE_PREFIX}_*.json").Max();
+            if (this._fileStorage.DirectoryExists(this._settings.SessionsRootDirectory))
+            {
+                return this._fileStorage.GetFiles(this._settings.SessionsRootDirectory, $"{BufermanApplication.SESSION_FILE_PREFIX}_*.json").Max();
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public void RestoreSession()

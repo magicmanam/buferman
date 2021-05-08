@@ -13,7 +13,11 @@ namespace BuferMAN.Infrastructure.Files
 
         void CreateFile(string filePath);
 
+        void CreateDirectory(string directoryPath);
+
         bool FileExists(string filePath);
+
+        bool DirectoryExists(string directoryPath);
 
         IEnumerable<string> GetFiles(string baseDirectory, string searchPattern = "*");
     }

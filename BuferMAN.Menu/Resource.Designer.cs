@@ -178,7 +178,7 @@ namespace BuferMAN.Menu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Restore the latest session.
+        ///   Looks up a localized string similar to &amp;Restore recent session.
         /// </summary>
         internal static string MenuFileRestoreSession {
             get {

@@ -24,12 +24,28 @@ namespace BuferMAN.Files
 
         public void CreateFile(string filePath)
         {
+            var directoryPath = Path.GetDirectoryName(filePath);
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
             File.Create(filePath).Close();
+        }
+
+        public void CreateDirectory(string directoryPath)
+        {
+            Directory.CreateDirectory(directoryPath);
         }
 
         public bool FileExists(string filePath)
         {
             return File.Exists(filePath);
+        }
+
+        public bool DirectoryExists(string directoryPath)
+        {
+            return Directory.Exists(directoryPath);
         }
 
         public IEnumerable<string> GetFiles(string baseDirectory, string searchPattern = "*")
