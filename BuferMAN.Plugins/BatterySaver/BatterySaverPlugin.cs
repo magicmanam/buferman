@@ -10,40 +10,28 @@ namespace BuferMAN.Plugins.BatterySaver
         private const string NOTIFICATION_TITLE = "Battery saver plugin";
         private readonly BatterySaverPluginSettings _settings = new BatterySaverPluginSettings();
 
-        private bool _enabled;
-        private readonly bool _batteryAvailable;
-
         private readonly Timer _timer = new Timer();
 
         public BatterySaverPlugin()
         {
             var status = SystemInformation.PowerStatus;
-            this._batteryAvailable = status.BatteryChargeStatus != BatteryChargeStatus.Unknown &&
+            this.Available = status.BatteryChargeStatus != BatteryChargeStatus.Unknown &&
                 status.BatteryChargeStatus != BatteryChargeStatus.NoSystemBattery;
 
-            this.Enabled = true;
+            if (this.Available)
+            {
+                this.Enabled = true;
+            }
         }
 
         public override void Initialize(IBufermanHost bufermanHost)
         {
-            base.Initialize(bufermanHost);
-
-            if (this._batteryAvailable)
+            if (this.Available)
             {
+                base.Initialize(bufermanHost);
+
                 this._timer.Interval = this._settings.IntervalInSeconds * 1000;
                 this._timer.Tick += this._BatteryCheckHandler;
-            }
-        }
-
-        private BufermanMenuItem _CreateMainMenuItem()
-        {
-            if (this._batteryAvailable)
-            {
-                return this.BufermanHost.CreateMenuItem(this.Name, this.BatterySaverMenuItem_Click);
-            }
-            else
-            {
-                return null;
             }
         }
 
@@ -70,37 +58,20 @@ namespace BuferMAN.Plugins.BatterySaver
 
         public override BufermanMenuItem CreateMainMenuItem()
         {
-            if (this._batteryAvailable)
+            return this.Available ?
+                   this.BufermanHost.CreateMenuItem(this.Name, this.BatterySaverMenuItem_Click) :
+                   throw new InvalidOperationException();
+        }
+
+        protected override void OnEnableChanged()
+        {
+            if (this.Enabled)
             {
-                return this._CreateMainMenuItem();
+                this._timer.Start();
             }
             else
             {
-                return null;
-            }
-        }
-
-        public override bool Enabled
-        {
-            get
-            {
-                return this._enabled;
-            }
-            set
-            {
-                if (this._batteryAvailable)
-                {
-                    if (value)
-                    {
-                        this._timer.Start();
-                    }
-                    else
-                    {
-                        this._timer.Stop();
-                    }
-
-                    this._enabled = value;
-                }
+                this._timer.Stop();
             }
         }
 

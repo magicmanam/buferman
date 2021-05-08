@@ -6,10 +6,8 @@ namespace BuferMAN.Plugins.Scripts
     {
         public ScriptsPlugin()
         {
-            this.Enabled = false;
+            this.Available = false;
         }
-
-        public override bool Enabled { get; set; }
 
         public override BufermanMenuItem CreateMainMenuItem()
         {

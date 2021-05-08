@@ -189,7 +189,11 @@ namespace BuferMAN.Menu
             var toolsMenu = bufermanHost.CreateMenuItem(Resource.MenuTools);
 
             toolsMenu.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuToolsMemory, this._GetShowMemoryUsageHandler(bufermanHost)));
-            toolsMenu.AddMenuItem(this._GeneratePluginsMenu(bufermanHost));
+            var pluginsMenuItems = this._GeneratePluginsMenu(bufermanHost);
+            if (pluginsMenuItems != null)
+            {
+                toolsMenu.AddMenuItem(pluginsMenuItems);
+            }
             toolsMenu.AddMenuItem(this._GenerateLanguageMenu(bufermanApplication));
             toolsMenu.AddMenuItem(bufermanHost.CreateMenuSeparatorItem());
             toolsMenu.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuToolsOptions, (object sender, EventArgs args) => this._optionsWindowFactory.Create().Open()));
@@ -219,18 +223,23 @@ namespace BuferMAN.Menu
         {
             var pluginsMenu = buferManHost.CreateMenuItem(Resource.MenuToolsPlugins);
 
-            foreach (var plugin in this._plugins) if (plugin.Enabled)
+            foreach (var plugin in this._plugins) if (plugin.Available)
                 {
                     var pluginMenuItem = plugin.CreateMainMenuItem();
-                    if (pluginMenuItem != null)
-                    {
-                        pluginsMenu.AddMenuItem(pluginMenuItem);
-                    }
+                    pluginsMenu.AddMenuItem(pluginMenuItem);
                 }
-            pluginsMenu.AddSeparator();
-            pluginsMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuPluginsManagement));// Should open a window to enable/disable, change order (in menu items and so on).
 
-            return pluginsMenu;
+            if (pluginsMenu.Children.Any())
+            {
+                pluginsMenu.AddSeparator();
+                pluginsMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuPluginsManagement));// Should open a window to enable/disable, change order (in menu items and so on).
+
+                return pluginsMenu;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private BufermanMenuItem _GenerateLanguageMenu(IBufermanApplication bufermanApplication)

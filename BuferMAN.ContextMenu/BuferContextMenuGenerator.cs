@@ -234,7 +234,7 @@ namespace BuferMAN.ContextMenu
                 menuItems = buferTypeMenuGenerator.Generate(menuItems, bufermanHost);
             }
 
-            foreach (var plugin in this._plugins) if (plugin.Enabled)
+            foreach (var plugin in this._plugins) if (plugin.Available && plugin.Enabled)
                 {
                     plugin.UpdateBuferContextMenu(model);
                     var pluginMenuItem = plugin.CreateBuferContextMenuItem();

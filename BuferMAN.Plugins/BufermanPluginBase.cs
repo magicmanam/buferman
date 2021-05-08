@@ -2,11 +2,14 @@
 using BuferMAN.Models;
 using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Infrastructure.Plugins;
+using System;
 
 namespace BuferMAN.Plugins
 {
     public abstract class BufermanPluginBase : IBufermanPlugin
     {
+        private bool _enabled;
+
         protected IBufermanHost BufermanHost { get; set; }
 
         public BufermanPluginBase(){ }
@@ -29,6 +32,29 @@ namespace BuferMAN.Plugins
         }
 
         public abstract string Name { get; }
-        public abstract bool Enabled { get; set; }
+
+        public bool Enabled
+        {
+            get
+            {
+                return this.Available ? this._enabled : throw new InvalidOperationException();
+            }
+            set
+            {
+                if (this.Available)
+                {
+                    this._enabled = value;
+                    this.OnEnableChanged();
+                }
+                else
+                {
+                    throw new InvalidOperationException();
+                }
+            }
+        }
+
+        public bool Available { get; protected set; }
+
+        protected virtual void OnEnableChanged() { }
     }
 }

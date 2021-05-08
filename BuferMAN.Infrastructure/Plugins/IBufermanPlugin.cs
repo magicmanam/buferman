@@ -11,5 +11,6 @@ namespace BuferMAN.Infrastructure.Plugins
         void UpdateBuferContextMenu(BuferContextMenuModel contextMenuModel);
         string Name { get; }
         bool Enabled { get; set; }
+        bool Available { get; }
     }
 }
