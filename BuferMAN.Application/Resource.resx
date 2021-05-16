@@ -127,7 +127,7 @@
     <value>Read more info in menu: Help -&gt;Documentation</value>
   </data>
   <data name="LastClipboardUpdate" xml:space="preserve">
-    <value>Clipboard last update was at </value>
+    <value>The latest clipboard update was at </value>
   </data>
   <data name="MenuFileExit" xml:space="preserve">
     <value>E&amp;xit session</value>
