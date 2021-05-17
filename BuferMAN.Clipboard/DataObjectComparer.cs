@@ -93,11 +93,13 @@ namespace BuferMAN.Clipboard
                                 if (xValueString != yValueString)
                                 {
                                     return false;
-                                } else
+                                }
+                                else
                                 {
                                     equals = true;
                                 }
-                            } else
+                            }
+                            else
                             {
                                 return false;
                             }

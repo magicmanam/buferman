@@ -40,11 +40,12 @@ namespace BuferMAN.ContextMenu
                 this.CancelDeferredBuferDeletion(sender, e);
             }
 
-            var tabIndex = this._bufer.TabIndex;
+            if (this._bufer.TabIndex > 0)
+            {
+                new KeyboardEmulator().HoldDownShift().PressTab();
+            }
 
             this._RemoveBufer();
-
-            this._FocusNextBufer(tabIndex);
         }
 
         public bool IsDeferredDeletionActivated()
@@ -75,35 +76,6 @@ namespace BuferMAN.ContextMenu
         {
             this._clipboardBuferService.RemoveBufer(this._bufer.ViewModel.ViewId);
             this._bufermanHost.RerenderBufers();
-        }
-
-        private void _FocusNextBufer(int tabIndex)
-        {
-            tabIndex = this._GetNearestTabIndex(tabIndex);
-
-            if (tabIndex > 0)
-            {
-                var keyboard = new KeyboardEmulator();
-
-                if (tabIndex < this._clipboardBuferService.BufersCount - tabIndex)
-                {
-                    new KeyboardEmulator().PressTab((uint)tabIndex);
-                }
-                else
-                {
-                    new KeyboardEmulator().HoldDownShift().PressTab((uint)(this._clipboardBuferService.BufersCount - tabIndex));
-                }
-            }
-        }
-
-        private int _GetNearestTabIndex(int tabIndex)
-        {
-            if (tabIndex == this._clipboardBuferService.BufersCount)
-            {
-                tabIndex -= 1;
-            }
-
-            return tabIndex;
         }
 
         private EventHandler _GetDeferredDeleteBuferHandler(int deleteInMinutes)
