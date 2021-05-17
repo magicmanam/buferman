@@ -232,11 +232,20 @@ namespace BuferMAN.Menu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Make &amp;world better.
+        ///   Looks up a localized string similar to To reward the author.
         /// </summary>
         internal static string MenuHelpDonate {
             get {
                 return ResourceManager.GetString("MenuHelpDonate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Make &amp;world better.
+        /// </summary>
+        internal static string MenuHelpDonateIdea {
+            get {
+                return ResourceManager.GetString("MenuHelpDonateIdea", resourceCulture);
             }
         }
         

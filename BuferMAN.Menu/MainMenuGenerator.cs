@@ -287,25 +287,29 @@ namespace BuferMAN.Menu
 
         private BufermanMenuItem _GenerateHelpMenu(IBufermanHost buferManHost)
         {
-            var helpMenu = buferManHost.CreateMenuItem(Resource.MenuHelp);
+            var helpMenuItem = buferManHost.CreateMenuItem(Resource.MenuHelp);
             var startTime = DateTime.Now;
-            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpSend, (object sender, EventArgs e) =>
+            helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpSend, (object sender, EventArgs e) =>
                 Process.Start("https://rink.hockeyapp.net/apps/51633746a31f44999eca3bc7b7945e92/feedback/new")));
-            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpStats, (object sender, EventArgs args) => buferManHost.UserInteraction.ShowPopup(string.Format(Resource.MenuHelpStatsInfo, startTime, this._dataObjectHandler.CopiesCount, this._dataObjectHandler.CurrentDayCopiesCount), Resource.MenuHelpStatsTitle)));
-            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpDonate, (object sender, EventArgs args) => buferManHost.UserInteraction.ShowPopup(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)));
-            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.DocumentationMenuItem, (object sender, EventArgs e) =>
-                Process.Start("Documentation.html")));
-            helpMenu.AddMenuItem(buferManHost.CreateMenuItem("-> klopat.by", (object sender, EventArgs e) =>
+            helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpStats, (object sender, EventArgs args) => buferManHost.UserInteraction.ShowPopup(string.Format(Resource.MenuHelpStatsInfo, startTime, this._dataObjectHandler.CopiesCount, this._dataObjectHandler.CurrentDayCopiesCount), Resource.MenuHelpStatsTitle)));
+
+            var donateMenuItem = buferManHost.CreateMenuItem(Resource.MenuHelpDonate);
+            donateMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpDonateIdea, (object sender, EventArgs args) => buferManHost.UserInteraction.ShowPopup(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)));
+            donateMenuItem.AddMenuItem(buferManHost.CreateMenuItem("-> klopat.by", (object sender, EventArgs e) =>
                 Process.Start("http://www.klopat.by/")));
-            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpReport, (object sender, EventArgs e) =>
+            helpMenuItem.AddMenuItem(donateMenuItem);
+
+            helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.DocumentationMenuItem, (object sender, EventArgs e) =>
+                Process.Start("Documentation.html")));
+            helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpReport, (object sender, EventArgs e) =>
                 Process.Start("https://github.com/magicmanam/buferman/issues/new")));
-            helpMenu.AddSeparator();
-            helpMenu.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpAbout, (object sender, EventArgs args) => {
+            helpMenuItem.AddSeparator();
+            helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpAbout, (object sender, EventArgs args) => {
                 var version = ApplicationDeployment.IsNetworkDeployed ? ApplicationDeployment.CurrentDeployment.CurrentVersion : Assembly.GetEntryAssembly().GetName().Version;
 
                 buferManHost.UserInteraction.ShowPopup(Resource.MenuHelpAboutText + " " + version.ToString(), Resource.MenuHelpAboutTitle); }));
 
-            return helpMenu;
+            return helpMenuItem;
         }
     }
 }

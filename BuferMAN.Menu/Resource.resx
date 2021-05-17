@@ -175,6 +175,9 @@
     <value>About BuferMAN</value>
   </data>
   <data name="MenuHelpDonate" xml:space="preserve">
+    <value>To reward the author</value>
+  </data>
+  <data name="MenuHelpDonateIdea" xml:space="preserve">
     <value>Make &amp;world better</value>
   </data>
   <data name="MenuHelpDonateText" xml:space="preserve">

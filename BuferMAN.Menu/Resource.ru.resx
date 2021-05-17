@@ -175,6 +175,9 @@
     <value>О проекте BuferMAN</value>
   </data>
   <data name="MenuHelpDonate" xml:space="preserve">
+    <value>Поощрить автора</value>
+  </data>
+  <data name="MenuHelpDonateIdea" xml:space="preserve">
     <value>Сделать &amp;мир лучше</value>
   </data>
   <data name="MenuHelpDonateText" xml:space="preserve">
