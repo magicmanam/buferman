@@ -111,11 +111,6 @@ namespace BuferMAN.Application
             var dataObject = this._clipboardWrapper.GetDataObject();
             var buferViewModel = new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now };
 
-            if (buferViewModel.Clip.GetData("System.String") as string == "")
-            {
-                this._bufermanHost.UserInteraction.ShowPopup($"This bufer should be inspected: System.String format is empty", "BuferMAN");
-            }// TODO (s) remove this line at July
-
             if (this.ShouldCatchCopies)
             {
                 this._dataObjectHandler.TryHandleDataObject(buferViewModel);

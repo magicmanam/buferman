@@ -5,6 +5,7 @@ using BuferMAN.Clipboard;
 using magicmanam.UndoRedo;
 using System;
 using BuferMAN.Infrastructure.Settings;
+using System.Windows.Forms;
 
 namespace BuferMAN.Application
 {
@@ -54,6 +55,11 @@ namespace BuferMAN.Application
         public bool TryHandleDataObject(BuferViewModel buferViewModel)
         {
             this._IncrementCopiesCounters();
+
+            if (buferViewModel.Clip.GetData(DataFormats.StringFormat) as string == string.Empty)
+            {
+                // TODO (s) maybe set System.String data ? Can be implemented via setting. Such bufers can be marked
+            }
 
             var isLastTempBufer = this._clipboardBuferService.IsLastTemporaryBufer(buferViewModel);
 
