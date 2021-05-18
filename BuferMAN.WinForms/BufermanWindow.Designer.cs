@@ -9,7 +9,6 @@ using BuferMAN.Infrastructure;
 using System.ComponentModel;
 using BuferMAN.Infrastructure.Window;
 using BuferMAN.Clipboard;
-using BuferMAN.Infrastructure.Files;
 using BuferMAN.Infrastructure.Menu;
 using BuferMAN.WinForms.Menu;
 using Logging;
@@ -200,9 +199,10 @@ namespace BuferMAN.WinForms
 
         public void SetStatusBarText(string newText)
         {
-            //this.StatusLabel.ToolTipText = newText;
-            const int MAX_STATUS_LENGTH = 45;//Define based on window's width
+            const int MAX_STATUS_LENGTH = 45;// TODO (s) Define based on window's width
+            this.StatusLabel.ToolTipText = newText;
             this.StatusLabel.Text = newText.Length <= MAX_STATUS_LENGTH ? newText : newText.Substring(0, MAX_STATUS_LENGTH);
+
             this.StatusLine.Update();
         }
 
@@ -311,25 +311,46 @@ namespace BuferMAN.WinForms
 
         private void _CreateStatusBar()
         {
-            StatusLine = new StatusStrip();
-            StatusLabel = new ToolStripStatusLabel() { AutoToolTip = true, Spring = true, TextAlign = ContentAlignment.MiddleLeft };
-            StatusLine.SuspendLayout();
-            SuspendLayout();
+            this.StatusLine = new StatusStrip();
+            this.StatusLabel = new ToolStripStatusLabel() {
+                AutoToolTip = true,
+                Alignment = ToolStripItemAlignment.Left
+            };
 
-            StatusLine.Dock = DockStyle.Bottom;
-            StatusLine.GripStyle = ToolStripGripStyle.Visible;
-            StatusLine.Items.AddRange(new ToolStripItem[] { StatusLabel });
-            StatusLine.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
-            StatusLine.ShowItemToolTips = true;
-            StatusLine.SizingGrip = false;
-            StatusLine.Stretch = false;
-            StatusLine.TabIndex = 1000;
+            this.StatusLine.SuspendLayout();
+            this.SuspendLayout();
 
-            Controls.Add(StatusLine);
-            StatusLine.ResumeLayout(false);
-            StatusLine.PerformLayout();
-            ResumeLayout(false);
-            PerformLayout();
+            this.StatusLine.Dock = DockStyle.Bottom;
+            this.StatusLine.GripStyle = ToolStripGripStyle.Visible;
+            this.StatusLine.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.StatusLine.ShowItemToolTips = true;
+            this.StatusLine.SizingGrip = false;
+            this.StatusLine.Stretch = false;
+            this.StatusLine.TabIndex = 1000;
+
+            var statisticsLabel = new ToolStripStatusLabel()
+            {
+                Spring = true,
+                Alignment = ToolStripItemAlignment.Left,
+                Image = new Icon(SystemIcons.Information, 30, 30).ToBitmap()
+            };
+            statisticsLabel.MouseEnter += this._StatisticsLabel_MouseEnter;
+            this.StatusLine.Items.Add(statisticsLabel);
+            this.StatusLine.Items.Add(this.StatusLabel);
+
+            this.Controls.Add(this.StatusLine);
+
+            this.StatusLine.ResumeLayout(false);
+            this.StatusLine.PerformLayout();
+
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+
+        private void _StatisticsLabel_MouseEnter(object sender, EventArgs e)
+        {
+            var s = sender as ToolStripStatusLabel;
+            s.ToolTipText = this._bufermanApp.GetStatisticsText();
         }
 
         private void _OnWindowClosing(object sender, FormClosingEventArgs e)

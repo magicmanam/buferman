@@ -144,6 +144,12 @@
   <data name="ResumedStatus" xml:space="preserve">
     <value>BuferMAN is resumed. Enjoy copies!</value>
   </data>
+  <data name="StatsInfo" xml:space="preserve">
+    <value>Program startup time is {0}. Copied bufers count: {1} ({2} for today).</value>
+  </data>
+  <data name="TodayStatsInfo" xml:space="preserve">
+    <value>Program startup time is {0}. Copied bufers count: {1}.</value>
+  </data>
   <data name="TrayMenuBuferManual" xml:space="preserve">
     <value>BuferMANual</value>
   </data>

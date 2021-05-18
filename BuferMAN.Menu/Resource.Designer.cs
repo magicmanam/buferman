@@ -286,33 +286,6 @@ namespace BuferMAN.Menu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &amp;Statistics.
-        /// </summary>
-        internal static string MenuHelpStats {
-            get {
-                return ResourceManager.GetString("MenuHelpStats", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Program was started at {0}. Copied bufers count: {1} ({2} for today)..
-        /// </summary>
-        internal static string MenuHelpStatsInfo {
-            get {
-                return ResourceManager.GetString("MenuHelpStatsInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Statistics.
-        /// </summary>
-        internal static string MenuHelpStatsTitle {
-            get {
-                return ResourceManager.GetString("MenuHelpStatsTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Plugins management.
         /// </summary>
         internal static string MenuPluginsManagement {

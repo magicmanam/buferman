@@ -288,10 +288,9 @@ namespace BuferMAN.Menu
         private BufermanMenuItem _GenerateHelpMenu(IBufermanHost buferManHost)
         {
             var helpMenuItem = buferManHost.CreateMenuItem(Resource.MenuHelp);
-            var startTime = DateTime.Now;
+
             helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpSend, (object sender, EventArgs e) =>
                 Process.Start("https://rink.hockeyapp.net/apps/51633746a31f44999eca3bc7b7945e92/feedback/new")));
-            helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpStats, (object sender, EventArgs args) => buferManHost.UserInteraction.ShowPopup(string.Format(Resource.MenuHelpStatsInfo, startTime, this._dataObjectHandler.CopiesCount, this._dataObjectHandler.CurrentDayCopiesCount), Resource.MenuHelpStatsTitle)));
 
             var donateMenuItem = buferManHost.CreateMenuItem(Resource.MenuHelpDonate);
             donateMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpDonateIdea, (object sender, EventArgs args) => buferManHost.UserInteraction.ShowPopup(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)));

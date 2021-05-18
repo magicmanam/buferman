@@ -192,15 +192,6 @@
   <data name="MenuHelpSend" xml:space="preserve">
     <value>Send &amp;feedback/issue</value>
   </data>
-  <data name="MenuHelpStats" xml:space="preserve">
-    <value>&amp;Statistics</value>
-  </data>
-  <data name="MenuHelpStatsInfo" xml:space="preserve">
-    <value>Program was started at {0}. Copied bufers count: {1} ({2} for today).</value>
-  </data>
-  <data name="MenuHelpStatsTitle" xml:space="preserve">
-    <value>Statistics</value>
-  </data>
   <data name="MenuPluginsManagement" xml:space="preserve">
     <value>Plugins management</value>
   </data>

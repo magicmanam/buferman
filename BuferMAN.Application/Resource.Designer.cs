@@ -88,7 +88,7 @@ namespace BuferMAN.Application {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clipboard last update was at .
+        ///   Looks up a localized string similar to The latest clipboard update was at .
         /// </summary>
         internal static string LastClipboardUpdate {
             get {
@@ -142,7 +142,25 @@ namespace BuferMAN.Application {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bufer manual.
+        ///   Looks up a localized string similar to Program startup time is {0}. Copied bufers count: {1} ({2} for today)..
+        /// </summary>
+        internal static string StatsInfo {
+            get {
+                return ResourceManager.GetString("StatsInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Program startup time is {0}. Copied bufers count: {1}..
+        /// </summary>
+        internal static string TodayStatsInfo {
+            get {
+                return ResourceManager.GetString("TodayStatsInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BuferMANual.
         /// </summary>
         internal static string TrayMenuBuferManual {
             get {

@@ -32,6 +32,7 @@ namespace BuferMAN.Application
         private readonly IMapper _mapper;
         private readonly IFileStorage _fileStorage;
         private const string SESSION_FILE_PREFIX = "session_state";
+        private readonly DateTime _startTime = DateTime.Now;
 
         private event EventHandler<BuferFocusedEventArgs> _BuferFocused;
 
@@ -344,6 +345,13 @@ namespace BuferMAN.Application
                 this._clipboardBuferService.RemoveBufer(bufer.ViewId);
                 action.Cancel();
             }
+        }
+
+        public string GetStatisticsText()
+        {
+            return this._startTime.Date == DateTime.Now.Date ?
+                string.Format(Resource.TodayStatsInfo, this._startTime, this._dataObjectHandler.CurrentDayCopiesCount) :
+                string.Format(Resource.StatsInfo, this._startTime, this._dataObjectHandler.CopiesCount, this._dataObjectHandler.CurrentDayCopiesCount);
         }
     }
 }

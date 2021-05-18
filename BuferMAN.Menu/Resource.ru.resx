@@ -192,15 +192,6 @@
   <data name="MenuHelpSend" xml:space="preserve">
     <value>&amp;Открыть форму обратной связи</value>
   </data>
-  <data name="MenuHelpStats" xml:space="preserve">
-    <value>&amp;Статистика</value>
-  </data>
-  <data name="MenuHelpStatsInfo" xml:space="preserve">
-    <value>Программа была запущена в {0}. Сделано копирований: {1} ({2} за сегодня).</value>
-  </data>
-  <data name="MenuHelpStatsTitle" xml:space="preserve">
-    <value>Статистика</value>
-  </data>
   <data name="MenuPluginsManagement" xml:space="preserve">
     <value>Управление плагинами</value>
   </data>
