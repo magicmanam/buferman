@@ -314,7 +314,9 @@ namespace BuferMAN.WinForms
             this.StatusLine = new StatusStrip();
             this.StatusLabel = new ToolStripStatusLabel() {
                 AutoToolTip = true,
-                Alignment = ToolStripItemAlignment.Left
+                Alignment = ToolStripItemAlignment.Left,
+                BorderSides = ToolStripStatusLabelBorderSides.Left,
+                Margin = new Padding(3, 0, 0, 0)
             };
 
             this.StatusLine.SuspendLayout();
