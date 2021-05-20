@@ -79,17 +79,20 @@ namespace BuferMAN.Application
 
             UndoableContext<ApplicationStateSnapshot>.Current.UndoableAction += (object sender, UndoableActionEventArgs<ApplicationStateSnapshot> e) =>
             {
-                if (e.IsRedo)
+                if (!e.Action.IsCancelled)
                 {
-                    this._bufermanHost.SetStatusBarText(Resource.BuferOperationRestored);
-                }
-                else if (e.IsUndo)
-                {
-                    this._bufermanHost.SetStatusBarText(Resource.BuferOperationCancelled);
-                }
-                else
-                {
-                    this._bufermanHost.SetStatusBarText(e.Action.Name);
+                    if (e.IsRedo)
+                    {
+                        this._bufermanHost.SetStatusBarText(Resource.BuferOperationRestored);
+                    }
+                    else if (e.IsUndo)
+                    {
+                        this._bufermanHost.SetStatusBarText(Resource.BuferOperationCancelled);
+                    }
+                    else
+                    {
+                        this._bufermanHost.SetStatusBarText(e.Action.Name);
+                    }
                 }
             };
 
@@ -343,11 +346,17 @@ namespace BuferMAN.Application
 
         private void _RemoveClipWithoutTrackingInUndoableContext(BuferViewModel bufer)
         {
+            ApplicationStateSnapshot stateWithoutEmptyBufer;
+
             using (var action = UndoableContext<ApplicationStateSnapshot>.Current.StartAction())
             {
                 this._clipboardBuferService.RemoveBufer(bufer.ViewId);
+                stateWithoutEmptyBufer = this._clipboardBuferService.UndoableState;
+
                 action.Cancel();
             }
+
+            this._clipboardBuferService.UndoableState = stateWithoutEmptyBufer;
         }
 
         public string GetStatisticsText()
