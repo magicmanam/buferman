@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="magicmanam.UndoRedo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\magicmanam.UndoRedo.1.0.0.1\lib\net45\magicmanam.UndoRedo.dll</HintPath>
+      <HintPath>..\packages\magicmanam.UndoRedo.1.1.0\lib\net45\magicmanam.UndoRedo.dll</HintPath>
     </Reference>
     <Reference Include="magicmanam.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\magicmanam.Windows.1.0.2\lib\net45\magicmanam.Windows.dll</HintPath>
@@ -97,6 +97,7 @@
     <EmbeddedResource Include="Resource.ru.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.ru.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>

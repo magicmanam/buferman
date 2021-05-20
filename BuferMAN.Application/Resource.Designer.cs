@@ -79,6 +79,24 @@ namespace BuferMAN.Application {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Operation cancelled.
+        /// </summary>
+        internal static string BuferOperationCancelled {
+            get {
+                return ResourceManager.GetString("BuferOperationCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation restored.
+        /// </summary>
+        internal static string BuferOperationRestored {
+            get {
+                return ResourceManager.GetString("BuferOperationRestored", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Read more info in menu: Help -&gt;Documentation.
         /// </summary>
         internal static string DocumentationMentioning {

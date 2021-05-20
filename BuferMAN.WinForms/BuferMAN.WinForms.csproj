@@ -32,7 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="magicmanam.UndoRedo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\magicmanam.UndoRedo.1.0.0.1\lib\net45\magicmanam.UndoRedo.dll</HintPath>
+      <HintPath>..\packages\magicmanam.UndoRedo.1.1.0\lib\net45\magicmanam.UndoRedo.dll</HintPath>
     </Reference>
     <Reference Include="magicmanam.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\magicmanam.Windows.1.0.2\lib\net45\magicmanam.Windows.dll</HintPath>
@@ -86,7 +86,9 @@
     <Compile Include="Window\RenderingHandler.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuferMAN.Assets\BuferMAN.Assets.csproj">

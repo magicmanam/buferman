@@ -137,7 +137,7 @@ namespace BuferMAN.Menu
                 deleteAllMenuItem.Enabled = deleteTemporaryMenuItem.Enabled || this._clipboardBuferService.GetPinnedBufers().Count() > 0;
             });
 
-            UndoableContext<ApplicationStateSnapshot>.Current.StateChanged += (object sender, UndoableContextChangedEventArgs e) =>
+            UndoableContext<ApplicationStateSnapshot>.Current.UndoableAction += (object sender, UndoableActionEventArgs<ApplicationStateSnapshot> e) =>
             {
                 undoMenuItem.Enabled = e.CanUndo;
                 redoMenuItem.Enabled = e.CanRedo;

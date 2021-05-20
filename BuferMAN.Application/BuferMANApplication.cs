@@ -77,17 +77,20 @@ namespace BuferMAN.Application
 
             UndoableContext<ApplicationStateSnapshot>.Current = new UndoableContext<ApplicationStateSnapshot>(this._clipboardBuferService);
 
-            UndoableContext<ApplicationStateSnapshot>.Current.UndoableAction += (object sender, UndoableActionEventArgs e) =>
+            UndoableContext<ApplicationStateSnapshot>.Current.UndoableAction += (object sender, UndoableActionEventArgs<ApplicationStateSnapshot> e) =>
             {
-                this._bufermanHost.SetStatusBarText(e.Action);
-            };
-            UndoableContext<ApplicationStateSnapshot>.Current.UndoAction += (object sender, UndoableActionEventArgs e) =>
-            {
-                this._bufermanHost.SetStatusBarText(e.Action);
-            };
-            UndoableContext<ApplicationStateSnapshot>.Current.RedoAction += (object sender, UndoableActionEventArgs e) =>
-            {
-                this._bufermanHost.SetStatusBarText(e.Action);
+                if (e.IsRedo)
+                {
+                    this._bufermanHost.SetStatusBarText(Resource.BuferOperationRestored);
+                }
+                else if (e.IsUndo)
+                {
+                    this._bufermanHost.SetStatusBarText(Resource.BuferOperationCancelled);
+                }
+                else
+                {
+                    this._bufermanHost.SetStatusBarText(e.Action.Name);
+                }
             };
 
             foreach (var storageModel in this._settings.StoragesToLoadOnStart)

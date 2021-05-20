@@ -120,6 +120,12 @@
   <data name="AdminWindowTitle" xml:space="preserve">
     <value>BuferMAN (Админ)</value>
   </data>
+  <data name="BuferOperationCancelled" xml:space="preserve">
+    <value>Операция отменена</value>
+  </data>
+  <data name="BuferOperationRestored" xml:space="preserve">
+    <value>Операция восстановлена</value>
+  </data>
   <data name="DocumentationMentioning" xml:space="preserve">
     <value>Полное руководство в меню: Помощь -&gt; Документация</value>
   </data>
