@@ -244,7 +244,7 @@ namespace BuferMAN.WinForms
 
             this._components = new Container();
 
-            this.ClientSize = new Size(282, 253);
+            this.ClientSize = new Size(290, 253);// Should be 290 because text must be located in status line
             this.DoubleBuffered = true;
             this.Icon = Icons.Buferman;
 
