@@ -289,8 +289,11 @@ namespace BuferMAN.Menu
         {
             var helpMenuItem = buferManHost.CreateMenuItem(Resource.MenuHelp);
 
+            helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.DocumentationMenuItem, (object sender, EventArgs e) =>
+                Process.Start("Documentation.html")));
+
             helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpSend, (object sender, EventArgs e) =>
-                Process.Start("https://rink.hockeyapp.net/apps/51633746a31f44999eca3bc7b7945e92/feedback/new")));
+                Process.Start("mailto:magicmanam@gmail.com?subject=BuferMAN")));
 
             var donateMenuItem = buferManHost.CreateMenuItem(Resource.MenuHelpDonate);
             donateMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpDonateIdea, (object sender, EventArgs args) => buferManHost.UserInteraction.ShowPopup(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)));
@@ -298,10 +301,8 @@ namespace BuferMAN.Menu
                 Process.Start("http://www.klopat.by/")));
             helpMenuItem.AddMenuItem(donateMenuItem);
 
-            helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.DocumentationMenuItem, (object sender, EventArgs e) =>
-                Process.Start("Documentation.html")));
-            helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpReport, (object sender, EventArgs e) =>
-                Process.Start("https://github.com/magicmanam/buferman/issues/new")));
+            helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpGitHub, (object sender, EventArgs e) =>
+                Process.Start("https://github.com/magicmanam/buferman")));
             helpMenuItem.AddSeparator();
             helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpAbout, (object sender, EventArgs args) => {
                 var version = ApplicationDeployment.IsNetworkDeployed ? ApplicationDeployment.CurrentDeployment.CurrentVersion : Assembly.GetEntryAssembly().GetName().Version;
