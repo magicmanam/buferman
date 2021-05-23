@@ -248,6 +248,8 @@ namespace BuferMAN.WinForms
             this.DoubleBuffered = true;
             this.Icon = Icons.Buferman;
 
+            this.ResumeLayout(false);// Should be before height assignment (or check an issue)
+
             this.AutoScaleMode = AutoScaleMode.Font;
             this.Height = 753 + 3 + 1;//+ is divider height + divider margin
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -257,8 +259,6 @@ namespace BuferMAN.WinForms
             this._CreateStatusBar();
             this._CreateUserManualLabel();
             this._userManualLabel.Text = this._GetUserManualText();
-
-            this.ResumeLayout(false);
 
             this.ShowInTaskbar = false;
             this.FormClosing += this._OnWindowClosing;

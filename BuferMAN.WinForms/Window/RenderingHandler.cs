@@ -57,6 +57,11 @@ namespace BuferMAN.WinForms.Window
 
             this._form.SuspendLayout();
 
+            if (this._clipboardBuferService.BufersCount > this._settings.MaxBufersCount)
+            {
+                temporaryBufers = temporaryBufers.Skip(this._clipboardBuferService.BufersCount - this._settings.MaxBufersCount).ToList();
+            }// TODO (l) remove this after scrolling will be added
+
             this._RemoveOldButtons(temporaryBufers.Union(pinnedBufers));
 
             if (temporaryBufers.Any())
