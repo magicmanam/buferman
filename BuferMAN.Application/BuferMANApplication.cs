@@ -7,11 +7,13 @@ using BuferMAN.Infrastructure.Settings;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Models;
 using BuferMAN.View;
+using Logging;
 using magicmanam.UndoRedo;
 using magicmanam.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace BuferMAN.Application
@@ -33,6 +35,7 @@ namespace BuferMAN.Application
         private readonly IFileStorage _fileStorage;
         private const string SESSION_FILE_PREFIX = "session_state";
         private readonly DateTime _startTime = DateTime.Now;
+        private DateTime _lastClipboardEventDateTime;
 
         private event EventHandler<BuferFocusedEventArgs> _BuferFocused;
 
@@ -115,35 +118,91 @@ namespace BuferMAN.Application
 
         private void _ProcessCopyClipboardEvent(object sender, EventArgs e)
         {
-            var dataObject = this._clipboardWrapper.GetDataObject();
-            var buferViewModel = new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now };
-
-            if (this.ShouldCatchCopies)
+            var currentTime = DateTime.Now;
+            if (this._IsDuplicatedEvent(currentTime))
             {
-                this._dataObjectHandler.TryHandleDataObject(buferViewModel);
+                return;
             }
             else
             {
-                using (var action = UndoableContext<ApplicationStateSnapshot>.Current.StartAction())
+                this._lastClipboardEventDateTime = currentTime;
+            }
+
+            try
+            {
+                var dataObject = this._clipboardWrapper.GetDataObject();
+
+                var copy = new DataObject();
+                foreach (var format in dataObject.GetFormats())
+                {
+                    if (format == "EnhancedMetafile")//Fixes bug with copy in Word
+                    {
+                        copy.SetData(format, "<< !!! EnhancedMetafile !!! >>");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            copy.SetData(format, dataObject.GetData(format));
+                        }
+                        catch
+                        {
+                            // TODO (m) Log input parameters and other details.
+                        }
+                    }
+                }
+
+                if (this._clipboardWrapper.ContainsImage())
+                {
+                    copy.SetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT, this._clipboardWrapper.GetImage());
+                }
+
+                var buferViewModel = new BuferViewModel { Clip = copy, CreatedAt = DateTime.Now };
+
+                if (this.ShouldCatchCopies)
                 {
                     this._dataObjectHandler.TryHandleDataObject(buferViewModel);
+                }
+                else
+                {
+                    using (var action = UndoableContext<ApplicationStateSnapshot>.Current.StartAction())
+                    {
+                        this._dataObjectHandler.TryHandleDataObject(buferViewModel);
 
-                    action.Cancel();
-                }// Should be refactored
+                        action.Cancel();
+                    }// Should be refactored
+                }
+
+                // TODO (s) maybe in a separate event handler (for example stats plugin)
+                if (this._dataObjectHandler.CopiesCount == 100)
+                {
+                    this._bufermanHost.NotificationEmitter.ShowInfoNotification(Resource.NotifyIcon100Congrats, 2500);
+                }
+                else if (this._dataObjectHandler.CopiesCount == 1000)
+                {
+                    this._bufermanHost.NotificationEmitter.ShowInfoNotification(Resource.NotifyIcon1000Congrats, 2500);
+                }
+
+                this._bufermanHost.SetStatusBarText(Resource.LastClipboardUpdate + currentTime.ToShortTimeString());//Should be in separate strip label
+                // end of TODO
             }
-
-            // TODO (s) maybe in a separate event handler (for example stats plugin)
-            if (this._dataObjectHandler.CopiesCount == 100)
+            catch (ExternalException exc)
             {
-                this._bufermanHost.NotificationEmitter.ShowInfoNotification(Resource.NotifyIcon100Congrats, 2500);
+                Logger.WriteError("An error during get clipboard operation", exc);
+                throw new ClipboardMessageException("An error occurred. See logs for more details.", exc);
             }
-            else if (this._dataObjectHandler.CopiesCount == 1000)
-            {
-                this._bufermanHost.NotificationEmitter.ShowInfoNotification(Resource.NotifyIcon1000Congrats, 2500);
-            }
+        }
 
-            this._bufermanHost.SetStatusBarText(Resource.LastClipboardUpdate + DateTime.Now.ToShortTimeString());//Should be in separate strip label
-            // end of TODO
+        /// <summary>
+        /// Pseudo fix !!!
+        /// </summary>
+        /// <param name="currentTime"></param>
+        /// <returns></returns>
+        private bool _IsDuplicatedEvent(DateTime currentTime)
+        {
+            var delay = currentTime.Ticks - this._lastClipboardEventDateTime.Ticks;
+
+            return delay < 1200000;
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)

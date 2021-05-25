@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace BuferMAN.Clipboard
 {
@@ -6,5 +7,7 @@ namespace BuferMAN.Clipboard
     {
         IDataObject GetDataObject();
         void SetDataObject(IDataObject dataObject);
+        bool ContainsImage();
+        Image GetImage();
     }
 }

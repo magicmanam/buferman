@@ -43,6 +43,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +87,10 @@
     <ProjectReference Include="..\BuferMAN.View\BuferMAN.View.csproj">
       <Project>{60FACDBB-0E8F-4EA9-8E18-99294EF5908A}</Project>
       <Name>BuferMAN.View</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logger\Logging.csproj">
+      <Project>{0DEECDC2-CF30-4625-A465-671F851F937E}</Project>
+      <Name>Logging</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
