@@ -45,6 +45,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.WinForms.Tests", "
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "BuferMAN.Installer", "BuferMAN.Installer\BuferMAN.Installer.vdproj", "{87E5FD4D-BB8C-4F2D-A7AB-3B3CE954F3EE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F1E16DF7-5123-4A71-894B-BB76790F82BD}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

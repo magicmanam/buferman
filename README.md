@@ -22,26 +22,28 @@ Alt+C  - launch a program
 
 TAB    - tabify between bufers
 
-V      - go to the last bufer
+Home   - go to the first bufer (or just key: X)
 
-X      - go to the first bufer
+End    - go to the latest bufer (or just key: V)
 
 C      - tabify 3 times
 
 Ctrl+H - hide bufer with some alias
 
-Space  - the same as Enter key - pastes selected bufer into an active window
+Space  - the same as Enter key - paste selected bufer into an active window
+
+Ctrl+Z - undo previous operation
+
+Ctrl+Y - redo previous operation
 
 ...
 
 ### Terms
-*Persistent bufer* - bufer which is stored all time you work with **BuferMAN** and cannot be rewritten by any copy operation. To make bufer persistent use *Ctrl + S (Save)* hot key.
-
 *Credentials bufer* - a bufer which minimize your interaction with login forms. Initial bufer's value is used as username, password you can set using *Ctrl + L (Login)* hot key. After that just place a cursor at username field in login form, activate a program using *Alt + C* hot key and select credentials bufer. The program will type your username, press TAB, type a password and Enter key while you just enjoy you life. **Warning:** Passwords are stored in-memory as-is and w/o encryption, so please do not use this feature for real credentials.
 
 ## License
 GNU General Public License v3.0
 
 ## Thanks
-Want to say thanks to the author of the icon I use in BuferMAN:
+I want to say thanks to the author of the icon I use in BuferMAN:
 https://www.iconsdb.com/royal-blue-icons/copy-icon.html 

@@ -73,7 +73,7 @@ namespace BuferMAN.Application
             this._dataObjectHandler.Updated += this.Updated;
 
             this._bufermanHost.WindowActivated += this.OnWindowActivating;
-            this._bufermanHost.ClipbordUpdated += this.ProcessCopyClipboardEvent;
+            this._bufermanHost.ClipbordUpdated += this._ProcessCopyClipboardEvent;
 
             UndoableContext<ApplicationStateSnapshot>.Current = new UndoableContext<ApplicationStateSnapshot>(this._clipboardBuferService);
 
@@ -113,7 +113,7 @@ namespace BuferMAN.Application
 
         public bool NeedRerender { get; set; }
 
-        private void ProcessCopyClipboardEvent(object sender, EventArgs e)
+        private void _ProcessCopyClipboardEvent(object sender, EventArgs e)
         {
             var dataObject = this._clipboardWrapper.GetDataObject();
             var buferViewModel = new BuferViewModel { Clip = dataObject, CreatedAt = DateTime.Now };

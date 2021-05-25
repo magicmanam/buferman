@@ -136,6 +136,8 @@ namespace BuferMAN.WinForms
                     else
                     {
                         buferText = this._MakeSpecialBuferText(Resource.NotTextBufer);
+                        // TODO (l) maybe track such cases and/or ask user to send info (at least formats list) of this bufer?
+                        // Or user can think of some name for this combination of formats
                     }
                 }
                 else
