@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="magicmanam.UndoRedo, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\magicmanam.UndoRedo.1.1.1\lib\net45\magicmanam.UndoRedo.dll</HintPath>
+      <HintPath>..\packages\magicmanam.UndoRedo.1.1.3\lib\net45\magicmanam.UndoRedo.dll</HintPath>
     </Reference>
     <Reference Include="magicmanam.Windows, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\magicmanam.Windows.1.0.2\lib\net45\magicmanam.Windows.dll</HintPath>
