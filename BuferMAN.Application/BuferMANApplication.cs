@@ -202,7 +202,7 @@ namespace BuferMAN.Application
         {
             var delay = currentTime.Ticks - this._lastClipboardEventDateTime.Ticks;
 
-            return delay < 1200000;
+            return delay < 1500000;
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
