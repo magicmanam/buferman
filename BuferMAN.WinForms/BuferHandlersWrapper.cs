@@ -143,6 +143,7 @@ namespace BuferMAN.WinForms
                 else
                 {
                     buferText = this._MakeSpecialBuferText($"{buferText.Length}   {Resource.WhiteSpaces}");
+                    tooltipTitle = buferText;
                 }
             }
             this._bufer.ViewModel.DefaultBackColor = this._bufer.BackColor;
