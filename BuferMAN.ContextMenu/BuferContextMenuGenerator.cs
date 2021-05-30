@@ -94,7 +94,14 @@ namespace BuferMAN.ContextMenu
                     {
                         particularFormatMenu.AddOnClickHandler((object sender, EventArgs args) =>
                         {
-                            bufermanHost.UserInteraction.ShowPopup(formatData.ToString(), format);
+                            int maxBuferLength = this._settings.MaxBuferPresentationLength;
+                            var data = formatData.ToString();
+                            if (data.Length > maxBuferLength)
+                            {
+                                data = data.Substring(0, maxBuferLength - 300) + Environment.NewLine + Environment.NewLine + "...";
+                            }
+                            var title = $"{format}";// TODO (s) maybe change this title to be more descriptive?
+                            bufermanHost.UserInteraction.ShowPopup(data, title);
                         });
                     }
                     formatsMenuItems.Add(particularFormatMenu);
