@@ -175,7 +175,7 @@
     <value>About BuferMAN</value>
   </data>
   <data name="MenuHelpDonate" xml:space="preserve">
-    <value>To reward the developer</value>
+    <value>Charity</value>
   </data>
   <data name="MenuHelpDonateIdea" xml:space="preserve">
     <value>Make &amp;world better</value>
@@ -187,10 +187,13 @@
     <value>Your help is really appreciated</value>
   </data>
   <data name="MenuHelpGitHub" xml:space="preserve">
-    <value>Open in GitHub</value>
+    <value>Open GitHub issues</value>
   </data>
   <data name="MenuHelpSend" xml:space="preserve">
     <value>Send email to developer</value>
+  </data>
+  <data name="MenuHelpSupport" xml:space="preserve">
+    <value>&amp;Support</value>
   </data>
   <data name="MenuPluginsManagement" xml:space="preserve">
     <value>Plugins management</value>

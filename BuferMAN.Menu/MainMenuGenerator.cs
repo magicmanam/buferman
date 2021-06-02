@@ -292,8 +292,19 @@ namespace BuferMAN.Menu
             helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.DocumentationMenuItem, (object sender, EventArgs e) =>
                 Process.Start("Documentation.html")));
 
-            helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpSend, (object sender, EventArgs e) =>
+            //helpMenuItem.AddSeparator();
+
+            var supportMenuItem = buferManHost.CreateMenuItem(Resource.MenuHelpSupport);
+            supportMenuItem.AddMenuItem(buferManHost.CreateMenuItem("reformal.ru (на русском)", (object sender, EventArgs e) =>
+                Process.Start("http://buferman.reformal.ru/")));
+            supportMenuItem.AddMenuItem(buferManHost.CreateMenuItem("idea.informer.com (in English)", (object sender, EventArgs e) =>
+                Process.Start("http://buferman.idea.informer.com/")));
+            supportMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpSend, (object sender, EventArgs e) =>
                 Process.Start("mailto:magicmanam@gmail.com?subject=BuferMAN")));
+            supportMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpGitHub, (object sender, EventArgs e) =>
+                Process.Start("https://github.com/magicmanam/buferman/issues")));
+
+            helpMenuItem.AddMenuItem(supportMenuItem);
 
             var donateMenuItem = buferManHost.CreateMenuItem(Resource.MenuHelpDonate);
             donateMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpDonateIdea, (object sender, EventArgs args) => buferManHost.UserInteraction.ShowPopup(Resource.MenuHelpDonateText, Resource.MenuHelpDonateTitle)));
@@ -301,8 +312,6 @@ namespace BuferMAN.Menu
                 Process.Start("http://www.klopat.by/")));
             helpMenuItem.AddMenuItem(donateMenuItem);
 
-            helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpGitHub, (object sender, EventArgs e) =>
-                Process.Start("https://github.com/magicmanam/buferman")));
             helpMenuItem.AddSeparator();
             helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(Resource.MenuHelpAbout, (object sender, EventArgs args) => {
                 var version = ApplicationDeployment.IsNetworkDeployed ? ApplicationDeployment.CurrentDeployment.CurrentVersion : Assembly.GetEntryAssembly().GetName().Version;

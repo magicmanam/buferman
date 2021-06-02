@@ -175,7 +175,7 @@
     <value>О проекте BuferMAN</value>
   </data>
   <data name="MenuHelpDonate" xml:space="preserve">
-    <value>Поощрить разработчика</value>
+    <value>Благотворительность</value>
   </data>
   <data name="MenuHelpDonateIdea" xml:space="preserve">
     <value>Сделать &amp;мир лучше</value>
@@ -191,6 +191,9 @@
   </data>
   <data name="MenuHelpSend" xml:space="preserve">
     <value>&amp;Написать разработчику</value>
+  </data>
+  <data name="MenuHelpSupport" xml:space="preserve">
+    <value>&amp;Поддержка</value>
   </data>
   <data name="MenuPluginsManagement" xml:space="preserve">
     <value>Управление плагинами</value>

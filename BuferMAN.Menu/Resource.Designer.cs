@@ -232,7 +232,7 @@ namespace BuferMAN.Menu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To reward the developer.
+        ///   Looks up a localized string similar to Charity.
         /// </summary>
         internal static string MenuHelpDonate {
             get {
@@ -268,7 +268,7 @@ namespace BuferMAN.Menu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open in GitHub.
+        ///   Looks up a localized string similar to Open GitHub issues.
         /// </summary>
         internal static string MenuHelpGitHub {
             get {
@@ -282,6 +282,15 @@ namespace BuferMAN.Menu {
         internal static string MenuHelpSend {
             get {
                 return ResourceManager.GetString("MenuHelpSend", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Support.
+        /// </summary>
+        internal static string MenuHelpSupport {
+            get {
+                return ResourceManager.GetString("MenuHelpSupport", resourceCulture);
             }
         }
         
