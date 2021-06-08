@@ -8,7 +8,7 @@ This tool helps you with managing Windows clipboard buffers: text, files, images
 ![BuferMAN screenshot](Buferman.jpg)
 
 ## Installation
-You can download a program [here](https://github.com/magicmanam/buferman/releases/tag/v1.0).
+You can download BuferMAN program [here](https://github.com/magicmanam/buferman/releases/tag/v1.0).
 
 ## Usage
 **BuferMAN** helps you in copypasting of text, images and files data. It allows you to save your clipboard bufers and many hours of your time. Every bufer has a context menu with many useful features. At application start **BuferMAN** is initialized with lines from 'bufers.txt' file located at the root of the application. There you can store the most popular text bufers.
@@ -16,7 +16,7 @@ You can download a program [here](https://github.com/magicmanam/buferman/release
 **!!! For correct usage with programs launched in administrative mode, BuferMAN should be started in admin mode as well.**
 
 ### Hot keys
-Alt+C  - launch a program
+Alt+C  - make BuferMAN visible
 
 TAB    - tabify between bufers
 

@@ -173,4 +173,40 @@
   <data name="OptionsWindowTitle" xml:space="preserve">
     <value>Опции</value>
   </data>
+  <data name="OptionsAdministratorModeReminder" xml:space="preserve">
+    <value>Предупреждать если запуск не в режиме администратора</value>
+  </data>
+  <data name="OptionsAdministratorModeReminderTooltip" xml:space="preserve">
+    <value>Предлагать запуск программы в режиме администратора</value>
+  </data>
+  <data name="OptionsChangeCurrentClipboardColor" xml:space="preserve">
+    <value>Изменить цвет текущего буфера</value>
+  </data>
+  <data name="OptionsChangeDefaultClipboardColor" xml:space="preserve">
+    <value>Изменить цвет по умолчанию для буфера</value>
+  </data>
+  <data name="OptionsChangePinnedClipboardColor" xml:space="preserve">
+    <value>Изменить цвет закреплённого буфера</value>
+  </data>
+  <data name="OptionsFocusBuferEnableDisable" xml:space="preserve">
+    <value>Включить/выключить</value>
+  </data>
+  <data name="OptionsFocusBuferTooltip" xml:space="preserve">
+    <value>Всплывающая подсказка при фокусе на буфере</value>
+  </data>
+  <data name="OptionsFocusBuferTooltipDurationText" xml:space="preserve">
+    <value>Продолжительность (миллисекунды)</value>
+  </data>
+  <data name="OptionsStartup" xml:space="preserve">
+    <value>Запуск программы</value>
+  </data>
+  <data name="OptionsWindowCancelButton" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="OptionsWindowRestoreButton" xml:space="preserve">
+    <value>Восстановить настройки по умолчанию</value>
+  </data>
+  <data name="OptionsWindowSaveButton" xml:space="preserve">
+    <value>Сохранить</value>
+  </data>
 </root>

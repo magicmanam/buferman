@@ -173,4 +173,40 @@
   <data name="OptionsWindowTitle" xml:space="preserve">
     <value>Options</value>
   </data>
+  <data name="OptionsAdministratorModeReminder" xml:space="preserve">
+    <value>Remind about Administaror mode</value>
+  </data>
+  <data name="OptionsAdministratorModeReminderTooltip" xml:space="preserve">
+    <value>Display message box on startup with option to open app in Administrator mode</value>
+  </data>
+  <data name="OptionsChangeCurrentClipboardColor" xml:space="preserve">
+    <value>Change color for current clipboard bufer</value>
+  </data>
+  <data name="OptionsChangeDefaultClipboardColor" xml:space="preserve">
+    <value>Change default color for clipboard bufer</value>
+  </data>
+  <data name="OptionsChangePinnedClipboardColor" xml:space="preserve">
+    <value>Change color for pinned bufer</value>
+  </data>
+  <data name="OptionsFocusBuferEnableDisable" xml:space="preserve">
+    <value>Enable/disable</value>
+  </data>
+  <data name="OptionsFocusBuferTooltip" xml:space="preserve">
+    <value>Tooltip on bufer focus</value>
+  </data>
+  <data name="OptionsFocusBuferTooltipDurationText" xml:space="preserve">
+    <value>Duration (milliseconds)</value>
+  </data>
+  <data name="OptionsStartup" xml:space="preserve">
+    <value>Startup</value>
+  </data>
+  <data name="OptionsWindowCancelButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="OptionsWindowRestoreButton" xml:space="preserve">
+    <value>Restore default &amp;&amp; Save</value>
+  </data>
+  <data name="OptionsWindowSaveButton" xml:space="preserve">
+    <value>Save</value>
+  </data>
 </root>

@@ -171,11 +171,83 @@ namespace BuferMAN.WinForms {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remind about Administaror mode.
+        /// </summary>
+        internal static string OptionsAdministratorModeReminder {
+            get {
+                return ResourceManager.GetString("OptionsAdministratorModeReminder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Display message box on startup with option to open app in Administrator mode.
+        /// </summary>
+        internal static string OptionsAdministratorModeReminderTooltip {
+            get {
+                return ResourceManager.GetString("OptionsAdministratorModeReminderTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change color for current clipboard bufer.
+        /// </summary>
+        internal static string OptionsChangeCurrentClipboardColor {
+            get {
+                return ResourceManager.GetString("OptionsChangeCurrentClipboardColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change default color for clipboard bufer.
+        /// </summary>
+        internal static string OptionsChangeDefaultClipboardColor {
+            get {
+                return ResourceManager.GetString("OptionsChangeDefaultClipboardColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change color for pinned bufer.
+        /// </summary>
+        internal static string OptionsChangePinnedClipboardColor {
+            get {
+                return ResourceManager.GetString("OptionsChangePinnedClipboardColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Common.
         /// </summary>
         internal static string OptionsCommonTabName {
             get {
                 return ResourceManager.GetString("OptionsCommonTabName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable/disable.
+        /// </summary>
+        internal static string OptionsFocusBuferEnableDisable {
+            get {
+                return ResourceManager.GetString("OptionsFocusBuferEnableDisable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tooltip on bufer focus.
+        /// </summary>
+        internal static string OptionsFocusBuferTooltip {
+            get {
+                return ResourceManager.GetString("OptionsFocusBuferTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Duration (milliseconds).
+        /// </summary>
+        internal static string OptionsFocusBuferTooltipDurationText {
+            get {
+                return ResourceManager.GetString("OptionsFocusBuferTooltipDurationText", resourceCulture);
             }
         }
         
@@ -189,11 +261,47 @@ namespace BuferMAN.WinForms {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Startup.
+        /// </summary>
+        internal static string OptionsStartup {
+            get {
+                return ResourceManager.GetString("OptionsStartup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UI Appearance.
         /// </summary>
         internal static string OptionsUITabName {
             get {
                 return ResourceManager.GetString("OptionsUITabName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        internal static string OptionsWindowCancelButton {
+            get {
+                return ResourceManager.GetString("OptionsWindowCancelButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore default &amp;&amp; Save.
+        /// </summary>
+        internal static string OptionsWindowRestoreButton {
+            get {
+                return ResourceManager.GetString("OptionsWindowRestoreButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        internal static string OptionsWindowSaveButton {
+            get {
+                return ResourceManager.GetString("OptionsWindowSaveButton", resourceCulture);
             }
         }
         

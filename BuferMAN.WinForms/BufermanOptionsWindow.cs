@@ -60,7 +60,7 @@ namespace BuferMAN.WinForms
 
             var cancelButton = new Button
             {
-                Text = "Cancel",
+                Text = Resource.OptionsWindowCancelButton,
                 AutoSize = true,
                 Parent = controlPanel
             };
@@ -69,7 +69,7 @@ namespace BuferMAN.WinForms
                 this.Close();
             };
             this._saveButton = new Button {
-                Text = "Save",
+                Text = Resource.OptionsWindowSaveButton,
                 AutoSize = true,
                 Parent = controlPanel,
                 Enabled = false
@@ -82,7 +82,7 @@ namespace BuferMAN.WinForms
             };
             this._restoreButton = new Button
             {
-                Text = "Restore default && Save",
+                Text = Resource.OptionsWindowRestoreButton,
                 AutoSize = true,
                 Parent = controlPanel,
                 Enabled = !this._settingsSetter.IsDefault
@@ -123,7 +123,7 @@ namespace BuferMAN.WinForms
         {
             var tooltipGroupBox = new GroupBox
             {
-                Text = "Tooltip on bufer focus",
+                Text = Resource.OptionsFocusBuferTooltip,
                 AutoSize = true,
                 Margin = new Padding(5),
                 Dock = DockStyle.Top,
@@ -143,7 +143,7 @@ namespace BuferMAN.WinForms
 
             var focusTooltipCheckbox = new CheckBox
             {
-                Text = "Enable/disable",
+                Text = Resource.OptionsFocusBuferEnableDisable,
                 AutoSize = true,
                 Checked = this._settingsGetter.ShowFocusTooltip,
                 Margin = new Padding(7),
@@ -178,7 +178,7 @@ namespace BuferMAN.WinForms
             };
             var tooltipDurationLabel = new Label
             {
-                Text = "Duration (milliseconds)",
+                Text = Resource.OptionsFocusBuferTooltipDurationText,
                 AutoSize = true,
                 Anchor = AnchorStyles.Top | AnchorStyles.Bottom,
                 Padding = new Padding(0, 5, 5, 5),
@@ -198,7 +198,7 @@ namespace BuferMAN.WinForms
         {
             var startupGroup = new GroupBox
             {
-                Text = "Startup",
+                Text = Resource.OptionsStartup,
                 AutoSize = true,
                 Margin = new Padding(5),
                 Height = 0,
@@ -217,7 +217,7 @@ namespace BuferMAN.WinForms
 
             var showUserModeNotificationCheckbox = new CheckBox()
             {
-                Text = "Remind about Administaror mode",// TODO (s) rename this label
+                Text = Resource.OptionsAdministratorModeReminder,// TODO (s) rename this label
                 Checked = this._settingsGetter.ShowUserModeNotification,
                 AutoSize = true,
                 Parent = startupPanel
@@ -227,7 +227,7 @@ namespace BuferMAN.WinForms
                 InitialDelay = 0,
                 IsBalloon = true
             };
-            userModeTooltip.SetToolTip(showUserModeNotificationCheckbox, "Display message box on startup with option to open app in Administrator mode");
+            userModeTooltip.SetToolTip(showUserModeNotificationCheckbox, Resource.OptionsAdministratorModeReminderTooltip);
 
             showUserModeNotificationCheckbox.CheckedChanged += (object sender, EventArgs args) =>
             {
@@ -253,7 +253,7 @@ namespace BuferMAN.WinForms
             var buferButtonWidth = 250;
             var buferDefaultBackgroundColorButton = new Button
             {
-                Text = "Change default color for clipboard bufer",
+                Text = Resource.OptionsChangeDefaultClipboardColor,
                 Width = buferButtonWidth,
                 BackColor = this._settingsGetter.BuferDefaultBackgroundColor,
                 Parent = panel
@@ -277,7 +277,7 @@ namespace BuferMAN.WinForms
 
             var pinnedBuferBackgroundColorButton = new Button
             {
-                Text = "Change color for pinned bufer",
+                Text = Resource.OptionsChangePinnedClipboardColor,
                 Width = buferButtonWidth,
                 BackColor = this._settingsGetter.PinnedBuferBackgroundColor,
                 Parent = panel
@@ -301,7 +301,7 @@ namespace BuferMAN.WinForms
 
             var currentBuferBackgroundColorButton = new Button
             {
-                Text = "Change color for current clipboard bufer",
+                Text = Resource.OptionsChangeCurrentClipboardColor,
                 Width = buferButtonWidth,
                 BackColor = this._settingsGetter.CurrentBuferBackgroundColor,
                 Parent = panel
