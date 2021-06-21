@@ -49,15 +49,7 @@ namespace BuferMAN.WinForms
             this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
             this._fileStorage = fileStorage;
 
-            var buferTextRepresentation = this._bufer.ViewModel.Clip.GetData(DataFormats.UnicodeText) as string;
-            if (string.IsNullOrEmpty(buferTextRepresentation))
-            {
-                buferTextRepresentation = this._bufer.ViewModel.Clip.GetData(DataFormats.StringFormat) as string;
-                if (string.IsNullOrEmpty(buferTextRepresentation))
-                {
-                    buferTextRepresentation = this._bufer.ViewModel.Clip.GetData(DataFormats.Text) as string;
-                }
-            }
+            var buferTextRepresentation = this._bufer.ViewModel.TextRepresentation;
 
             var formats = this._bufer.ViewModel.Clip.GetFormats();
 
@@ -163,6 +155,7 @@ namespace BuferMAN.WinForms
 
             this._bufer.ViewModel.Representation = buferTextRepresentation;// Maybe store original presentation as well ?
             this._bufer.SetMouseOverToolTip(buferTextRepresentation);// TODO (s) an issue here: on alias change this tooltip will show wront tooltip
+            this._bufer.ViewModel.TextRepresentation = buferTextRepresentation;
             tooltipTitle = tooltipTitle ?? buferTitle;
 
             if (!string.IsNullOrWhiteSpace(tooltipTitle))

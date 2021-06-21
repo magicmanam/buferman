@@ -24,6 +24,7 @@ namespace BuferMAN.View
         public Color DefaultBackColor { get; set; }// Remove color from here
         public object Representation { get; set; }
         public string OriginBuferText { get; set; }
+        public string TextRepresentation { get; set; }
 
         public BuferViewModel ShallowCopy()
         {

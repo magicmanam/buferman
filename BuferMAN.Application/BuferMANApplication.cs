@@ -157,7 +157,12 @@ namespace BuferMAN.Application
                     copy.SetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT, this._clipboardWrapper.GetImage());
                 }
 
-                var buferViewModel = new BuferViewModel { Clip = copy, CreatedAt = DateTime.Now };
+                var buferViewModel = new BuferViewModel
+                {
+                    Clip = copy,
+                    CreatedAt = DateTime.Now,
+                    TextRepresentation = this._GetNotEmptyStringData(copy, DataFormats.UnicodeText, DataFormats.StringFormat, DataFormats.Text)
+                };
 
                 if (this.ShouldCatchCopies)
                 {
@@ -191,6 +196,23 @@ namespace BuferMAN.Application
                 Logger.WriteError("An error during get clipboard operation", exc);
                 throw new ClipboardMessageException("An error occurred. See logs for more details.", exc);
             }
+        }
+
+        private string _GetNotEmptyStringData(IDataObject dataObject, params string[] formats)
+        {
+            string data = null;
+
+            foreach (var format in formats)
+            {
+                data = dataObject.GetData(format) as string;
+
+                if (!string.IsNullOrEmpty(data))
+                {
+                    break;
+                }
+            }
+
+            return data;
         }
 
         /// <summary>
