@@ -8,7 +8,6 @@ using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Window;
 using BuferMAN.Plugins.BuferPresentations;
 using BuferMAN.BuferPresentations;
-using magicmanam.UndoRedo;
 using BuferMAN.View;
 using BuferMAN.Infrastructure.Settings;
 
