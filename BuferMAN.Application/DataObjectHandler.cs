@@ -54,6 +54,8 @@ namespace BuferMAN.Application
         // (not exist) <add pinned>
         public bool TryHandleDataObject(BuferViewModel buferViewModel)
         {
+            buferViewModel.TextRepresentation = this._GetNotEmptyStringData(buferViewModel.Clip, DataFormats.UnicodeText, DataFormats.StringFormat, DataFormats.Text);
+
             this._IncrementCopiesCounters();
 
             if (buferViewModel.Clip.GetData(DataFormats.StringFormat) as string == string.Empty)
@@ -109,6 +111,23 @@ namespace BuferMAN.Application
 
             this.Updated?.Invoke(this, new ClipboardUpdatedEventArgs(buferViewModel));
             return true;
+        }
+
+        private string _GetNotEmptyStringData(IDataObject dataObject, params string[] formats)
+        {
+            string data = null;
+
+            foreach (var format in formats)
+            {
+                data = dataObject.GetData(format) as string;
+
+                if (!string.IsNullOrEmpty(data))
+                {
+                    break;
+                }
+            }
+
+            return data;
         }
     }
 }
