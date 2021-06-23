@@ -372,7 +372,7 @@ namespace BuferMAN.WinForms
             var exc = e.Exception as ClipboardMessageException;
             if (exc != null)
             {
-                MessageBox.Show(exc.Message, exc.Title ?? Application.ProductName);
+                //MessageBox.Show(exc.Message, exc.Title ?? Application.ProductName); // TODO (m) handle this situation with non blocking popup, because UI is freezed
             }
         }
     }
