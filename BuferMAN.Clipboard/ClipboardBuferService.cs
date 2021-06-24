@@ -10,13 +10,13 @@ namespace BuferMAN.Clipboard
     internal class ClipboardBuferService : IClipboardBuferService
     {
         private IList<BuferViewModel> _tempObjects = new List<BuferViewModel>();
-		private IList<BuferViewModel> _pinnedObjects = new List<BuferViewModel>();
+        private IList<BuferViewModel> _pinnedObjects = new List<BuferViewModel>();
         private readonly IEqualityComparer<IDataObject> _comparer;
 
         public ClipboardBuferService(IEqualityComparer<IDataObject> comparer)
-		{
-			this._comparer = comparer;
-		}
+        {
+            this._comparer = comparer;
+        }
 
         public IEnumerable<IDataObject> GetClips(bool pinnedFirst = false)
         {
@@ -37,10 +37,10 @@ namespace BuferMAN.Clipboard
             }
         }
 
-		private IEnumerable<IDataObject> _GetAllClips(bool pinnedFirst)
-		{
+        private IEnumerable<IDataObject> _GetAllClips(bool pinnedFirst)
+        {
             return pinnedFirst ? this._pinnedObjects.Union(this._tempObjects).Select(t => t.Clip) : this._tempObjects.Union(this._pinnedObjects).Select(t => t.Clip);
-		}
+        }
 
         public BuferViewModel LastTemporaryBufer
         {
@@ -60,8 +60,8 @@ namespace BuferMAN.Clipboard
         }
 
         public bool IsInPinnedBufers(BuferViewModel bufer, out Guid pinnedBuferViewId)
-		{
-			var pinnedBufer = this._pinnedObjects.FirstOrDefault(d => this._comparer.Equals(bufer.Clip, d.Clip) && string.Equals(bufer.Alias, d.Alias, StringComparison.CurrentCulture));
+        {
+            var pinnedBufer = this._pinnedObjects.FirstOrDefault(d => this._comparer.Equals(bufer.Clip, d.Clip) && string.Equals(bufer.Alias, d.Alias, StringComparison.CurrentCulture));
 
             if (pinnedBufer != null)
             {
@@ -73,7 +73,7 @@ namespace BuferMAN.Clipboard
                 pinnedBuferViewId = Guid.Empty;
                 return false;
             }
-		}
+        }
 
         public BuferViewModel FirstTemporaryBufer
         {

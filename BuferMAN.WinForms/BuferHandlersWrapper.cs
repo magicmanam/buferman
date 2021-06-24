@@ -225,7 +225,7 @@ namespace BuferMAN.WinForms
 
                 if (this._settings.ShowFocusTooltip)
                 {
-                    this._bufer.ShowFocusTooltip(buferViewModel.Representation as string, this._settings.FocusTooltipDuration);
+                    this._bufer.ShowFocusTooltip(buferViewModel.TextRepresentation, this._settings.FocusTooltipDuration);
                 }
             }
         }
