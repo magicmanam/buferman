@@ -141,7 +141,7 @@ namespace BuferMAN.ContextMenu
                     var pasteAsTextMenuItem = bufermanHost.CreateMenuItem(Resource.MenuPasteAsText, (object sender, EventArgs args) =>
                     {
                         var textDataObject = new DataObject();
-                        textDataObject.SetText(buferViewModel.OriginBuferText);
+                        textDataObject.SetText(buferViewModel.OriginBuferTitle);
 
                         var textBuferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(textDataObject);
                         textBuferSelectionHandler.DoOnClipSelection(sender, args);
@@ -154,16 +154,16 @@ namespace BuferMAN.ContextMenu
                 model.PasteMenuItem.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuCharByChar, (object sender, EventArgs args) =>
                 {
                     WindowLevelContext.Current.HideWindow();
-                    new KeyboardEmulator().TypeText(model.Bufer.ViewModel.OriginBuferText);
+                    new KeyboardEmulator().TypeText(model.Bufer.ViewModel.OriginBuferTitle);
                 }));
 
                 menuItems.Add(bufermanHost.CreateMenuSeparatorItem());
 
-                if (Uri.TryCreate(buferViewModel.OriginBuferText, UriKind.Absolute, out var uriResult)
+                if (Uri.TryCreate(buferViewModel.OriginBuferTitle, UriKind.Absolute, out var uriResult)
                         && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
                 {
                     var openInBrowserMenuItem = bufermanHost.CreateMenuItem(Resource.MenuOpenInBrowser, (object sender, EventArgs e) =>
-                                        Process.Start(buferViewModel.OriginBuferText));
+                                        Process.Start(buferViewModel.OriginBuferTitle));
                     openInBrowserMenuItem.ShortCut = Shortcut.CtrlB;
                     menuItems.Add(openInBrowserMenuItem);
                 }

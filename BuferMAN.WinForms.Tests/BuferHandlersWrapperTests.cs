@@ -46,7 +46,7 @@ namespace BuferMAN.WinForms.Tests
 
             // Assert
             Assert.AreEqual(originText, bufer.ViewModel.Representation);
-            Assert.AreEqual(originText.Trim(), bufer.Text);
+            Assert.AreEqual(originText.Trim(), bufer.ViewModel.OriginBuferTitle);
         }
 
         [TestMethod]
@@ -78,7 +78,7 @@ namespace BuferMAN.WinForms.Tests
 
             // Assert
             Assert.AreEqual(originText, bufer.ViewModel.Representation);
-            Assert.AreEqual(originText.Trim(), bufer.Text);
+            Assert.AreEqual(originText.Trim(), bufer.ViewModel.OriginBuferTitle);
         }
 
         [TestMethod]
@@ -111,7 +111,7 @@ namespace BuferMAN.WinForms.Tests
 
             // Assert
             Assert.AreEqual(originText, bufer.ViewModel.Representation);
-            Assert.AreEqual(originText.Trim(), bufer.Text);
+            Assert.AreEqual(originText.Trim(), bufer.ViewModel.OriginBuferTitle);
         }
 
         [TestMethod]
@@ -143,7 +143,7 @@ namespace BuferMAN.WinForms.Tests
                 bufer);
 
             // Assert
-            Assert.AreEqual($"<< {file} >>", bufer.Text);
+            Assert.AreEqual($"<< {file} >>", bufer.ViewModel.OriginBuferTitle);
             Assert.AreEqual("C:\\" + Environment.NewLine + Environment.NewLine + "file.txt", bufer.ViewModel.Representation);
         }
 
@@ -178,7 +178,7 @@ namespace BuferMAN.WinForms.Tests
                 bufer);
 
             // Assert
-            Assert.AreEqual($"<< {Resource.FilesBufer} (2) >>", bufer.Text);
+            Assert.AreEqual($"<< {Resource.FilesBufer} (2) >>", bufer.ViewModel.OriginBuferTitle);
             Assert.AreEqual("c:\\" + Environment.NewLine + Environment.NewLine + "file1.ext" + Environment.NewLine + "file2.ext", bufer.ViewModel.Representation);
         }
 
@@ -214,7 +214,7 @@ namespace BuferMAN.WinForms.Tests
                 bufer);
 
             // Assert
-            Assert.AreEqual($"<< {Resource.FilesBufer} (2) >>", bufer.Text);
+            Assert.AreEqual($"<< {Resource.FilesBufer} (2) >>", bufer.ViewModel.OriginBuferTitle);
             Assert.AreEqual("c:\\" + Environment.NewLine + Environment.NewLine + "file1.ext" + Environment.NewLine + "folder\\", bufer.ViewModel.Representation);
         }
 
@@ -243,7 +243,7 @@ namespace BuferMAN.WinForms.Tests
                 bufer);
 
             // Assert
-            Assert.AreEqual($"<< {Resource.ImageBufer} >>", bufer.Text);
+            Assert.AreEqual($"<< {Resource.ImageBufer} >>", bufer.ViewModel.OriginBuferTitle);
             Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), bufer.GetButton().Font);
         }
 
@@ -272,7 +272,7 @@ namespace BuferMAN.WinForms.Tests
                 bufer);
 
             // Assert
-            Assert.AreEqual($"<< {Resource.FileContentsBufer} >>", bufer.Text);
+            Assert.AreEqual($"<< {Resource.FileContentsBufer} >>", bufer.ViewModel.OriginBuferTitle);
             Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), bufer.GetButton().Font);
         }
 
@@ -301,7 +301,7 @@ namespace BuferMAN.WinForms.Tests
                 bufer);
 
             // Assert
-            Assert.AreEqual($"<< {Resource.NotTextBufer} >>", bufer.Text);
+            Assert.AreEqual($"<< {Resource.NotTextBufer} >>", bufer.ViewModel.OriginBuferTitle);
             Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), bufer.GetButton().Font);
         }
 
@@ -330,7 +330,7 @@ namespace BuferMAN.WinForms.Tests
                 bufer);
 
             // Assert
-            Assert.AreEqual($"<< 3   {Resource.WhiteSpaces} >>", bufer.Text);
+            Assert.AreEqual($"<< 3   {Resource.WhiteSpaces} >>", bufer.ViewModel.OriginBuferTitle);
             Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), bufer.GetButton().Font);
         }
     }

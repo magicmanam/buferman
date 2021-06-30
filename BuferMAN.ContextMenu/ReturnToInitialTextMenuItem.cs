@@ -16,7 +16,7 @@ namespace BuferMAN.ContextMenu
 
         private void _ReturnTextToInitial(object sender, EventArgs e)
         {
-            this.TryChangeText(this.Bufer.ViewModel.OriginBuferText);
+            this.TryChangeText(this.Bufer.ViewModel.OriginBuferTitle);
             this.MenuItem.Enabled = false;
         }
     }

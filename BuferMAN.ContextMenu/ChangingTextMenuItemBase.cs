@@ -3,6 +3,7 @@ using System.Drawing;
 using magicmanam.Windows;
 using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Infrastructure;
+using BuferMAN.View;
 
 namespace BuferMAN.ContextMenu
 {
@@ -12,12 +13,15 @@ namespace BuferMAN.ContextMenu
 
         protected BufermanMenuItem MenuItem { get; private set; }
 
+        protected BuferViewModel ViewModel { get; private set; }
+
         protected IBufer Bufer { get; private set; }
 
         protected ChangingTextMenuItemBase(BufermanMenuItem menuItem, IBufer bufer, IBufermanHost bufermanHost)
         {
             this.MenuItem = menuItem;
             this.Bufer = bufer;
+            this.ViewModel = bufer.ViewModel;
             this.BufermanHost = bufermanHost;
         }
 
@@ -25,21 +29,24 @@ namespace BuferMAN.ContextMenu
 
         public void TryChangeText(string newText)
         {
-            if (!string.IsNullOrWhiteSpace(newText) && newText != this.Bufer.Text)
+            if (!string.IsNullOrWhiteSpace(newText) && newText != this.ViewModel.Alias)
             {
-                this.Bufer.Text = newText;
-                this.Bufer.ViewModel.Representation = newText;
+                this.Bufer.SetText(newText);// TODO (l) remove this method void SetText(...) and add rebind/rendering
+                this.ViewModel.Representation = newText;
+                this.ViewModel.TextRepresentation = newText;
                 ChangingTextMenuItemBase._UpdateFocusTooltip();
 
-                bool isOriginText = newText == this.Bufer.ViewModel.OriginBuferText;
+                bool isOriginText = newText == this.ViewModel.OriginBuferTitle;
 
                 if (isOriginText)
                 {
+                    this.ViewModel.Alias = null;
                     this.Bufer.ApplyFontStyle(FontStyle.Regular);
                     this.BufermanHost.UserInteraction.ShowPopup(Resource.BuferAliasReturned, Resource.ChangeTextTitle);
                 }
                 else
                 {
+                    this.ViewModel.Alias = newText;
                     this.Bufer.ApplyFontStyle(FontStyle.Bold);
                 }
 

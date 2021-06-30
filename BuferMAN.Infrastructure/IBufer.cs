@@ -10,7 +10,7 @@ namespace BuferMAN.Infrastructure
     public interface IBufer
     {
         void SetContextMenu(IEnumerable<BufermanMenuItem> menuItems);
-        string Text { get; set; }
+        void SetText(string text);
         BuferViewModel ViewModel { get; set; }
         Font ApplyFontStyle(FontStyle style);
         void AddOnClickHandler(EventHandler onClick);

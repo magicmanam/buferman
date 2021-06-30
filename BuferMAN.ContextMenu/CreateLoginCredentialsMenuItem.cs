@@ -19,7 +19,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
 
         private void _CreateLoginCredentials(object sender, EventArgs e)
         {
-            var password = this.BufermanHost.UserInteraction.PromptPopup(Resource.CreateCredsPrefix + $" \"{this.Bufer.ViewModel.OriginBuferText}\". " + Resource.CreateCredsPostfix,
+            var password = this.BufermanHost.UserInteraction.PromptPopup(Resource.CreateCredsPrefix + $" \"{this.Bufer.ViewModel.OriginBuferTitle}\". " + Resource.CreateCredsPostfix,
                   Resource.CreateCredsTitle,
                    null);
 
@@ -31,14 +31,14 @@ namespace ClipboardViewerForm.ClipMenu.Items
             {
                 this.MenuItem.Text = Resource.LoginCreds;
                 this.LoginCreated?.Invoke(this, new CreateLoginCredentialsEventArgs(password));
-                this.TryChangeText(Resource.CredsPrefix + $" {this.Bufer.Text}");
+                this.TryChangeText(Resource.CredsPrefix + $" {this.Bufer.ViewModel.OriginBuferTitle}");
 
                 this.Bufer.AddOnClickHandler((object pasteCredsSender, EventArgs args) =>
                 {
                     WindowLevelContext.Current.HideWindow();
 
                     new KeyboardEmulator()
-                        .TypeText(this.Bufer.ViewModel.OriginBuferText)
+                        .TypeText(this.Bufer.ViewModel.TextData)
                         .PressTab()
                         .TypeText(password)
                         .PressEnter();
@@ -67,7 +67,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
                     WindowLevelContext.Current.HideWindow();
 
                     new KeyboardEmulator()
-                        .TypeText(this.Bufer.ViewModel.OriginBuferText);
+                        .TypeText(this.Bufer.ViewModel.TextData);
                 });
                 this.MenuItem.AddMenuItem(credsNameMenuItem);
             }

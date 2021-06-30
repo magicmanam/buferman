@@ -46,16 +46,9 @@ namespace BuferMAN.WinForms
             this._button.ContextMenu.PopulateMenuWithItems(menuItems);
         }
 
-        public string Text
+        public void SetText(string text)
         {
-            get
-            {
-                return this._button.Text;
-            }
-            set
-            {
-                this._button.Text = value;
-            }
+            this._button.Text = text;
         }
 
         public BuferViewModel ViewModel { get; set; }

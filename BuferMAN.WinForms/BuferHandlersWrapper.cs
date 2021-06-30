@@ -139,8 +139,9 @@ namespace BuferMAN.WinForms
                 }
             }
             this._bufer.ViewModel.DefaultBackColor = this._bufer.BackColor;
-            this._bufer.Text = buferText.Trim();
-            this._bufer.ViewModel.OriginBuferText = this._bufer.Text;
+            buferText = buferText.Trim();
+            this._bufer.SetText(buferText);
+            this._bufer.ViewModel.OriginBuferTitle = buferText;
 
             int maxBuferLength = this._settings.MaxBuferPresentationLength;
             if (isChangeTextAvailable && buferTextRepresentation != null && buferTextRepresentation.Length > maxBuferLength)
@@ -166,11 +167,27 @@ namespace BuferMAN.WinForms
 
             if (formats.Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT))
             {
-                this._bufer.ViewModel.Representation = this._bufer.ViewModel.Clip.GetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT) as Image;
-                this._bufer.MouseOverTooltip.IsBalloon = false;
-                this._bufer.MouseOverTooltip.OwnerDraw = true;
-                this._bufer.MouseOverTooltip.Popup += Tooltip_Popup;
-                this._bufer.MouseOverTooltip.Draw += Tooltip_Draw;
+                var image = this._bufer.ViewModel.Clip.GetData(ClipboardFormats.CUSTOM_IMAGE_FORMAT) as Image;
+                if (image != null)
+                {
+                    this._bufer.ViewModel.Representation = image;
+                    this._bufer.MouseOverTooltip.IsBalloon = false;
+                    this._bufer.MouseOverTooltip.OwnerDraw = true;
+                    this._bufer.MouseOverTooltip.Popup += (object sender, PopupEventArgs e) =>
+                    {
+                        e.ToolTipSize = new Size((int)(image.Width * IMAGE_SCALE), (int)(image.Height * IMAGE_SCALE));
+                    };
+                    this._bufer.MouseOverTooltip.Draw += (object sender, DrawToolTipEventArgs e) =>
+                    {
+                        using (var b = new TextureBrush(new Bitmap(image)))
+                        {
+                            b.ScaleTransform(IMAGE_SCALE, IMAGE_SCALE);
+
+                            var g = e.Graphics;
+                            g.FillRectangle(b, e.Bounds);
+                        }
+                    };
+                }
             }
 
             this._bufer.AddOnFocusHandler(this._Bufer_GotFocus);
@@ -185,32 +202,6 @@ namespace BuferMAN.WinForms
         private string _MakeSpecialBuferText(string baseString)
         {
             return $"<< {baseString} >>";
-        }
-
-        private void Tooltip_Draw(object sender, DrawToolTipEventArgs e)
-        {
-            var preview = this._bufer.ViewModel.Representation as Image;
-
-            if (preview != null)
-            {
-                using (var b = new TextureBrush(new Bitmap(preview)))
-                {
-                    b.ScaleTransform(IMAGE_SCALE, IMAGE_SCALE);
-
-                    var g = e.Graphics;
-                    g.FillRectangle(b, e.Bounds);
-                }
-            }
-        }
-
-        private void Tooltip_Popup(object sender, PopupEventArgs e)
-        {
-            var previewImage = this._bufer.ViewModel.Representation as Image;
-
-            if (previewImage != null)
-            {
-                e.ToolTipSize = new Size((int)(previewImage.Width * IMAGE_SCALE), (int)(previewImage.Height * IMAGE_SCALE));
-            }
         }
 
         private void _Bufer_GotFocus(object sender, EventArgs e)
