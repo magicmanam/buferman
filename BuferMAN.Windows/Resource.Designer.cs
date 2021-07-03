@@ -61,7 +61,7 @@ namespace BuferMAN.Windows {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You are launching the program in user mode. For correct work with programs launched in Admin mode, use context menu &quot;Run as administrator&quot;. Click &quot;Yes&quot; to continue or &quot;No&quot; if you want to run it as administrator (File Explorer with program selected will be opened)..
+        ///   Looks up a localized string similar to You are launching the program in user mode. For correct work with programs launched in Admin mode, run BuferMAN app as administrator. Click &quot;Yes&quot; to continue in user mode or &quot;No&quot; to run it as administrator (program&apos;s file will be opened in File Explorer)..
         /// </summary>
         internal static string AdminModeConfirmation {
             get {
