@@ -194,6 +194,11 @@ namespace BuferMAN.WinForms
                 }
             }
 
+            if (m.Msg == Messages.WM_QUERYENDSESSION)
+            {
+                this._bufermanApp.Exit();
+            }
+
             base.WndProc(ref m);
         }
 
