@@ -29,6 +29,7 @@ namespace BuferMAN.WinForms
         private Label _userManualLabel;
         private bool _isAdmin;
         private IBufermanApplication _bufermanApp;
+        private bool _isClosingWindowExplaned = false;
 
         public INotificationEmitter NotificationEmitter { get; private set; }
         public event EventHandler ClipbordUpdated;
@@ -364,6 +365,12 @@ namespace BuferMAN.WinForms
         {
             if (this._bufermanApp != null)
             {
+                if (this._isClosingWindowExplaned == false)
+                {
+                    this.NotificationEmitter.ShowInfoNotification(Resource.ClosingWindowExplanation, 2000);
+                    this._isClosingWindowExplaned = true;
+                }
+
                 e.Cancel = true;
                 var form = (Form)sender;
                 form.WindowState = FormWindowState.Minimized;

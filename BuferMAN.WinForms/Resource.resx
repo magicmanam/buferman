@@ -209,4 +209,7 @@
   <data name="OptionsWindowSaveButton" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="ClosingWindowExplanation" xml:space="preserve">
+    <value>BuferMAN is working in background. Click Alt+C to open.</value>
+  </data>
 </root>

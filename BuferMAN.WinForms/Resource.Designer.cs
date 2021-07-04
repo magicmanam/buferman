@@ -88,6 +88,15 @@ namespace BuferMAN.WinForms {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BuferMAN is working in background. Click Alt+C to open..
+        /// </summary>
+        internal static string ClosingWindowExplanation {
+            get {
+                return ResourceManager.GetString("ClosingWindowExplanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
         internal static string FileBufer {
