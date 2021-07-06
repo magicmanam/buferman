@@ -35,7 +35,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
 
                 this.Bufer.AddOnClickHandler((object pasteCredsSender, EventArgs args) =>
                 {
-                    WindowLevelContext.Current.HideWindow();
+                    this.BufermanHost.HideWindow();
 
                     new KeyboardEmulator()
                         .TypeText(this.Bufer.ViewModel.TextData)
@@ -46,7 +46,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
 
                 var credsPasswordEnterMenuItem = this.BufermanHost.CreateMenuItem(Resource.CredsPasswordEnter, (object pastePasswordSender, EventArgs args) =>
                 {
-                    WindowLevelContext.Current.HideWindow();
+                    this.BufermanHost.HideWindow();
                     new KeyboardEmulator()
                         .TypeText(password)
                         .PressEnter();
@@ -55,7 +55,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
 
                 var credsPasswordMenuItem = this.BufermanHost.CreateMenuItem(Resource.CredsPassword, (object pastePasswordSender, EventArgs args) =>
                 {
-                    WindowLevelContext.Current.HideWindow();
+                    this.BufermanHost.HideWindow();
 
                     new KeyboardEmulator()
                         .TypeText(password);
@@ -64,7 +64,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
 
                 var credsNameMenuItem = this.BufermanHost.CreateMenuItem(Resource.CredsName, (object pasteUsernameSender, EventArgs args) =>
                 {
-                    WindowLevelContext.Current.HideWindow();
+                    this.BufermanHost.HideWindow();
 
                     new KeyboardEmulator()
                         .TypeText(this.Bufer.ViewModel.TextData);

@@ -67,11 +67,9 @@
     <Compile Include="Files\IUserFileSelector.cs" />
     <Compile Include="INotificationEmitter.cs" />
     <Compile Include="Settings\IProgramSettingsGetter.cs" />
-    <Compile Include="IWindowLevelContext.cs" />
     <Compile Include="Menu\IMainMenuGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\IPersistentBufersStorage.cs" />
-    <Compile Include="WindowLevelContext.cs" />
     <Compile Include="Window\IRenderingHandler.cs" />
   </ItemGroup>
   <ItemGroup>

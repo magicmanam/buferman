@@ -193,7 +193,7 @@ namespace BuferMAN.WinForms
             this._bufer.AddOnFocusHandler(this._Bufer_GotFocus);
             this._bufer.AddOnUnfocusHandler(this._Bufer_LostFocus);
 
-            var buferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(this._bufer.ViewModel.Clip);
+            var buferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(this._bufer.ViewModel.Clip, bufermanHost);
             this._bufer.AddOnClickHandler(buferSelectionHandler.DoOnClipSelection);
 
             bufer.SetContextMenu(buferContextMenuGenerator.GenerateContextMenuItems(this._bufer, isChangeTextAvailable, buferSelectionHandler, bufermanHost, buferTypeGenerator));

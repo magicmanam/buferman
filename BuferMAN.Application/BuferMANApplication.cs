@@ -25,7 +25,6 @@ namespace BuferMAN.Application
         private readonly IMainMenuGenerator _mainMenuGenerator;
         private readonly IIDataObjectHandler _dataObjectHandler;
         private readonly IBufersStorageFactory _bufersStorageFactory;
-        private readonly IWindowLevelContext _windowLevelContext;
         private IBufermanHost _bufermanHost;
         private readonly IProgramSettingsGetter _settings;
         private bool _shouldCatchCopies = true;
@@ -44,7 +43,6 @@ namespace BuferMAN.Application
             IIDataObjectHandler dataObjectHandler,
             IProgramSettingsGetter settings,
             IMainMenuGenerator mainMenuGenerator,
-            IWindowLevelContext windowLevelContext,
             IEnumerable<IBufermanPlugin> plugins,
             IBufersStorageFactory bufersStorageFactory,
             IBufermanOptionsWindowFactory optionsWindowFactory,
@@ -57,7 +55,6 @@ namespace BuferMAN.Application
             this._mainMenuGenerator = mainMenuGenerator;
             this._dataObjectHandler = dataObjectHandler;
             this._bufersStorageFactory = bufersStorageFactory;
-            this._windowLevelContext = windowLevelContext;
             this._settings = settings;
             this._optionsWindowFactory = optionsWindowFactory;
             this._mapper = mapper;
@@ -110,8 +107,6 @@ namespace BuferMAN.Application
 
             this._bufermanHost.SetOnKeyDown(this.OnKeyDown);
             this._BuferFocused += this._bufermanHost.BuferFocused;
-
-            WindowLevelContext.SetCurrent(this._windowLevelContext);
         }
 
         public bool NeedRerender { get; set; }
@@ -214,7 +209,7 @@ namespace BuferMAN.Application
             switch (e.KeyCode)
             {
                 case Keys.Escape:
-                    WindowLevelContext.Current.HideWindow();
+                    this._bufermanHost.HideWindow();
                     break;
                 case Keys.Space:
                     new KeyboardEmulator().PressEnter();

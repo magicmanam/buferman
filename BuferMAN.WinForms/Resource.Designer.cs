@@ -88,7 +88,7 @@ namespace BuferMAN.WinForms {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to BuferMAN is working in background. Click Alt+C to open..
+        ///   Looks up a localized string similar to Application is working in background. Click Alt+C to open..
         /// </summary>
         internal static string ClosingWindowExplanation {
             get {

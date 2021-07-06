@@ -143,7 +143,7 @@ namespace BuferMAN.ContextMenu
                         var textDataObject = new DataObject();
                         textDataObject.SetText(buferViewModel.OriginBuferTitle);
 
-                        var textBuferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(textDataObject);
+                        var textBuferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(textDataObject, bufermanHost);
                         textBuferSelectionHandler.DoOnClipSelection(sender, args);
                     });
                     model.PasteMenuItem.AddMenuItem(pasteAsTextMenuItem);
@@ -153,7 +153,7 @@ namespace BuferMAN.ContextMenu
 
                 model.PasteMenuItem.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuCharByChar, (object sender, EventArgs args) =>
                 {
-                    WindowLevelContext.Current.HideWindow();
+                    bufermanHost.HideWindow();
                     new KeyboardEmulator().TypeText(model.Bufer.ViewModel.OriginBuferTitle);
                 }));
 

@@ -11,21 +11,23 @@ namespace BuferMAN.ContextMenu
     {
         private readonly IDataObject _dataObject;
         private readonly IClipboardWrapper _clipboardWrapper;
+        private readonly IBufermanHost _bufermanHost;
 
-        public BuferSelectionHandler(IDataObject dataObject, IClipboardWrapper clipboardWrapper)
+        public BuferSelectionHandler(IDataObject dataObject, IClipboardWrapper clipboardWrapper, IBufermanHost bufermanHost)
         {
             this._dataObject = dataObject;
             this._clipboardWrapper = clipboardWrapper;
+            this._bufermanHost = bufermanHost;
         }
 
         public void DoOnClipSelection(object sender, EventArgs e)
         {
-			this._clipboardWrapper.SetDataObject(this._dataObject);
+            this._clipboardWrapper.SetDataObject(this._dataObject);
 
-            WindowLevelContext.Current.HideWindow();
+            this._bufermanHost.HideWindow();
 
             var currentLanguage = InputLanguage.CurrentInputLanguage;
-            InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("en-US"));//This culture should be calculated automatically
+            InputLanguage.CurrentInputLanguage = InputLanguage.FromCulture(new CultureInfo("en-US"));// TODO (m) This culture should be calculated automatically
 
             new KeyboardEmulator()
                 .HoldDownCtrl()

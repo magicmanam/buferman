@@ -13,9 +13,9 @@ namespace BuferMAN.ContextMenu
             this._clipboardWrapper = clipboardWrapper;
         }
 
-        public IBuferSelectionHandler CreateHandler(IDataObject dataObject)
+        public IBuferSelectionHandler CreateHandler(IDataObject dataObject, IBufermanHost bufermanHost)
         {
-            return new BuferSelectionHandler(dataObject, this._clipboardWrapper);
+            return new BuferSelectionHandler(dataObject, this._clipboardWrapper, bufermanHost);
         }
     }
 }

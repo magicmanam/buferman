@@ -372,8 +372,7 @@ namespace BuferMAN.WinForms
                 }
 
                 e.Cancel = true;
-                var form = (Form)sender;
-                form.WindowState = FormWindowState.Minimized;
+                this.HideWindow();
             }
         }
 
