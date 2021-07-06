@@ -97,6 +97,15 @@ namespace BuferMAN.WinForms {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tip: use Esc key to hide the application..
+        /// </summary>
+        internal static string EscHotKeyExplanation {
+            get {
+                return ResourceManager.GetString("EscHotKeyExplanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
         internal static string FileBufer {

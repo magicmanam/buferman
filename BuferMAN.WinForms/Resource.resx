@@ -212,4 +212,7 @@
   <data name="ClosingWindowExplanation" xml:space="preserve">
     <value>Application is working in background. Click Alt+C to open.</value>
   </data>
+  <data name="EscHotKeyExplanation" xml:space="preserve">
+    <value>Tip: use Esc key to hide the application.</value>
+  </data>
 </root>

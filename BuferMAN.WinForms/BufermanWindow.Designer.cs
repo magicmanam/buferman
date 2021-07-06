@@ -30,6 +30,7 @@ namespace BuferMAN.WinForms
         private bool _isAdmin;
         private IBufermanApplication _bufermanApp;
         private bool _isClosingWindowExplaned = false;
+        private bool _isEscHotKeyIntroduced = false;
 
         public INotificationEmitter NotificationEmitter { get; private set; }
         public event EventHandler ClipbordUpdated;
@@ -214,6 +215,11 @@ namespace BuferMAN.WinForms
 
         public void ActivateWindow()
         {
+            if (!this._isEscHotKeyIntroduced)
+            {
+                this.NotificationEmitter.ShowInfoNotification(Resource.EscHotKeyExplanation, 2500);
+                this._isEscHotKeyIntroduced = true;
+            }
             this.WindowState = FormWindowState.Normal;
             this.Visible = true;
         }
@@ -367,7 +373,7 @@ namespace BuferMAN.WinForms
             {
                 if (this._isClosingWindowExplaned == false)
                 {
-                    this.NotificationEmitter.ShowInfoNotification(Resource.ClosingWindowExplanation, 2000);
+                    this.NotificationEmitter.ShowInfoNotification(Resource.ClosingWindowExplanation, 2500);
                     this._isClosingWindowExplaned = true;
                 }
 

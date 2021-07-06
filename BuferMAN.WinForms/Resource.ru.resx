@@ -212,4 +212,7 @@
   <data name="ClosingWindowExplanation" xml:space="preserve">
     <value>Приложение работает в фоновом режиме: Alt+C чтобы открыть.</value>
   </data>
+  <data name="EscHotKeyExplanation" xml:space="preserve">
+    <value>Подсказка: используйте клавишу Esc, чтобы спрятать приложение.</value>
+  </data>
 </root>
