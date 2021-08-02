@@ -1,4 +1,5 @@
-﻿using BuferMAN.Infrastructure.Settings;
+﻿using BuferMAN.Infrastructure.Files;
+using BuferMAN.Infrastructure.Settings;
 using BuferMAN.Models;
 using System;
 using System.Collections.Generic;
@@ -13,13 +14,14 @@ namespace BuferMAN.Settings
         private readonly IList<ISettingItem> _settingItems;
 
         private readonly SettingItem<bool> _showUserModeNotificationSetting;
+        private readonly SettingItem<bool> _restorePreviousSession;
         private readonly SettingItem<bool> _showFocusTooltipSetting;
         private readonly SettingItem<int> _pinnedBuferBackgroundColorSetting;
         private readonly SettingItem<int> _buferDefaultBackgroundColorSetting;
         private readonly SettingItem<int> _currentBuferBackgroundColorSetting;
         private readonly SettingItem<int> _focusTooltipDurationSetting;
 
-        public ProgramSettings()
+        public ProgramSettings(IFileStorage fileStorage)
         {
             this._buferDefaultBackgroundColorSetting = new SettingItem<int>(
                 Color.Silver.ToArgb(),
@@ -27,9 +29,14 @@ namespace BuferMAN.Settings
                 (value) => { User.Default.BuferDefaultBackgroundColor = value; });
 
             this._showUserModeNotificationSetting = new SettingItem<bool>(
-                true,
+                false,
                 User.Default.ShowUserModeNotification,
                 (value) => { User.Default.ShowUserModeNotification = value; });
+
+            this._restorePreviousSession = new SettingItem<bool>(
+                true,
+                User.Default.RestorePreviousSession,
+                (value) => { User.Default.RestorePreviousSession = value; });
 
             this._pinnedBuferBackgroundColorSetting = new SettingItem<int>(
                 Color.LightSlateGray.ToArgb(),
@@ -55,11 +62,17 @@ namespace BuferMAN.Settings
             {
                 this._buferDefaultBackgroundColorSetting,
                 this._showUserModeNotificationSetting,
+                this._restorePreviousSession,
                 this._showFocusTooltipSetting,
                 this._focusTooltipDurationSetting,
                 this._pinnedBuferBackgroundColorSetting,
                 this._currentBuferBackgroundColorSetting
             };
+
+            if (!fileStorage.FileExists(this.DefaultBufersFileName))
+            {
+                fileStorage.CreateFile(this.DefaultBufersFileName);
+            }
         }
 
         public IEnumerable<BufersStorageModel> StoragesToLoadOnStart =>
@@ -71,7 +84,7 @@ namespace BuferMAN.Settings
                 }
             };
 
-        public string DefaultBufersFileName => "bufers.json";
+        public string DefaultBufersFileName => Path.Combine(this._bufermanDataFolder, "bufers.json");
 
         public int MaxBufersCount => 30;
 
@@ -143,6 +156,18 @@ namespace BuferMAN.Settings
             }
         }
 
+        public bool RestorePreviousSession
+        {
+            get
+            {
+                return this._restorePreviousSession.SavedValue;
+            }
+            set
+            {
+                this._restorePreviousSession.CurrentValue = value;
+            }
+        }
+
         public int FocusTooltipDuration
         {
             get
@@ -206,10 +231,12 @@ namespace BuferMAN.Settings
             get
             {
                 return Path.Combine(
-                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                    "BuferMAN",
+                    this._bufermanDataFolder,
                     "session");// TODO (s) in constants
             }
         }
+
+        private readonly string _bufermanDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "BuferMAN");
     }
 }

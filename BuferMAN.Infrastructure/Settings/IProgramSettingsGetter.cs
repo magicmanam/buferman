@@ -19,6 +19,7 @@ namespace BuferMAN.Infrastructure.Settings
         Color PinnedBuferBackgroundColor { get; }
         Color PinnedCurrentBuferBackColor { get; }
         bool ShowUserModeNotification { get; }
+        bool RestorePreviousSession { get; }
         bool ShowFocusTooltip { get; }
     }
 }

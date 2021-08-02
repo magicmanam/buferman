@@ -25,7 +25,7 @@ namespace BuferMAN.Settings {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool ShowUserModeNotification {
             get {
                 return ((bool)(this["ShowUserModeNotification"]));
@@ -92,6 +92,18 @@ namespace BuferMAN.Settings {
             }
             set {
                 this["ShowFocusTooltip"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool RestorePreviousSession {
+            get {
+                return ((bool)(this["RestorePreviousSession"]));
+            }
+            set {
+                this["RestorePreviousSession"] = value;
             }
         }
     }

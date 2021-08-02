@@ -215,4 +215,10 @@
   <data name="EscHotKeyExplanation" xml:space="preserve">
     <value>Tip: use Esc key to hide the application.</value>
   </data>
+  <data name="OptionsRestorePreviousSession" xml:space="preserve">
+    <value>Restore previous session</value>
+  </data>
+  <data name="OptionsRestorePreviousSessionTooltip" xml:space="preserve">
+    <value>Only text bufers</value>
+  </data>
 </root>

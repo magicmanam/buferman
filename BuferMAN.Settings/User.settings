@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="ShowUserModeNotification" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
+      <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="CurrentBuferBackgroundColor" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
@@ -18,6 +18,9 @@
       <Value Profile="(Default)">2500</Value>
     </Setting>
     <Setting Name="ShowFocusTooltip" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="RestorePreviousSession" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>

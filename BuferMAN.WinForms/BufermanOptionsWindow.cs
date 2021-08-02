@@ -15,6 +15,8 @@ namespace BuferMAN.WinForms
         private readonly IContainer _components = null;
         private readonly Button _saveButton;
         private readonly Button _restoreButton;
+        private readonly Padding _flowLayoutPanelPadding = new Padding(3);
+        private readonly Padding _groupBoxPadding = new Padding(5);
 
         public BufermanOptionsWindow(
             IProgramSettingsGetter settingsGetter,
@@ -110,7 +112,7 @@ namespace BuferMAN.WinForms
                 FlowDirection = FlowDirection.TopDown,
                 Parent = commonTab,
                 Dock = DockStyle.Fill,
-                Padding = new Padding(5)
+                Padding = this._flowLayoutPanelPadding
             };
 
             this._SetupStartupGroup(panel);
@@ -125,36 +127,27 @@ namespace BuferMAN.WinForms
             {
                 Text = Resource.OptionsFocusBuferTooltip,
                 AutoSize = true,
-                Margin = new Padding(5),
-                Dock = DockStyle.Top,
+                Margin = this._groupBoxPadding,
                 Height = 0,
                 Parent = panel
             };
 
-            var onFocusTooltipPanel = new FlowLayoutPanel()
-            {
-                FlowDirection = FlowDirection.TopDown,
-                Top = 15,
-                Left = 10,
-                Height = 0,
-                AutoSize = true,
-                Parent = tooltipGroupBox
-            };
+            var onFocusTooltipGroupBoxPanel = BufermanOptionsWindow._CreateGroupBoxPanel(tooltipGroupBox);
 
             var focusTooltipCheckbox = new CheckBox
             {
                 Text = Resource.OptionsFocusBuferEnableDisable,
                 AutoSize = true,
                 Checked = this._settingsGetter.ShowFocusTooltip,
-                Margin = new Padding(7),
-                Parent = onFocusTooltipPanel
+                Parent = onFocusTooltipGroupBoxPanel
             };
 
             var tooltipDurationPanel = new FlowLayoutPanel
             {
                 AutoSize = true,
                 FlowDirection = FlowDirection.LeftToRight,
-                Parent = onFocusTooltipPanel
+                Parent = onFocusTooltipGroupBoxPanel,
+                Margin = new Padding(0)
             };
 
             var tooltipDurationInput = new NumericUpDown()
@@ -196,31 +189,23 @@ namespace BuferMAN.WinForms
 
         private void _SetupStartupGroup(FlowLayoutPanel panel)
         {
-            var startupGroup = new GroupBox
+            var startupGroupBox = new GroupBox
             {
                 Text = Resource.OptionsStartup,
                 AutoSize = true,
-                Margin = new Padding(5),
+                Margin = this._groupBoxPadding,
                 Height = 0,
                 Parent = panel
             };
 
-            var startupPanel = new FlowLayoutPanel
-            {
-                FlowDirection = FlowDirection.TopDown,
-                Top = 15,
-                Left = 10,
-                Height = 0,
-                AutoSize = true,
-                Parent = startupGroup
-            };
+            var startupGroupBoxPanel = BufermanOptionsWindow._CreateGroupBoxPanel(startupGroupBox);
 
             var showUserModeNotificationCheckbox = new CheckBox()
             {
                 Text = Resource.OptionsAdministratorModeReminder,// TODO (s) rename this label
                 Checked = this._settingsGetter.ShowUserModeNotification,
                 AutoSize = true,
-                Parent = startupPanel
+                Parent = startupGroupBoxPanel
             };
             var userModeTooltip = new ToolTip()
             {
@@ -235,6 +220,42 @@ namespace BuferMAN.WinForms
 
                 this._saveButton.Enabled = this._settingsSetter.IsDirty;
                 this._restoreButton.Enabled = !this._settingsSetter.IsDefault;
+            };
+
+            var restorePreviousSessionCheckbox = new CheckBox()
+            {
+                Text = Resource.OptionsRestorePreviousSession,
+                Checked = this._settingsGetter.RestorePreviousSession,
+                AutoSize = true,
+                Parent = startupGroupBoxPanel
+            };
+
+            var restoreSessionTooltip = new ToolTip()
+            {
+                InitialDelay = 0,
+                IsBalloon = true
+            };
+            restoreSessionTooltip.SetToolTip(restorePreviousSessionCheckbox, Resource.OptionsRestorePreviousSessionTooltip);
+
+            restorePreviousSessionCheckbox.CheckedChanged += (object sender, EventArgs args) =>
+            {
+                this._settingsSetter.RestorePreviousSession = restorePreviousSessionCheckbox.Checked;
+
+                this._saveButton.Enabled = this._settingsSetter.IsDirty;
+                this._restoreButton.Enabled = !this._settingsSetter.IsDefault;
+            };
+        }
+
+        private static FlowLayoutPanel _CreateGroupBoxPanel(GroupBox tooltipGroupBox)
+        {
+            return new FlowLayoutPanel()
+            {
+                FlowDirection = FlowDirection.TopDown,
+                Top = 14,
+                Left = 5,
+                Height = 0,
+                AutoSize = true,
+                Parent = tooltipGroupBox
             };
         }
 

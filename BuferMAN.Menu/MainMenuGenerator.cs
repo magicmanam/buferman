@@ -85,15 +85,26 @@ namespace BuferMAN.Menu
             fileMenu.AddMenuItem(pauseResumeMenuItem);
 
             if (bufermanApplication.IsLatestSessionSaved())
-            {// TODO (s) Maybe show dialog to ask user to restore previous session? Can be a setting
-                var restoreSessionMenuItem = bufermanHost.CreateMenuItem(Resource.MenuFileRestoreSession);// TODO (s) question: do you need bufers count from recent session here?
-                restoreSessionMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
+            {
+                var restoreSessionMenuItem = bufermanHost.CreateMenuItem(Resource.MenuFileRestoreSession);
+                // TODO (s) question: do you need bufers count from recent session here?
+
+                if (this._settings.RestorePreviousSession)
                 {
                     restoreSessionMenuItem.Enabled = false;// TODO (s) on language change this property is lost (as well as others)!
 
                     bufermanApplication.RestoreSession();
-                });
-                restoreSessionMenuItem.ShortCut = Shortcut.CtrlR;
+                }
+                else
+                {
+                    restoreSessionMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
+                    {
+                        restoreSessionMenuItem.Enabled = false;// TODO (s) on language change this property is lost (as well as others)!
+
+                        bufermanApplication.RestoreSession();
+                    });
+                    restoreSessionMenuItem.ShortCut = Shortcut.CtrlR;
+                }
 
                 fileMenu.AddMenuItem(restoreSessionMenuItem);
             }

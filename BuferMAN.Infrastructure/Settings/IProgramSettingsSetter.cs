@@ -5,6 +5,7 @@ namespace BuferMAN.Infrastructure.Settings
     public interface IProgramSettingsSetter
     {
         bool ShowUserModeNotification { set; }
+        bool RestorePreviousSession { set; }
         Color CurrentBuferBackgroundColor { set; }
         Color BuferDefaultBackgroundColor { set; }
         Color PinnedBuferBackgroundColor { set; }

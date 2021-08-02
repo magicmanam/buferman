@@ -215,4 +215,10 @@
   <data name="EscHotKeyExplanation" xml:space="preserve">
     <value>Подсказка: используйте клавишу Esc, чтобы спрятать приложение.</value>
   </data>
+  <data name="OptionsRestorePreviousSession" xml:space="preserve">
+    <value>Восстанавливать предыдущую сессию</value>
+  </data>
+  <data name="OptionsRestorePreviousSessionTooltip" xml:space="preserve">
+    <value>Только текстовые буферы</value>
+  </data>
 </root>

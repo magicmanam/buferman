@@ -279,6 +279,24 @@ namespace BuferMAN.WinForms {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restore previous session.
+        /// </summary>
+        internal static string OptionsRestorePreviousSession {
+            get {
+                return ResourceManager.GetString("OptionsRestorePreviousSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Only text bufers.
+        /// </summary>
+        internal static string OptionsRestorePreviousSessionTooltip {
+            get {
+                return ResourceManager.GetString("OptionsRestorePreviousSessionTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Startup.
         /// </summary>
         internal static string OptionsStartup {
