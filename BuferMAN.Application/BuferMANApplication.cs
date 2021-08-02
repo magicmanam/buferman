@@ -12,6 +12,7 @@ using magicmanam.UndoRedo;
 using magicmanam.Windows;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -318,11 +319,11 @@ namespace BuferMAN.Application
                                    .Where(b => b.Clip.IsStringObject())
                                    .Select(b => this._mapper.Map(b)))
                 .ToList();
-
+            
             if (buferItems.Any())
             {
                 var now = DateTime.Now;
-                var sessionFile = this._settings.SessionsRootDirectory + $"\\{BufermanApplication.SESSION_FILE_PREFIX}_{now.Year}_{now.Month}_{now.Day}_{now.Hour}_{now.Minute}_{now.Second}_{now.Millisecond}_{buferItems.Count()}.json";
+                var sessionFile = Path.Combine(this._settings.SessionsRootDirectory, $"{BufermanApplication.SESSION_FILE_PREFIX}_{now.Year}_{now.Month}_{now.Day}_{now.Hour}_{now.Minute}_{now.Second}_{now.Millisecond}_{buferItems.Count()}.json");
 
                 var storage = this._bufersStorageFactory.CreateStorageByFileExtension(sessionFile);
 

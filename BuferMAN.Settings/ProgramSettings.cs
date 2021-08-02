@@ -1,5 +1,6 @@
 ﻿using BuferMAN.Infrastructure.Settings;
 using BuferMAN.Models;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -204,7 +205,10 @@ namespace BuferMAN.Settings
         {
             get
             {
-                return Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar + "session" + Path.DirectorySeparatorChar;
+                return Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "BuferMAN",
+                    "session");// TODO (s) in constants
             }
         }
     }

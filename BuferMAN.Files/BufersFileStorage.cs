@@ -62,13 +62,13 @@ namespace BuferMAN.Files
 
         public void SaveBufers(IEnumerable<BuferItem> buferItems)
         {
-            if (!this._fileStorage.FileExists(this._filePath))
-            {
-                this._fileStorage.CreateFile(this._filePath);
-            }
-
             try
             {
+                if (!this._fileStorage.FileExists(this._filePath))
+                {
+                    this._fileStorage.CreateFile(this._filePath);
+                }
+
                 List<BuferItem> bufers;
 
                 using (var fileReader = BufersFileStorage.GetMultiLanguageFileReader(this._filePath))
