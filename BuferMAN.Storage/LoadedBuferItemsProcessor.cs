@@ -22,7 +22,7 @@ namespace BuferMAN.Storage
 
         public void ProcessBuferItems(IEnumerable<BuferItem> bufers)
         {
-            using (var action = UndoableContext<ApplicationStateSnapshot>.Current.StartAction())
+            using (var action = UndoableContext<ApplicationStateSnapshot>.Current.StartAction(Resource.BufersLoaded))
             {
                 var loaded = false;
 
