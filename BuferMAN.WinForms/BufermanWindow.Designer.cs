@@ -29,8 +29,10 @@ namespace BuferMAN.WinForms
         private Label _userManualLabel;
         private bool _isAdmin;
         private IBufermanApplication _bufermanApp;
-        private bool _isClosingWindowExplaned = false;
-        private bool _isEscHotKeyIntroduced = false;
+        private bool _wasWindowClosed = false;
+        private bool _wasWindowActivated = false;
+        private IProgramSettingsGetter _settingsGetter;
+        private IProgramSettingsSetter _settingsSetter;
 
         public INotificationEmitter NotificationEmitter { get; private set; }
         public event EventHandler ClipbordUpdated;
@@ -41,12 +43,15 @@ namespace BuferMAN.WinForms
         public ToolStripStatusLabel StatusLabel { get; set; }
 
         public BufermanWindow(
-            IProgramSettingsGetter settings,
+            IProgramSettingsGetter settingsGetter,
             IRenderingHandler renderingHandler,
-            IUserInteraction userInteraction)
+            IUserInteraction userInteraction,
+            IProgramSettingsSetter settingsSetter)
         {
-            this._buttonsMap = new Dictionary<Guid, Button>(settings.MaxBufersCount + settings.ExtraBufersCount);
+            this._buttonsMap = new Dictionary<Guid, Button>(settingsGetter.MaxBufersCount + settingsGetter.ExtraBufersCount);
             this._renderingHandler = renderingHandler;
+            this._settingsGetter = settingsGetter;
+            this._settingsSetter = settingsSetter;
 
             this._userInteraction = userInteraction;
         }
@@ -215,11 +220,21 @@ namespace BuferMAN.WinForms
 
         public void ActivateWindow()
         {
-            if (!this._isEscHotKeyIntroduced)
+            var escHotKeyIntroCounter = this._settingsGetter.EscHotKeyIntroductionCounter;
+
+            if (!this._wasWindowActivated && escHotKeyIntroCounter < int.MaxValue / 8)
             {
-                this.NotificationEmitter.ShowInfoNotification(Resource.EscHotKeyExplanation, 2500);
-                this._isEscHotKeyIntroduced = true;
+                if (this._IsPowerOfTwo(escHotKeyIntroCounter))
+                {
+                    this.NotificationEmitter.ShowInfoNotification(Resource.EscHotKeyExplanation, 2500);
+                    escHotKeyIntroCounter *= 4;
+                }
+
+                this._settingsSetter.EscHotKeyIntroductionCounter = escHotKeyIntroCounter - 1;
+
+                this._wasWindowActivated = true;
             }
+
             this.WindowState = FormWindowState.Normal;
             this.Visible = true;
         }
@@ -250,6 +265,10 @@ namespace BuferMAN.WinForms
 
         public BuferViewModel LatestFocusedBufer { get; set; }
 
+        private bool _IsPowerOfTwo(int number)
+        {
+            return (number & (number - 1)) == 0;
+        }
         private void _InitializeForm()
         {
             this.SuspendLayout();
@@ -371,10 +390,19 @@ namespace BuferMAN.WinForms
         {
             if (this._bufermanApp != null)
             {
-                if (this._isClosingWindowExplaned == false)
+                var closingWindowExplanationCounter = this._settingsGetter.ClosingWindowExplanationCounter;
+
+                if (!this._wasWindowClosed && closingWindowExplanationCounter < int.MaxValue / 8)
                 {
-                    this.NotificationEmitter.ShowInfoNotification(Resource.ClosingWindowExplanation, 2500);
-                    this._isClosingWindowExplaned = true;
+                    if (this._IsPowerOfTwo(closingWindowExplanationCounter))
+                    {
+                        this.NotificationEmitter.ShowInfoNotification(Resource.ClosingWindowExplanation, 2500);
+                        closingWindowExplanationCounter *= 4;
+                    }
+
+                    this._settingsSetter.ClosingWindowExplanationCounter = closingWindowExplanationCounter - 1;
+
+                    this._wasWindowClosed = true;
                 }
 
                 e.Cancel = true;

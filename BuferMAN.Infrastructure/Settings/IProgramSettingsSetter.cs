@@ -11,6 +11,8 @@ namespace BuferMAN.Infrastructure.Settings
         Color PinnedBuferBackgroundColor { set; }
         int FocusTooltipDuration { set; }
         bool ShowFocusTooltip { set; }
+        int EscHotKeyIntroductionCounter { set; }
+        int ClosingWindowExplanationCounter { set; }
         bool IsDirty { get; }
         bool IsDefault { get; }
         void Save();

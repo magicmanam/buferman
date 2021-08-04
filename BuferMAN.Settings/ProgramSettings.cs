@@ -192,6 +192,32 @@ namespace BuferMAN.Settings
             }
         }
 
+        public int EscHotKeyIntroductionCounter
+        {
+            get
+            {
+                return User.Default.EscHotKeyIntroductionCounter;
+            }
+            set
+            {
+                User.Default.EscHotKeyIntroductionCounter = value;
+                User.Default.Save();
+            }
+        }
+
+        public int ClosingWindowExplanationCounter
+        {
+            get
+            {
+                return User.Default.ClosingWindowExplanationCounter;
+            }
+            set
+            {
+                User.Default.ClosingWindowExplanationCounter = value;
+                User.Default.Save();
+            }
+        }
+
         public void RestoreDefault()
         {
             foreach (var setting in this._settingItems)

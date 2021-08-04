@@ -21,5 +21,7 @@ namespace BuferMAN.Infrastructure.Settings
         bool ShowUserModeNotification { get; }
         bool RestorePreviousSession { get; }
         bool ShowFocusTooltip { get; }
+        int EscHotKeyIntroductionCounter { get; }
+        int ClosingWindowExplanationCounter { get; }
     }
 }
