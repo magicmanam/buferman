@@ -19,7 +19,7 @@ namespace BuferMAN.WinForms.Tests
         private readonly Fake<IProgramSettingsGetter> _settings = new Fake<IProgramSettingsGetter>();
 
         [TestMethod]
-        public void On_Text_format_button_has_data_as_tag_and_text_trimmed()
+        public void Sets_Trimmed_TextRepresentation_To_OriginBuferTitle()
         {
             // Arrange
             var originText = " Text";
@@ -29,7 +29,8 @@ namespace BuferMAN.WinForms.Tests
             {
                 ViewModel = new BuferViewModel()
                 {
-                    Clip = data
+                    Clip = data,
+                    TextRepresentation = originText
                 }
             };
             this._settings.CallsTo(s => s.MaxBuferPresentationLength)
@@ -45,73 +46,7 @@ namespace BuferMAN.WinForms.Tests
                 bufer);
 
             // Assert
-            Assert.AreEqual(originText, bufer.ViewModel.Representation);
-            Assert.AreEqual(originText.Trim(), bufer.ViewModel.OriginBuferTitle);
-        }
-
-        [TestMethod]
-        public void On_String_format_button_has_data_as_tag_and_text_trimmed()
-        {
-            // Arrange
-            var originText = "  String";
-            var data = new DataObject(DataFormats.StringFormat, originText);
-            data.SetData(DataFormats.Text, " Text");
-            data.SetData(DataFormats.UnicodeText, null);
-            var bufer = new Bufer
-            {
-                ViewModel = new BuferViewModel
-                {
-                    Clip = data
-                }
-            };
-            this._settings.CallsTo(p => p.MaxBuferPresentationLength)
-                .Returns(3000);
-
-            // Act
-            var wrapper = new BuferHandlersWrapper(
-                A.Fake<IBuferContextMenuGenerator>(),
-                A.Fake<IBuferSelectionHandlerFactory>(),
-                A.Fake<IFileStorage>(),
-                A.Fake<IBufermanHost>(),
-                this._settings.FakedObject,
-                bufer);
-
-            // Assert
-            Assert.AreEqual(originText, bufer.ViewModel.Representation);
-            Assert.AreEqual(originText.Trim(), bufer.ViewModel.OriginBuferTitle);
-        }
-
-        [TestMethod]
-        public void On_Unicode_format_button_has_data_as_tag_and_text_trimmed()
-        {
-            // Arrange
-            var originText = "   Unicode";
-            var data = new DataObject(DataFormats.UnicodeText, originText);
-            data.SetData(DataFormats.Text, " Text");
-            data.SetData(DataFormats.StringFormat, " String");
-            var bufer = new Bufer
-            {
-                ViewModel = new BuferViewModel
-                {
-                    Clip = data
-                }
-            };
-            this._settings.CallsTo(p => p.MaxBuferPresentationLength)
-                .Returns(3000);
-
-            // Act
-            var wrapper = new BuferHandlersWrapper(
-                data,
-                A.Fake<IBuferContextMenuGenerator>(), 
-                A.Fake<IBuferSelectionHandlerFactory>(), 
-                A.Fake<IFileStorage>(), 
-                A.Fake<IBufermanHost>(), 
-                this._settings.FakedObject, 
-                bufer);
-
-            // Assert
-            Assert.AreEqual(originText, bufer.ViewModel.Representation);
-            Assert.AreEqual(originText.Trim(), bufer.ViewModel.OriginBuferTitle);
+            Assert.AreEqual("Text", bufer.ViewModel.OriginBuferTitle);
         }
 
         [TestMethod]
@@ -306,7 +241,7 @@ namespace BuferMAN.WinForms.Tests
         }
 
         [TestMethod]
-        public void On_whitespaces_button_has_text_with_whitespaces_count()
+        public void Sets_OriginalBuferTitle_With_Whitespaces_Count_On_whitespaces_clip()
         {
             // Arrange
             var data = new DataObject(DataFormats.UnicodeText, "   ");
@@ -314,7 +249,8 @@ namespace BuferMAN.WinForms.Tests
             {
                 ViewModel = new BuferViewModel
                 {
-                    Clip = data
+                    Clip = data,
+                    TextRepresentation = "   "
                 }
             };
             var oldFont = bufer.GetButton().Font;

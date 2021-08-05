@@ -9,10 +9,10 @@ using System.Windows.Forms;
 
 namespace BuferMAN.Application
 {
-	internal class DataObjectHandler : IIDataObjectHandler
+    internal class DataObjectHandler : IIDataObjectHandler
     {
         private readonly IClipboardBuferService _clipboardBuferService;
-		private readonly IProgramSettingsGetter _settings;
+        private readonly IProgramSettingsGetter _settings;
 
         public event EventHandler<ClipboardUpdatedEventArgs> Updated;
         public event EventHandler Full;
