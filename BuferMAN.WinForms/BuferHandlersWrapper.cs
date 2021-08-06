@@ -53,51 +53,48 @@ namespace BuferMAN.WinForms
 
             var formats = this._bufer.ViewModel.Clip.GetFormats();
 
-            var isChangeTextAvailable = true;
-            IBuferTypeMenuGenerator buferTypeGenerator = null;
             string buferTitle = null;
-            string tooltipTitle = null;
-            string buferText = null;
+
             if (buferTextRepresentation == null)
             {
-                var files = this._bufer.ViewModel.Clip.GetData(DataFormats.FileDrop) as string[];
-                if (files != null && files.Length > 0)
+                string tempBuferText = null;
+
+                var clipFiles = this._bufer.ViewModel.Clip.GetData(DataFormats.FileDrop) as string[];
+                if (clipFiles != null && clipFiles.Length > 0)
                 {
-                    isChangeTextAvailable = false;
-                    var firstFile = files.First();
-                    var onlyFolders = files.Select(f => this._fileStorage.GetFileAttributes(f).HasFlag(FileAttributes.Directory))
+                    this._bufer.ViewModel.IsChangeTextAvailable = false;
+                    var firstFile = clipFiles.First();
+                    var onlyFolders = clipFiles.Select(f => this._fileStorage.GetFileAttributes(f).HasFlag(FileAttributes.Directory))
                         .All(f => f);
 
-                    if (files.Length == 1)
+                    if (clipFiles.Length == 1)
                     {
-                        buferText = onlyFolders ? Resource.FolderBufer : Resource.FileBufer;
+                        tempBuferText = onlyFolders ? Resource.FolderBufer : Resource.FileBufer;
 
                         const int MAX_FILE_LENGTH_FOR_BUFER_TITLE = 50;// TODO (m) into settings
                         if (firstFile.Length < MAX_FILE_LENGTH_FOR_BUFER_TITLE)
                         {
-                            tooltipTitle = this._MakeSpecialBuferText(buferText);
+                            this._bufer.ViewModel.TooltipTitle = this._MakeSpecialBuferText(tempBuferText);
                         }
 
-                        buferTitle = this._MakeSpecialBuferText(firstFile.Length < MAX_FILE_LENGTH_FOR_BUFER_TITLE ? firstFile : buferText);
-
-                        buferTypeGenerator = new FileBuferMenuGenerator(firstFile);
+                        buferTitle = this._MakeSpecialBuferText(firstFile.Length < MAX_FILE_LENGTH_FOR_BUFER_TITLE ? firstFile : tempBuferText);
                     }
                     else
                     {
-                        buferText = onlyFolders ? Resource.FoldersBufer : Resource.FilesBufer;
-                        buferTitle = this._MakeSpecialBuferText($"{buferText} ({files.Length})");
+                        tempBuferText = onlyFolders ? Resource.FoldersBufer : Resource.FilesBufer;
+                        buferTitle = this._MakeSpecialBuferText($"{tempBuferText} ({clipFiles.Length})");
                     }
 
                     var folder = this._fileStorage.GetFileDirectory(firstFile);
                     buferTextRepresentation += folder + Environment.NewLine + Environment.NewLine;
-                    buferTextRepresentation += string.Join(Environment.NewLine, files.Select(f => this._fileStorage.GetFileName(f) + (this._fileStorage.GetFileAttributes(f).HasFlag(FileAttributes.Directory) ? Path.DirectorySeparatorChar.ToString() : string.Empty)).ToList());
+                    buferTextRepresentation += string.Join(Environment.NewLine, clipFiles.Select(f => this._fileStorage.GetFileName(f) + (this._fileStorage.GetFileAttributes(f).HasFlag(FileAttributes.Directory) ? Path.DirectorySeparatorChar.ToString() : string.Empty)).ToList());
                 }
                 else
                 {
                     var isBitmap = formats.Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT);
                     if (isBitmap)
                     {
-                        isChangeTextAvailable = false;
+                        this._bufer.ViewModel.IsChangeTextAvailable = false;
                         buferTextRepresentation = this._MakeSpecialBuferText(Resource.ImageBufer);
                         this._bufer.ApplyFontStyle(FontStyle.Italic | FontStyle.Bold);
                     }
@@ -105,7 +102,7 @@ namespace BuferMAN.WinForms
                     {
                         if (formats.Contains(ClipboardFormats.FILE_CONTENTS_FORMAT))
                         {
-                            isChangeTextAvailable = false;
+                            this._bufer.ViewModel.IsChangeTextAvailable = false;
                             buferTextRepresentation = this._MakeSpecialBuferText(Resource.FileContentsBufer);
                             this._bufer.ApplyFontStyle(FontStyle.Italic | FontStyle.Bold);
                         }
@@ -113,11 +110,11 @@ namespace BuferMAN.WinForms
                 }
             }
 
-            buferText = buferTitle ?? buferTextRepresentation;
+            string buferText = buferTitle ?? buferTextRepresentation;
             if (string.IsNullOrWhiteSpace(buferText))
             {
                 this._bufer.ApplyFontStyle(FontStyle.Italic | FontStyle.Bold);
-                isChangeTextAvailable = false;
+                this._bufer.ViewModel.IsChangeTextAvailable = false;
 
                 if (buferText == null)
                 {
@@ -135,7 +132,7 @@ namespace BuferMAN.WinForms
                 else
                 {
                     buferText = this._MakeSpecialBuferText($"{buferText.Length}   {Resource.WhiteSpaces}");
-                    tooltipTitle = buferText;
+                    this._bufer.ViewModel.TooltipTitle = buferText;
                 }
             }
             this._bufer.ViewModel.DefaultBackColor = this._bufer.BackColor;
@@ -144,7 +141,7 @@ namespace BuferMAN.WinForms
             this._bufer.ViewModel.OriginBuferTitle = buferText;
 
             int maxBuferLength = this._settings.MaxBuferPresentationLength;
-            if (isChangeTextAvailable && buferTextRepresentation != null && buferTextRepresentation.Length > maxBuferLength)
+            if (this._bufer.ViewModel.IsChangeTextAvailable && buferTextRepresentation != null && buferTextRepresentation.Length > maxBuferLength)
             {
                 buferTextRepresentation = buferTextRepresentation.Substring(0, maxBuferLength - 300) + Environment.NewLine + Environment.NewLine + "...";
 
@@ -157,12 +154,24 @@ namespace BuferMAN.WinForms
             this._bufer.ViewModel.Representation = buferTextRepresentation;// Maybe store original presentation as well ?
             this._bufer.SetMouseOverToolTip(buferTextRepresentation);// TODO (s) an issue here: on alias change this tooltip will show wront tooltip
             this._bufer.ViewModel.TextRepresentation = buferTextRepresentation;
-            tooltipTitle = tooltipTitle ?? buferTitle;
+            this._bufer.ViewModel.TooltipTitle = this._bufer.ViewModel.TooltipTitle ?? buferTitle;
 
-            if (!string.IsNullOrWhiteSpace(tooltipTitle))
+            if (!string.IsNullOrWhiteSpace(this._bufer.ViewModel.TooltipTitle))
             {
-                this._bufer.MouseOverTooltip.ToolTipTitle = tooltipTitle;
-                this._bufer.FocusTooltip.ToolTipTitle = tooltipTitle;
+                this._bufer.MouseOverTooltip.ToolTipTitle = this._bufer.ViewModel.TooltipTitle;
+                this._bufer.FocusTooltip.ToolTipTitle = this._bufer.ViewModel.TooltipTitle;
+            }
+
+            IBuferTypeMenuGenerator buferTypeMenuGenerator = null;
+            var files = this._bufer.ViewModel.Clip.GetData(DataFormats.FileDrop) as string[];
+            if (files != null && files.Length > 0)
+            {
+                var firstFile = files.First();
+
+                if (files.Length == 1)
+                {
+                    buferTypeMenuGenerator = new FileBuferMenuGenerator(firstFile);
+                }
             }
 
             if (formats.Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT))
@@ -196,7 +205,7 @@ namespace BuferMAN.WinForms
             var buferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(this._bufer.ViewModel.Clip, bufermanHost);
             this._bufer.AddOnClickHandler(buferSelectionHandler.DoOnClipSelection);
 
-            bufer.SetContextMenu(buferContextMenuGenerator.GenerateContextMenuItems(this._bufer, isChangeTextAvailable, buferSelectionHandler, bufermanHost, buferTypeGenerator));
+            bufer.SetContextMenu(buferContextMenuGenerator.GenerateContextMenuItems(this._bufer, buferSelectionHandler, bufermanHost, buferTypeMenuGenerator));
         }
 
         private string _MakeSpecialBuferText(string baseString)

@@ -18,7 +18,9 @@ namespace BuferMAN.View
         public Guid ViewId { get; set; }
         public IDataObject Clip { get; set; }
         public bool Pinned { get; set; }
- 
+        public bool IsChangeTextAvailable { get; set; }
+        public string TooltipTitle { get; set; }
+        
         /// <summary>
         /// Gets or sets an user alias for bufer UI appearance. Null if not specified.
         /// </summary>

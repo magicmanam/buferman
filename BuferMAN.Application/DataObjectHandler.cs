@@ -54,6 +54,8 @@ namespace BuferMAN.Application
         // (not exist) <add pinned>
         public bool TryHandleDataObject(BuferViewModel buferViewModel)
         {
+            buferViewModel.IsChangeTextAvailable = true;
+
             buferViewModel.TextData = this._GetNotEmptyStringData(buferViewModel.Clip, DataFormats.UnicodeText, DataFormats.StringFormat, DataFormats.Text);
             buferViewModel.TextRepresentation = buferViewModel.TextData;
 

@@ -49,7 +49,6 @@ namespace BuferMAN.ContextMenu
         }
 
         public IEnumerable<BufermanMenuItem> GenerateContextMenuItems(IBufer bufer,
-            bool isChangeTextAvailable,
             IBuferSelectionHandler buferSelectionHandler,
             IBufermanHost bufermanHost,
             IBuferTypeMenuGenerator buferTypeMenuGenerator)
@@ -129,7 +128,7 @@ namespace BuferMAN.ContextMenu
             });
             model.PlaceInBuferMenuItem.ShortCut = Shortcut.CtrlC;
 
-            if (isChangeTextAvailable)
+            if (bufer.ViewModel.IsChangeTextAvailable)
             {
                 model.PasteMenuItem.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuPasteAsIs + $" {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
                 {
