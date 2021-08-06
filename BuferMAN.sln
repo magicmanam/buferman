@@ -50,6 +50,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.Wix", "BuferMAN.Wix\BuferMAN.Wix.csproj", "{47141C49-D4D5-4908-B648-F446958B6CDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.Application.Tests", "BuferMAN.Application.Tests\BuferMAN.Application.Tests.csproj", "{D0D29DA9-08BF-46A7-9E2A-E9CA112129DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -139,6 +143,13 @@ Global
 		{87E5FD4D-BB8C-4F2D-A7AB-3B3CE954F3EE}.Debug|Any CPU.ActiveCfg = Debug
 		{87E5FD4D-BB8C-4F2D-A7AB-3B3CE954F3EE}.Release|Any CPU.ActiveCfg = Release
 		{87E5FD4D-BB8C-4F2D-A7AB-3B3CE954F3EE}.Release|Any CPU.Build.0 = Release
+		{47141C49-D4D5-4908-B648-F446958B6CDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47141C49-D4D5-4908-B648-F446958B6CDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47141C49-D4D5-4908-B648-F446958B6CDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D0D29DA9-08BF-46A7-9E2A-E9CA112129DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D0D29DA9-08BF-46A7-9E2A-E9CA112129DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D0D29DA9-08BF-46A7-9E2A-E9CA112129DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D0D29DA9-08BF-46A7-9E2A-E9CA112129DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
