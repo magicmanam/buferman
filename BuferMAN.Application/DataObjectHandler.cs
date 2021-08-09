@@ -6,6 +6,8 @@ using magicmanam.UndoRedo;
 using System;
 using BuferMAN.Infrastructure.Settings;
 using System.Windows.Forms;
+using System.IO;
+using BuferMAN.Infrastructure.Files;
 
 namespace BuferMAN.Application
 {
@@ -13,14 +15,16 @@ namespace BuferMAN.Application
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IProgramSettingsGetter _settings;
+        private readonly IFileStorage _fileStorage;
 
         public event EventHandler<ClipboardUpdatedEventArgs> Updated;
         public event EventHandler Full;
 
-        public DataObjectHandler(IClipboardBuferService clipboardBuferService, IProgramSettingsGetter settings)
+        public DataObjectHandler(IClipboardBuferService clipboardBuferService, IProgramSettingsGetter settings, IFileStorage fileStorage)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._settings = settings;
+            this._fileStorage = fileStorage;
         }
 
         private long _copiesCount = 0;
@@ -64,6 +68,23 @@ namespace BuferMAN.Application
             if (buferViewModel.Clip.GetData(DataFormats.StringFormat) as string == string.Empty)
             {
                 // TODO (s) maybe set System.String data ? Can be implemented via setting. Such bufers can be marked
+            }
+
+            var files = buferViewModel.Clip.GetData(DataFormats.FileDrop) as string[];
+            if (files != null && files.Length > 0)
+            {
+                var firstFile = files.First();
+                var onlyFolders = files.Select(f => this._fileStorage.GetFileAttributes(f).HasFlag(FileAttributes.Directory))
+                    .All(f => f);
+
+                if (files.Length == 1)
+                {
+                    const int MAX_FILE_LENGTH_FOR_BUFER_TITLE = 50;// TODO (m) into settings
+                    if (firstFile.Length < MAX_FILE_LENGTH_FOR_BUFER_TITLE)
+                    {
+                        buferViewModel.TooltipTitle = this._MakeSpecialBuferText(onlyFolders ? Resource.FolderBufer : Resource.FileBufer);
+                    }
+                }
             }
 
             var isLastTempBufer = this._clipboardBuferService.IsLastTemporaryBufer(buferViewModel);
@@ -132,5 +153,10 @@ namespace BuferMAN.Application
 
             return data;
         }
+
+        private string _MakeSpecialBuferText(string baseString)
+        {
+            return $"<< {baseString} >>";
+        }// TODO (m) is duplicated in BuferHandlersWrapper
     }
 }

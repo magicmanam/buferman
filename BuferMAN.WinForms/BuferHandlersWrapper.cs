@@ -57,8 +57,6 @@ namespace BuferMAN.WinForms
 
             if (buferTextRepresentation == null)
             {
-                string tempBuferText = null;
-
                 var clipFiles = this._bufer.ViewModel.Clip.GetData(DataFormats.FileDrop) as string[];
                 if (clipFiles != null && clipFiles.Length > 0)
                 {
@@ -69,20 +67,15 @@ namespace BuferMAN.WinForms
 
                     if (clipFiles.Length == 1)
                     {
-                        tempBuferText = onlyFolders ? Resource.FolderBufer : Resource.FileBufer;
-
                         const int MAX_FILE_LENGTH_FOR_BUFER_TITLE = 50;// TODO (m) into settings
-                        if (firstFile.Length < MAX_FILE_LENGTH_FOR_BUFER_TITLE)
-                        {
-                            this._bufer.ViewModel.TooltipTitle = this._MakeSpecialBuferText(tempBuferText);
-                        }
-
-                        buferTitle = this._MakeSpecialBuferText(firstFile.Length < MAX_FILE_LENGTH_FOR_BUFER_TITLE ? firstFile : tempBuferText);
+                        buferTitle = this._MakeSpecialBuferText(
+                            firstFile.Length < MAX_FILE_LENGTH_FOR_BUFER_TITLE ?
+                            firstFile :
+                            (onlyFolders ? Resource.FolderBufer : Resource.FileBufer));// TODO (m) these resources are duplicated in BuferMAN.Application project
                     }
                     else
                     {
-                        tempBuferText = onlyFolders ? Resource.FoldersBufer : Resource.FilesBufer;
-                        buferTitle = this._MakeSpecialBuferText($"{tempBuferText} ({clipFiles.Length})");
+                        buferTitle = this._MakeSpecialBuferText($"{(onlyFolders ? Resource.FoldersBufer : Resource.FilesBufer)} ({clipFiles.Length})");
                     }
 
                     var folder = this._fileStorage.GetFileDirectory(firstFile);
@@ -211,7 +204,7 @@ namespace BuferMAN.WinForms
         private string _MakeSpecialBuferText(string baseString)
         {
             return $"<< {baseString} >>";
-        }
+        }// TODO (m) is duplicated in DataObjectHandler
 
         private void _Bufer_GotFocus(object sender, EventArgs e)
         {

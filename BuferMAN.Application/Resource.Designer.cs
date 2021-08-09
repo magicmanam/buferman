@@ -106,6 +106,24 @@ namespace BuferMAN.Application {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File.
+        /// </summary>
+        internal static string FileBufer {
+            get {
+                return ResourceManager.GetString("FileBufer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Folder.
+        /// </summary>
+        internal static string FolderBufer {
+            get {
+                return ResourceManager.GetString("FolderBufer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The latest clipboard update was at .
         /// </summary>
         internal static string LastClipboardUpdate {

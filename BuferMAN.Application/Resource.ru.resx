@@ -129,6 +129,12 @@
   <data name="DocumentationMentioning" xml:space="preserve">
     <value>Полное руководство в меню: Помощь -&gt; Документация</value>
   </data>
+  <data name="FileBufer" xml:space="preserve">
+    <value>Файл</value>
+  </data>
+  <data name="FolderBufer" xml:space="preserve">
+    <value>Папка</value>
+  </data>
   <data name="LastClipboardUpdate" xml:space="preserve">
     <value>Последнее обновление буфера в </value>
   </data>

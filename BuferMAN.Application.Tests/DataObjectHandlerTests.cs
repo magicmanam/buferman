@@ -4,6 +4,7 @@ using FakeItEasy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Windows.Forms;
 using BuferMAN.View;
+using BuferMAN.Infrastructure.Files;
 
 namespace BuferMAN.Application.Tests
 {
@@ -24,7 +25,8 @@ namespace BuferMAN.Application.Tests
 
             var sut = new DataObjectHandler(
                 A.Fake<IClipboardBuferService>(),
-                A.Fake<IProgramSettingsGetter>());
+                A.Fake<IProgramSettingsGetter>(),
+                A.Fake<IFileStorage>());
 
             // Act
             sut.TryHandleDataObject(viewModel);
@@ -49,7 +51,8 @@ namespace BuferMAN.Application.Tests
 
             var sut = new DataObjectHandler(
                 A.Fake<IClipboardBuferService>(),
-                A.Fake<IProgramSettingsGetter>());
+                A.Fake<IProgramSettingsGetter>(),
+                A.Fake<IFileStorage>());
 
             // Act
             sut.TryHandleDataObject(viewModel);
@@ -74,7 +77,8 @@ namespace BuferMAN.Application.Tests
 
             var sut = new DataObjectHandler(
                 A.Fake<IClipboardBuferService>(),
-                A.Fake<IProgramSettingsGetter>());
+                A.Fake<IProgramSettingsGetter>(),
+                A.Fake<IFileStorage>());
 
             // Act
             sut.TryHandleDataObject(viewModel);

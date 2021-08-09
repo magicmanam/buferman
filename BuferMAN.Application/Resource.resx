@@ -132,6 +132,12 @@
   <data name="DocumentationMentioning" xml:space="preserve">
     <value>Read more info in menu: Help -&gt;Documentation</value>
   </data>
+  <data name="FileBufer" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="FolderBufer" xml:space="preserve">
+    <value>Folder</value>
+  </data>
   <data name="LastClipboardUpdate" xml:space="preserve">
     <value>The latest clipboard update was at </value>
   </data>
