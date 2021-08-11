@@ -9,6 +9,7 @@ namespace BuferMAN.Plugins.BatterySaver
     {
         private const string NOTIFICATION_TITLE = "Battery saver plugin";
         private readonly BatterySaverPluginSettings _settings = new BatterySaverPluginSettings();
+        private BufermanMenuItem _mainMenuItem;
 
         private readonly Timer _timer = new Timer();
 
@@ -53,14 +54,23 @@ namespace BuferMAN.Plugins.BatterySaver
         private void _BatterySaverMenuItem_Click(object sender, EventArgs e)
         {
             this.Enabled = !this.Enabled;
+            this._mainMenuItem.Checked = this.Enabled;
             // Open settings window: show current battery state and history of changes (chart: green if online, red if offline)
         }
 
         public override BufermanMenuItem CreateMainMenuItem()
         {
-            return this.Available ?
-                   this.BufermanHost.CreateMenuItem(this.Name, this._BatterySaverMenuItem_Click) :
-                   throw new InvalidOperationException();
+            if (this.Available)
+            {
+                this._mainMenuItem = this.BufermanHost.CreateMenuItem(this.Name, this._BatterySaverMenuItem_Click);
+                this._mainMenuItem.Checked = this.Enabled;
+
+                return this._mainMenuItem;
+            }
+            else
+            {
+                throw new InvalidOperationException();
+            }
         }
 
         protected override void OnEnableChanged()

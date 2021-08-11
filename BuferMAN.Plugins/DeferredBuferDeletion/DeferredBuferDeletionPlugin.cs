@@ -6,6 +6,8 @@ namespace BuferMAN.Plugins.DeferredBuferDeletion
 {
     public class DeferredBuferDeletionPlugin : BufermanPluginBase
     {
+        private BufermanMenuItem _mainMenuItem;
+
         public override string Name
         {
             get
@@ -22,7 +24,10 @@ namespace BuferMAN.Plugins.DeferredBuferDeletion
 
         public override BufermanMenuItem CreateMainMenuItem()
         {
-            return this.BufermanHost.CreateMenuItem(this.Name, this._DeferredDeletionMenuItem_Click);
+            this._mainMenuItem = this.BufermanHost.CreateMenuItem(this.Name, this._DeferredDeletionMenuItem_Click);
+            this._mainMenuItem.Checked = this.Available && this.Enabled;
+
+            return this._mainMenuItem;
         }
 
         public override void UpdateBuferContextMenu(BuferContextMenuState contextMenuState)
@@ -33,6 +38,7 @@ namespace BuferMAN.Plugins.DeferredBuferDeletion
         private void _DeferredDeletionMenuItem_Click(object sender, EventArgs e)
         {
             this.Enabled = !this.Enabled;
+            this._mainMenuItem.Checked = this.Enabled;
         }
     }
 }
