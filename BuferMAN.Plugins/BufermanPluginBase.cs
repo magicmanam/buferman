@@ -1,5 +1,5 @@
 ﻿using BuferMAN.Infrastructure;
-using BuferMAN.Models;
+using BuferMAN.Infrastructure.ContextMenu;
 using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Infrastructure.Plugins;
 using System;
@@ -26,7 +26,7 @@ namespace BuferMAN.Plugins
             return null;
         }
 
-        public virtual void UpdateBuferContextMenu(BuferContextMenuModel contextMenuModel)
+        public virtual void UpdateBuferContextMenu(BuferContextMenuState contextMenuModel)
         {
             return;
         }

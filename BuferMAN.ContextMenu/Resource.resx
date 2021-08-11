@@ -195,20 +195,11 @@
   <data name="MenuCopyingTime" xml:space="preserve">
     <value>Copied at {0}</value>
   </data>
-  <data name="DeleteBuferInNMinutesMenuItem" xml:space="preserve">
-    <value>In {0} minutes</value>
-  </data>
-  <data name="DeleteBuferNowMenuItem" xml:space="preserve">
-    <value>&amp;Now</value>
-  </data>
   <data name="MenuPasteAsText" xml:space="preserve">
     <value>W/o formatting (as a text)</value>
   </data>
   <data name="MenuPasteAsIs" xml:space="preserve">
     <value>AS IS</value>
-  </data>
-  <data name="CancelDeferredDeletionMenuItem" xml:space="preserve">
-    <value>Cancel deletion (at {0})</value>
   </data>
   <data name="MenuOpenInBrowser" xml:space="preserve">
     <value>Open in &amp;browser</value>

@@ -1,18 +1,17 @@
 ﻿using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure;
-using BuferMAN.Models;
 using BuferMAN.Infrastructure.Menu;
 using System;
+using BuferMAN.Infrastructure.ContextMenu;
 
 namespace BuferMAN.ContextMenu
 {
-    internal class BuferContextMenuModelWrapper : BuferContextMenuModel
+    internal class BuferContextMenuStateWrapper : BuferContextMenuState
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IBuferSelectionHandler _buferSelectionHandler;
         private readonly IBufermanHost _bufermanHost;
 
-        public IBufer Bufer;
         public BufermanMenuItem ReturnTextToInitialMenuItem;
         public BufermanMenuItem ChangeTextMenuItem;
         public BufermanMenuItem MarkAsPinnedMenuItem;
@@ -20,9 +19,9 @@ namespace BuferMAN.ContextMenu
         public BufermanMenuItem AddToFileMenuItem;
         public BufermanMenuItem PasteMenuItem;
         public BufermanMenuItem PlaceInBuferMenuItem;
-        public DeleteClipMenuItem DeleteMenuItem { get; set; }
 
-        public BuferContextMenuModelWrapper(IClipboardBuferService clipboardBuferService, IBuferSelectionHandler buferSelectionHandler, IBufermanHost bufermanHost)
+        public BuferContextMenuStateWrapper(IClipboardBuferService clipboardBuferService, IBuferSelectionHandler buferSelectionHandler, IBufermanHost bufermanHost)
+            : base(clipboardBuferService, bufermanHost)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._buferSelectionHandler = buferSelectionHandler;
@@ -75,10 +74,7 @@ namespace BuferMAN.ContextMenu
                     this.MarkAsPinnedMenuItem.Text = Resource.MenuUnpin;
                     this._bufermanHost.RerenderBufers();
 
-                    if (this.DeleteMenuItem.IsDeferredDeletionActivated())
-                    {
-                        this.DeleteMenuItem.CancelDeferredBuferDeletion(sender, e);
-                    }
+                    this.InvokePinnedBuferEvent(new BuferPinnedEventArgs());
                 }
             }
         }

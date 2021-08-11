@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="magicmanam.UndoRedo, Version=1.1.0.0, Culture=neutral, PublicKeyToken=null" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -39,6 +40,8 @@
   <ItemGroup>
     <Compile Include="BuferFocusedEventArgs.cs" />
     <Compile Include="ClipboardUpdatedEventArgs.cs" />
+    <Compile Include="ContextMenu\BuferContextMenuState.cs" />
+    <Compile Include="ContextMenu\BuferPinnedEventArgs.cs" />
     <Compile Include="ContextMenu\IBuferContextMenuGenerator.cs" />
     <Compile Include="ContextMenu\IBuferTypeMenuGenerator.cs" />
     <Compile Include="Environment\IUserInteraction.cs" />

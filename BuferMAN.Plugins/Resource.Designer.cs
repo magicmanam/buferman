@@ -88,6 +88,42 @@ namespace BuferMAN.Plugins {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel deletion (at {0}).
+        /// </summary>
+        internal static string CancelDeferredDeletionMenuItem {
+            get {
+                return ResourceManager.GetString("CancelDeferredDeletionMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deferred bufer deletion plugin.
+        /// </summary>
+        internal static string DeferredBuferPlugin {
+            get {
+                return ResourceManager.GetString("DeferredBuferPlugin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In {0} minutes.
+        /// </summary>
+        internal static string DeleteBuferInNMinutesMenuItem {
+            get {
+                return ResourceManager.GetString("DeleteBuferInNMinutesMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &amp;Now.
+        /// </summary>
+        internal static string DeleteBuferNowMenuItem {
+            get {
+                return ResourceManager.GetString("DeleteBuferNowMenuItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PC cleaner.
         /// </summary>
         internal static string PCCleanerPlugin {

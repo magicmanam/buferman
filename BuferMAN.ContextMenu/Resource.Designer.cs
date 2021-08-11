@@ -70,15 +70,6 @@ namespace BuferMAN.ContextMenu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel deletion (at {0}).
-        /// </summary>
-        internal static string CancelDeferredDeletionMenuItem {
-            get {
-                return ResourceManager.GetString("CancelDeferredDeletionMenuItem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Enter a new text for this bufer. It can be useful to hide copied passwords or alias some enourmous text. If you need save login/password pair, just use &apos;Create login credentials menu&apos;..
         /// </summary>
         internal static string ChangeBigText {
@@ -178,29 +169,11 @@ namespace BuferMAN.ContextMenu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In {0} minutes.
-        /// </summary>
-        internal static string DeleteBuferInNMinutesMenuItem {
-            get {
-                return ResourceManager.GetString("DeleteBuferInNMinutesMenuItem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to &amp;Delete bufer.
         /// </summary>
         internal static string DeleteBuferMenuItem {
             get {
                 return ResourceManager.GetString("DeleteBuferMenuItem", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &amp;Now.
-        /// </summary>
-        internal static string DeleteBuferNowMenuItem {
-            get {
-                return ResourceManager.GetString("DeleteBuferNowMenuItem", resourceCulture);
             }
         }
         

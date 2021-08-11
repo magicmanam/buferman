@@ -126,6 +126,18 @@
   <data name="BatterySaverPluginUnchargeNoteFormat" xml:space="preserve">
     <value>Please uncharge your battery ({0}%) in order to save your battery's health</value>
   </data>
+  <data name="CancelDeferredDeletionMenuItem" xml:space="preserve">
+    <value>Cancel deletion (at {0})</value>
+  </data>
+  <data name="DeferredBuferPlugin" xml:space="preserve">
+    <value>Deferred bufer deletion plugin</value>
+  </data>
+  <data name="DeleteBuferInNMinutesMenuItem" xml:space="preserve">
+    <value>In {0} minutes</value>
+  </data>
+  <data name="DeleteBuferNowMenuItem" xml:space="preserve">
+    <value>&amp;Now</value>
+  </data>
   <data name="PCCleanerPlugin" xml:space="preserve">
     <value>PC cleaner</value>
   </data>

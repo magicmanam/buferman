@@ -50,7 +50,7 @@ namespace BuferMAN.Plugins.BatterySaver
             }
         }
 
-        private void BatterySaverMenuItem_Click(object sender, EventArgs e)
+        private void _BatterySaverMenuItem_Click(object sender, EventArgs e)
         {
             this.Enabled = !this.Enabled;
             // Open settings window: show current battery state and history of changes (chart: green if online, red if offline)
@@ -59,7 +59,7 @@ namespace BuferMAN.Plugins.BatterySaver
         public override BufermanMenuItem CreateMainMenuItem()
         {
             return this.Available ?
-                   this.BufermanHost.CreateMenuItem(this.Name, this.BatterySaverMenuItem_Click) :
+                   this.BufermanHost.CreateMenuItem(this.Name, this._BatterySaverMenuItem_Click) :
                    throw new InvalidOperationException();
         }
 

@@ -1,4 +1,4 @@
-﻿using BuferMAN.Models;
+﻿using BuferMAN.Infrastructure.ContextMenu;
 using BuferMAN.Infrastructure.Menu;
 
 namespace BuferMAN.Infrastructure.Plugins
@@ -8,7 +8,7 @@ namespace BuferMAN.Infrastructure.Plugins
         BufermanMenuItem CreateMainMenuItem();
         void Initialize(IBufermanHost bufermanHost);
         BufermanMenuItem CreateBuferContextMenuItem();
-        void UpdateBuferContextMenu(BuferContextMenuModel contextMenuModel);
+        void UpdateBuferContextMenu(BuferContextMenuState contextMenuModel);
         string Name { get; }
         bool Enabled { get; set; }
         bool Available { get; }
