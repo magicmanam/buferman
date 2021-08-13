@@ -221,4 +221,7 @@
   <data name="OptionsRestorePreviousSessionTooltip" xml:space="preserve">
     <value>Only text bufers</value>
   </data>
+  <data name="BuferClickingExplanationText" xml:space="preserve">
+    <value>Your click on bufer pastes its content into the place where mouse cursor is in or where you are active now</value>
+  </data>
 </root>

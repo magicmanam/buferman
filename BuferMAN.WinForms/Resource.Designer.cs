@@ -79,6 +79,15 @@ namespace BuferMAN.WinForms {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your click on bufer pastes its content into the place where mouse cursor is in or where you are active now.
+        /// </summary>
+        internal static string BuferClickingExplanationText {
+            get {
+                return ResourceManager.GetString("BuferClickingExplanationText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bufer was loaded from storage.
         /// </summary>
         internal static string BuferLoaded {

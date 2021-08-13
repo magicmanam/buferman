@@ -14,7 +14,8 @@ namespace BuferMAN.WinForms
 {
     internal class BuferHandlersWrapper
     {
-        private readonly IProgramSettingsGetter _settings;
+        private readonly IProgramSettingsGetter _settingsGetter;
+        private readonly IProgramSettingsSetter _settingsSetter;
         private readonly IBuferSelectionHandlerFactory _buferSelectionHandlerFactory;
         private readonly IFileStorage _fileStorage;
         private readonly IBufermanHost _bufermanHost;
@@ -22,27 +23,16 @@ namespace BuferMAN.WinForms
         private const float IMAGE_SCALE = 0.75f;
 
         public BuferHandlersWrapper(
-            IDataObject dataObject,
             IBuferContextMenuGenerator buferContextMenuGenerator,
             IBuferSelectionHandlerFactory buferSelectionHandlerFactory,
             IFileStorage fileStorage,
             IBufermanHost bufermanHost,
-            IProgramSettingsGetter settings,
-            IBufer bufer)
-            : this(buferContextMenuGenerator, buferSelectionHandlerFactory, fileStorage, bufermanHost, settings, bufer)
-        {
-
-        }
-
-        public BuferHandlersWrapper(
-            IBuferContextMenuGenerator buferContextMenuGenerator,
-            IBuferSelectionHandlerFactory buferSelectionHandlerFactory,
-            IFileStorage fileStorage,
-            IBufermanHost bufermanHost,
-            IProgramSettingsGetter settings,
+            IProgramSettingsGetter settingsGetter,
+            IProgramSettingsSetter settingsSetter,
             IBufer bufer)
         {
-            this._settings = settings;
+            this._settingsGetter = settingsGetter;
+            this._settingsSetter = settingsSetter;
 
             this._bufermanHost = bufermanHost;
             this._bufer = bufer;
@@ -133,7 +123,7 @@ namespace BuferMAN.WinForms
             this._bufer.SetText(buferText);
             this._bufer.ViewModel.OriginBuferTitle = buferText;
 
-            int maxBuferLength = this._settings.MaxBuferPresentationLength;
+            int maxBuferLength = this._settingsGetter.MaxBuferPresentationLength;
             if (this._bufer.ViewModel.IsChangeTextAvailable && buferTextRepresentation != null && buferTextRepresentation.Length > maxBuferLength)
             {
                 buferTextRepresentation = buferTextRepresentation.Substring(0, maxBuferLength - 300) + Environment.NewLine + Environment.NewLine + "...";
@@ -196,7 +186,25 @@ namespace BuferMAN.WinForms
             this._bufer.AddOnUnfocusHandler(this._Bufer_LostFocus);
 
             var buferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(this._bufer.ViewModel.Clip, bufermanHost);
-            this._bufer.AddOnClickHandler(buferSelectionHandler.DoOnClipSelection);
+            if (this._settingsGetter.IsBuferClickingExplained)
+            {
+                this._bufer.AddOnClickHandler(buferSelectionHandler.DoOnClipSelection);
+            }
+            else
+            {
+                this._bufer.AddOnClickHandler((object sender, EventArgs e) =>
+                {
+                    if (this._settingsGetter.IsBuferClickingExplained)
+                    {
+                        buferSelectionHandler.DoOnClipSelection(sender, e);
+                    }
+                    else
+                    {
+                        this._bufermanHost.UserInteraction.ShowPopup(Resource.BuferClickingExplanationText, Application.ProductName);
+                        this._settingsSetter.MarkThatBuferClickingWasExplained();
+                    }
+                });
+            }
 
             bufer.SetContextMenu(buferContextMenuGenerator.GenerateContextMenuItems(this._bufer, buferSelectionHandler, bufermanHost, buferTypeMenuGenerator));
         }
@@ -210,15 +218,15 @@ namespace BuferMAN.WinForms
         {
             var buferViewModel = this._bufer.ViewModel;
 
-            this._bufer.BackColor = this._settings.FocusedBuferBackgroundColor;
+            this._bufer.BackColor = this._settingsGetter.FocusedBuferBackgroundColor;
 
             if (buferViewModel != this._bufermanHost.LatestFocusedBufer)
             {
                 this._bufermanHost.LatestFocusedBufer = buferViewModel;
 
-                if (this._settings.ShowFocusTooltip)
+                if (this._settingsGetter.ShowFocusTooltip)
                 {
-                    this._bufer.ShowFocusTooltip(buferViewModel.TextRepresentation, this._settings.FocusTooltipDuration);
+                    this._bufer.ShowFocusTooltip(buferViewModel.TextRepresentation, this._settingsGetter.FocusTooltipDuration);
                 }
             }
         }
@@ -227,7 +235,7 @@ namespace BuferMAN.WinForms
         {
             this._bufer.BackColor = this._bufer.ViewModel.DefaultBackColor;
 
-            if (this._settings.ShowFocusTooltip)
+            if (this._settingsGetter.ShowFocusTooltip)
             {
                 this._bufer.HideFocusTooltip();
             }

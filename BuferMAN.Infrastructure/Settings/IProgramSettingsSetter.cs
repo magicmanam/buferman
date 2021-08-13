@@ -13,6 +13,7 @@ namespace BuferMAN.Infrastructure.Settings
         bool ShowFocusTooltip { set; }
         int EscHotKeyIntroductionCounter { set; }
         int ClosingWindowExplanationCounter { set; }
+        void MarkThatBuferClickingWasExplained();
         bool IsDirty { get; }
         bool IsDefault { get; }
         void Save();

@@ -218,6 +218,20 @@ namespace BuferMAN.Settings
             }
         }
 
+        public bool IsBuferClickingExplained
+        {
+            get
+            {
+                return User.Default.IsBuferClickingExplained;
+            }
+        }
+
+        public void MarkThatBuferClickingWasExplained()
+        {
+            User.Default.IsBuferClickingExplained = true;
+            User.Default.Save();
+        }
+
         public void RestoreDefault()
         {
             foreach (var setting in this._settingItems)

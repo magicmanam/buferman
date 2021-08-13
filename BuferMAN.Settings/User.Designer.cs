@@ -130,5 +130,17 @@ namespace BuferMAN.Settings {
                 this["ClosingWindowExplanationCounter"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool IsBuferClickingExplained {
+            get {
+                return ((bool)(this["IsBuferClickingExplained"]));
+            }
+            set {
+                this["IsBuferClickingExplained"] = value;
+            }
+        }
     }
 }

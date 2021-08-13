@@ -16,7 +16,8 @@ namespace BuferMAN.WinForms.Tests
     [TestClass]
     public class BuferHandlersWrapperTests
     {
-        private readonly Fake<IProgramSettingsGetter> _settings = new Fake<IProgramSettingsGetter>();
+        private readonly Fake<IProgramSettingsGetter> _settingsGetter = new Fake<IProgramSettingsGetter>();
+        private readonly Fake<IProgramSettingsSetter> _settingsSetter = new Fake<IProgramSettingsSetter>();
 
         [TestMethod]
         public void Sets_Trimmed_TextRepresentation_To_OriginBuferTitle()
@@ -33,7 +34,7 @@ namespace BuferMAN.WinForms.Tests
                     TextRepresentation = originText
                 }
             };
-            this._settings.CallsTo(s => s.MaxBuferPresentationLength)
+            this._settingsGetter.CallsTo(s => s.MaxBuferPresentationLength)
                 .Returns(2000);
 
             // Act
@@ -42,7 +43,8 @@ namespace BuferMAN.WinForms.Tests
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 A.Fake<IFileStorage>(),
                 A.Fake<IBufermanHost>(),
-                this._settings.FakedObject,
+                this._settingsGetter.FakedObject,
+                A.Fake<IProgramSettingsSetter>(),
                 bufer);
 
             // Assert
@@ -69,12 +71,12 @@ namespace BuferMAN.WinForms.Tests
 
             // Act
             var wrapper = new BuferHandlersWrapper(
-                data,
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 fileStorage.FakedObject,
                 A.Fake<IBufermanHost>(),
                 A.Fake<IProgramSettingsGetter>(),
+                A.Fake<IProgramSettingsSetter>(),
                 bufer);
 
             // Assert
@@ -104,12 +106,12 @@ namespace BuferMAN.WinForms.Tests
 
             // Act
             var wrapper = new BuferHandlersWrapper(
-                data,
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 fileStorage.FakedObject,
                 A.Fake<IBufermanHost>(),
                 A.Fake<IProgramSettingsGetter>(),
+                A.Fake<IProgramSettingsSetter>(),
                 bufer);
 
             // Assert
@@ -140,12 +142,12 @@ namespace BuferMAN.WinForms.Tests
 
             // Act
             var wrapper = new BuferHandlersWrapper(
-                data,
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 fileStorage.FakedObject,
                 A.Fake<IBufermanHost>(),
                 A.Fake<IProgramSettingsGetter>(),
+                A.Fake<IProgramSettingsSetter>(),
                 bufer);
 
             // Assert
@@ -169,12 +171,12 @@ namespace BuferMAN.WinForms.Tests
 
             // Act
             var wrapper = new BuferHandlersWrapper(
-                data,
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 A.Fake<IFileStorage>(),
                 A.Fake<IBufermanHost>(),
                 A.Fake<IProgramSettingsGetter>(),
+                A.Fake<IProgramSettingsSetter>(),
                 bufer);
 
             // Assert
@@ -198,12 +200,12 @@ namespace BuferMAN.WinForms.Tests
 
             // Act
             var wrapper = new BuferHandlersWrapper(
-                data,
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 A.Fake<IFileStorage>(),
                 A.Fake<IBufermanHost>(),
                 A.Fake<IProgramSettingsGetter>(),
+                A.Fake<IProgramSettingsSetter>(),
                 bufer);
 
             // Assert
@@ -227,12 +229,12 @@ namespace BuferMAN.WinForms.Tests
 
             // Act
             var wrapper = new BuferHandlersWrapper(
-                data,
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 A.Fake<IFileStorage>(),
                 A.Fake<IBufermanHost>(),
                 A.Fake<IProgramSettingsGetter>(),
+                A.Fake<IProgramSettingsSetter>(),
                 bufer);
 
             // Assert
@@ -257,12 +259,12 @@ namespace BuferMAN.WinForms.Tests
 
             // Act
             var wrapper = new BuferHandlersWrapper(
-                data,
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 A.Fake<IFileStorage>(),
                 A.Fake<IBufermanHost>(),
                 A.Fake<IProgramSettingsGetter>(),
+                A.Fake<IProgramSettingsSetter>(),
                 bufer);
 
             // Assert

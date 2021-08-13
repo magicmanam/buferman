@@ -221,4 +221,7 @@
   <data name="OptionsRestorePreviousSessionTooltip" xml:space="preserve">
     <value>Только текстовые буферы</value>
   </data>
+  <data name="BuferClickingExplanationText" xml:space="preserve">
+    <value>Нажатие на буфер вставляет его содержимое туда, где находится курсор или в то место, где вы сейчас активны.</value>
+  </data>
 </root>
