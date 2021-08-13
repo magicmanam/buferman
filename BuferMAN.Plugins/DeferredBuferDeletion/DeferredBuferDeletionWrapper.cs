@@ -12,6 +12,7 @@ namespace BuferMAN.Plugins.DeferredBuferDeletion
         private readonly BuferContextMenuState _buferContextMenuState;
         private readonly IBufermanHost _bufermanHost;
         private Timer _timer = null;
+        private bool _isTooltipTitleChanged = false;
 
         private BufermanMenuItem _separatorItem;
         private BufermanMenuItem _cancelDeletionMenuItem;
@@ -66,6 +67,12 @@ namespace BuferMAN.Plugins.DeferredBuferDeletion
             this._separatorItem.Remove();
             this._cancelDeletionMenuItem.Remove();
             this._UncheckAllDeleteOptions();
+
+            if (this._isTooltipTitleChanged)
+            {
+                this._buferContextMenuState.Bufer.SetMouseOverToolTipTitle(null);
+                this._isTooltipTitleChanged = false;
+            }
         }
 
         private void _UncheckAllDeleteOptions()
@@ -109,11 +116,19 @@ namespace BuferMAN.Plugins.DeferredBuferDeletion
         private void _AddCancelDeletionMenuItem()
         {
             this._separatorItem = this._buferContextMenuState.DeleteBuferMenuItem.AddSeparator();
+            var deletionTime = DateTime.Now.AddMilliseconds(this._timer.Interval).ToLocalTime();
+
             this._cancelDeletionMenuItem = this._bufermanHost
-                .CreateMenuItem(string.Format(Resource.CancelDeferredDeletionMenuItem, DateTime.Now.AddMilliseconds(this._timer.Interval).ToLocalTime()),
+                .CreateMenuItem(string.Format(Resource.CancelDeferredDeletionMenuItem, deletionTime),
                                 this.CancelDeferredBuferDeletion);
 
             this._buferContextMenuState.DeleteBuferMenuItem.AddMenuItem(this._cancelDeletionMenuItem);
+
+            if (string.IsNullOrEmpty(this._buferContextMenuState.Bufer.MouseOverTooltip.ToolTipTitle))
+            {
+                this._buferContextMenuState.Bufer.SetMouseOverToolTipTitle(string.Format(Resource.DeferredBuferDeletionTime, deletionTime));
+                this._isTooltipTitleChanged = true;
+            }
         }
     }
 }

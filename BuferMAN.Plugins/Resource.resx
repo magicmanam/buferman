@@ -129,6 +129,9 @@
   <data name="CancelDeferredDeletionMenuItem" xml:space="preserve">
     <value>Cancel deletion (at {0})</value>
   </data>
+  <data name="DeferredBuferDeletionTime" xml:space="preserve">
+    <value>Bufer will be deleted at {0}</value>
+  </data>
   <data name="DeferredBuferPlugin" xml:space="preserve">
     <value>Deferred bufer deletion plugin</value>
   </data>

@@ -97,6 +97,15 @@ namespace BuferMAN.Plugins {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bufer will be deleted at {0}.
+        /// </summary>
+        internal static string DeferredBuferDeletionTime {
+            get {
+                return ResourceManager.GetString("DeferredBuferDeletionTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Deferred bufer deletion plugin.
         /// </summary>
         internal static string DeferredBuferPlugin {

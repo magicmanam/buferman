@@ -27,6 +27,7 @@ namespace BuferMAN.Infrastructure
         ToolTip MouseOverTooltip { get; }
         int Width { get; set; }
         void SetMouseOverToolTip(string tooltipText);
+        void SetMouseOverToolTipTitle(string tooltipTitle);
         void ShowFocusTooltip(string tooltipText, int durationInMilliseconds);
         void HideFocusTooltip();
         int TabIndex { get; }

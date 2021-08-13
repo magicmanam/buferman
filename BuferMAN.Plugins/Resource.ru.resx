@@ -129,6 +129,9 @@
   <data name="CancelDeferredDeletionMenuItem" xml:space="preserve">
     <value>Отменить удаление (в {0})</value>
   </data>
+  <data name="DeferredBuferDeletionTime" xml:space="preserve">
+    <value>Буфер удалится в {0}</value>
+  </data>
   <data name="DeferredBuferPlugin" xml:space="preserve">
     <value>Отложенное удаление буферов</value>
   </data>

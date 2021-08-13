@@ -162,6 +162,11 @@ namespace BuferMAN.WinForms
             this._mouseOverTooltip.SetToolTip(this._button, tooltipText);
         }
 
+        public void SetMouseOverToolTipTitle(string tooltipTitle)
+        {
+            this._mouseOverTooltip.ToolTipTitle = tooltipTitle;
+        }
+
         public void ShowFocusTooltip(string tooltipText, int durationInMilliseconds)
         {
             this._focusTooltip.Show(tooltipText, this._button, durationInMilliseconds);
