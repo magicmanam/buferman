@@ -165,9 +165,6 @@
   <data name="LoginWith" xml:space="preserve">
     <value>Login with creds</value>
   </data>
-  <data name="MenuAddedToFile" xml:space="preserve">
-    <value>Added to &amp;default file</value>
-  </data>
   <data name="MenuAddToDefaultFile" xml:space="preserve">
     <value>Default</value>
   </data>
@@ -182,9 +179,6 @@
   </data>
   <data name="MenuPaste" xml:space="preserve">
     <value>&amp;Paste</value>
-  </data>
-  <data name="MenuPin" xml:space="preserve">
-    <value>P&amp;in bufer</value>
   </data>
   <data name="MenuPlaceInBufer" xml:space="preserve">
     <value>Place in bufer without paste</value>
@@ -204,16 +198,13 @@
   <data name="MenuOpenInBrowser" xml:space="preserve">
     <value>Open in &amp;browser</value>
   </data>
-  <data name="MenuAddToFile" xml:space="preserve">
-    <value>&amp;Add to file</value>
-  </data>
   <data name="MenuAddToSelectedFile" xml:space="preserve">
     <value>&amp;Select file...</value>
   </data>
-  <data name="MenuUnpin" xml:space="preserve">
-    <value>Unpin bufer</value>
-  </data>
   <data name="MenuOpenFileLocation" xml:space="preserve">
     <value>Open location in File Explorer</value>
+  </data>
+  <data name="MenuAddToFile" xml:space="preserve">
+    <value>&amp;Add to file</value>
   </data>
 </root>

@@ -205,15 +205,6 @@ namespace BuferMAN.ContextMenu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Added to &amp;default file.
-        /// </summary>
-        internal static string MenuAddedToFile {
-            get {
-                return ResourceManager.GetString("MenuAddedToFile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Default.
         /// </summary>
         internal static string MenuAddToDefaultFile {
@@ -322,15 +313,6 @@ namespace BuferMAN.ContextMenu {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to P&amp;in bufer.
-        /// </summary>
-        internal static string MenuPin {
-            get {
-                return ResourceManager.GetString("MenuPin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Place in bufer without paste.
         /// </summary>
         internal static string MenuPlaceInBufer {
@@ -345,15 +327,6 @@ namespace BuferMAN.ContextMenu {
         internal static string MenuReturn {
             get {
                 return ResourceManager.GetString("MenuReturn", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Unpin bufer.
-        /// </summary>
-        internal static string MenuUnpin {
-            get {
-                return ResourceManager.GetString("MenuUnpin", resourceCulture);
             }
         }
     }

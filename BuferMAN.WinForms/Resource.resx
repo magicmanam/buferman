@@ -224,4 +224,13 @@
   <data name="BuferClickingExplanationText" xml:space="preserve">
     <value>Your click on bufer pastes its content into the place where mouse cursor is in or where you are active now</value>
   </data>
+  <data name="MenuAddedToFile" xml:space="preserve">
+    <value>Added to &amp;default file</value>
+  </data>
+  <data name="MenuPin" xml:space="preserve">
+    <value>P&amp;in bufer</value>
+  </data>
+  <data name="MenuUnpin" xml:space="preserve">
+    <value>Unpin bufer</value>
+  </data>
 </root>

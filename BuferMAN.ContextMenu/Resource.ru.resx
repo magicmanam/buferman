@@ -165,9 +165,6 @@
   <data name="LoginWith" xml:space="preserve">
     <value>Войти как</value>
   </data>
-  <data name="MenuAddedToFile" xml:space="preserve">
-    <value>Добавлен в файл с буферами</value>
-  </data>
   <data name="MenuAddToDefaultFile" xml:space="preserve">
     <value>По умолчанию</value>
   </data>
@@ -182,9 +179,6 @@
   </data>
   <data name="MenuPaste" xml:space="preserve">
     <value>&amp;Вставить</value>
-  </data>
-  <data name="MenuPin" xml:space="preserve">
-    <value>&amp;Закрепить буфер</value>
   </data>
   <data name="MenuPlaceInBufer" xml:space="preserve">
     <value>Поместить в буфер без вставки</value>
@@ -209,9 +203,6 @@
   </data>
   <data name="MenuAddToSelectedFile" xml:space="preserve">
     <value>&amp;Выбрать файл...</value>
-  </data>
-  <data name="MenuUnpin" xml:space="preserve">
-    <value>Открепить буфер</value>
   </data>
   <data name="MenuOpenFileLocation" xml:space="preserve">
     <value>Открыть в файловом обозревателе</value>

@@ -46,7 +46,6 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuferContextMenuStateWrapper.cs" />
     <Compile Include="BuferSelectionHandlerFactory.cs" />
     <Compile Include="BuferSelectionHandler.cs" />
     <Compile Include="ChangeTextMenuItem.cs" />

@@ -15,6 +15,7 @@ namespace BuferMAN.WinForms
     internal class BuferHandlersWrapper
     {
         private readonly IProgramSettingsGetter _settingsGetter;
+        private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IProgramSettingsSetter _settingsSetter;
         private readonly IBuferSelectionHandlerFactory _buferSelectionHandlerFactory;
         private readonly IFileStorage _fileStorage;
@@ -23,6 +24,7 @@ namespace BuferMAN.WinForms
         private const float IMAGE_SCALE = 0.75f;
 
         public BuferHandlersWrapper(
+            IClipboardBuferService clipboardBuferService,
             IBuferContextMenuGenerator buferContextMenuGenerator,
             IBuferSelectionHandlerFactory buferSelectionHandlerFactory,
             IFileStorage fileStorage,
@@ -34,6 +36,7 @@ namespace BuferMAN.WinForms
             this._settingsGetter = settingsGetter;
             this._settingsSetter = settingsSetter;
 
+            this._clipboardBuferService = clipboardBuferService;
             this._bufermanHost = bufermanHost;
             this._bufer = bufer;
             this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
@@ -206,7 +209,16 @@ namespace BuferMAN.WinForms
                 });
             }
 
-            bufer.SetContextMenu(buferContextMenuGenerator.GenerateContextMenuItems(this._bufer, buferSelectionHandler, bufermanHost, buferTypeMenuGenerator));
+            var buferContextMenuState = new BuferContextMenuState(
+                clipboardBuferService,
+                buferSelectionHandler,
+                bufermanHost,
+                () => Resource.MenuPin,
+                () => Resource.MenuUnpin,
+                () => Resource.MenuAddedToFile,
+                bufer);
+
+            bufer.SetContextMenu(buferContextMenuGenerator.GenerateContextMenuItems(buferContextMenuState, bufermanHost, buferTypeMenuGenerator));
         }
 
         private string _MakeSpecialBuferText(string baseString)

@@ -224,4 +224,13 @@
   <data name="BuferClickingExplanationText" xml:space="preserve">
     <value>Нажатие на буфер вставляет его содержимое туда, где находится курсор или в то место, где вы сейчас активны.</value>
   </data>
+  <data name="MenuAddedToFile" xml:space="preserve">
+    <value>Добавлен в файл с буферами</value>
+  </data>
+  <data name="MenuPin" xml:space="preserve">
+    <value>&amp;Закрепить буфер</value>
+  </data>
+  <data name="MenuUnpin" xml:space="preserve">
+    <value>Открепить буфер</value>
+  </data>
 </root>

@@ -39,6 +39,7 @@ namespace BuferMAN.WinForms.Tests
 
             // Act
             var wrapper = new BuferHandlersWrapper(
+                A.Fake<IClipboardBuferService>(),
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 A.Fake<IFileStorage>(),
@@ -71,6 +72,7 @@ namespace BuferMAN.WinForms.Tests
 
             // Act
             var wrapper = new BuferHandlersWrapper(
+                A.Fake<IClipboardBuferService>(),
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 fileStorage.FakedObject,
@@ -106,6 +108,7 @@ namespace BuferMAN.WinForms.Tests
 
             // Act
             var wrapper = new BuferHandlersWrapper(
+                A.Fake<IClipboardBuferService>(),
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 fileStorage.FakedObject,
@@ -142,6 +145,7 @@ namespace BuferMAN.WinForms.Tests
 
             // Act
             var wrapper = new BuferHandlersWrapper(
+                A.Fake<IClipboardBuferService>(),
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 fileStorage.FakedObject,
@@ -171,6 +175,7 @@ namespace BuferMAN.WinForms.Tests
 
             // Act
             var wrapper = new BuferHandlersWrapper(
+                A.Fake<IClipboardBuferService>(),
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 A.Fake<IFileStorage>(),
@@ -200,6 +205,7 @@ namespace BuferMAN.WinForms.Tests
 
             // Act
             var wrapper = new BuferHandlersWrapper(
+                A.Fake<IClipboardBuferService>(),
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 A.Fake<IFileStorage>(),
@@ -229,6 +235,7 @@ namespace BuferMAN.WinForms.Tests
 
             // Act
             var wrapper = new BuferHandlersWrapper(
+                A.Fake<IClipboardBuferService>(),
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 A.Fake<IFileStorage>(),
@@ -259,6 +266,7 @@ namespace BuferMAN.WinForms.Tests
 
             // Act
             var wrapper = new BuferHandlersWrapper(
+                A.Fake<IClipboardBuferService>(),
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 A.Fake<IFileStorage>(),

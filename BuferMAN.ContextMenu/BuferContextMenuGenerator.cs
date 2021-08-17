@@ -20,7 +20,6 @@ namespace BuferMAN.ContextMenu
 {
     internal class BuferContextMenuGenerator : IBuferContextMenuGenerator
     {
-        private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IBuferSelectionHandlerFactory _buferSelectionHandlerFactory;
         private readonly IProgramSettingsGetter _settings;
         private readonly IClipboardWrapper _clipboardWrapper;
@@ -29,8 +28,7 @@ namespace BuferMAN.ContextMenu
         private readonly IUserFileSelector _userFileSelector;
         private readonly IMapper _mapper;
 
-        public BuferContextMenuGenerator(IClipboardBuferService clipboardBuferService,
-            IBuferSelectionHandlerFactory buferSelectionHandlerFactory,
+        public BuferContextMenuGenerator(IBuferSelectionHandlerFactory buferSelectionHandlerFactory,
             IProgramSettingsGetter settings,
             IClipboardWrapper clipboardWrapper,
             IEnumerable<IBufermanPlugin> plugins,
@@ -38,7 +36,6 @@ namespace BuferMAN.ContextMenu
             IUserFileSelector userFileSelector,
             IMapper mapper)
         {
-            this._clipboardBuferService = clipboardBuferService;
             this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
             this._settings = settings;
             this._clipboardWrapper = clipboardWrapper;
@@ -48,20 +45,15 @@ namespace BuferMAN.ContextMenu
             this._mapper = mapper;
         }
 
-        public IEnumerable<BufermanMenuItem> GenerateContextMenuItems(IBufer bufer,
-            IBuferSelectionHandler buferSelectionHandler,
+        public IEnumerable<BufermanMenuItem> GenerateContextMenuItems(BuferContextMenuState buferContextMenuState,
             IBufermanHost bufermanHost,
             IBuferTypeMenuGenerator buferTypeMenuGenerator)
         {
-            var buferContextMenuState = new BuferContextMenuStateWrapper(this._clipboardBuferService, buferSelectionHandler, bufermanHost)
-            {
-                Bufer = bufer
-            };
+            var bufer = buferContextMenuState.Bufer;
             var buferViewModel = bufer.ViewModel;
 
             IList<BufermanMenuItem> menuItems = new List<BufermanMenuItem>();
 
-            buferContextMenuState.MarkAsPinnedMenuItem = bufermanHost.CreateMenuItem(bufer.ViewModel.Pinned ? Resource.MenuUnpin : Resource.MenuPin, buferContextMenuState.TryTogglePinBufer);
             buferContextMenuState.MarkAsPinnedMenuItem.ShortCut = Shortcut.CtrlS;
             menuItems.Add(buferContextMenuState.MarkAsPinnedMenuItem);
 
@@ -177,7 +169,10 @@ namespace BuferMAN.ContextMenu
                 {
                     ctmi.TryChangeText(buferViewModel.Alias);
                 }
-                ctmi.TextChanged += buferContextMenuState.ChangeTextMenuItem_TextChanged;
+                ctmi.TextChanged += (object sender, TextChangedEventArgs e) =>
+                {
+                    buferContextMenuState.ReturnTextToInitialMenuItem.Enabled = !e.IsOriginText;
+                };
                 buferContextMenuState.ChangeTextMenuItem = changeTextMenuItem;
                 menuItems.Add(buferContextMenuState.ChangeTextMenuItem);
                 menuItems.Add(buferContextMenuState.ReturnTextToInitialMenuItem);
@@ -217,7 +212,21 @@ namespace BuferMAN.ContextMenu
 
                 var loginCredentialsMenuItem = bufermanHost.CreateMenuItem(Resource.CreateCredsMenuItem);
                 var clcmi = new CreateLoginCredentialsMenuItem(loginCredentialsMenuItem, buferContextMenuState.Bufer, bufermanHost);
-                clcmi.LoginCreated += buferContextMenuState.LoginCredentialsMenuItem_LoginCreated;
+                clcmi.LoginCreated += (object sender, CreateLoginCredentialsEventArgs e) =>
+                {
+                    buferContextMenuState.PasteMenuItem.Text = $"{Resource.LoginWith} {new String('\t', 2)} Enter";
+
+                    buferContextMenuState.ReturnTextToInitialMenuItem.Enabled = false;
+                    buferContextMenuState.PlaceInBuferMenuItem.Enabled = false;
+                    buferContextMenuState.ChangeTextMenuItem.Enabled = false;
+                    buferViewModel.Clip.SetData(ClipboardFormats.PASSWORD_FORMAT, e.Password);
+                    if (!buferViewModel.Pinned)
+                    {
+                        buferContextMenuState.TryTogglePinBufer(sender, e);
+                    }
+
+                    buferContextMenuState.RemoveBuferSelectionHandler();
+                };
                 buferContextMenuState.CreateLoginDataMenuItem = loginCredentialsMenuItem;
                 menuItems.Add(buferContextMenuState.CreateLoginDataMenuItem);
 
@@ -259,7 +268,7 @@ namespace BuferMAN.ContextMenu
             return menuItems;
         }
 
-        private BuferItem _GetBuferItemFromModel(BuferContextMenuStateWrapper model)
+        private BuferItem _GetBuferItemFromModel(BuferContextMenuState model)
         {
             var buferViewModel = model.Bufer.ViewModel;
 
