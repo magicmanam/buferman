@@ -90,8 +90,6 @@ namespace BuferMAN.Settings
 
         public int ExtraBufersCount => 25;
 
-        public int MaxBuferPresentationLength => 2300;//Limits: low 2000, high 5000
-
         public Color BuferDefaultBackgroundColor
         {
             get

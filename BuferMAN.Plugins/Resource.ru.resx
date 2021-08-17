@@ -126,6 +126,12 @@
   <data name="BatterySaverPluginUnchargeNoteFormat" xml:space="preserve">
     <value>Отключи свою батарею ({0}%) от зарядки, чтобы она прослужила дольше</value>
   </data>
+  <data name="BigTextBufer" xml:space="preserve">
+    <value>Много букв...</value>
+  </data>
+  <data name="BigTextBuferPlugin" xml:space="preserve">
+    <value>Большой текстовый плагин</value>
+  </data>
   <data name="CancelDeferredDeletionMenuItem" xml:space="preserve">
     <value>Отменить удаление (в {0})</value>
   </data>

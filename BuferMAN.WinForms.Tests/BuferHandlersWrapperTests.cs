@@ -10,6 +10,8 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 using BuferMAN.View;
+using BuferMAN.Infrastructure.Plugins;
+using System.Collections.Generic;
 
 namespace BuferMAN.WinForms.Tests
 {
@@ -34,8 +36,6 @@ namespace BuferMAN.WinForms.Tests
                     TextRepresentation = originText
                 }
             };
-            this._settingsGetter.CallsTo(s => s.MaxBuferPresentationLength)
-                .Returns(2000);
 
             // Act
             var wrapper = new BuferHandlersWrapper(
@@ -46,6 +46,7 @@ namespace BuferMAN.WinForms.Tests
                 A.Fake<IBufermanHost>(),
                 this._settingsGetter.FakedObject,
                 A.Fake<IProgramSettingsSetter>(),
+                new List<IBufermanPlugin>(),
                 bufer);
 
             // Assert
@@ -79,6 +80,7 @@ namespace BuferMAN.WinForms.Tests
                 A.Fake<IBufermanHost>(),
                 A.Fake<IProgramSettingsGetter>(),
                 A.Fake<IProgramSettingsSetter>(),
+                new List<IBufermanPlugin>(),
                 bufer);
 
             // Assert
@@ -115,6 +117,7 @@ namespace BuferMAN.WinForms.Tests
                 A.Fake<IBufermanHost>(),
                 A.Fake<IProgramSettingsGetter>(),
                 A.Fake<IProgramSettingsSetter>(),
+                new List<IBufermanPlugin>(),
                 bufer);
 
             // Assert
@@ -152,6 +155,7 @@ namespace BuferMAN.WinForms.Tests
                 A.Fake<IBufermanHost>(),
                 A.Fake<IProgramSettingsGetter>(),
                 A.Fake<IProgramSettingsSetter>(),
+                new List<IBufermanPlugin>(),
                 bufer);
 
             // Assert
@@ -182,6 +186,7 @@ namespace BuferMAN.WinForms.Tests
                 A.Fake<IBufermanHost>(),
                 A.Fake<IProgramSettingsGetter>(),
                 A.Fake<IProgramSettingsSetter>(),
+                new List<IBufermanPlugin>(),
                 bufer);
 
             // Assert
@@ -212,6 +217,7 @@ namespace BuferMAN.WinForms.Tests
                 A.Fake<IBufermanHost>(),
                 A.Fake<IProgramSettingsGetter>(),
                 A.Fake<IProgramSettingsSetter>(),
+                new List<IBufermanPlugin>(),
                 bufer);
 
             // Assert
@@ -242,6 +248,7 @@ namespace BuferMAN.WinForms.Tests
                 A.Fake<IBufermanHost>(),
                 A.Fake<IProgramSettingsGetter>(),
                 A.Fake<IProgramSettingsSetter>(),
+                new List<IBufermanPlugin>(),
                 bufer);
 
             // Assert
@@ -273,6 +280,7 @@ namespace BuferMAN.WinForms.Tests
                 A.Fake<IBufermanHost>(),
                 A.Fake<IProgramSettingsGetter>(),
                 A.Fake<IProgramSettingsSetter>(),
+                new List<IBufermanPlugin>(),
                 bufer);
 
             // Assert

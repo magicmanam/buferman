@@ -51,6 +51,7 @@
     <Compile Include="BuferPresentations\FolderIconBuferPresentationBase.cs" />
     <Compile Include="BuferPresentations\IBuferPresentation.cs" />
     <Compile Include="BuferPresentations\IconBuferPresentationBase.cs" />
+    <Compile Include="BugTextBufer\BigTextBuferPlugin.cs" />
     <Compile Include="ContainerExtensions.cs" />
     <Compile Include="DeferredBuferDeletion\DeferredBuferDeletionPlugin.cs" />
     <Compile Include="DeferredBuferDeletion\DeferredBuferDeletionWrapper.cs" />
@@ -71,6 +72,10 @@
     <ProjectReference Include="..\BuferMAN.Models\BuferMAN.Models.csproj">
       <Project>{E949968B-00F2-4CAA-8C8A-3053CBF79A63}</Project>
       <Name>BuferMAN.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BuferMAN.View\BuferMAN.View.csproj">
+      <Project>{60FACDBB-0E8F-4EA9-8E18-99294EF5908A}</Project>
+      <Name>BuferMAN.View</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

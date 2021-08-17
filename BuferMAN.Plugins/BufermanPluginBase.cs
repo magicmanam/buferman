@@ -21,12 +21,7 @@ namespace BuferMAN.Plugins
 
         public abstract BufermanMenuItem CreateMainMenuItem();
 
-        public virtual BufermanMenuItem CreateBuferContextMenuItem()
-        {
-            return null;
-        }
-
-        public virtual void UpdateBuferContextMenu(BuferContextMenuState contextMenuModel)
+        public virtual void UpdateBuferItem(BuferContextMenuState contextMenuModel)
         {
             return;
         }

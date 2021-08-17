@@ -70,15 +70,6 @@ namespace BuferMAN.WinForms {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Many characters....
-        /// </summary>
-        internal static string BigTextBufer {
-            get {
-                return ResourceManager.GetString("BigTextBufer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Your click on bufer pastes its content into the place where mouse cursor is in or where you are active now.
         /// </summary>
         internal static string BuferClickingExplanationText {

@@ -88,6 +88,24 @@ namespace BuferMAN.Plugins {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Many characters....
+        /// </summary>
+        internal static string BigTextBufer {
+            get {
+                return ResourceManager.GetString("BigTextBufer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Big text.
+        /// </summary>
+        internal static string BigTextBuferPlugin {
+            get {
+                return ResourceManager.GetString("BigTextBuferPlugin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel deletion (at {0}).
         /// </summary>
         internal static string CancelDeferredDeletionMenuItem {

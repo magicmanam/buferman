@@ -9,6 +9,8 @@ using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Files;
 using BuferMAN.Infrastructure.Settings;
 using BuferMAN.ContextMenu;
+using System.Collections.Generic;
+using BuferMAN.Infrastructure.Plugins;
 
 namespace BuferMAN.WinForms
 {
@@ -31,6 +33,7 @@ namespace BuferMAN.WinForms
             IBufermanHost bufermanHost,
             IProgramSettingsGetter settingsGetter,
             IProgramSettingsSetter settingsSetter,
+            IEnumerable<IBufermanPlugin> plugins,
             IBufer bufer)
         {
             this._settingsGetter = settingsGetter;
@@ -126,19 +129,8 @@ namespace BuferMAN.WinForms
             this._bufer.SetText(buferText);
             this._bufer.ViewModel.OriginBuferTitle = buferText;
 
-            int maxBuferLength = this._settingsGetter.MaxBuferPresentationLength;
-            if (this._bufer.ViewModel.IsChangeTextAvailable && buferTextRepresentation != null && buferTextRepresentation.Length > maxBuferLength)
-            {
-                buferTextRepresentation = buferTextRepresentation.Substring(0, maxBuferLength - 300) + Environment.NewLine + Environment.NewLine + "...";
-
-                if (string.IsNullOrEmpty(buferTitle))
-                {
-                    buferTitle = this._MakeSpecialBuferText(Resource.BigTextBufer);
-                }
-            }
-
             this._bufer.ViewModel.Representation = buferTextRepresentation;// Maybe store original presentation as well ?
-            this._bufer.SetMouseOverToolTip(buferTextRepresentation);// TODO (s) an issue here: on alias change this tooltip will show wront tooltip
+            this._bufer.SetMouseOverToolTip(buferTextRepresentation);// TODO (s) an issue here: on alias change this tooltip will show wrong tooltip
             this._bufer.ViewModel.TextRepresentation = buferTextRepresentation;
             this._bufer.ViewModel.TooltipTitle = this._bufer.ViewModel.TooltipTitle ?? buferTitle;
 
@@ -213,18 +205,23 @@ namespace BuferMAN.WinForms
                 clipboardBuferService,
                 buferSelectionHandler,
                 bufermanHost,
-                () => Resource.MenuPin,
+                () => Resource.MenuPin, // TODO (m) remove these actions
                 () => Resource.MenuUnpin,
                 () => Resource.MenuAddedToFile,
                 bufer);
 
             bufer.SetContextMenu(buferContextMenuGenerator.GenerateContextMenuItems(buferContextMenuState, bufermanHost, buferTypeMenuGenerator));
+
+            foreach (var plugin in plugins) if (plugin.Available && plugin.Enabled)
+                {
+                    plugin.UpdateBuferItem(buferContextMenuState);
+                }
         }
 
         private string _MakeSpecialBuferText(string baseString)
         {
             return $"<< {baseString} >>";
-        }// TODO (m) is duplicated in DataObjectHandler
+        }// TODO (m) is duplicated in DataObjectHandler and BigTextBuferPlugin
 
         private void _Bufer_GotFocus(object sender, EventArgs e)
         {

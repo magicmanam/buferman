@@ -30,7 +30,7 @@ namespace BuferMAN.Plugins.DeferredBuferDeletion
             return this._mainMenuItem;
         }
 
-        public override void UpdateBuferContextMenu(BuferContextMenuState contextMenuState)
+        public override void UpdateBuferItem(BuferContextMenuState contextMenuState)
         {
             new DeferredBuferDeletionWrapper(contextMenuState, this.BufermanHost);
         }

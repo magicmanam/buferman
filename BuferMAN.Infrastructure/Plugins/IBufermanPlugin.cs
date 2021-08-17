@@ -7,8 +7,7 @@ namespace BuferMAN.Infrastructure.Plugins
     {
         BufermanMenuItem CreateMainMenuItem();
         void Initialize(IBufermanHost bufermanHost);
-        BufermanMenuItem CreateBuferContextMenuItem();
-        void UpdateBuferContextMenu(BuferContextMenuState contextMenuModel);
+        void UpdateBuferItem(BuferContextMenuState contextMenuModel);// TODO (s) rename BuferContextMenuState -> BuferContext
         string Name { get; }
         bool Enabled { get; set; }
         bool Available { get; }

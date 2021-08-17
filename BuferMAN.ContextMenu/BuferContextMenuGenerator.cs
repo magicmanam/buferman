@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using magicmanam.Windows;
 using System.Collections.Generic;
 using BuferMAN.Infrastructure.Menu;
-using BuferMAN.Infrastructure.Plugins;
 using System.Diagnostics;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Models;
@@ -23,7 +22,6 @@ namespace BuferMAN.ContextMenu
         private readonly IBuferSelectionHandlerFactory _buferSelectionHandlerFactory;
         private readonly IProgramSettingsGetter _settings;
         private readonly IClipboardWrapper _clipboardWrapper;
-        private readonly IEnumerable<IBufermanPlugin> _plugins;
         private readonly IBufersStorageFactory _bufersStorageFactory;
         private readonly IUserFileSelector _userFileSelector;
         private readonly IMapper _mapper;
@@ -31,7 +29,6 @@ namespace BuferMAN.ContextMenu
         public BuferContextMenuGenerator(IBuferSelectionHandlerFactory buferSelectionHandlerFactory,
             IProgramSettingsGetter settings,
             IClipboardWrapper clipboardWrapper,
-            IEnumerable<IBufermanPlugin> plugins,
             IBufersStorageFactory bufersStorageFactory, 
             IUserFileSelector userFileSelector,
             IMapper mapper)
@@ -39,7 +36,6 @@ namespace BuferMAN.ContextMenu
             this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
             this._settings = settings;
             this._clipboardWrapper = clipboardWrapper;
-            this._plugins = plugins;
             this._bufersStorageFactory = bufersStorageFactory;
             this._userFileSelector = userFileSelector;
             this._mapper = mapper;
@@ -85,7 +81,7 @@ namespace BuferMAN.ContextMenu
                     {
                         particularFormatMenu.AddOnClickHandler((object sender, EventArgs args) =>
                         {
-                            int maxBuferLength = this._settings.MaxBuferPresentationLength;
+                            int maxBuferLength = 2300;// TODO (m) into BigTextBuferPlugin
                             var data = formatData.ToString();
                             if (data.Length > maxBuferLength)
                             {
@@ -249,16 +245,6 @@ namespace BuferMAN.ContextMenu
             {
                 menuItems = buferTypeMenuGenerator.Generate(menuItems, bufermanHost);
             }
-
-            foreach (var plugin in this._plugins) if (plugin.Available && plugin.Enabled)
-                {
-                    plugin.UpdateBuferContextMenu(buferContextMenuState);
-                    var pluginMenuItem = plugin.CreateBuferContextMenuItem();
-                    if (pluginMenuItem != null)
-                    {
-                        menuItems.Add(pluginMenuItem);
-                    }
-                }
 
             menuItems.Add(bufermanHost.CreateMenuSeparatorItem());
             var createdAtMenuItem = bufermanHost.CreateMenuItem(string.Format(Resource.MenuCopyingTime, buferViewModel.CreatedAt));

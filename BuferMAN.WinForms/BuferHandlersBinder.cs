@@ -3,6 +3,8 @@ using BuferMAN.Infrastructure.ContextMenu;
 using BuferMAN.Infrastructure.Settings;
 using BuferMAN.Infrastructure.Files;
 using BuferMAN.Clipboard;
+using System.Collections.Generic;
+using BuferMAN.Infrastructure.Plugins;
 
 namespace BuferMAN.WinForms
 {
@@ -14,6 +16,7 @@ namespace BuferMAN.WinForms
         private readonly IFileStorage _fileStorage;
         private readonly IProgramSettingsGetter _settingsGetter;
         private readonly IProgramSettingsSetter _settingsSetter;
+        private readonly IEnumerable<IBufermanPlugin> _plugins;
 
         public BuferHandlersBinder(
             IBuferContextMenuGenerator buferContextMenuGenerator,
@@ -21,6 +24,7 @@ namespace BuferMAN.WinForms
             IFileStorage fileStorage,
             IProgramSettingsGetter settingsGetter,
             IProgramSettingsSetter settingsSetter,
+            IEnumerable<IBufermanPlugin> plugins,
             IClipboardBuferService clipboardBuferService)
         {
             this._buferContextMenuGenerator = buferContextMenuGenerator;
@@ -28,12 +32,13 @@ namespace BuferMAN.WinForms
             this._fileStorage = fileStorage;
             this._settingsGetter = settingsGetter;
             this._settingsSetter = settingsSetter;
+            this._plugins = plugins;
             this._clipboardBuferService = clipboardBuferService;
         }
 
         public void Bind(IBufer bufer, IBufermanHost bufermanHost)
         {
-            new BuferHandlersWrapper(this._clipboardBuferService, this._buferContextMenuGenerator, this._buferSelectionHandlerFactory, this._fileStorage, bufermanHost, this._settingsGetter, this._settingsSetter, bufer);
+            new BuferHandlersWrapper(this._clipboardBuferService, this._buferContextMenuGenerator, this._buferSelectionHandlerFactory, this._fileStorage, bufermanHost, this._settingsGetter, this._settingsSetter, this._plugins, bufer);
         }
     }
 }
