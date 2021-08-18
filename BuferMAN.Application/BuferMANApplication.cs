@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace BuferMAN.Application
@@ -323,6 +324,15 @@ namespace BuferMAN.Application
             {
                 menuItem.TextRefresh();
             }
+        }
+
+        public void ChangeLanguage(string shortLanguage)
+        {
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(shortLanguage);
+
+            this.RefreshMainMenu();
+            this.Host.RefreshUI();
+            this.Host.SetTrayMenu(this.GetTrayMenuItems());
         }
 
         public void SaveSession()

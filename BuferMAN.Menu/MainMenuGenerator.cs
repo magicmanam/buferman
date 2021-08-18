@@ -277,7 +277,7 @@ namespace BuferMAN.Menu
 
             englishMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
             {
-                this._rerenderUI("en", bufermanApplication);
+                bufermanApplication.ChangeLanguage("en");
 
                 englishMenuItem.Checked = true;
                 englishMenuItem.Enabled = false;
@@ -286,7 +286,7 @@ namespace BuferMAN.Menu
             });
             russianMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
             {
-                this._rerenderUI("ru", bufermanApplication);
+                bufermanApplication.ChangeLanguage("ru");
 
                 russianMenuItem.Checked = true;
                 russianMenuItem.Enabled = false;
@@ -295,16 +295,6 @@ namespace BuferMAN.Menu
             });
 
             return languageMenu;
-        }
-
-        private void _rerenderUI(string culture, IBufermanApplication bufermanApplication)
-        {
-            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(culture);
-
-            bufermanApplication.RefreshMainMenu();
-            bufermanApplication.Host.RerenderBufers();// TODO (l) this line will work only if I do not use cached button and will recreate all bufers !!!
-            bufermanApplication.Host.RerenderUserManual();// TODO (l) make all this rerendering as one method of buferman host object
-            bufermanApplication.Host.SetTrayMenu(bufermanApplication.GetTrayMenuItems());
         }
 
         private BufermanMenuItem _GenerateHelpMenu(IBufermanHost buferManHost)

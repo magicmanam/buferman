@@ -254,6 +254,12 @@ namespace BuferMAN.WinForms
             this._renderingHandler.Render(this);
         }
 
+        public void RefreshUI()
+        {
+            this.RerenderBufers();// TODO (l) this line will work only if I do not use cached button and will recreate all bufers !!!
+            this.RerenderUserManual();
+        }
+
         public void SetCurrentBufer(BuferViewModel bufer)
         {
             this._renderingHandler.SetCurrentBufer(bufer);

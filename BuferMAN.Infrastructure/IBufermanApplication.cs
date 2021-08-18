@@ -20,6 +20,7 @@ namespace BuferMAN.Infrastructure
 
         void SetMainMenu(IEnumerable<BufermanMenuItem> menuItems);
         void RefreshMainMenu();
+        void ChangeLanguage(string shortLanguage);
 
         /// <summary>
         /// Clear bufers that do not contain any data (operation system releases data objects sometimes).
