@@ -44,7 +44,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
                         .PressEnter();
                 });
 
-                var credsPasswordEnterMenuItem = this.BufermanHost.CreateMenuItem(Resource.CredsPasswordEnter, (object pastePasswordSender, EventArgs args) =>
+                var credsPasswordEnterMenuItem = this.BufermanHost.CreateMenuItem(() => Resource.CredsPasswordEnter, (object pastePasswordSender, EventArgs args) =>
                 {
                     this.BufermanHost.HideWindow();
                     new KeyboardEmulator()
@@ -53,7 +53,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
                 });
                 this.MenuItem.AddMenuItem(credsPasswordEnterMenuItem);
 
-                var credsPasswordMenuItem = this.BufermanHost.CreateMenuItem(Resource.CredsPassword, (object pastePasswordSender, EventArgs args) =>
+                var credsPasswordMenuItem = this.BufermanHost.CreateMenuItem(() => Resource.CredsPassword, (object pastePasswordSender, EventArgs args) =>
                 {
                     this.BufermanHost.HideWindow();
 
@@ -62,7 +62,7 @@ namespace ClipboardViewerForm.ClipMenu.Items
                 });
                 this.MenuItem.AddMenuItem(credsPasswordMenuItem);
 
-                var credsNameMenuItem = this.BufermanHost.CreateMenuItem(Resource.CredsName, (object pasteUsernameSender, EventArgs args) =>
+                var credsNameMenuItem = this.BufermanHost.CreateMenuItem(() => Resource.CredsName, (object pasteUsernameSender, EventArgs args) =>
                 {
                     this.BufermanHost.HideWindow();
 

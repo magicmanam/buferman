@@ -27,6 +27,7 @@ namespace BuferMAN.Application
         private readonly IIDataObjectHandler _dataObjectHandler;
         private readonly IBufersStorageFactory _bufersStorageFactory;
         private IBufermanHost _bufermanHost;
+        private IEnumerable<BufermanMenuItem> _mainMenuItems;
         private readonly IProgramSettingsGetter _settings;
         private bool _shouldCatchCopies = true;
         private readonly IEnumerable<IBufermanPlugin> _plugins;
@@ -307,6 +308,21 @@ namespace BuferMAN.Application
         public string GetUserManualText()
         {
             return Resource.UserManual;
+        }
+
+        public void SetMainMenu(IEnumerable<BufermanMenuItem> menuItems)
+        {
+            this._mainMenuItems = menuItems;
+
+            this.Host.SetMainMenu(menuItems);
+        }
+
+        public void RefreshMainMenu()
+        {
+            foreach (var menuItem in this._mainMenuItems)
+            {
+                menuItem.TextRefresh();
+            }
         }
 
         public void SaveSession()

@@ -11,7 +11,7 @@ namespace BuferMAN.Plugins.Scripts
 
         public override BufermanMenuItem CreateMainMenuItem()
         {
-            return this.BufermanHost.CreateMenuItem(this.Name);
+            return this.BufermanHost.CreateMenuItem(() => this.Name);
         }
 
         public override string Name

@@ -55,7 +55,7 @@ namespace BuferMAN.Menu
                 this._GenerateHelpMenu(bufermanApplication.Host)
             };
 
-            bufermanApplication.Host.SetMainMenu(items);
+            bufermanApplication.SetMainMenu(items);
         }
 
         private BufermanMenuItem _GenerateFileMenu(IBufermanApplication bufermanApplication)
@@ -79,7 +79,7 @@ namespace BuferMAN.Menu
             pauseResumeMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
                 {
                     bufermanApplication.ShouldCatchCopies = !bufermanApplication.ShouldCatchCopies;
-                    pauseResumeMenuItem.Text = this._GetPauseResumeMenuItemText(bufermanApplication);
+                    pauseResumeMenuItem.TextRefresh();
                 });
 
             fileMenu.AddMenuItem(pauseResumeMenuItem);
@@ -91,16 +91,14 @@ namespace BuferMAN.Menu
 
                 if (this._settings.RestorePreviousSession)
                 {
-                    restoreSessionMenuItem.Enabled = false;// TODO (s) on language change this property is lost (as well as others)!
-
+                    restoreSessionMenuItem.Enabled = false;
                     bufermanApplication.RestoreSession();
                 }
                 else
                 {
                     restoreSessionMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
                     {
-                        restoreSessionMenuItem.Enabled = false;// TODO (s) on language change this property is lost (as well as others)!
-
+                        restoreSessionMenuItem.Enabled = false;
                         bufermanApplication.RestoreSession();
                     });
                     restoreSessionMenuItem.ShortCut = Shortcut.CtrlR;
@@ -277,23 +275,36 @@ namespace BuferMAN.Menu
                     break;
             }
 
-            englishMenuItem.AddOnClickHandler(this._createLanguageEventHandler("en", bufermanApplication));
-            russianMenuItem.AddOnClickHandler(this._createLanguageEventHandler("ru", bufermanApplication));
+            englishMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
+            {
+                this._rerenderUI("en", bufermanApplication);
+
+                englishMenuItem.Checked = true;
+                englishMenuItem.Enabled = false;
+                russianMenuItem.Checked = false;
+                russianMenuItem.Enabled = true;
+            });
+            russianMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
+            {
+                this._rerenderUI("ru", bufermanApplication);
+
+                russianMenuItem.Checked = true;
+                russianMenuItem.Enabled = false;
+                englishMenuItem.Checked = false;
+                englishMenuItem.Enabled = true;// TODO (s) remove these duplicates with new language
+            });
 
             return languageMenu;
         }
 
-        private EventHandler _createLanguageEventHandler(string culture, IBufermanApplication bufermanApplication)
+        private void _rerenderUI(string culture, IBufermanApplication bufermanApplication)
         {
-            return (object sender, EventArgs args) =>
-            {
-                Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(culture);
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(culture);
 
-                this.GenerateMainMenu(bufermanApplication);
-                bufermanApplication.Host.RerenderBufers();// TODO (l) this line will work only if I do not use cached button and will recreate all bufers !!!
-                bufermanApplication.Host.RerenderUserManual();// TODO (l) make all this rerendering as one method of buferman host object
-                bufermanApplication.Host.SetTrayMenu(bufermanApplication.GetTrayMenuItems());
-            };
+            bufermanApplication.RefreshMainMenu();
+            bufermanApplication.Host.RerenderBufers();// TODO (l) this line will work only if I do not use cached button and will recreate all bufers !!!
+            bufermanApplication.Host.RerenderUserManual();// TODO (l) make all this rerendering as one method of buferman host object
+            bufermanApplication.Host.SetTrayMenu(bufermanApplication.GetTrayMenuItems());
         }
 
         private BufermanMenuItem _GenerateHelpMenu(IBufermanHost buferManHost)

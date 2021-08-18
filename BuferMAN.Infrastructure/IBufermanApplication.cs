@@ -18,6 +18,9 @@ namespace BuferMAN.Infrastructure
         void RestoreSession();
         void Exit();
 
+        void SetMainMenu(IEnumerable<BufermanMenuItem> menuItems);
+        void RefreshMainMenu();
+
         /// <summary>
         /// Clear bufers that do not contain any data (operation system releases data objects sometimes).
         /// </summary>

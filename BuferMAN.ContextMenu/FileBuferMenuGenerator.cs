@@ -21,7 +21,7 @@ namespace BuferMAN.ContextMenu
         {
             menuItems.Add(bufermanHost.CreateMenuSeparatorItem());
 
-            var openFileLocationMenuItem = bufermanHost.CreateMenuItem(Resource.MenuOpenFileLocation, (object sender, EventArgs args) =>
+            var openFileLocationMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuOpenFileLocation, (object sender, EventArgs args) =>
             {
                 var arguments = $"/select, \"{this._filePath}\"";
                 Process.Start("explorer.exe", arguments).WaitForInputIdle();

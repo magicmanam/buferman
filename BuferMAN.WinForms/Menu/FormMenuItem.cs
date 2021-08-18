@@ -8,12 +8,14 @@ namespace BuferMAN.WinForms.Menu
     class FormMenuItem : BufermanMenuItem
     {
         private readonly MenuItem _menuItem;
+        private Func<string> _textFn;
+        private IList<BufermanMenuItem> _children = new List<BufermanMenuItem>();
 
         private readonly IList<EventHandler> _onClickHandlers = new List<EventHandler>();
 
-        public FormMenuItem(Func<string> textFn, EventHandler eventHandler = null)
+        public FormMenuItem(Func<string> textFn, EventHandler eventHandler = null) : this(textFn(), eventHandler)
         {
-            this._menuItem = new MenuItem(textFn(), eventHandler);
+            this._textFn = textFn;
         }
 
         public FormMenuItem(string text, EventHandler eventHandler = null)
@@ -24,6 +26,19 @@ namespace BuferMAN.WinForms.Menu
         public FormMenuItem(MenuItem menuItem)
         {
             this._menuItem = menuItem;
+        }
+
+        public override void TextRefresh()
+        {
+            if (this._textFn != null)
+            {
+                this.Text = this._textFn();
+
+                foreach (var child in this.Children)
+                {
+                    child.TextRefresh();
+                }
+            }
         }
 
         public override string Text
@@ -55,14 +70,7 @@ namespace BuferMAN.WinForms.Menu
         {
             get
             {
-                var result = new List<BufermanMenuItem>();
-
-                foreach (var menuItem in this._menuItem.MenuItems)
-                {
-                    result.Add(new FormMenuItem(menuItem as MenuItem));
-                }
-
-                return result;
+                return this._children;
             }
         }
 
@@ -102,6 +110,7 @@ namespace BuferMAN.WinForms.Menu
 
         public override void AddMenuItem(BufermanMenuItem menuItem)
         {
+            this._children.Add(menuItem);
             this._menuItem.MenuItems.Add((menuItem as FormMenuItem).GetMenuItem());
         }
 

@@ -95,23 +95,23 @@ namespace BuferMAN.ContextMenu
                 }
             }
 
-            var formatsMenuItem = bufermanHost.CreateMenuItem(Resource.MenuFormats + $" ({formatsMenuItems.Count})");
+            var formatsMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuFormats + $" ({formatsMenuItems.Count})");
             foreach (var formatMenuItem in formatsMenuItems)
             {
                 formatsMenuItem.AddMenuItem(formatMenuItem);
             }
 
             menuItems.Add(formatsMenuItem);
-            buferContextMenuState.DeleteBuferMenuItem = bufermanHost.CreateMenuItem(Resource.DeleteBuferMenuItem, (object sender, EventArgs args) => {
+            buferContextMenuState.DeleteBuferMenuItem = bufermanHost.CreateMenuItem(() => Resource.DeleteBuferMenuItem, (object sender, EventArgs args) => {
                 buferContextMenuState.RemoveBufer();
             });
             menuItems.Add(buferContextMenuState.DeleteBuferMenuItem);
 
-            buferContextMenuState.PasteMenuItem = bufermanHost.CreateMenuItem(Resource.MenuPaste);
+            buferContextMenuState.PasteMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuPaste);
 
             menuItems.Add(buferContextMenuState.PasteMenuItem);
 
-            buferContextMenuState.PlaceInBuferMenuItem = bufermanHost.CreateMenuItem(Resource.MenuPlaceInBufer, (object sender, EventArgs e) =>
+            buferContextMenuState.PlaceInBuferMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuPlaceInBufer, (object sender, EventArgs e) =>
             {
                 this._clipboardWrapper.SetDataObject(buferContextMenuState.Bufer.ViewModel.Clip);
             });
@@ -119,14 +119,14 @@ namespace BuferMAN.ContextMenu
 
             if (bufer.ViewModel.IsChangeTextAvailable)
             {
-                buferContextMenuState.PasteMenuItem.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuPasteAsIs + $" {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
+                buferContextMenuState.PasteMenuItem.AddMenuItem(bufermanHost.CreateMenuItem(() => Resource.MenuPasteAsIs + $" {new String('\t', 4)} Enter", (object sender, EventArgs ars) =>
                 {
                     new KeyboardEmulator().PressEnter();
                 }));
 
                 if (formats.Length != 3 || ClipboardFormats.TextFormats.Any(tf => !formats.Contains(tf)))
                 {
-                    var pasteAsTextMenuItem = bufermanHost.CreateMenuItem(Resource.MenuPasteAsText, (object sender, EventArgs args) =>
+                    var pasteAsTextMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuPasteAsText, (object sender, EventArgs args) =>
                     {
                         var textDataObject = new DataObject();
                         textDataObject.SetText(buferViewModel.OriginBuferTitle);
@@ -139,7 +139,7 @@ namespace BuferMAN.ContextMenu
                     pasteAsTextMenuItem.ShortCut = Shortcut.CtrlA;
                 }
 
-                buferContextMenuState.PasteMenuItem.AddMenuItem(bufermanHost.CreateMenuItem(Resource.MenuCharByChar, (object sender, EventArgs args) =>
+                buferContextMenuState.PasteMenuItem.AddMenuItem(bufermanHost.CreateMenuItem(() => Resource.MenuCharByChar, (object sender, EventArgs args) =>
                 {
                     bufermanHost.HideWindow();
                     new KeyboardEmulator().TypeText(buferContextMenuState.Bufer.ViewModel.OriginBuferTitle);
@@ -150,16 +150,16 @@ namespace BuferMAN.ContextMenu
                 if (Uri.TryCreate(buferViewModel.OriginBuferTitle, UriKind.Absolute, out var uriResult)
                         && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
                 {
-                    var openInBrowserMenuItem = bufermanHost.CreateMenuItem(Resource.MenuOpenInBrowser, (object sender, EventArgs e) =>
+                    var openInBrowserMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuOpenInBrowser, (object sender, EventArgs e) =>
                                         Process.Start(buferViewModel.OriginBuferTitle));
                     openInBrowserMenuItem.ShortCut = Shortcut.CtrlB;
                     menuItems.Add(openInBrowserMenuItem);
                 }
 
-                var returnTextToInitialMenuItem = bufermanHost.CreateMenuItem(Resource.MenuReturn);
+                var returnTextToInitialMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuReturn);
                 new ReturnToInitialTextMenuItem(returnTextToInitialMenuItem, buferContextMenuState.Bufer, bufermanHost);
                 buferContextMenuState.ReturnTextToInitialMenuItem = returnTextToInitialMenuItem;
-                var changeTextMenuItem = bufermanHost.CreateMenuItem(Resource.MenuChange);
+                var changeTextMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuChange);
                 var ctmi = new ChangeTextMenuItem(changeTextMenuItem, buferContextMenuState.Bufer, bufermanHost);
                 if (!string.IsNullOrWhiteSpace(buferViewModel.Alias))
                 {
@@ -173,14 +173,14 @@ namespace BuferMAN.ContextMenu
                 menuItems.Add(buferContextMenuState.ChangeTextMenuItem);
                 menuItems.Add(buferContextMenuState.ReturnTextToInitialMenuItem);
 
-                buferContextMenuState.AddToFileMenuItem = bufermanHost.CreateMenuItem(Resource.MenuAddToFile);
+                buferContextMenuState.AddToFileMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuAddToFile);
 
                 if (formats.Contains(ClipboardFormats.FROM_FILE_FORMAT))
                 {
                     buferContextMenuState.MarkMenuItemAsAddedToFile();
                 } else
                 {
-                    var addToDefaultFileMenuItem = bufermanHost.CreateMenuItem(Resource.MenuAddToDefaultFile, (object sender, EventArgs args) =>
+                    var addToDefaultFileMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuAddToDefaultFile, (object sender, EventArgs args) =>
                     {
                         var bufersStorage = this._bufersStorageFactory.CreateStorageByFileExtension(this._settings.DefaultBufersFileName);
 
@@ -194,7 +194,7 @@ namespace BuferMAN.ContextMenu
                     addToDefaultFileMenuItem.ShortCut = Shortcut.CtrlF;
                     buferContextMenuState.AddToFileMenuItem.AddMenuItem(addToDefaultFileMenuItem);
 
-                    var addToFileMenuItem = bufermanHost.CreateMenuItem(Resource.MenuAddToSelectedFile, (object sender, EventArgs args) =>
+                    var addToFileMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuAddToSelectedFile, (object sender, EventArgs args) =>
                     {
                         var buferItem = this._GetBuferItemFromModel(buferContextMenuState);
 
@@ -206,11 +206,11 @@ namespace BuferMAN.ContextMenu
                 }
                 menuItems.Add(buferContextMenuState.AddToFileMenuItem);
 
-                var loginCredentialsMenuItem = bufermanHost.CreateMenuItem(Resource.CreateCredsMenuItem);
+                var loginCredentialsMenuItem = bufermanHost.CreateMenuItem(() => Resource.CreateCredsMenuItem);
                 var clcmi = new CreateLoginCredentialsMenuItem(loginCredentialsMenuItem, buferContextMenuState.Bufer, bufermanHost);
                 clcmi.LoginCreated += (object sender, CreateLoginCredentialsEventArgs e) =>
                 {
-                    buferContextMenuState.PasteMenuItem.Text = $"{Resource.LoginWith} {new String('\t', 2)} Enter";
+                    buferContextMenuState.PasteMenuItem.Text = $"{Resource.LoginWith} {new String('\t', 2)} Enter";// TODO (s) textFn
 
                     buferContextMenuState.ReturnTextToInitialMenuItem.Enabled = false;
                     buferContextMenuState.PlaceInBuferMenuItem.Enabled = false;
@@ -247,7 +247,7 @@ namespace BuferMAN.ContextMenu
             }
 
             menuItems.Add(bufermanHost.CreateMenuSeparatorItem());
-            var createdAtMenuItem = bufermanHost.CreateMenuItem(string.Format(Resource.MenuCopyingTime, buferViewModel.CreatedAt));
+            var createdAtMenuItem = bufermanHost.CreateMenuItem(() => string.Format(Resource.MenuCopyingTime, buferViewModel.CreatedAt));
             createdAtMenuItem.Enabled = false;
             menuItems.Add(createdAtMenuItem);
 

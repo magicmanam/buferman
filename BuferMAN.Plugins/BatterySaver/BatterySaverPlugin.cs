@@ -62,7 +62,7 @@ namespace BuferMAN.Plugins.BatterySaver
         {
             if (this.Available)
             {
-                this._mainMenuItem = this.BufermanHost.CreateMenuItem(this.Name, this._BatterySaverMenuItem_Click);
+                this._mainMenuItem = this.BufermanHost.CreateMenuItem(() => this.Name, this._BatterySaverMenuItem_Click);
                 this._mainMenuItem.Checked = this.Enabled;
 
                 return this._mainMenuItem;

@@ -26,7 +26,7 @@ namespace BuferMAN.Plugins.BigTextBufer
 
         public override BufermanMenuItem CreateMainMenuItem()
         {
-            this._mainMenuItem = this.BufermanHost.CreateMenuItem(this.Name, this._BigTextBuferMenuItem_Click);
+            this._mainMenuItem = this.BufermanHost.CreateMenuItem(() => this.Name, this._BigTextBuferMenuItem_Click);
             this._mainMenuItem.Checked = this.Available && this.Enabled;
 
             return this._mainMenuItem;

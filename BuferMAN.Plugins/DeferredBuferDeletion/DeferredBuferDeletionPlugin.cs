@@ -24,7 +24,7 @@ namespace BuferMAN.Plugins.DeferredBuferDeletion
 
         public override BufermanMenuItem CreateMainMenuItem()
         {
-            this._mainMenuItem = this.BufermanHost.CreateMenuItem(this.Name, this._DeferredDeletionMenuItem_Click);
+            this._mainMenuItem = this.BufermanHost.CreateMenuItem(() => this.Name, this._DeferredDeletionMenuItem_Click);
             this._mainMenuItem.Checked = this.Available && this.Enabled;
 
             return this._mainMenuItem;
