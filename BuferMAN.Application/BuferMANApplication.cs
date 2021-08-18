@@ -285,10 +285,10 @@ namespace BuferMAN.Application
         {
             var trayIconMenuItems = new List<BufermanMenuItem>
             {
-                this.Host.CreateMenuItem(Resource.TrayMenuOptions, (object sender, EventArgs args) => this._optionsWindowFactory.Create().Open()),
-                this.Host.CreateMenuItem(Resource.TrayMenuBuferManual, (object sernder, EventArgs args) => this.Host.UserInteraction.ShowPopup(Resource.UserManual + Environment.NewLine + Environment.NewLine + Resource.DocumentationMentioning, Resource.ApplicationTitle)),
+                this.Host.CreateMenuItem(() => Resource.TrayMenuOptions, (object sender, EventArgs args) => this._optionsWindowFactory.Create().Open()),
+                this.Host.CreateMenuItem(() => Resource.TrayMenuBuferManual, (object sernder, EventArgs args) => this.Host.UserInteraction.ShowPopup(Resource.UserManual + Environment.NewLine + Environment.NewLine + Resource.DocumentationMentioning, Resource.ApplicationTitle)),
                 this.Host.CreateMenuSeparatorItem(),
-                this.Host.CreateMenuItem(Resource.MenuFileExit, (object sender, EventArgs args) => this.Exit())
+                this.Host.CreateMenuItem(() => Resource.MenuFileExit, (object sender, EventArgs args) => this.Exit())
             };
 
             return trayIconMenuItems;

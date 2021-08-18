@@ -11,6 +11,11 @@ namespace BuferMAN.WinForms.Menu
 
         private readonly IList<EventHandler> _onClickHandlers = new List<EventHandler>();
 
+        public FormMenuItem(Func<string> textFn, EventHandler eventHandler = null)
+        {
+            this._menuItem = new MenuItem(textFn(), eventHandler);
+        }
+
         public FormMenuItem(string text, EventHandler eventHandler = null)
         {
             this._menuItem = new MenuItem(text, eventHandler);

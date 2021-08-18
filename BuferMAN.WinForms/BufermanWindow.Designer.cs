@@ -62,6 +62,11 @@ namespace BuferMAN.WinForms
             this.Menu.PopulateMenuWithItems(menuItems);
         }
 
+        public BufermanMenuItem CreateMenuItem(Func<string> textFn, EventHandler eventHandler = null)
+        {
+            return new FormMenuItem(textFn, eventHandler);
+        }
+
         public BufermanMenuItem CreateMenuItem(string text, EventHandler eventHandler = null)
         {
             return new FormMenuItem(text, eventHandler);

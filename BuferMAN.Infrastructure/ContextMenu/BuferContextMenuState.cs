@@ -40,7 +40,7 @@ namespace BuferMAN.Infrastructure.ContextMenu
             this._resourceMenuAddedToFile = resourceMenuAddedToFile;
 
             this.Bufer = bufer;
-            this.MarkAsPinnedMenuItem = bufermanHost.CreateMenuItem(this.Bufer.ViewModel.Pinned ? resourceMenuUnpin() : resourceMenuPin(), this.TryTogglePinBufer);
+            this.MarkAsPinnedMenuItem = bufermanHost.CreateMenuItem(this.Bufer.ViewModel.Pinned ? resourceMenuUnpin : resourceMenuPin, this.TryTogglePinBufer);
         }
 
         public IBufer Bufer { get; private set; }
