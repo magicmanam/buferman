@@ -52,7 +52,7 @@
     <Compile Include="BuferPresentations\FolderIconBuferPresentationBase.cs" />
     <Compile Include="BuferPresentations\IBuferPresentation.cs" />
     <Compile Include="BuferPresentations\IconBuferPresentationBase.cs" />
-    <Compile Include="BugTextBufer\BigTextBuferPlugin.cs" />
+    <Compile Include="BigTextBufer\BigTextBuferPlugin.cs" />
     <Compile Include="ContainerExtensions.cs" />
     <Compile Include="DeferredBuferDeletion\DeferredBuferDeletionPlugin.cs" />
     <Compile Include="DeferredBuferDeletion\DeferredBuferDeletionWrapper.cs" />
