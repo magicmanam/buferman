@@ -37,6 +37,7 @@ namespace BuferMAN.WinForms
         public INotificationEmitter NotificationEmitter { get; private set; }
         public event EventHandler ClipbordUpdated;
         public event EventHandler WindowActivated;
+        public event EventHandler WindowHidden;
 
         public IDictionary<Guid, Button> ButtonsMap { get { return this._buttonsMap; } }
         internal StatusStrip StatusLine { get; set; }
@@ -247,6 +248,7 @@ namespace BuferMAN.WinForms
         public void HideWindow()
         {
             this.WindowState = FormWindowState.Minimized;
+            this.WindowHidden?.Invoke(this, new EventArgs());
         }
 
         public void RerenderBufers()

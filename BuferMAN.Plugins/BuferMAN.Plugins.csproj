@@ -48,6 +48,7 @@
     <Compile Include="BatterySaver\BatterySaverPlugin.cs" />
     <Compile Include="BatterySaver\BatterySaverPluginSettings.cs" />
     <Compile Include="BufermanPluginBase.cs" />
+    <Compile Include="BufermanReminder\BufermanReminderPlugin.cs" />
     <Compile Include="BuferPresentations\FolderIconBuferPresentationBase.cs" />
     <Compile Include="BuferPresentations\IBuferPresentation.cs" />
     <Compile Include="BuferPresentations\IconBuferPresentationBase.cs" />

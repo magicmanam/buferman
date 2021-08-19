@@ -11,6 +11,7 @@ namespace BuferMAN.Infrastructure
     {
         event EventHandler ClipbordUpdated;
         event EventHandler WindowActivated;
+        event EventHandler WindowHidden;
         INotificationEmitter NotificationEmitter { get; }
         bool IsVisible { get; }
         void SetStatusBarText(string newText);

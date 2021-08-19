@@ -132,6 +132,9 @@
   <data name="BigTextBuferPlugin" xml:space="preserve">
     <value>Big text</value>
   </data>
+  <data name="BufermanReminderPlugin" xml:space="preserve">
+    <value>Reminder about BuferMAN</value>
+  </data>
   <data name="CancelDeferredDeletionMenuItem" xml:space="preserve">
     <value>Cancel deletion (at {0})</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="PCCleanerPlugin" xml:space="preserve">
     <value>PC cleaner</value>
+  </data>
+  <data name="ReminderPluginText" xml:space="preserve">
+    <value>All you need is BuferMAN: Alt +C !</value>
   </data>
   <data name="ScriptsPlugin" xml:space="preserve">
     <value>Scripts</value>

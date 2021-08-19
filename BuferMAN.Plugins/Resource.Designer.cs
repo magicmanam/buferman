@@ -106,6 +106,15 @@ namespace BuferMAN.Plugins {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reminder about BuferMAN.
+        /// </summary>
+        internal static string BufermanReminderPlugin {
+            get {
+                return ResourceManager.GetString("BufermanReminderPlugin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel deletion (at {0}).
         /// </summary>
         internal static string CancelDeferredDeletionMenuItem {
@@ -156,6 +165,15 @@ namespace BuferMAN.Plugins {
         internal static string PCCleanerPlugin {
             get {
                 return ResourceManager.GetString("PCCleanerPlugin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All you need is BuferMAN: Alt +C !.
+        /// </summary>
+        internal static string ReminderPluginText {
+            get {
+                return ResourceManager.GetString("ReminderPluginText", resourceCulture);
             }
         }
         

@@ -132,6 +132,9 @@
   <data name="BigTextBuferPlugin" xml:space="preserve">
     <value>Большой текстовый плагин</value>
   </data>
+  <data name="BufermanReminderPlugin" xml:space="preserve">
+    <value>Напоминания о Буфермэне</value>
+  </data>
   <data name="CancelDeferredDeletionMenuItem" xml:space="preserve">
     <value>Отменить удаление (в {0})</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="PCCleanerPlugin" xml:space="preserve">
     <value>Очистка файлов</value>
+  </data>
+  <data name="ReminderPluginText" xml:space="preserve">
+    <value>Помни про Буфермэна: Alt +C !</value>
   </data>
   <data name="ScriptsPlugin" xml:space="preserve">
     <value>Скрипты</value>
