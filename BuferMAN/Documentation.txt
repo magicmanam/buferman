@@ -1,26 +1,17 @@
 ﻿******************* sorted ****************
 
-# Release by 1 June 2021
-рендеринг оптимизировать:  не всегда нужно перерендеривать все буферы, иногда достаточно просто поменять цвет или что-то другое
-
 Issues to solve:
-- Load all bufers as one action (update UndoRedo nuget)
-
 - пароль хешировать
 
 - разные "профили" с файлами. И теперь в меню "Сохранить буфер в файл" показывать в какой профиль (файл) сохранять.
 Много букав - сделать чуть по другому тултип и кэпшен
 При открытии файла если вылетает ошибка, она проглатывается
-При сохранении персистент-буфера в файл он должен сохраниться как персистент
-Меню "Сохранить в файл" - убрать Ctrl + F - выбирать нужный файл/сторадж
 
 Book:
 - MAX_STATUS_LENGTH = 55 as well as other magic numbers/strings - in scope of StatusStrip
 - Search from keyboard (by text or aliases). Ctrl + F - search mode on visible time. Many keys are handled, so only Ctrl + F and a separate input - this will handle a case with different languages
 - Помечать клип в буфере отдельным цветом - для случая, если он pinned - может он просто полусерым будет?
 - running line in button text - as new presentation
-- Show status line on every action
-- Add clips count into status bar (separate strip) <100 100+, 200
 - Add drag an drop for temp/pinned bufers
 - На основе фич сделать список подсказок и показывать их на стартапе. Чаще показывать фичи, которые редко используются
 
@@ -32,13 +23,11 @@ Hard:
 
 # Ultimate version (almost sorted)
 - Window with hot keys + menu with applications (scripts tool and others)
-- Refactor: add DI with plugin support. reminders as plugin
 - Write youtube clip
 - if bufer selected 3 and more time - ask to save as pinned
 - Alt + C can be overwritten in some programs (like Notepad++)
 - Complete presentation - залить на гитхаб и возможно на slides.net
 - relocate tooltips to presentation classes. Make plugins for preview tooltips with settings
-- If link in bufer - open in browser if Shift pressed (or other key)
 - Разобраться с лицензиями
 - On scroll to show current clipboard with possibility to click
 - Hosting at https://sourceforge.net and other market places.
@@ -48,7 +37,6 @@ Hard:
 - Add some AI strategies based on user behaviour (Ctrl+C - TAB - Ctrl+V - TAB - Ctrl+C) (for example suggest to pin bufer or save into some storage) - via plugins
 - Improve Performance (try different tools)
 - Alt-C + P - Opens Paint + other shortcuts
-- There is a new bufers.txt file on every program update.
 - Automatic tests: create python git repo
 - https://alperguc.blogspot.com/2008/11/c-system-tray-minimize-to-tray-with.html
 - Add program to autostart (only for portable version. There is a well-known problem with ClickOnce applications: it will have several programs at once)
