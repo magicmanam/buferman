@@ -144,7 +144,7 @@ namespace BuferMAN.WinForms
             if (Uri.TryCreate(this._bufer.ViewModel.OriginBuferTitle, UriKind.Absolute, out var uriResult)
                         && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
             {
-                buferTypeMenuGenerator = new HttpUrlBuferMenuGenerator(this._bufer.ViewModel.OriginBuferTitle);
+                buferTypeMenuGenerator = new HttpUrlBuferMenuGenerator(this._bufer.ViewModel.OriginBuferTitle, this._settingsGetter, this._settingsSetter);
             }
             else
             {

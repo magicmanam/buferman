@@ -22,6 +22,7 @@ namespace BuferMAN.Infrastructure.Settings
         bool ShowFocusTooltip { get; }
         int EscHotKeyIntroductionCounter { get; }
         int ClosingWindowExplanationCounter { get; }
+        int HttpUrlBuferExplanationCounter { get; }
         bool IsBuferClickingExplained { get; }
     }
 }

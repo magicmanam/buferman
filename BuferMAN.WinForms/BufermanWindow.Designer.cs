@@ -282,6 +282,7 @@ namespace BuferMAN.WinForms
         {
             return (number & (number - 1)) == 0;
         }
+
         private void _InitializeForm()
         {
             this.SuspendLayout();

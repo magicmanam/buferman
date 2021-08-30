@@ -187,6 +187,15 @@ namespace BuferMAN.ContextMenu {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You just copied HTTP url. Now you can open it in browser via bufer&apos;s context menu or Ctrl+B hot key combination.
+        /// </summary>
+        internal static string HttpUrlBuferExplanation {
+            get {
+                return ResourceManager.GetString("HttpUrlBuferExplanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Login credentials.
         /// </summary>
         internal static string LoginCreds {

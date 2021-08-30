@@ -216,6 +216,19 @@ namespace BuferMAN.Settings
             }
         }
 
+        public int HttpUrlBuferExplanationCounter
+        {
+            get
+            {
+                return User.Default.HttpUrlBuferExplanationCounter;
+            }
+            set
+            {
+                User.Default.HttpUrlBuferExplanationCounter = value;
+                User.Default.Save();
+            }
+        }
+
         public bool IsBuferClickingExplained
         {
             get

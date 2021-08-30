@@ -207,4 +207,7 @@
   <data name="MenuAddToFile" xml:space="preserve">
     <value>&amp;Add to file</value>
   </data>
+  <data name="HttpUrlBuferExplanation" xml:space="preserve">
+    <value>You just copied HTTP url. Now you can open it in browser via bufer's context menu or Ctrl+B hot key combination</value>
+  </data>
 </root>

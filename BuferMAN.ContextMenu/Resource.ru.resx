@@ -207,4 +207,7 @@
   <data name="MenuOpenFileLocation" xml:space="preserve">
     <value>Открыть в файловом обозревателе</value>
   </data>
+  <data name="HttpUrlBuferExplanation" xml:space="preserve">
+    <value>Вы скопировали Http-ссылку. Открыть её в браузере можно через контекстное меню буфера или комбинацию горячих клавиш Ctrl+B</value>
+  </data>
 </root>
