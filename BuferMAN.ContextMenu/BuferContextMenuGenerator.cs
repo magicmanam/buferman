@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using magicmanam.Windows;
 using System.Collections.Generic;
 using BuferMAN.Infrastructure.Menu;
-using System.Diagnostics;
 using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Models;
 using BuferMAN.Infrastructure.Settings;
@@ -147,15 +146,6 @@ namespace BuferMAN.ContextMenu
 
                 menuItems.Add(bufermanHost.CreateMenuSeparatorItem());
 
-                if (Uri.TryCreate(buferViewModel.OriginBuferTitle, UriKind.Absolute, out var uriResult)
-                        && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
-                {
-                    var openInBrowserMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuOpenInBrowser, (object sender, EventArgs e) =>
-                                        Process.Start(buferViewModel.OriginBuferTitle));
-                    openInBrowserMenuItem.ShortCut = Shortcut.CtrlB;
-                    menuItems.Add(openInBrowserMenuItem);
-                }
-
                 var returnTextToInitialMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuReturn);
                 new ReturnToInitialTextMenuItem(returnTextToInitialMenuItem, buferContextMenuState.Bufer, bufermanHost);
                 buferContextMenuState.ReturnTextToInitialMenuItem = returnTextToInitialMenuItem;
@@ -178,7 +168,8 @@ namespace BuferMAN.ContextMenu
                 if (formats.Contains(ClipboardFormats.FROM_FILE_FORMAT))
                 {
                     buferContextMenuState.MarkMenuItemAsAddedToFile();
-                } else
+                }
+                else
                 {
                     var addToDefaultFileMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuAddToDefaultFile, (object sender, EventArgs args) =>
                     {

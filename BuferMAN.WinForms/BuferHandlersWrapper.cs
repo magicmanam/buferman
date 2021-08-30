@@ -141,14 +141,22 @@ namespace BuferMAN.WinForms
             }
 
             IBuferTypeMenuGenerator buferTypeMenuGenerator = null;
-            var files = this._bufer.ViewModel.Clip.GetData(DataFormats.FileDrop) as string[];
-            if (files != null && files.Length > 0)
+            if (Uri.TryCreate(this._bufer.ViewModel.OriginBuferTitle, UriKind.Absolute, out var uriResult)
+                        && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
             {
-                var firstFile = files.First();
-
-                if (files.Length == 1)
+                buferTypeMenuGenerator = new HttpUrlBuferMenuGenerator(this._bufer.ViewModel.OriginBuferTitle);
+            }
+            else
+            {
+                var files = this._bufer.ViewModel.Clip.GetData(DataFormats.FileDrop) as string[];
+                if (files != null && files.Length > 0)
                 {
-                    buferTypeMenuGenerator = new FileBuferMenuGenerator(firstFile);
+                    var firstFile = files.First();
+
+                    if (files.Length == 1)
+                    {
+                        buferTypeMenuGenerator = new FileBuferMenuGenerator(firstFile);
+                    }
                 }
             }
 
