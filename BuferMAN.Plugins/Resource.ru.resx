@@ -130,7 +130,7 @@
     <value>Много букв...</value>
   </data>
   <data name="BigTextBuferPlugin" xml:space="preserve">
-    <value>Большой текстовый плагин</value>
+    <value>Большой текстовый буфер</value>
   </data>
   <data name="BufermanReminderPlugin" xml:space="preserve">
     <value>Напоминания о Буфермэне</value>

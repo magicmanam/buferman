@@ -130,7 +130,7 @@
     <value>Many characters...</value>
   </data>
   <data name="BigTextBuferPlugin" xml:space="preserve">
-    <value>Big text</value>
+    <value>Big text bufer</value>
   </data>
   <data name="BufermanReminderPlugin" xml:space="preserve">
     <value>Reminder about BuferMAN</value>

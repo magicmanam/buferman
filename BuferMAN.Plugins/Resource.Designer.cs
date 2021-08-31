@@ -97,7 +97,7 @@ namespace BuferMAN.Plugins {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Big text.
+        ///   Looks up a localized string similar to Big text bufer.
         /// </summary>
         internal static string BigTextBuferPlugin {
             get {
