@@ -120,6 +120,9 @@
   <data name="DocumentationMenuItem" xml:space="preserve">
     <value>&amp;Documentation</value>
   </data>
+  <data name="DocumentationPath" xml:space="preserve">
+    <value>Documentation.html</value>
+  </data>
   <data name="MenuEdit" xml:space="preserve">
     <value>&amp;Edit</value>
   </data>

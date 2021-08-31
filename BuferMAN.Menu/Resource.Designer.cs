@@ -70,6 +70,15 @@ namespace BuferMAN.Menu {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Documentation.html.
+        /// </summary>
+        internal static string DocumentationPath {
+            get {
+                return ResourceManager.GetString("DocumentationPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Edit.
         /// </summary>
         internal static string MenuEdit {

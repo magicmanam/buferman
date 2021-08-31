@@ -22,55 +22,55 @@
     </section>
     <h2>Documentation</h2>
     <p>
-        В зависимости от дефолтной настройки языка в системе, интерфейс программы может быть русский или английский. Возможность настройки языка оболочки будет добавлена позже.
+        There are two languages are supported: English and Russian. You can switch them via main menu.
     </p><p>
-        Если в папке, где лежит программа, находится текстовый файл bufers.json, то при загрузке программы, буферы загрузятся автоматически. Изменить дефолтный файл можно через пункт главного меню.
+        If application folder contains file bufers.json, bufers from this file will be loaded on application launch automatically. You can change default file via main menu.
     </p><p>
-        Вы можете удалить все буферы, либо только временные.
+        You can delete all bufers or only temporal.
     </p><p>
-        Вы можете создать пару имя/пароль, используя контекстное меню.
+        You can create credentials from bufer using context menu or hot keys.
     </p><p>
-        При добавлении в буфер картинки, в качестве тултипа добавляется превью картинки.
+        On image adding, there is a tooltip with image preview is added to the bufer.
     </p><p>
-        Чтобы отменить удаление/добавление буфера, используйте горячие клавиши Ctrl + Z, Ctrl + Y
+        In order to undo/redo any operation with bufers, use hot keys Ctrl+Z, Ctrl+Y
     </p><p>
-        Сразу же при запуске программы в буфере будет находится текущий клип (если он там есть).
+        At application launch the program already contains current bufer if it exists.
     </p><p>
-        Программа поддерживает русские и английские буферы.
+        BuferMAN supports text bufers in different languages.
     </p><p>
-        Текст кнопки буфера показывает текст буфера с обрезанными лидирующими и заканчивающими знаками невидимых символов (пробелы, перевод каретки и т.д.).
+        Bufer's text trims leading and trailing whitespaces.
     </p><p>
-        Программа сохраняет буферы разных типов: любой текст (plain text, html, Microsoft Office), файлы, снимки экрана и т.д.
+        Application works with bufers of different types: any text (w/o formatting, html, Microsoft Office), files/folders, screenshots and so on.
     </p><p>
-        Если при копировании в буфер приложение крешится, опишите в каком приложении вы копируете и напишите на почту magicmanam@gmail.com
+        If application is crashed, send an email with described application/conditions/steps to reproduce to magicmanam@gmail.com
     </p><p>
-        Для каждого буфера хранятся все его форматы, в которых он представлен. Форматы доступны через контекстное меню.
+        All bufer's formats are stored and available for viewing - via context menu.
     </p><p>
-        Программу желательно запускать в режиме Администратора, для корректной работы с приложениями, уже запущенными в этом режиме.
+        It's higly recommended to run BuferMAN in Administrator mode - for correct work with applications running in the same mode.
     </p><p>
-        При выборе буфера, он поднимается вверх списка буферов, так как попадает в него снова.
+        When you select any bufer, it bubbles up to the top of bufers list (as current one).
     </p><p>
-        Приложение позволяет сохранять буферы-файлы. Для удобства такие буферы помечаются иконкой файла.
+        You can store/categorize bufers in files (txt or json). Bufers loaded from file are marked with file icon.
     </p><p>
-        В один момент времени на одном компьютере может быть запущено не более одного экземпляра программы. В панели задач пиктограмма программы отсутствует. Зато присутствует в системном трее.
+        At one moment the only BuferMAN instance can be launched. There is no BuferMAN icon in task panel, but it exists in system tray.
     </p><p>
-        По нажатию на клавишу Escape, программа сворачивается.
+        Escape key hides the program (does not close).
     </p><p>
-        Список доступных буферов появляется по нажатию на клавиши Alt+C. Навигироваться по буферам можно стрелками управления курсором, или клавишей Tab. Также доступны горячие клавиши: 'X' - перейти в начало списка, 'C' - табулироваться на 3 буфера вперёд, 'V' - перейти в конец списка.
+        You can see bufers list using hot key combination Alt+C. You can navigate in this list using arrow keys or Tab key. Also you can use key: 'X' - go to the top of the list, 'C' - 3 times Tab , 'V' - go to the bottom of the list.
     </p><p>
-        Для выбора нужного буфера, нужно нажать клавишу Enter или нажать левой кнопкой мыши. Буфер вставится туда, где стоит курсор активного окна.
+        To paste the bufer, click Enter key or use your mouse. Bufer will be pasted in active window.
     </p><p>
-        Для удаления выделенного буфера нажмите кнопку Delete, или воспользуйтесь контекстным меню буфера.
+        To delete bufer click Delete key or use context menu.
     </p><p>
-        При нажатии на кнопку закрытия окна программы или горячих клавиш Alt+F4 окно сворачивается, но не закрывается. Для закрытия программы используйте пункт главного меню или иконку в системном трее.
+        Close button and Alt+F4 hot key combination hide the program, but do not close it. To close the program you need to use main menu or tray icon's context menu.
     </p><p>
-        Если вам нужно скрыть скопированный пароль, либо дать более смысловое имя-алиас для буфера, воспользуйтесь контекстным меню. Вернуть текст к первоначальному можно, воспользовавшись контекстным меню.
+        If you need to hide a password or give some alias to a bufer, use context menu or Ctrl+H hot key. Initial version can be returned via context menu or Ctrl+I hot key.
     </p><p>
-        Программа позволяет сохранять постоянные буферы (через пункт контекстного меню), они не будут перезаписываться и всегда будут находиться внизу списка.
+        You can pin bufers (Ctrl+S) - they won't be rewritten by new bufers and will be located at the bottom of bufers list.
     </p><p>
-        Постоянные буферы отделены от временных горизонтальной полоской.
-    </p><p>Для удобства в системном трее имеется иконка программы.
-    </p><p>Комбинация Alt+P при открытом окне программы - прекратить/восстановить перехват событий копирования. Удобно когда нужно вставить подряд несколько буферов из программы и список буферов не должен меняться (для удобства выбора следующего).
-    </p><p>Можно сделать любой буфер текущим с помощью Ctrl+C.</p>
+        Pinned bufers are separated from usual bufers with horizontal line.
+    </p><p>There is BuferMAN icon in system tray - use it to access Options window or when you need to close a program.
+    </p><p>Alt+P hot key is used to pause/resume bufers intercepting. This is convenient when you need to paste several bufers and bufers list should store its order.
+    </p><p>You can place any bufer in clipboard w/o pasting it via Ctrl+C hot key.</p>
 </body>
 </html>

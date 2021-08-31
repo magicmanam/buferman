@@ -120,6 +120,9 @@
   <data name="DocumentationMenuItem" xml:space="preserve">
     <value>&amp;Документация</value>
   </data>
+  <data name="DocumentationPath" xml:space="preserve">
+    <value>Документация.html</value>
+  </data>
   <data name="MenuEdit" xml:space="preserve">
     <value>П&amp;равка</value>
   </data>

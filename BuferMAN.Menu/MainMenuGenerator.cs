@@ -301,8 +301,9 @@ namespace BuferMAN.Menu
         {
             var helpMenuItem = buferManHost.CreateMenuItem(() => Resource.MenuHelp);
 
+            Func<string> documentationPath = () => Resource.DocumentationPath;
             helpMenuItem.AddMenuItem(buferManHost.CreateMenuItem(() => Resource.DocumentationMenuItem, (object sender, EventArgs e) =>
-                Process.Start("Documentation.html")));
+                Process.Start(documentationPath())));
 
             //helpMenuItem.AddSeparator();
 

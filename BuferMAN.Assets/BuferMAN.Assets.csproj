@@ -48,6 +48,9 @@
     <Content Include="buferman.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Документация.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Documentation.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
