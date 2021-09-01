@@ -86,8 +86,8 @@ namespace BuferMAN.ContextMenu
                             {
                                 data = data.Substring(0, maxBuferLength - 300) + Environment.NewLine + Environment.NewLine + "...";
                             }
-                            var title = $"{format}";// TODO (s) maybe change this title to be more descriptive?
-                            bufermanHost.UserInteraction.ShowPopup(data, title);
+
+                            bufermanHost.UserInteraction.ShowPopup(data, format);
                         });
                     }
                     formatsMenuItems.Add(particularFormatMenu);
