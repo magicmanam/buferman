@@ -8,6 +8,7 @@ namespace BuferMAN.Infrastructure.Menu
     {
         public abstract string Text { get; set; }
         public abstract void TextRefresh();
+        public abstract void SetTextFunction(Func<string> textFunc);
         public abstract Shortcut ShortCut { get; set; }
         public abstract bool Enabled { get; set; }
         public abstract bool Checked { get; set; }

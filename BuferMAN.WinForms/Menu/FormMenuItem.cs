@@ -41,6 +41,14 @@ namespace BuferMAN.WinForms.Menu
             }
         }
 
+        public override void SetTextFunction(Func<string> textFunc)
+        {
+            if (textFunc != null)
+            {
+                this._textFn = textFunc;
+            }
+        }
+
         public override string Text
         {
             get

@@ -291,7 +291,7 @@ namespace BuferMAN.Menu
                 russianMenuItem.Checked = true;
                 russianMenuItem.Enabled = false;
                 englishMenuItem.Checked = false;
-                englishMenuItem.Enabled = true;// TODO (s) remove these duplicates with new language
+                englishMenuItem.Enabled = true;// TODO (m) remove these duplicates with new language
             });
 
             return languageMenu;

@@ -201,7 +201,8 @@ namespace BuferMAN.ContextMenu
                 var clcmi = new CreateLoginCredentialsMenuItem(loginCredentialsMenuItem, buferContextMenuState.Bufer, bufermanHost);
                 clcmi.LoginCreated += (object sender, CreateLoginCredentialsEventArgs e) =>
                 {
-                    buferContextMenuState.PasteMenuItem.Text = $"{Resource.LoginWith} {new String('\t', 2)} Enter";// TODO (s) textFn
+                    buferContextMenuState.PasteMenuItem.SetTextFunction(() => $"{Resource.LoginWith} {new String('\t', 2)} Enter");
+                    buferContextMenuState.PasteMenuItem.TextRefresh();
 
                     buferContextMenuState.ReturnTextToInitialMenuItem.Enabled = false;
                     buferContextMenuState.PlaceInBuferMenuItem.Enabled = false;
