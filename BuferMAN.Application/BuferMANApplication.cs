@@ -33,7 +33,6 @@ namespace BuferMAN.Application
         private bool _shouldCatchCopies = true;
         private readonly IEnumerable<IBufermanPlugin> _plugins;
         private readonly IBufermanOptionsWindowFactory _optionsWindowFactory;
-        private readonly IMapper _mapper;
         private readonly IFileStorage _fileStorage;
         private const string SESSION_FILE_PREFIX = "session_state";
         private readonly DateTime _startTime = DateTime.Now;
@@ -49,7 +48,6 @@ namespace BuferMAN.Application
             IEnumerable<IBufermanPlugin> plugins,
             IBufersStorageFactory bufersStorageFactory,
             IBufermanOptionsWindowFactory optionsWindowFactory,
-            IMapper mapper,
             IFileStorage fileStorage)
         {
             this._clipboardBuferService = clipboardBuferService;
@@ -60,7 +58,6 @@ namespace BuferMAN.Application
             this._bufersStorageFactory = bufersStorageFactory;
             this._settings = settings;
             this._optionsWindowFactory = optionsWindowFactory;
-            this._mapper = mapper;
             this._fileStorage = fileStorage;
         }
 
@@ -339,11 +336,11 @@ namespace BuferMAN.Application
         {
             var buferItems = this._clipboardBuferService.GetTemporaryBufers()
                 .Where(b => b.Clip.IsStringObject())
-                .Select(b => this._mapper.Map(b))
+                .Select(b => b.ToModel())
                 .Union(this._clipboardBuferService
                                    .GetPinnedBufers()
                                    .Where(b => b.Clip.IsStringObject())
-                                   .Select(b => this._mapper.Map(b)))
+                                   .Select(b => b.ToModel()))
                 .ToList();
             
             if (buferItems.Any())

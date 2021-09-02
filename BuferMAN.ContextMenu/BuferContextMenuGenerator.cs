@@ -23,21 +23,18 @@ namespace BuferMAN.ContextMenu
         private readonly IClipboardWrapper _clipboardWrapper;
         private readonly IBufersStorageFactory _bufersStorageFactory;
         private readonly IUserFileSelector _userFileSelector;
-        private readonly IMapper _mapper;
 
         public BuferContextMenuGenerator(IBuferSelectionHandlerFactory buferSelectionHandlerFactory,
             IProgramSettingsGetter settings,
             IClipboardWrapper clipboardWrapper,
             IBufersStorageFactory bufersStorageFactory, 
-            IUserFileSelector userFileSelector,
-            IMapper mapper)
+            IUserFileSelector userFileSelector)
         {
             this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
             this._settings = settings;
             this._clipboardWrapper = clipboardWrapper;
             this._bufersStorageFactory = bufersStorageFactory;
             this._userFileSelector = userFileSelector;
-            this._mapper = mapper;
         }
 
         public IEnumerable<BufermanMenuItem> GenerateContextMenuItems(BuferContextMenuState buferContextMenuState,
@@ -175,7 +172,7 @@ namespace BuferMAN.ContextMenu
                     {
                         var bufersStorage = this._bufersStorageFactory.CreateStorageByFileExtension(this._settings.DefaultBufersFileName);
 
-                        var buferItem = this._GetBuferItemFromModel(buferContextMenuState);
+                        var buferItem = buferContextMenuState.Bufer.ViewModel.ToModel();
 
                         bufersStorage.SaveBufer(buferItem);
 
@@ -187,7 +184,7 @@ namespace BuferMAN.ContextMenu
 
                     var addToFileMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuAddToSelectedFile, (object sender, EventArgs args) =>
                     {
-                        var buferItem = this._GetBuferItemFromModel(buferContextMenuState);
+                        var buferItem = buferContextMenuState.Bufer.ViewModel.ToModel();
 
                         this._userFileSelector.TrySelectBufersStorage(storage => storage.SaveBufer(buferItem));
                     });
@@ -244,13 +241,6 @@ namespace BuferMAN.ContextMenu
             menuItems.Add(createdAtMenuItem);
 
             return menuItems;
-        }
-
-        private BuferItem _GetBuferItemFromModel(BuferContextMenuState model)
-        {
-            var buferViewModel = model.Bufer.ViewModel;
-
-            return this._mapper.Map(buferViewModel);
         }
     }
 }

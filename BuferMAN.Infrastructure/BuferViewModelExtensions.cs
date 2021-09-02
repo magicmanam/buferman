@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using BuferMAN.Models;
+﻿using BuferMAN.Models;
 using BuferMAN.View;
+using System.Linq;
 
 namespace BuferMAN.Infrastructure
 {
-    public class Mapper : IMapper // TODO (s) into mapper
+    public static class BuferViewModelExtensions
     {
-        public BuferItem Map(BuferViewModel buferViewModel)
+        public static BuferItem ToModel(this BuferViewModel buferViewModel)
         {
             var buferItem = new BuferItem()
             {
