@@ -150,7 +150,7 @@ namespace BuferMAN.ContextMenu
                 new ReturnToInitialTextMenuItem(returnTextToInitialMenuItem, buferContextMenuState.Bufer, bufermanHost);
                 buferContextMenuState.ReturnTextToInitialMenuItem = returnTextToInitialMenuItem;
                 var changeTextMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuChange);
-                var ctmi = new ChangeTextMenuItem(changeTextMenuItem, buferContextMenuState.Bufer, bufermanHost);
+                var ctmi = new ChangeTextMenuItem(changeTextMenuItem, buferContextMenuState.Bufer, bufermanHost, this._settings);
                 if (!string.IsNullOrWhiteSpace(buferViewModel.Alias))
                 {
                     ctmi.TryChangeText(buferViewModel.Alias);

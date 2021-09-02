@@ -277,6 +277,8 @@ namespace BuferMAN.Settings
             }
         }
 
+        public int MaxBuferLengthToShowOnAliasCreation { get; } = 100;
+
         public string SessionsRootDirectory
         {
             get

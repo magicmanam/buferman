@@ -24,5 +24,6 @@ namespace BuferMAN.Infrastructure.Settings
         int ClosingWindowExplanationCounter { get; }
         int HttpUrlBuferExplanationCounter { get; }
         bool IsBuferClickingExplained { get; }
+        int MaxBuferLengthToShowOnAliasCreation { get; }
     }
 }
