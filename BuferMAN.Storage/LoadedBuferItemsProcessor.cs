@@ -29,7 +29,7 @@ namespace BuferMAN.Storage
                 foreach (var bufer in bufers)
                 {
                     var dataObject = this._buferItemDataObjectConverter.ToDataObject(bufer);
-                    var buferViewModel = new BuferViewModel// TODO (s) It should be in mapper and remove reference to Buferman.View assembly
+                    var buferViewModel = new BuferViewModel
                     {
                         Clip = dataObject,
                         Alias = bufer.Alias,

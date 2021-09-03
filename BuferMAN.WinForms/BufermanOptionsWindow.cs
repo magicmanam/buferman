@@ -79,7 +79,7 @@ namespace BuferMAN.WinForms
             this._saveButton.Click += (object sender, EventArgs args) =>
             {
                 this._settingsSetter.Save();
-                // TODO (s) rerender bufers because colors can be changed
+                // TODO (m) rerender bufers because colors can be changed
                 this.Close();
             };
             this._restoreButton = new Button
@@ -93,7 +93,7 @@ namespace BuferMAN.WinForms
             {
                 this._settingsSetter.RestoreDefault();
                 this._settingsSetter.Save();
-                // TODO (s) rerender bufers because colors can be changed
+                // TODO (m) rerender bufers because colors can be changed
                 this.Close();
             };
 
@@ -202,7 +202,7 @@ namespace BuferMAN.WinForms
 
             var showUserModeNotificationCheckbox = new CheckBox()
             {
-                Text = Resource.OptionsAdministratorModeReminder,// TODO (s) rename this label
+                Text = Resource.OptionsAdministratorModeReminder,
                 Checked = this._settingsGetter.ShowUserModeNotification,
                 AutoSize = true,
                 Parent = startupGroupBoxPanel

@@ -5,7 +5,7 @@ namespace BuferMAN.Clipboard
 {
     public static class ClipboardFormats
     {
-        public static IList<string> StringFormats = new List<string>() { DataFormats.StringFormat, DataFormats.Text, DataFormats.Rtf, DataFormats.UnicodeText, DataFormats.OemText, DataFormats.Html };// TODO (s) "VX Clipboard Descriptor Format";
+        public static IList<string> StringFormats = new List<string>() { DataFormats.StringFormat, DataFormats.Text, DataFormats.Rtf, DataFormats.UnicodeText, DataFormats.OemText, DataFormats.Html };// TODO (m) "VX Clipboard Descriptor Format";
         public static IList<string> TextFormats = new List<string>() { DataFormats.StringFormat, DataFormats.Text, DataFormats.UnicodeText };
 
         public static IList<string> FileFormats = new List<string>() { DataFormats.FileDrop, "FileName", "FileNameW" };

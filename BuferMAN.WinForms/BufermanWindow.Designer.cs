@@ -217,7 +217,7 @@ namespace BuferMAN.WinForms
 
         public void SetStatusBarText(string newText)
         {
-            const int MAX_STATUS_LENGTH = 40;// TODO (s) Define based on window's width
+            const int MAX_STATUS_LENGTH = 40;// TODO (m) Define based on window's width
             this.StatusLabel.ToolTipText = newText;
             this.StatusLabel.Text = newText.Length <= MAX_STATUS_LENGTH ? newText : newText.Substring(0, MAX_STATUS_LENGTH);
 

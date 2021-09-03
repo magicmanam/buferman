@@ -67,7 +67,7 @@ namespace BuferMAN.Application
 
             if (buferViewModel.Clip.GetData(DataFormats.StringFormat) as string == string.Empty)
             {
-                // TODO (s) maybe set System.String data ? Can be implemented via setting. Such bufers can be marked and maybe suggest to user paste it as a usual text (Ctrl + A)
+                // TODO (m) maybe set System.String data ? Can be implemented via setting. Such bufers can be marked and maybe suggest to user paste it as a usual text (Ctrl + A)
             }
 
             var files = buferViewModel.Clip.GetData(DataFormats.FileDrop) as string[];

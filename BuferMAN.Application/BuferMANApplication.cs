@@ -172,7 +172,7 @@ namespace BuferMAN.Application
                     }// Should be refactored
                 }
 
-                // TODO (s) maybe in a separate event handler (for example stats plugin)
+                // TODO (m) maybe in a separate event handler (for example stats plugin)
                 if (this._dataObjectHandler.CopiesCount == 100)
                 {
                     this._bufermanHost.NotificationEmitter.ShowInfoNotification(Resource.NotifyIcon100Congrats, 2500);

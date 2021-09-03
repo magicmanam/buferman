@@ -52,7 +52,7 @@ namespace BuferMAN.Windows
                 }
                 else
                 {
-                    this._bufermanHost.UserInteraction.ShowPopup(Resource.ProgramLaunched, Application.ProductName);// TODO (s) Application.ProductName ?
+                    this._bufermanHost.UserInteraction.ShowPopup(Resource.ProgramLaunched, Application.ProductName);
                 }
             }
         }

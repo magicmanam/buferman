@@ -129,8 +129,8 @@ namespace BuferMAN.WinForms
             this._bufer.SetText(buferText);
             this._bufer.ViewModel.OriginBuferTitle = buferText;
 
-            this._bufer.ViewModel.Representation = buferTextRepresentation;// Maybe store original presentation as well ?
-            this._bufer.SetMouseOverToolTip(buferTextRepresentation);// TODO (s) an issue here: on alias change this tooltip will show wrong tooltip
+            this._bufer.ViewModel.Representation = buferTextRepresentation;// TODO (m) Maybe store original presentation as well ?
+            this._bufer.SetMouseOverToolTip(buferTextRepresentation);
             this._bufer.ViewModel.TextRepresentation = buferTextRepresentation;
             this._bufer.ViewModel.TooltipTitle = this._bufer.ViewModel.TooltipTitle ?? buferTitle;
 

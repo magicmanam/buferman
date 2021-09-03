@@ -44,7 +44,7 @@ namespace BuferMAN.Settings
                 (value) => { User.Default.PinnedBuferBackgroundColor = value; });
 
             this._currentBuferBackgroundColorSetting = new SettingItem<int>(
-                Color.Silver.ToArgb(), // TODO (s) Consider new color: Color.LightGreen
+                Color.Silver.ToArgb(), // TODO (m) Consider new color: Color.LightGreen
                 User.Default.CurrentBuferBackgroundColor,
                 (value) => { User.Default.CurrentBuferBackgroundColor = value; });
 
@@ -290,6 +290,6 @@ namespace BuferMAN.Settings
         }
 
         private readonly string _bufermanDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                    "BuferMAN");
+                    "BuferMAN");// TODO (s) in constants
     }
 }

@@ -28,7 +28,7 @@ namespace BuferMAN.Files
             if (result == DialogResult.OK)
             {
                 var storage = this._bufersStorageFactory.CreateStorageByFileExtension(this._dialog.FileName);
-                // TODO (s) add this file into recent files and display in main and context menus
+                // TODO (m) add this file into recent files and display in main and context menus
                 action(storage);
             }
         }
