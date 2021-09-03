@@ -254,7 +254,7 @@ namespace BuferMAN.Menu
         private BufermanMenuItem _GenerateLanguageMenu(IBufermanApplication bufermanApplication)
         {
             var bufermanHost = bufermanApplication.Host;
-            // во время открытия приложения показывать диалог с выбором языка и сохранять это значение
+            // TODO (m) во время открытия приложения показывать диалог с выбором языка и сохранять это значение
             var languageMenu = bufermanHost.CreateMenuItem(() => Resource.MenuToolsLanguage);
             
             var englishMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuToolsLanguageEn);
@@ -266,35 +266,37 @@ namespace BuferMAN.Menu
             switch(Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName)
             {
                 case "ru":
-                    russianMenuItem.Checked = true;
-                    russianMenuItem.Enabled = false;
+                    this._UpdateLanguageMenuItems(russianMenuItem, englishMenuItem);
                     break;
                 case "en":
-                    englishMenuItem.Checked = true;
-                    englishMenuItem.Enabled = false;
+                    this._UpdateLanguageMenuItems(englishMenuItem, russianMenuItem);
                     break;
             }
 
             englishMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
             {
                 bufermanApplication.ChangeLanguage("en");
-
-                englishMenuItem.Checked = true;
-                englishMenuItem.Enabled = false;
-                russianMenuItem.Checked = false;
-                russianMenuItem.Enabled = true;
+                this._UpdateLanguageMenuItems(englishMenuItem, russianMenuItem);
             });
             russianMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
             {
                 bufermanApplication.ChangeLanguage("ru");
-
-                russianMenuItem.Checked = true;
-                russianMenuItem.Enabled = false;
-                englishMenuItem.Checked = false;
-                englishMenuItem.Enabled = true;// TODO (m) remove these duplicates with new language
+                this._UpdateLanguageMenuItems(russianMenuItem, englishMenuItem);
             });
 
             return languageMenu;
+        }
+
+        private void _UpdateLanguageMenuItems(BufermanMenuItem current, params BufermanMenuItem[] others)
+        {
+            current.Checked = true;
+            current.Enabled = false;
+
+            foreach (var other in others)
+            {
+                other.Checked = false;
+                other.Enabled = true;
+            }
         }
 
         private BufermanMenuItem _GenerateHelpMenu(IBufermanHost buferManHost)
