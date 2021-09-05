@@ -123,9 +123,6 @@
   <data name="FilesBufer" xml:space="preserve">
     <value>Файлы</value>
   </data>
-  <data name="ImageBufer" xml:space="preserve">
-    <value>Картинка</value>
-  </data>
   <data name="NotTextBufer" xml:space="preserve">
     <value>Странный буфер</value>
   </data>
@@ -145,9 +142,6 @@
   </data>
   <data name="NotifyIconStartupText" xml:space="preserve">
     <value>BuferMAN: Alt+C чтобы открыть</value>
-  </data>
-  <data name="FileContentsBufer" xml:space="preserve">
-    <value>В буфере файлы</value>
   </data>
   <data name="BuferLoaded" xml:space="preserve">
     <value>Буфер загружен из файла</value>

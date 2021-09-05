@@ -115,15 +115,6 @@ namespace BuferMAN.WinForms {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File Content.
-        /// </summary>
-        internal static string FileContentsBufer {
-            get {
-                return ResourceManager.GetString("FileContentsBufer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Files.
         /// </summary>
         internal static string FilesBufer {
@@ -147,15 +138,6 @@ namespace BuferMAN.WinForms {
         internal static string FoldersBufer {
             get {
                 return ResourceManager.GetString("FoldersBufer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Image.
-        /// </summary>
-        internal static string ImageBufer {
-            get {
-                return ResourceManager.GetString("ImageBufer", resourceCulture);
             }
         }
         

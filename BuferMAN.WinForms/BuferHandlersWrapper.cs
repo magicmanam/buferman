@@ -45,61 +45,40 @@ namespace BuferMAN.WinForms
             this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
             this._fileStorage = fileStorage;
 
-            var buferTextRepresentation = this._bufer.ViewModel.TextRepresentation;
-
             var formats = this._bufer.ViewModel.Clip.GetFormats();
 
             string buferTitle = null;
 
-            if (buferTextRepresentation == null)
+            var clipFiles = this._bufer.ViewModel.Clip.GetData(DataFormats.FileDrop) as string[];
+            if (clipFiles != null && clipFiles.Length > 0)
             {
-                var clipFiles = this._bufer.ViewModel.Clip.GetData(DataFormats.FileDrop) as string[];
-                if (clipFiles != null && clipFiles.Length > 0)
+                var firstFile = clipFiles.First();
+                var onlyFolders = clipFiles.Select(f => this._fileStorage.GetFileAttributes(f).HasFlag(FileAttributes.Directory))
+                    .All(f => f);
+
+                if (clipFiles.Length == 1)
                 {
-                    this._bufer.ViewModel.IsChangeTextAvailable = false;
-                    var firstFile = clipFiles.First();
-                    var onlyFolders = clipFiles.Select(f => this._fileStorage.GetFileAttributes(f).HasFlag(FileAttributes.Directory))
-                        .All(f => f);
-
-                    if (clipFiles.Length == 1)
-                    {
-                        const int MAX_FILE_LENGTH_FOR_BUFER_TITLE = 50;// TODO (m) into settings
-                        buferTitle = this._MakeSpecialBuferText(
-                            firstFile.Length < MAX_FILE_LENGTH_FOR_BUFER_TITLE ?
-                            firstFile :
-                            (onlyFolders ? Resource.FolderBufer : Resource.FileBufer));// TODO (m) these resources are duplicated in BuferMAN.Application project
-                    }
-                    else
-                    {
-                        buferTitle = this._MakeSpecialBuferText($"{(onlyFolders ? Resource.FoldersBufer : Resource.FilesBufer)} ({clipFiles.Length})");
-                    }
-
-                    var folder = this._fileStorage.GetFileDirectory(firstFile);
-                    buferTextRepresentation += folder + Environment.NewLine + Environment.NewLine;
-                    buferTextRepresentation += string.Join(Environment.NewLine, clipFiles.Select(f => this._fileStorage.GetFileName(f) + (this._fileStorage.GetFileAttributes(f).HasFlag(FileAttributes.Directory) ? Path.DirectorySeparatorChar.ToString() : string.Empty)).ToList());
+                    const int MAX_FILE_LENGTH_FOR_BUFER_TITLE = 50;// TODO (m) into settings
+                    buferTitle = this._MakeSpecialBuferText(
+                        firstFile.Length < MAX_FILE_LENGTH_FOR_BUFER_TITLE ?
+                        firstFile :
+                        (onlyFolders ? Resource.FolderBufer : Resource.FileBufer));// TODO (m) these resources are duplicated in BuferMAN.Application project
                 }
                 else
                 {
-                    var isBitmap = formats.Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT);
-                    if (isBitmap)
-                    {
-                        this._bufer.ViewModel.IsChangeTextAvailable = false;
-                        buferTextRepresentation = this._MakeSpecialBuferText(Resource.ImageBufer);
-                        this._bufer.ApplyFontStyle(FontStyle.Italic | FontStyle.Bold);
-                    }
-                    else
-                    {
-                        if (formats.Contains(ClipboardFormats.FILE_CONTENTS_FORMAT))
-                        {
-                            this._bufer.ViewModel.IsChangeTextAvailable = false;
-                            buferTextRepresentation = this._MakeSpecialBuferText(Resource.FileContentsBufer);
-                            this._bufer.ApplyFontStyle(FontStyle.Italic | FontStyle.Bold);
-                        }
-                    }
+                    buferTitle = this._MakeSpecialBuferText($"{(onlyFolders ? Resource.FoldersBufer : Resource.FilesBufer)} ({clipFiles.Length})");
+                }
+            }
+            else
+            {
+                if (formats.Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT) ||
+                    formats.Contains(ClipboardFormats.FILE_CONTENTS_FORMAT))
+                {
+                    this._bufer.ApplyFontStyle(FontStyle.Italic | FontStyle.Bold);
                 }
             }
 
-            string buferText = buferTitle ?? buferTextRepresentation;
+            string buferText = buferTitle ?? this._bufer.ViewModel.TextRepresentation;
             if (string.IsNullOrWhiteSpace(buferText))
             {
                 this._bufer.ApplyFontStyle(FontStyle.Italic | FontStyle.Bold);
@@ -129,9 +108,7 @@ namespace BuferMAN.WinForms
             this._bufer.SetText(buferText);
             this._bufer.ViewModel.OriginBuferTitle = buferText;
 
-            this._bufer.ViewModel.Representation = buferTextRepresentation;// TODO (m) Maybe store original presentation as well ?
-            this._bufer.SetMouseOverToolTip(buferTextRepresentation);
-            this._bufer.ViewModel.TextRepresentation = buferTextRepresentation;
+            this._bufer.SetMouseOverToolTip(this._bufer.ViewModel.TextRepresentation);
             this._bufer.ViewModel.TooltipTitle = this._bufer.ViewModel.TooltipTitle ?? buferTitle;
 
             if (!string.IsNullOrWhiteSpace(this._bufer.ViewModel.TooltipTitle))

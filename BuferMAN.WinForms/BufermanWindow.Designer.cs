@@ -158,7 +158,7 @@ namespace BuferMAN.WinForms
             trickTimer.Interval = intervalSeconds * 1000;
             trickTimer.Tick += this._TrickTimer_Tick;
             trickTimer.Start();
-        }//TODO Find better solution
+        }//TODO (m) Find better solution
 
         private void _TrickTimer_Tick(object sender, EventArgs e)
         {

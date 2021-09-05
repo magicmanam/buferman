@@ -5,7 +5,6 @@ using BuferMAN.Infrastructure.Settings;
 using BuferMAN.Infrastructure.Files;
 using FakeItEasy;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
@@ -54,7 +53,7 @@ namespace BuferMAN.WinForms.Tests
         }
 
         [TestMethod]
-        public void On_FileDrop_format_and_one_file_button_has_text_with_filename()
+        public void On_FileDrop_format_and_one_file_button_has_title_with_filename()
         {
             // Arrange
             var file = "c:\\file.txt";
@@ -66,17 +65,13 @@ namespace BuferMAN.WinForms.Tests
                     Clip = data
                 }
             };
-            var fileStorage = new Fake<IFileStorage>();
-            fileStorage.CallsTo(s => s.GetFileAttributes(file)).Returns(FileAttributes.Normal);
-            fileStorage.CallsTo(s => s.GetFileDirectory(file)).Returns("C:\\");
-            fileStorage.CallsTo(s => s.GetFileName(file)).Returns("file.txt");
 
             // Act
             var wrapper = new BuferHandlersWrapper(
                 A.Fake<IClipboardBuferService>(),
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
-                fileStorage.FakedObject,
+                A.Fake<IFileStorage>(),
                 A.Fake<IBufermanHost>(),
                 A.Fake<IProgramSettingsGetter>(),
                 A.Fake<IProgramSettingsSetter>(),
@@ -85,11 +80,10 @@ namespace BuferMAN.WinForms.Tests
 
             // Assert
             Assert.AreEqual($"<< {file} >>", bufer.ViewModel.OriginBuferTitle);
-            Assert.AreEqual("C:\\" + Environment.NewLine + Environment.NewLine + "file.txt", bufer.ViewModel.Representation);
         }
 
         [TestMethod]
-        public void On_FileDrop_format_and_two_files_button_has_text_with_files_count()
+        public void On_FileDrop_format_and_two_files_button_has_title_as_files_bufer()
         {
             // Arrange
             var file1 = "c:\\file1.ext";
@@ -102,18 +96,13 @@ namespace BuferMAN.WinForms.Tests
                     Clip = data
                 }
             };
-            var fileStorage = new Fake<IFileStorage>();
-            fileStorage.CallsTo(s => s.GetFileAttributes(file1)).Returns(FileAttributes.Normal);
-            fileStorage.CallsTo(s => s.GetFileDirectory(file1)).Returns("c:\\");
-            fileStorage.CallsTo(s => s.GetFileName(file1)).Returns("file1.ext");
-            fileStorage.CallsTo(s => s.GetFileName(file2)).Returns("file2.ext");
 
             // Act
             var wrapper = new BuferHandlersWrapper(
                 A.Fake<IClipboardBuferService>(),
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
-                fileStorage.FakedObject,
+                A.Fake<IFileStorage>(),
                 A.Fake<IBufermanHost>(),
                 A.Fake<IProgramSettingsGetter>(),
                 A.Fake<IProgramSettingsSetter>(),
@@ -122,11 +111,10 @@ namespace BuferMAN.WinForms.Tests
 
             // Assert
             Assert.AreEqual($"<< {Resource.FilesBufer} (2) >>", bufer.ViewModel.OriginBuferTitle);
-            Assert.AreEqual("c:\\" + Environment.NewLine + Environment.NewLine + "file1.ext" + Environment.NewLine + "file2.ext", bufer.ViewModel.Representation);
         }
 
         [TestMethod]
-        public void On_FileDrop_format_and_one_file_with_directory_button_has_text_with_files_count_and_filename_and_folder()
+        public void On_FileDrop_format_and_one_file_with_directory_button_has_title_as_files_bufer()
         {
             // Arrange
             var file = "c:\\file1.ext";
@@ -136,22 +124,17 @@ namespace BuferMAN.WinForms.Tests
             {
                 ViewModel = new BuferViewModel
                 {
-                    Clip = data
+                    Clip = data,
+                    TextRepresentation = "Files bufer"
                 }
             };
-            var fileStorage = new Fake<IFileStorage>();
-            fileStorage.CallsTo(s => s.GetFileAttributes(file)).Returns(FileAttributes.Normal);
-            fileStorage.CallsTo(s => s.GetFileDirectory(file)).Returns("c:\\");
-            fileStorage.CallsTo(s => s.GetFileName(file)).Returns("file1.ext");
-            fileStorage.CallsTo(s => s.GetFileName(folder)).Returns("folder");
-            fileStorage.CallsTo(s => s.GetFileAttributes(folder)).Returns(FileAttributes.Directory);
 
             // Act
             var wrapper = new BuferHandlersWrapper(
                 A.Fake<IClipboardBuferService>(),
                 A.Fake<IBuferContextMenuGenerator>(),
                 A.Fake<IBuferSelectionHandlerFactory>(),
-                fileStorage.FakedObject,
+                A.Fake<IFileStorage>(),
                 A.Fake<IBufermanHost>(),
                 A.Fake<IProgramSettingsGetter>(),
                 A.Fake<IProgramSettingsSetter>(),
@@ -160,11 +143,10 @@ namespace BuferMAN.WinForms.Tests
 
             // Assert
             Assert.AreEqual($"<< {Resource.FilesBufer} (2) >>", bufer.ViewModel.OriginBuferTitle);
-            Assert.AreEqual("c:\\" + Environment.NewLine + Environment.NewLine + "file1.ext" + Environment.NewLine + "folder\\", bufer.ViewModel.Representation);
         }
 
         [TestMethod]
-        public void On_CUSTOM_IMAGE_FORMAT_button_has_image_bufer_in_text()
+        public void On_CUSTOM_IMAGE_FORMAT_button_has_italic_and_bold_text()
         {
             // Arrange
             var data = new DataObject(ClipboardFormats.CUSTOM_IMAGE_FORMAT, new object());
@@ -172,7 +154,8 @@ namespace BuferMAN.WinForms.Tests
             {
                 ViewModel = new BuferViewModel
                 {
-                    Clip = data
+                    Clip = data,
+                    TextRepresentation = "Image"
                 }
             };
             var oldFont = bufer.GetButton().Font;
@@ -190,7 +173,7 @@ namespace BuferMAN.WinForms.Tests
                 bufer);
 
             // Assert
-            Assert.AreEqual($"<< {Resource.ImageBufer} >>", bufer.ViewModel.OriginBuferTitle);
+            Assert.AreEqual("Image", bufer.ViewModel.OriginBuferTitle);
             Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), bufer.GetButton().Font);
         }
 
@@ -203,7 +186,8 @@ namespace BuferMAN.WinForms.Tests
             {
                 ViewModel = new BuferViewModel
                 {
-                    Clip = data
+                    Clip = data,
+                    TextRepresentation = "File Content"
                 }
             };
             var oldFont = bufer.GetButton().Font;
@@ -221,7 +205,7 @@ namespace BuferMAN.WinForms.Tests
                 bufer);
 
             // Assert
-            Assert.AreEqual($"<< {Resource.FileContentsBufer} >>", bufer.ViewModel.OriginBuferTitle);
+            Assert.AreEqual("File Content", bufer.ViewModel.OriginBuferTitle);
             Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), bufer.GetButton().Font);
         }
 

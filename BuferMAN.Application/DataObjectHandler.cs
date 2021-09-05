@@ -73,6 +73,7 @@ namespace BuferMAN.Application
             var files = buferViewModel.Clip.GetData(DataFormats.FileDrop) as string[];
             if (files != null && files.Length > 0)
             {
+                buferViewModel.IsChangeTextAvailable = false;
                 var firstFile = files.First();
                 var onlyFolders = files.Select(f => this._fileStorage.GetFileAttributes(f).HasFlag(FileAttributes.Directory))
                     .All(f => f);
@@ -85,7 +86,29 @@ namespace BuferMAN.Application
                         buferViewModel.TooltipTitle = this._MakeSpecialBuferText(onlyFolders ? Resource.FolderBufer : Resource.FileBufer);
                     }
                 }
+
+                var folder = this._fileStorage.GetFileDirectory(firstFile);
+                buferViewModel.TextRepresentation += folder + Environment.NewLine + Environment.NewLine;
+                buferViewModel.TextRepresentation += string.Join(Environment.NewLine, files.Select(f => this._fileStorage.GetFileName(f) + (this._fileStorage.GetFileAttributes(f).HasFlag(FileAttributes.Directory) ? Path.DirectorySeparatorChar.ToString() : string.Empty)).ToList());
             }
+            else
+            {
+                if (buferViewModel.Clip.GetFormats().Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT))
+                {
+                    buferViewModel.IsChangeTextAvailable = false;
+                    buferViewModel.TextRepresentation = this._MakeSpecialBuferText(Resource.ImageBufer);
+                }
+                else
+                {
+                    if (buferViewModel.Clip.GetFormats().Contains(ClipboardFormats.FILE_CONTENTS_FORMAT))
+                    {
+                        buferViewModel.IsChangeTextAvailable = false;
+                        buferViewModel.TextRepresentation = this._MakeSpecialBuferText(Resource.FileContentsBufer);
+                    }
+                }
+            }
+
+            buferViewModel.Representation = buferViewModel.TextRepresentation;// TODO (m) Maybe store original presentation as well ?
 
             var isLastTempBufer = this._clipboardBuferService.IsLastTemporaryBufer(buferViewModel);
 

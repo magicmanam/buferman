@@ -123,9 +123,6 @@
   <data name="FilesBufer" xml:space="preserve">
     <value>Files</value>
   </data>
-  <data name="ImageBufer" xml:space="preserve">
-    <value>Image</value>
-  </data>
   <data name="NotTextBufer" xml:space="preserve">
     <value>Not a text</value>
   </data>
@@ -145,9 +142,6 @@
   </data>
   <data name="NotifyIconStartupText" xml:space="preserve">
     <value>BuferMAN: Alt+C to open</value>
-  </data>
-  <data name="FileContentsBufer" xml:space="preserve">
-    <value>File Content</value>
   </data>
   <data name="BuferLoaded" xml:space="preserve">
     <value>Bufer was loaded from storage</value>

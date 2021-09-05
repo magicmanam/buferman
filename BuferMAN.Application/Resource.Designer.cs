@@ -115,11 +115,29 @@ namespace BuferMAN.Application {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File Content.
+        /// </summary>
+        internal static string FileContentsBufer {
+            get {
+                return ResourceManager.GetString("FileContentsBufer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Folder.
         /// </summary>
         internal static string FolderBufer {
             get {
                 return ResourceManager.GetString("FolderBufer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        internal static string ImageBufer {
+            get {
+                return ResourceManager.GetString("ImageBufer", resourceCulture);
             }
         }
         
