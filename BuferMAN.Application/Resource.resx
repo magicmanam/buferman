@@ -150,23 +150,11 @@
   <data name="MenuFileExit" xml:space="preserve">
     <value>E&amp;xit session</value>
   </data>
-  <data name="NotifyIcon1000Congrats" xml:space="preserve">
-    <value>You copied 1000 times! You are great copypaster ever!</value>
-  </data>
-  <data name="NotifyIcon100Congrats" xml:space="preserve">
-    <value>You copied 100 times! Congrats!</value>
-  </data>
   <data name="PausedStatus" xml:space="preserve">
     <value>BuferMAN is paused. Alt+P to resume</value>
   </data>
   <data name="ResumedStatus" xml:space="preserve">
     <value>BuferMAN is resumed. Enjoy copies!</value>
-  </data>
-  <data name="StatsInfo" xml:space="preserve">
-    <value>Program startup time is {0}. Copied bufers count: {1} ({2} for today).</value>
-  </data>
-  <data name="TodayStatsInfo" xml:space="preserve">
-    <value>Program startup time is {0}. Copied bufers count: {1}.</value>
   </data>
   <data name="TrayMenuBuferManual" xml:space="preserve">
     <value>BuferMANual</value>

@@ -35,7 +35,6 @@ namespace BuferMAN.Application
         private readonly IBufermanOptionsWindowFactory _optionsWindowFactory;
         private readonly IFileStorage _fileStorage;
         private const string SESSION_FILE_PREFIX = "session_state";
-        private readonly DateTime _startTime = DateTime.Now;
         private DateTime _lastClipboardEventDateTime;
 
         private event EventHandler<BuferFocusedEventArgs> _BuferFocused;
@@ -169,21 +168,11 @@ namespace BuferMAN.Application
                         this._dataObjectHandler.TryHandleDataObject(buferViewModel);
 
                         action.Cancel();
-                    }// Should be refactored
+                    }// TODO (m) Should be refactored
                 }
 
-                // TODO (m) maybe in a separate event handler (for example stats plugin)
-                if (this._dataObjectHandler.CopiesCount == 100)
-                {
-                    this._bufermanHost.NotificationEmitter.ShowInfoNotification(Resource.NotifyIcon100Congrats, 2500);
-                }
-                else if (this._dataObjectHandler.CopiesCount == 1000)
-                {
-                    this._bufermanHost.NotificationEmitter.ShowInfoNotification(Resource.NotifyIcon1000Congrats, 2500);
-                }
-
-                this._bufermanHost.SetStatusBarText(Resource.LastClipboardUpdate + currentTime.ToShortTimeString());//Should be in separate strip label
-                // end of TODO
+                this._bufermanHost.SetStatusBarText(Resource.LastClipboardUpdate + currentTime.ToShortTimeString());
+                // TODO (m) Should be in separate strip label
             }
             catch (ExternalException exc)
             {
@@ -439,13 +428,6 @@ namespace BuferMAN.Application
             }
 
             this._clipboardBuferService.UndoableState = stateWithoutEmptyBufer;
-        }
-
-        public string GetStatisticsText()
-        {
-            return this._startTime.Date == DateTime.Now.Date ?
-                string.Format(Resource.TodayStatsInfo, this._startTime, this._dataObjectHandler.CurrentDayCopiesCount) :
-                string.Format(Resource.StatsInfo, this._startTime, this._dataObjectHandler.CopiesCount, this._dataObjectHandler.CurrentDayCopiesCount);
         }
     }
 }

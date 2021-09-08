@@ -27,26 +27,6 @@ namespace BuferMAN.Application
             this._fileStorage = fileStorage;
         }
 
-        private long _copiesCount = 0;
-        private long _currentDayCopiesCount = 0;
-        private DateTime _latestCopyDay = DateTime.Now.Date;
-        
-        private void _IncrementCopiesCounters()
-        {
-            this._copiesCount++;
-
-            if (DateTime.Now.Date != this._latestCopyDay)
-            {
-                this._latestCopyDay = DateTime.Now.Date;
-                this._currentDayCopiesCount = 0;
-            }
-
-            this._currentDayCopiesCount++;
-        }
-
-        public long CopiesCount { get { return this._copiesCount; } }
-        public long CurrentDayCopiesCount { get { return this._currentDayCopiesCount; } }
-
         // For unit tests:
         // not persistent: last temp ? <nothing> :
         // any temp ? <swap> : 
@@ -62,8 +42,6 @@ namespace BuferMAN.Application
 
             buferViewModel.TextData = this._GetNotEmptyStringData(buferViewModel.Clip, DataFormats.UnicodeText, DataFormats.StringFormat, DataFormats.Text);
             buferViewModel.TextRepresentation = buferViewModel.TextData;
-
-            this._IncrementCopiesCounters();
 
             if (buferViewModel.Clip.GetData(DataFormats.StringFormat) as string == string.Empty)
             {

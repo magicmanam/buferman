@@ -160,24 +160,6 @@ namespace BuferMAN.Application {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You copied 1000 times! You are great copypaster ever!.
-        /// </summary>
-        internal static string NotifyIcon1000Congrats {
-            get {
-                return ResourceManager.GetString("NotifyIcon1000Congrats", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to You copied 100 times! Congrats!.
-        /// </summary>
-        internal static string NotifyIcon100Congrats {
-            get {
-                return ResourceManager.GetString("NotifyIcon100Congrats", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to BuferMAN is paused. Alt+P to resume.
         /// </summary>
         internal static string PausedStatus {
@@ -192,24 +174,6 @@ namespace BuferMAN.Application {
         internal static string ResumedStatus {
             get {
                 return ResourceManager.GetString("ResumedStatus", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Program startup time is {0}. Copied bufers count: {1} ({2} for today)..
-        /// </summary>
-        internal static string StatsInfo {
-            get {
-                return ResourceManager.GetString("StatsInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Program startup time is {0}. Copied bufers count: {1}..
-        /// </summary>
-        internal static string TodayStatsInfo {
-            get {
-                return ResourceManager.GetString("TodayStatsInfo", resourceCulture);
             }
         }
         

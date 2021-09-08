@@ -52,6 +52,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.Wix", "BuferMAN.Wi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuferMAN.Application.Tests", "BuferMAN.Application.Tests\BuferMAN.Application.Tests.csproj", "{D0D29DA9-08BF-46A7-9E2A-E9CA112129DE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{762D2885-2515-44E4-B160-A56C890552C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stats.BuferMAN.Plugin", "Stats.BuferMAN.Plugin\Stats.BuferMAN.Plugin.csproj", "{4BA76E77-EB83-488C-A399-6507CDF093FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -145,9 +149,16 @@ Global
 		{D0D29DA9-08BF-46A7-9E2A-E9CA112129DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0D29DA9-08BF-46A7-9E2A-E9CA112129DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0D29DA9-08BF-46A7-9E2A-E9CA112129DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BA76E77-EB83-488C-A399-6507CDF093FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BA76E77-EB83-488C-A399-6507CDF093FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BA76E77-EB83-488C-A399-6507CDF093FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BA76E77-EB83-488C-A399-6507CDF093FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4BA76E77-EB83-488C-A399-6507CDF093FD} = {762D2885-2515-44E4-B160-A56C890552C0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A41DAAAB-5628-41B5-BCC4-46BE39812007}

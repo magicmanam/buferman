@@ -375,14 +375,6 @@ namespace BuferMAN.WinForms
             this.StatusLine.Stretch = false;
             this.StatusLine.TabIndex = 1000;
 
-            var statisticsLabel = new ToolStripStatusLabel()
-            {
-                Spring = true,
-                Alignment = ToolStripItemAlignment.Left,
-                Image = new Icon(SystemIcons.Information, 30, 30).ToBitmap()
-            };
-            statisticsLabel.MouseEnter += this._StatisticsLabel_MouseEnter;
-            this.StatusLine.Items.Add(statisticsLabel);
             this.StatusLine.Items.Add(this.StatusLabel);
 
             this.Controls.Add(this.StatusLine);
@@ -394,10 +386,18 @@ namespace BuferMAN.WinForms
             this.PerformLayout();
         }
 
-        private void _StatisticsLabel_MouseEnter(object sender, EventArgs e)
+        public void AddStatusLinePart(string text, Icon icon, EventHandler handler)
         {
-            var s = sender as ToolStripStatusLabel;
-            s.ToolTipText = this._bufermanApp.GetStatisticsText();
+            var label = new ToolStripStatusLabel()
+            {
+                Spring = true,
+                Alignment = ToolStripItemAlignment.Left,
+                Image = icon?.ToBitmap(),
+                Text = text
+            };
+            label.MouseEnter += handler;
+
+            this.StatusLine.Items.Insert(0, label);
         }
 
         private void _OnWindowClosing(object sender, FormClosingEventArgs e)

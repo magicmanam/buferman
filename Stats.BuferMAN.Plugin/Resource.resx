@@ -117,59 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AdminWindowTitle" xml:space="preserve">
-    <value>BuferMAN (Админ)</value>
+  <data name="NotifyIcon1000Congrats" xml:space="preserve">
+    <value>You copied 1000 times! You are great copypaster ever!</value>
   </data>
-  <data name="BuferOperationCancelled" xml:space="preserve">
-    <value>Операция отменена</value>
+  <data name="NotifyIcon100Congrats" xml:space="preserve">
+    <value>You copied 100 times! Congrats!</value>
   </data>
-  <data name="BuferOperationRestored" xml:space="preserve">
-    <value>Операция восстановлена</value>
+  <data name="StatsInfo" xml:space="preserve">
+    <value>Program startup time is {0}. Copied bufers count: {1} ({2} for today).</value>
   </data>
-  <data name="DocumentationMentioning" xml:space="preserve">
-    <value>Полное руководство в меню: Помощь -&gt; Документация</value>
+  <data name="StatsPlugin" xml:space="preserve">
+    <value>Stats plugin</value>
   </data>
-  <data name="FileBufer" xml:space="preserve">
-    <value>Файл</value>
-  </data>
-  <data name="FileContentsBufer" xml:space="preserve">
-    <value>В буфере файлы</value>
-  </data>
-  <data name="FolderBufer" xml:space="preserve">
-    <value>Папка</value>
-  </data>
-  <data name="ImageBufer" xml:space="preserve">
-    <value>Картинка</value>
-  </data>
-  <data name="LastClipboardUpdate" xml:space="preserve">
-    <value>Последнее обновление буфера в </value>
-  </data>
-  <data name="MenuFileExit" xml:space="preserve">
-    <value>Выход из программы</value>
-  </data>
-  <data name="PausedStatus" xml:space="preserve">
-    <value>BuferMAN на отдыхе. Alt+P - возобновить</value>
-  </data>
-  <data name="ResumedStatus" xml:space="preserve">
-    <value>BuferMAN возобновил работу</value>
-  </data>
-  <data name="TrayMenuBuferManual" xml:space="preserve">
-    <value>Буфероводство</value>
-  </data>
-  <data name="TrayMenuOptions" xml:space="preserve">
-    <value>Опции</value>
-  </data>
-  <data name="UserManual" xml:space="preserve">
-    <value>Выберите буфер, чтобы вставить в активное окно.
-Каждый буфер имеет контекстное меню.
-
-Горячие клавиши:
-  - Запустить программу: Alt + C
-  - Перейти к первому буферу: X (Home)
-  - Перейти к последнему буферу: V (End)
-  - Сместиться на 3 буфера: C  
-  - Отменить/вернуть действие: Ctrl+Z / Ctrl+Y 
-
--&gt; Копируйте на здоровье!</value>
+  <data name="TodayStatsInfo" xml:space="preserve">
+    <value>Program startup time is {0}. Copied bufers count: {1}.</value>
   </data>
 </root>

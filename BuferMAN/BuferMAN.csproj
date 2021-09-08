@@ -83,6 +83,10 @@
       <Project>{0DEECDC2-CF30-4625-A465-671F851F937E}</Project>
       <Name>Logging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Stats.BuferMAN.Plugin\Stats.BuferMAN.Plugin.csproj">
+      <Project>{4ba76e77-eb83-488c-a399-6507cdf093fd}</Project>
+      <Name>Stats.BuferMAN.Plugin</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="CheckList.txt" />
