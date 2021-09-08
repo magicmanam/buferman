@@ -66,7 +66,16 @@ namespace BuferMAN.Application
 
             foreach (var plugin in this._plugins)
             {
-                plugin.Initialize(this._bufermanHost);
+                try
+                {
+                    plugin.Initialize(this._bufermanHost);
+                }
+                catch (Exception exc)
+                {
+                    bufermanHost
+                        .UserInteraction
+                        .ShowPopup(exc.Message, plugin.Name);
+                }
             }
             this._dataObjectHandler.Full += this._bufermanHost.OnFullBuferMAN;
             this._dataObjectHandler.Updated += this.Updated;

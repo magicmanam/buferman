@@ -228,20 +228,29 @@ namespace BuferMAN.Menu
             };
         }
 
-        private BufermanMenuItem _GeneratePluginsMenu(IBufermanHost buferManHost)
+        private BufermanMenuItem _GeneratePluginsMenu(IBufermanHost bufermanHost)
         {
-            var pluginsMenu = buferManHost.CreateMenuItem(() => Resource.MenuToolsPlugins);
+            var pluginsMenu = bufermanHost.CreateMenuItem(() => Resource.MenuToolsPlugins);
 
             foreach (var plugin in this._plugins) if (plugin.Available)
                 {
-                    var pluginMenuItem = plugin.CreateMainMenuItem();
-                    pluginsMenu.AddMenuItem(pluginMenuItem);
+                    try
+                    {
+                        var pluginMenuItem = plugin.CreateMainMenuItem();
+                        pluginsMenu.AddMenuItem(pluginMenuItem);
+                    }
+                    catch (Exception exc)
+                    {
+                        bufermanHost
+                            .UserInteraction
+                            .ShowPopup(exc.Message, plugin.Name);
+                    }
                 }
 
             if (pluginsMenu.Children.Any())
             {
                 pluginsMenu.AddSeparator();
-                pluginsMenu.AddMenuItem(buferManHost.CreateMenuItem(() => Resource.MenuPluginsManagement));// Should open a window to enable/disable, change order (in menu items and so on).
+                pluginsMenu.AddMenuItem(bufermanHost.CreateMenuItem(() => Resource.MenuPluginsManagement));// Should open a window to enable/disable, change order (in menu items and so on).
 
                 return pluginsMenu;
             }

@@ -199,7 +199,16 @@ namespace BuferMAN.WinForms
 
             foreach (var plugin in plugins) if (plugin.Available && plugin.Enabled)
                 {
-                    plugin.UpdateBuferItem(buferContextMenuState);
+                    try
+                    {
+                        plugin.UpdateBuferItem(buferContextMenuState);
+                    }
+                    catch (Exception exc)
+                    {
+                        bufermanHost
+                            .UserInteraction
+                            .ShowPopup(exc.Message, plugin.Name);
+                    }
                 }
         }
 
