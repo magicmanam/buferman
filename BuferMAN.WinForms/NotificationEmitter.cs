@@ -25,6 +25,11 @@ namespace BuferMAN.WinForms
             this._ShowNotification(infoText, ToolTipIcon.Info, delay, title);
         }
 
+        public void ShowErrorNotification(string errorText, int delay, string title = null)
+        {
+            this._ShowNotification(errorText, ToolTipIcon.Error, delay, title);
+        }
+
         private void _ShowNotification(string notificationText, ToolTipIcon icon, int delay, string title = null)
         {
             this._notifyIcon.ShowBalloonTip(delay, title ?? this._defaultTitle, notificationText, icon);

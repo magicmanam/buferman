@@ -33,6 +33,7 @@ namespace BuferMAN.WinForms
         private bool _wasWindowActivated = false;
         private IProgramSettingsGetter _settingsGetter;
         private IProgramSettingsSetter _settingsSetter;
+        private static BufermanWindow _current;
 
         public INotificationEmitter NotificationEmitter { get; private set; }
         public event EventHandler ClipbordUpdated;
@@ -55,6 +56,7 @@ namespace BuferMAN.WinForms
             this._settingsSetter = settingsSetter;
 
             this._userInteraction = userInteraction;
+            BufermanWindow._current = this;
         }
 
         public void SetMainMenu(IEnumerable<BufermanMenuItem> menuItems)
@@ -429,9 +431,9 @@ namespace BuferMAN.WinForms
             Logger.WriteError("Exception " + e.Exception.Message, e.Exception);
 
             var exc = e.Exception as ClipboardMessageException;
-            if (exc != null)
-            {
-                //MessageBox.Show(exc.Message, exc.Title ?? Application.ProductName); // TODO (m) handle this situation with non blocking popup, because UI is freezed
+            if (exc != null && BufermanWindow._current?.NotificationEmitter != null)
+            {// Notification is used, because popup is blocking and UI is freezed with it
+                BufermanWindow._current.NotificationEmitter.ShowErrorNotification(exc.Message, 0, exc.Title ?? Application.ProductName);
             }
         }
     }

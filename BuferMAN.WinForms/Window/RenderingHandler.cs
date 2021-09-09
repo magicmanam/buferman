@@ -15,7 +15,7 @@ namespace BuferMAN.WinForms.Window
 {
 	internal class RenderingHandler : IRenderingHandler
     {
-        private BufermanWindow _form;// TODO (m) must be IBuferMANHost
+        private BufermanWindow _form;// TODO (m) must be IBufermanHost
         private readonly IClipboardBuferService _clipboardBuferService;
         private int _buttonWidth;
         private Label _pinnedClipsDivider;// TODO (m) replace with Split Container (along with scrolling bufers feature and pinned area)
