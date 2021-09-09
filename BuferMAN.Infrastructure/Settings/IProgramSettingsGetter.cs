@@ -10,7 +10,7 @@ namespace BuferMAN.Infrastructure.Settings
         string SessionsRootDirectory { get; }
         string DefaultBufersFileName { get; }
         int MaxBufersCount { get; }
-        int ExtraBufersCount { get; } // Can not be big, because rendering is too slow cause of auto keyboard emulation.
+        int ExtraBufersCount { get; } // TODO (m) Replace with adding scrolling bufers. Can not be big, because rendering is too slow cause of keyboard emulation.
         int FocusTooltipDuration { get; }
         Color BuferDefaultBackgroundColor { get; }
         Color CurrentBuferBackgroundColor { get; }
@@ -25,5 +25,6 @@ namespace BuferMAN.Infrastructure.Settings
         int HttpUrlBuferExplanationCounter { get; }
         bool IsBuferClickingExplained { get; }
         int MaxBuferLengthToShowOnAliasCreation { get; }
+        int MaxFilePathLengthForBuferTitle { get; }
     }
 }

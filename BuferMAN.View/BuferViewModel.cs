@@ -6,14 +6,7 @@ namespace BuferMAN.View
 {
     public class BuferViewModel
     {
-        public BuferViewModel()
-        {
-        }
-
-        //public BuferViewModel(string buferText)
-        //{
-        //    this.OriginBuferText = buferText;
-        //}
+        public BuferViewModel() { }
 
         public Guid ViewId { get; set; }
         public IDataObject Clip { get; set; }
@@ -22,7 +15,7 @@ namespace BuferMAN.View
         public string TooltipTitle { get; set; }
         
         /// <summary>
-        /// Gets or sets an user alias for bufer UI appearance. Null if not specified.
+        /// Gets or sets an user alias for bufer UI appearance. null if not specified.
         /// </summary>
         public string Alias { get; set; }
         public DateTime CreatedAt { get; set; }

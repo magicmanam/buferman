@@ -90,6 +90,8 @@ namespace BuferMAN.Settings
 
         public int ExtraBufersCount => 25;
 
+        public int MaxFilePathLengthForBuferTitle => 50;
+
         public Color BuferDefaultBackgroundColor
         {
             get
@@ -277,7 +279,7 @@ namespace BuferMAN.Settings
             }
         }
 
-        public int MaxBuferLengthToShowOnAliasCreation { get; } = 100;
+        public int MaxBuferLengthToShowOnAliasCreation => 100;
 
         public string SessionsRootDirectory
         {

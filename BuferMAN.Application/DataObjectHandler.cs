@@ -58,8 +58,7 @@ namespace BuferMAN.Application
 
                 if (files.Length == 1)
                 {
-                    const int MAX_FILE_LENGTH_FOR_BUFER_TITLE = 50;// TODO (m) into settings
-                    if (firstFile.Length < MAX_FILE_LENGTH_FOR_BUFER_TITLE)
+                    if (firstFile.Length < this._settings.MaxFilePathLengthForBuferTitle)
                     {
                         buferViewModel.TooltipTitle = this._MakeSpecialBuferText(onlyFolders ? Resource.FolderBufer : Resource.FileBufer);
                     }

@@ -58,9 +58,8 @@ namespace BuferMAN.WinForms
 
                 if (clipFiles.Length == 1)
                 {
-                    const int MAX_FILE_LENGTH_FOR_BUFER_TITLE = 50;// TODO (m) into settings
                     buferTitle = this._MakeSpecialBuferText(
-                        firstFile.Length < MAX_FILE_LENGTH_FOR_BUFER_TITLE ?
+                        firstFile.Length < settingsGetter.MaxFilePathLengthForBuferTitle ?
                         firstFile :
                         (onlyFolders ? Resource.FolderBufer : Resource.FileBufer));// TODO (m) these resources are duplicated in BuferMAN.Application project
                 }
