@@ -101,7 +101,8 @@ namespace BuferMAN.WinForms.Window
                     bufer = new Bufer()
                     {
                         BackColor = this._settings.BuferDefaultBackgroundColor,
-                        ViewModel = buferViewModel
+                        ViewModel = buferViewModel,
+                        Width = bufermanHost.InnerAreaWidth
                     };
                     this._buferHandlersBinder.Bind(bufer, bufermanHost);
 
@@ -141,8 +142,6 @@ namespace BuferMAN.WinForms.Window
 
                 button.TabIndex = currentButtonIndex;
                 button.Location = new Point(0, y);
-
-                bufer.Width = bufermanHost.InnerAreaWidth;
 
                 currentButtonIndex -= 1;
                 y -= BUTTON_HEIGHT;

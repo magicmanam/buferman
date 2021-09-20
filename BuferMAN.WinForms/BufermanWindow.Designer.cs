@@ -128,13 +128,7 @@ namespace BuferMAN.WinForms
             }
         }
 
-        public int InnerAreaWidth
-        {
-            get
-            {
-                return this.ClientRectangle.Width;
-            }
-        }
+        public int InnerAreaWidth { get; private set; }
 
         public void Start(IBufermanApplication bufermanApp, bool isAdmin)
         {
@@ -160,6 +154,8 @@ namespace BuferMAN.WinForms
             this.Text = isAdmin ?
                 bufermanApp.GetBufermanAdminTitle() : 
                 bufermanApp.GetBufermanTitle();
+
+            this.InnerAreaWidth = this.ClientRectangle.Width;
 
             this._pinnedBufersDivider = new Label
             {
