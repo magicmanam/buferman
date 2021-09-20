@@ -31,5 +31,6 @@ namespace BuferMAN.Infrastructure
         void ShowFocusTooltip(string tooltipText, int durationInMilliseconds);
         void HideFocusTooltip();
         int TabIndex { get; }
+        Button GetButton();// TODO (l) replace/remove
     }
 }

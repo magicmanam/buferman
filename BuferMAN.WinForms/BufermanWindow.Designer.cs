@@ -22,7 +22,7 @@ namespace BuferMAN.WinForms
     partial class BufermanWindow
     {
         private readonly IUserInteraction _userInteraction;
-        private readonly IDictionary<Guid, Button> _buttonsMap;
+        private readonly IDictionary<Guid, IBufer> _bufersMap;
         private ClipboardViewer _clipboardViewer;
         private readonly IRenderingHandler _renderingHandler;
         private NotifyIcon TrayIcon;
@@ -40,7 +40,7 @@ namespace BuferMAN.WinForms
         public event EventHandler WindowActivated;
         public event EventHandler WindowHidden;
 
-        public IDictionary<Guid, Button> ButtonsMap { get { return this._buttonsMap; } }
+        public IDictionary<Guid, IBufer> BufersMap { get { return this._bufersMap; } }
         internal StatusStrip StatusLine { get; set; }
         public ToolStripStatusLabel StatusLabel { get; set; }
 
@@ -50,7 +50,7 @@ namespace BuferMAN.WinForms
             IUserInteraction userInteraction,
             IProgramSettingsSetter settingsSetter)
         {
-            this._buttonsMap = new Dictionary<Guid, Button>(settingsGetter.MaxBufersCount + settingsGetter.ExtraBufersCount);
+            this._bufersMap = new Dictionary<Guid, IBufer>(settingsGetter.MaxBufersCount + settingsGetter.ExtraBufersCount);
             this._renderingHandler = renderingHandler;
             this._settingsGetter = settingsGetter;
             this._settingsSetter = settingsSetter;
@@ -82,7 +82,7 @@ namespace BuferMAN.WinForms
 
         public void BuferFocused(object sender, BuferFocusedEventArgs e)
         {
-            this._buttonsMap[e.Bufer.ViewId].Focus();
+            this._bufersMap[e.Bufer.ViewId].GetButton().Focus();
         }
 
         public void SetOnKeyDown(KeyEventHandler handler)
@@ -108,6 +108,14 @@ namespace BuferMAN.WinForms
             get
             {
                 return this.WindowState != FormWindowState.Minimized && this.Visible;
+            }
+        }
+
+        public int InnerAreaWidth
+        {
+            get
+            {
+                return this.ClientRectangle.Width;
             }
         }
 

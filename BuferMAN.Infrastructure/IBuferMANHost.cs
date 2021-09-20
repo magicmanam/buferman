@@ -35,5 +35,6 @@ namespace BuferMAN.Infrastructure
         BufermanMenuItem CreateMenuSeparatorItem();
         IUserInteraction UserInteraction { get; }
         BuferViewModel LatestFocusedBufer { get; set; }
+        int InnerAreaWidth { get; }
     }
 }

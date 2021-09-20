@@ -15,7 +15,8 @@ namespace BuferMAN.WinForms.Window
 {
 	internal class RenderingHandler : IRenderingHandler
     {
-        private BufermanWindow _form;// TODO (m) must be IBufermanHost
+        private BufermanWindow _form;// TODO (m) must be IBufermanHost, remove it
+        private IBufermanHost _bufermanHost;
         private readonly IClipboardBuferService _clipboardBuferService;
         private int _buttonWidth;
         private Label _pinnedClipsDivider;// TODO (m) replace with Split Container (along with scrolling bufers feature and pinned area)
@@ -35,10 +36,10 @@ namespace BuferMAN.WinForms.Window
 
         public void SetForm(Form form)
         {
-            var f = form as BufermanWindow;// TODO (l) : remove this assignment
+            this._form = form as BufermanWindow;// TODO (l) : remove this assignment
 
-            this._form = f;
-            this._buttonWidth = this._form.ClientRectangle.Width;
+            this._bufermanHost = form as IBufermanHost;
+            this._buttonWidth = this._bufermanHost.InnerAreaWidth;
             this._pinnedClipsDivider = new Label() { Text = string.Empty, BorderStyle = BorderStyle.FixedSingle, AutoSize = false, Height = 3, BackColor = Color.AliceBlue, Width = this._buttonWidth };
             this._form.Controls.Add(this._pinnedClipsDivider);
             this._pinnedClipsDivider.BringToFront();
@@ -84,11 +85,11 @@ namespace BuferMAN.WinForms.Window
             foreach (var buferViewModel in bufers)
             {
                 Button button;
-                var equalObject = this._form.ButtonsMap.ContainsKey(buferViewModel.ViewId);
+                var equalObject = this._form.BufersMap.ContainsKey(buferViewModel.ViewId);
 
                 if (equalObject)
                 {
-                    button = this._form.ButtonsMap[buferViewModel.ViewId];
+                    button = this._form.BufersMap[buferViewModel.ViewId].GetButton();
                 }
                 else
                 {
@@ -104,7 +105,7 @@ namespace BuferMAN.WinForms.Window
                     button.Tag = bufer;// TODO (m) remove Tag usage!
                     this._TryApplyPresentation(buferViewModel.Clip, button);
 
-                    this._form.ButtonsMap.Add(buferViewModel.ViewId, button);
+                    this._form.BufersMap.Add(buferViewModel.ViewId, bufer);
                     this._form.Controls.Add(button);
                     button.BringToFront();
                 }
@@ -161,20 +162,20 @@ namespace BuferMAN.WinForms.Window
         {
 			var deletedKeys = new List<Guid>();
 
-            foreach (var key in this._form.ButtonsMap.Keys.ToList())
+            foreach (var key in this._form.BufersMap.Keys.ToList())
             {
                 var equalKey = bufers.FirstOrDefault(b => b.ViewId == key);
                 if (equalKey == null)
                 {
-                    var button = this._form.ButtonsMap[key];
-                    this._form.Controls.Remove(button);
+                    var bufer = this._form.BufersMap[key];
+                    this._form.Controls.Remove(bufer.GetButton());
                     deletedKeys.Add(key);
                 }
             }
 
             foreach (var key in deletedKeys)
             {
-                this._form.ButtonsMap.Remove(key);
+                this._form.BufersMap.Remove(key);
             }
         }
     }
