@@ -1,13 +1,10 @@
-﻿using BuferMAN.View;
-using System.Windows.Forms;
+﻿using System;
 
 namespace BuferMAN.Infrastructure.Window
 {
     public interface IRenderingHandler
     {
         void Render(IBufermanHost bufermanHost);
-        void SetCurrentBufer(BuferViewModel bufer);
-
-        void SetForm(Form form);// TODO (l) remove this method from here
+        Guid CurrentBuferViewId { get; set; }
     }
 }

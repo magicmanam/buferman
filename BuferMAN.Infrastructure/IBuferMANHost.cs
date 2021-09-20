@@ -36,5 +36,12 @@ namespace BuferMAN.Infrastructure
         IUserInteraction UserInteraction { get; }
         BuferViewModel LatestFocusedBufer { get; set; }
         int InnerAreaWidth { get; }
+        IDictionary<Guid, IBufer> BufersMap { get; }
+        void AddBufer(IBufer bufer);
+        void RemoveBufer(IBufer bufer);
+        void SetPinnedBufersDividerY(int y);
+        int PinnedBufersDividerHeight { get; }
+        void SuspendLayoutLogic();
+        void ResumeLayoutLogic();
     }
 }

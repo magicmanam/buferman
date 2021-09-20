@@ -27,6 +27,7 @@ namespace BuferMAN.WinForms
         private readonly IRenderingHandler _renderingHandler;
         private NotifyIcon TrayIcon;
         private Label _userManualLabel;
+        private Label _pinnedBufersDivider;// TODO (m) replace with Split Container (along with scrolling bufers feature and pinned area)
         private bool _isAdmin;
         private IBufermanApplication _bufermanApp;
         private bool _wasWindowClosed = false;
@@ -68,6 +69,22 @@ namespace BuferMAN.WinForms
         public BufermanMenuItem CreateMenuItem(Func<string> textFn, EventHandler eventHandler = null)
         {
             return new FormMenuItem(textFn, eventHandler);
+        }
+
+        public void AddBufer(IBufer bufer)
+        {
+            this._bufersMap.Add(bufer.ViewModel.ViewId, bufer);
+
+            var button = bufer.GetButton();
+            this.Controls.Add(button);
+            button.BringToFront();
+        }
+
+        public void RemoveBufer(IBufer bufer)
+        {
+            this.Controls.Remove(bufer.GetButton());
+
+            this._bufersMap.Remove(bufer.ViewModel.ViewId);
         }
 
         public BufermanMenuItem CreateMenuItem(string text, EventHandler eventHandler = null)
@@ -144,7 +161,17 @@ namespace BuferMAN.WinForms
                 bufermanApp.GetBufermanAdminTitle() : 
                 bufermanApp.GetBufermanTitle();
 
-            this._renderingHandler.SetForm(this);
+            this._pinnedBufersDivider = new Label
+            {
+                Text = string.Empty,
+                BorderStyle = BorderStyle.FixedSingle,
+                AutoSize = false,
+                Height = 3,
+                BackColor = Color.AliceBlue,
+                Width = this.InnerAreaWidth
+            };
+            this.Controls.Add(this._pinnedBufersDivider);
+            this._pinnedBufersDivider.BringToFront();
 
             bufermanApp.RunInHost(this);
 
@@ -160,6 +187,26 @@ namespace BuferMAN.WinForms
             };
 
             Application.Run(this);
+        }
+
+        public void SetPinnedBufersDividerY(int y)
+        {
+            this._pinnedBufersDivider.Location = new Point(0, y);
+        }
+
+        public int PinnedBufersDividerHeight
+        {
+            get { return this._pinnedBufersDivider.Height; }
+        }
+
+        public void SuspendLayoutLogic()
+        {
+            this.SuspendLayout();
+        }
+
+        public void ResumeLayoutLogic()
+        {
+            this.ResumeLayout(false);
         }
 
         private void _StartTrickTimer(int intervalSeconds)
@@ -274,7 +321,7 @@ namespace BuferMAN.WinForms
 
         public void SetCurrentBufer(BuferViewModel bufer)
         {
-            this._renderingHandler.SetCurrentBufer(bufer);
+            this._renderingHandler.CurrentBuferViewId = bufer.ViewId;
         }
 
         public void Exit()

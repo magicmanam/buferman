@@ -15,15 +15,10 @@ namespace BuferMAN.WinForms.Window
 {
 	internal class RenderingHandler : IRenderingHandler
     {
-        private BufermanWindow _form;// TODO (m) must be IBufermanHost, remove it
-        private IBufermanHost _bufermanHost;
         private readonly IClipboardBuferService _clipboardBuferService;
-        private int _buttonWidth;
-        private Label _pinnedClipsDivider;// TODO (m) replace with Split Container (along with scrolling bufers feature and pinned area)
         private readonly IBuferHandlersBinder _buferHandlersBinder;
         private readonly IProgramSettingsGetter _settings;
         private readonly IList<IBuferPresentation> _clipPresentations = new List<IBuferPresentation>() { new SkypeBuferPresentation(), new FileContentsBuferPresentation() };
-        private BuferViewModel _currentBufer;
 
         private const int BUTTON_HEIGHT = 23;
 
@@ -34,49 +29,58 @@ namespace BuferMAN.WinForms.Window
             this._buferHandlersBinder = buferHandlersBinder;
         }
 
-        public void SetForm(Form form)
-        {
-            this._form = form as BufermanWindow;// TODO (l) : remove this assignment
-
-            this._bufermanHost = form as IBufermanHost;
-            this._buttonWidth = this._bufermanHost.InnerAreaWidth;
-            this._pinnedClipsDivider = new Label() { Text = string.Empty, BorderStyle = BorderStyle.FixedSingle, AutoSize = false, Height = 3, BackColor = Color.AliceBlue, Width = this._buttonWidth };
-            this._form.Controls.Add(this._pinnedClipsDivider);
-            this._pinnedClipsDivider.BringToFront();
-        }
-
-        public void SetCurrentBufer(BuferViewModel bufer)
-        {
-            this._currentBufer = bufer;
-        }
+        public Guid CurrentBuferViewId { get; set; }
 
         public void Render(IBufermanHost bufermanHost)
         {
             var pinnedBufers = this._clipboardBuferService.GetPinnedBufers();
             var temporaryBufers = this._clipboardBuferService.GetTemporaryBufers().ToList();
 
-            this._form.SuspendLayout();
+            bufermanHost.SuspendLayoutLogic();
 
             if (this._clipboardBuferService.BufersCount > this._settings.MaxBufersCount)
             {
                 temporaryBufers = temporaryBufers.Skip(this._clipboardBuferService.BufersCount - this._settings.MaxBufersCount).ToList();
             }// TODO (l) remove this after scrolling will be added
 
-            this._RemoveOldButtons(temporaryBufers.Union(pinnedBufers));
+            var deletedBufers = new List<IBufer>();
+
+            foreach (var key in bufermanHost.BufersMap.Keys.ToList())
+            {
+                var equalKey = temporaryBufers
+                    .Union(pinnedBufers)
+                    .FirstOrDefault(b => b.ViewId == key);
+
+                if (equalKey == null)
+                {
+                    deletedBufers.Add(bufermanHost.BufersMap[key]);
+                }
+            }
+
+            foreach (var bufer in deletedBufers)
+            {
+                bufermanHost.RemoveBufer(bufer);
+            }
 
             if (temporaryBufers.Any())
             {
                 this._DrawButtonsForBufers(bufermanHost, temporaryBufers, temporaryBufers.Count * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count - 1);
             }
 
-            this._pinnedClipsDivider.Location = new Point(0, temporaryBufers.Count * BUTTON_HEIGHT + 1);
+            var pinnedBufersDividerY = temporaryBufers.Count * BUTTON_HEIGHT + 1;
+            bufermanHost.SetPinnedBufersDividerY(pinnedBufersDividerY);
 
             if (pinnedBufers.Any())
             {
-                this._DrawButtonsForBufers(bufermanHost, pinnedBufers.ToList(), this._pinnedClipsDivider.Location.Y + this._pinnedClipsDivider.Height + 1 + pinnedBufers.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count + pinnedBufers.Count() - 1, true);
+                this._DrawButtonsForBufers(
+                    bufermanHost,
+                    pinnedBufers.ToList(),
+                    pinnedBufersDividerY + bufermanHost.PinnedBufersDividerHeight + 1 + pinnedBufers.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT,
+                    temporaryBufers.Count + pinnedBufers.Count() - 1,
+                    true);
             }
 
-            this._form.ResumeLayout(false);
+            bufermanHost.ResumeLayoutLogic();
         }
 
         private void _DrawButtonsForBufers(IBufermanHost bufermanHost, List<BuferViewModel> bufers, int y, int currentButtonIndex,
@@ -84,31 +88,28 @@ namespace BuferMAN.WinForms.Window
         {
             foreach (var buferViewModel in bufers)
             {
+                IBufer bufer;
                 Button button;
-                var equalObject = this._form.BufersMap.ContainsKey(buferViewModel.ViewId);
+                var equalObject = bufermanHost.BufersMap.ContainsKey(buferViewModel.ViewId);
 
                 if (equalObject)
                 {
-                    button = this._form.BufersMap[buferViewModel.ViewId].GetButton();
+                    bufer = bufermanHost.BufersMap[buferViewModel.ViewId];
                 }
                 else
                 {
-                    var bufer = new Bufer()
+                    bufer = new Bufer()
                     {
-                        Width = this._buttonWidth,
                         BackColor = this._settings.BuferDefaultBackgroundColor,
                         ViewModel = buferViewModel
                     };
                     this._buferHandlersBinder.Bind(bufer, bufermanHost);
 
-                    button = bufer.GetButton();
-                    button.Tag = bufer;// TODO (m) remove Tag usage!
-                    this._TryApplyPresentation(buferViewModel.Clip, button);
-
-                    this._form.BufersMap.Add(buferViewModel.ViewId, bufer);
-                    this._form.Controls.Add(button);
-                    button.BringToFront();
+                    this._TryApplyPresentation(bufer);
+                    bufermanHost.AddBufer(bufer);
                 }
+
+                button = bufer.GetButton();
 
                 for (var i = 0; i < button.ContextMenu.MenuItems.Count; i++)
                 {// TODO (m) remove this shit
@@ -116,7 +117,7 @@ namespace BuferMAN.WinForms.Window
 
                     if (menuItem.Shortcut == Shortcut.CtrlC)
                     {
-                        menuItem.Enabled = buferViewModel.ViewId != this._currentBufer.ViewId;
+                        menuItem.Enabled = buferViewModel.ViewId != this.CurrentBuferViewId;
                     }
                     else
                     {
@@ -125,57 +126,38 @@ namespace BuferMAN.WinForms.Window
                             var nestedMenuItem = menuItem.MenuItems[j];
                             if (nestedMenuItem.Shortcut == Shortcut.CtrlC)
                             {
-                                nestedMenuItem.Enabled = buferViewModel.ViewId != this._currentBufer.ViewId;
+                                nestedMenuItem.Enabled = buferViewModel.ViewId != this.CurrentBuferViewId;
                             }
                         }
                     }
                 }// TODO (l) maybe remove this menu item if bufer is current? I can do this if rerender context menu on every change in clipboard service
 
-                var defaultBackColor = buferViewModel.ViewId == this._currentBufer.ViewId ?
+                var defaultBackColor = buferViewModel.ViewId == this.CurrentBuferViewId ?
                     (pinned ? this._settings.PinnedCurrentBuferBackColor : this._settings.CurrentBuferBackgroundColor) :
                     (pinned ? this._settings.PinnedBuferBackgroundColor : this._settings.BuferDefaultBackgroundColor);
 
                 button.BackColor = defaultBackColor;
-                (button.Tag as IBufer).ViewModel.DefaultBackColor = defaultBackColor;
+                bufer.ViewModel.DefaultBackColor = defaultBackColor;
 
                 button.TabIndex = currentButtonIndex;
                 button.Location = new Point(0, y);
+
+                bufer.Width = bufermanHost.InnerAreaWidth;
 
                 currentButtonIndex -= 1;
                 y -= BUTTON_HEIGHT;
             }
         }
 
-        private void _TryApplyPresentation(IDataObject dataObject, Button button)
+        private void _TryApplyPresentation(IBufer bufer)
         {
             foreach (var presentation in this._clipPresentations)
             {
-                if (presentation.IsCompatibleWithBufer(dataObject))
+                if (presentation.IsCompatibleWithBufer(bufer.ViewModel.Clip))
                 {
-                    presentation.ApplyToButton(button);
+                    presentation.ApplyToButton(bufer.GetButton());
                     return;
                 }
-            }
-        }
-
-        private void _RemoveOldButtons(IEnumerable<BuferViewModel> bufers)
-        {
-			var deletedKeys = new List<Guid>();
-
-            foreach (var key in this._form.BufersMap.Keys.ToList())
-            {
-                var equalKey = bufers.FirstOrDefault(b => b.ViewId == key);
-                if (equalKey == null)
-                {
-                    var bufer = this._form.BufersMap[key];
-                    this._form.Controls.Remove(bufer.GetButton());
-                    deletedKeys.Add(key);
-                }
-            }
-
-            foreach (var key in deletedKeys)
-            {
-                this._form.BufersMap.Remove(key);
             }
         }
     }
