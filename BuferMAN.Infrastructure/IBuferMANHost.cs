@@ -23,7 +23,7 @@ namespace BuferMAN.Infrastructure
         void HideWindow();
         void RerenderBufers();
         void RerenderUserManual();
-        void SetCurrentBufer(BuferViewModel bufer);
+        Guid CurrentBuferViewId { get; set; }
         void Exit();
         void Start(IBufermanApplication bufermanApp, bool isAdmin);
         void SetMainMenu(IEnumerable<BufermanMenuItem> menuItems);
@@ -36,7 +36,7 @@ namespace BuferMAN.Infrastructure
         IUserInteraction UserInteraction { get; }
         BuferViewModel LatestFocusedBufer { get; set; }
         int InnerAreaWidth { get; }
-        IDictionary<Guid, IBufer> BufersMap { get; }
+        IEnumerable<IBufer> Bufers { get; }
         void AddBufer(IBufer bufer);
         void RemoveBufer(IBufer bufer);
         void SetPinnedBufersDividerY(int y);

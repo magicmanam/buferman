@@ -244,7 +244,7 @@ namespace BuferMAN.Application
 
         public void Updated(object sender, ClipboardUpdatedEventArgs e)
         {
-            this._bufermanHost.SetCurrentBufer(e.Bufer);
+            this._bufermanHost.CurrentBuferViewId = e.ViewModel.ViewId;
 
             this.NeedRerender = true;
         }

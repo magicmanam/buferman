@@ -29,8 +29,6 @@ namespace BuferMAN.WinForms.Window
             this._buferHandlersBinder = buferHandlersBinder;
         }
 
-        public Guid CurrentBuferViewId { get; set; }
-
         public void Render(IBufermanHost bufermanHost)
         {
             var pinnedBufers = this._clipboardBuferService.GetPinnedBufers();
@@ -45,15 +43,15 @@ namespace BuferMAN.WinForms.Window
 
             var deletedBufers = new List<IBufer>();
 
-            foreach (var key in bufermanHost.BufersMap.Keys.ToList())
+            foreach (var bufer in bufermanHost.Bufers)
             {
                 var equalKey = temporaryBufers
                     .Union(pinnedBufers)
-                    .FirstOrDefault(b => b.ViewId == key);
+                    .FirstOrDefault(b => b.ViewId == bufer.ViewModel.ViewId);
 
                 if (equalKey == null)
                 {
-                    deletedBufers.Add(bufermanHost.BufersMap[key]);
+                    deletedBufers.Add(bufer);
                 }
             }
 
@@ -88,15 +86,10 @@ namespace BuferMAN.WinForms.Window
         {
             foreach (var buferViewModel in bufers)
             {
-                IBufer bufer;
                 Button button;
-                var equalObject = bufermanHost.BufersMap.ContainsKey(buferViewModel.ViewId);
+                var bufer = bufermanHost.Bufers.SingleOrDefault(b => b.ViewModel.ViewId == buferViewModel.ViewId);
 
-                if (equalObject)
-                {
-                    bufer = bufermanHost.BufersMap[buferViewModel.ViewId];
-                }
-                else
+                if (bufer == null)
                 {
                     bufer = new Bufer()
                     {
@@ -112,13 +105,14 @@ namespace BuferMAN.WinForms.Window
 
                 button = bufer.GetButton();
 
+                var isCurrentBufer = buferViewModel.ViewId == bufermanHost.CurrentBuferViewId;
                 for (var i = 0; i < button.ContextMenu.MenuItems.Count; i++)
                 {// TODO (m) remove this shit
                     var menuItem = button.ContextMenu.MenuItems[i];
 
                     if (menuItem.Shortcut == Shortcut.CtrlC)
                     {
-                        menuItem.Enabled = buferViewModel.ViewId != this.CurrentBuferViewId;
+                        menuItem.Enabled = !isCurrentBufer;
                     }
                     else
                     {
@@ -127,13 +121,13 @@ namespace BuferMAN.WinForms.Window
                             var nestedMenuItem = menuItem.MenuItems[j];
                             if (nestedMenuItem.Shortcut == Shortcut.CtrlC)
                             {
-                                nestedMenuItem.Enabled = buferViewModel.ViewId != this.CurrentBuferViewId;
+                                nestedMenuItem.Enabled = !isCurrentBufer;
                             }
                         }
                     }
                 }// TODO (l) maybe remove this menu item if bufer is current? I can do this if rerender context menu on every change in clipboard service
 
-                var defaultBackColor = buferViewModel.ViewId == this.CurrentBuferViewId ?
+                var defaultBackColor = isCurrentBufer ?
                     (pinned ? this._settings.PinnedCurrentBuferBackColor : this._settings.CurrentBuferBackgroundColor) :
                     (pinned ? this._settings.PinnedBuferBackgroundColor : this._settings.BuferDefaultBackgroundColor);
 

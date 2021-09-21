@@ -16,13 +16,14 @@ using BuferMAN.Infrastructure.Environment;
 using BuferMAN.View;
 using BuferMAN.Infrastructure.Settings;
 using System.Windows.Input;
+using System.Linq;
 
 namespace BuferMAN.WinForms
 {
     partial class BufermanWindow
     {
         private readonly IUserInteraction _userInteraction;
-        private readonly IDictionary<Guid, IBufer> _bufersMap;
+        private readonly IList<IBufer> _bufers;
         private ClipboardViewer _clipboardViewer;
         private readonly IRenderingHandler _renderingHandler;
         private NotifyIcon TrayIcon;
@@ -41,7 +42,7 @@ namespace BuferMAN.WinForms
         public event EventHandler WindowActivated;
         public event EventHandler WindowHidden;
 
-        public IDictionary<Guid, IBufer> BufersMap { get { return this._bufersMap; } }
+        public IEnumerable<IBufer> Bufers { get { return this._bufers.ToList(); } }
         internal StatusStrip StatusLine { get; set; }
         public ToolStripStatusLabel StatusLabel { get; set; }
 
@@ -51,7 +52,7 @@ namespace BuferMAN.WinForms
             IUserInteraction userInteraction,
             IProgramSettingsSetter settingsSetter)
         {
-            this._bufersMap = new Dictionary<Guid, IBufer>(settingsGetter.MaxBufersCount + settingsGetter.ExtraBufersCount);
+            this._bufers = new List<IBufer>(settingsGetter.MaxBufersCount + settingsGetter.ExtraBufersCount);
             this._renderingHandler = renderingHandler;
             this._settingsGetter = settingsGetter;
             this._settingsSetter = settingsSetter;
@@ -73,7 +74,7 @@ namespace BuferMAN.WinForms
 
         public void AddBufer(IBufer bufer)
         {
-            this._bufersMap.Add(bufer.ViewModel.ViewId, bufer);
+            this._bufers.Add(bufer);
 
             var button = bufer.GetButton();
             this.Controls.Add(button);
@@ -84,7 +85,11 @@ namespace BuferMAN.WinForms
         {
             this.Controls.Remove(bufer.GetButton());
 
-            this._bufersMap.Remove(bufer.ViewModel.ViewId);
+            var wasRemoved = this._bufers.Remove(bufer);
+            if (!wasRemoved)
+            {
+                throw new InvalidOperationException("There was an attempt to remove not existing bufer");
+            }
         }
 
         public BufermanMenuItem CreateMenuItem(string text, EventHandler eventHandler = null)
@@ -99,7 +104,10 @@ namespace BuferMAN.WinForms
 
         public void BuferFocused(object sender, BuferFocusedEventArgs e)
         {
-            this._bufersMap[e.Bufer.ViewId].GetButton().Focus();
+            this._bufers
+                .Single(b => b.ViewModel.ViewId == e.Bufer.ViewId)
+                .GetButton()
+                .Focus();
         }
 
         public void SetOnKeyDown(KeyEventHandler handler)
@@ -315,10 +323,7 @@ namespace BuferMAN.WinForms
             this.RerenderUserManual();
         }
 
-        public void SetCurrentBufer(BuferViewModel bufer)
-        {
-            this._renderingHandler.CurrentBuferViewId = bufer.ViewId;
-        }
+        public Guid CurrentBuferViewId { get; set; }
 
         public void Exit()
         {

@@ -7,9 +7,9 @@ namespace BuferMAN.Infrastructure
     {
         public ClipboardUpdatedEventArgs(BuferViewModel bufer)
         {
-            this.Bufer = bufer;
+            this.ViewModel = bufer;
         }
 
-        public BuferViewModel Bufer { get; protected set; }
+        public BuferViewModel ViewModel { get; protected set; }
     }
 }
