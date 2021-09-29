@@ -444,7 +444,7 @@ namespace BuferMAN.WinForms
             this.PerformLayout();
         }
 
-        public void AddStatusLinePart(string text, Icon icon, EventHandler handler)
+        public void AddStatusLinePart(string text, Icon icon, EventHandler mouseEnterHandler)
         {
             var label = new ToolStripStatusLabel()
             {
@@ -453,7 +453,11 @@ namespace BuferMAN.WinForms
                 Image = icon?.ToBitmap(),
                 Text = text
             };
-            label.MouseEnter += handler;
+            label.MouseEnter += (object sender, EventArgs e) =>
+            {
+                Action<string> statusLinePartAction = (tooltip) => label.ToolTipText = tooltip;
+                mouseEnterHandler(statusLinePartAction, e);
+            };
 
             this.StatusLine.Items.Insert(0, label);
         }

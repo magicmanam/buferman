@@ -28,7 +28,7 @@ namespace BuferMAN.Infrastructure
         void Start(IBufermanApplication bufermanApp, bool isAdmin);
         void SetMainMenu(IEnumerable<BufermanMenuItem> menuItems);
         void SetTrayMenu(IEnumerable<BufermanMenuItem> menuItems);
-        void AddStatusLinePart(string text, Icon icon, EventHandler handler);
+        void AddStatusLinePart(string text, Icon icon, EventHandler mouseEnterHandler);
         void RefreshUI();
         BufermanMenuItem CreateMenuItem(Func<string> textFn, EventHandler eventHandler = null);
         BufermanMenuItem CreateMenuItem(string text, EventHandler eventHandler = null);

@@ -22,8 +22,7 @@ namespace BuferMAN.WinForms
             this._button = new Button()
             {
                 TextAlign = ContentAlignment.MiddleLeft,
-                Margin = new Padding(0),
-                Tag = this // TODO (m) remove Tag usage!
+                Margin = new Padding(0)
             };
             this._focusTooltip = new ToolTip()
             {

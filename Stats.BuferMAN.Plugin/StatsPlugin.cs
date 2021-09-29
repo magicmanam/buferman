@@ -44,8 +44,7 @@ namespace Stats.BuferMAN.Plugin
 
         private void _StatisticsLabel_MouseEnter(object sender, EventArgs e)
         {
-            var s = sender as ToolStripStatusLabel;// TODO (s) must be not WinForms specific
-            s.ToolTipText = this._GetStatisticsText();
+            (sender as Action<string>)(this._GetStatisticsText());
         }
 
         private void _IncrementCopiesCounters()
