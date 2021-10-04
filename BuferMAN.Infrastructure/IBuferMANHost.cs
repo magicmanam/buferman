@@ -21,7 +21,7 @@ namespace BuferMAN.Infrastructure
         void SetOnKeyDown(KeyEventHandler keyDown);
         void ActivateWindow();
         void HideWindow();
-        void RerenderBufers();
+        void RerenderBufers(IEnumerable<BuferViewModel> temporaryBuferViewModels, IEnumerable<BuferViewModel> pinnedBuferViewModels);
         void RerenderUserManual();
         Guid CurrentBuferViewId { get; set; }
         void Exit();
@@ -29,7 +29,7 @@ namespace BuferMAN.Infrastructure
         void SetMainMenu(IEnumerable<BufermanMenuItem> menuItems);
         void SetTrayMenu(IEnumerable<BufermanMenuItem> menuItems);
         void AddStatusLinePart(string text, Icon icon, EventHandler mouseEnterHandler);
-        void RefreshUI();
+        void RefreshUI(IEnumerable<BuferViewModel> temporaryBuferViewModels, IEnumerable<BuferViewModel> pinnedBuferViewModels);
         BufermanMenuItem CreateMenuItem(Func<string> textFn, EventHandler eventHandler = null);
         BufermanMenuItem CreateMenuItem(string text, EventHandler eventHandler = null);
         BufermanMenuItem CreateMenuSeparatorItem();

@@ -28,24 +28,21 @@ namespace BuferMAN.WinForms.Window
             this._buferHandlersBinder = buferHandlersBinder;
         }
 
-        public void Render(IBufermanHost bufermanHost)
+        public void Render(IBufermanHost bufermanHost, IEnumerable<BuferViewModel> temporaryBuferViewModels, IEnumerable<BuferViewModel> pinnedBuferViewModels)
         {
-            var pinnedBufers = this._clipboardBuferService.GetPinnedBufers();
-            var temporaryBufers = this._clipboardBuferService.GetTemporaryBufers().ToList();
-
             bufermanHost.SuspendLayoutLogic();
 
             if (this._clipboardBuferService.BufersCount > this._settings.MaxBufersCount)
             {
-                temporaryBufers = temporaryBufers.Skip(this._clipboardBuferService.BufersCount - this._settings.MaxBufersCount).ToList();
+                temporaryBuferViewModels = temporaryBuferViewModels.Skip(this._clipboardBuferService.BufersCount - this._settings.MaxBufersCount).ToList();
             }// TODO (l) remove this after scrolling will be added
 
             var deletedBufers = new List<IBufer>();
 
             foreach (var bufer in bufermanHost.Bufers)
             {
-                var equalKey = temporaryBufers
-                    .Union(pinnedBufers)
+                var equalKey = temporaryBuferViewModels
+                    .Union(pinnedBuferViewModels)
                     .FirstOrDefault(b => b.ViewId == bufer.ViewModel.ViewId);
 
                 if (equalKey == null)
@@ -59,21 +56,21 @@ namespace BuferMAN.WinForms.Window
                 bufermanHost.RemoveBufer(bufer);
             }
 
-            if (temporaryBufers.Any())
+            if (temporaryBuferViewModels.Any())
             {
-                this._DrawButtonsForBufers(bufermanHost, temporaryBufers, temporaryBufers.Count * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBufers.Count - 1);
+                this._DrawButtonsForBufers(bufermanHost, temporaryBuferViewModels.ToList(), temporaryBuferViewModels.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBuferViewModels.Count() - 1);
             }
 
-            var pinnedBufersDividerY = temporaryBufers.Count * BUTTON_HEIGHT + 1;
+            var pinnedBufersDividerY = temporaryBuferViewModels.Count() * BUTTON_HEIGHT + 1;
             bufermanHost.SetPinnedBufersDividerY(pinnedBufersDividerY);
 
-            if (pinnedBufers.Any())
+            if (pinnedBuferViewModels.Any())
             {
                 this._DrawButtonsForBufers(
                     bufermanHost,
-                    pinnedBufers.ToList(),
-                    pinnedBufersDividerY + bufermanHost.PinnedBufersDividerHeight + 1 + pinnedBufers.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT,
-                    temporaryBufers.Count + pinnedBufers.Count() - 1,
+                    pinnedBuferViewModels.ToList(),
+                    pinnedBufersDividerY + bufermanHost.PinnedBufersDividerHeight + 1 + pinnedBuferViewModels.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT,
+                    temporaryBuferViewModels.Count() + pinnedBuferViewModels.Count() - 1,
                     true);
             }
 

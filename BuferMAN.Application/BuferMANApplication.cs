@@ -60,6 +60,13 @@ namespace BuferMAN.Application
             this._fileStorage = fileStorage;
         }
 
+        public void RerenderBufers()
+        {
+            this._bufermanHost.RerenderBufers(
+                this._clipboardBuferService.GetTemporaryBufers(),
+                this._clipboardBuferService.GetPinnedBufers());
+        }
+
         public void RunInHost(IBufermanHost bufermanHost)
         {
             this._bufermanHost = bufermanHost;
@@ -326,7 +333,7 @@ namespace BuferMAN.Application
             Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(shortLanguage);
 
             this.RefreshMainMenu();
-            this.Host.RefreshUI();
+            this.Host.RefreshUI(this._clipboardBuferService.GetTemporaryBufers(), this._clipboardBuferService.GetPinnedBufers());
             this.Host.SetTrayMenu(this.GetTrayMenuItems());
         }
 

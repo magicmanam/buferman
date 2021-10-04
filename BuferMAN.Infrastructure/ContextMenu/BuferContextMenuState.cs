@@ -56,7 +56,10 @@ namespace BuferMAN.Infrastructure.ContextMenu
         public void RemoveBufer()
         {
             this._clipboardBuferService.RemoveBufer(this.Bufer.ViewModel.ViewId);
-            this._bufermanHost.RerenderBufers();
+
+            this._bufermanHost.RerenderBufers(
+                this._clipboardBuferService.GetTemporaryBufers(),
+                this._clipboardBuferService.GetPinnedBufers());
         }
 
         public void TryTogglePinBufer(object sender, EventArgs e)
@@ -67,7 +70,9 @@ namespace BuferMAN.Infrastructure.ContextMenu
                 {
                     this.Bufer.ViewModel.Pinned = false;
                     this.MarkAsPinnedMenuItem.Text = this._resourceMenuPin();
-                    this._bufermanHost.RerenderBufers();
+                    this._bufermanHost.RerenderBufers(
+                        this._clipboardBuferService.GetTemporaryBufers(),
+                        this._clipboardBuferService.GetPinnedBufers());
                 }
             }
             else
@@ -76,7 +81,9 @@ namespace BuferMAN.Infrastructure.ContextMenu
                 {
                     this.Bufer.ViewModel.Pinned = true;
                     this.MarkAsPinnedMenuItem.Text = this._resourceMenuUnpin();
-                    this._bufermanHost.RerenderBufers();
+                    this._bufermanHost.RerenderBufers(
+                        this._clipboardBuferService.GetTemporaryBufers(),
+                        this._clipboardBuferService.GetPinnedBufers());
 
                     this.InvokePinnedBuferEvent(new BuferPinnedEventArgs());
                 }

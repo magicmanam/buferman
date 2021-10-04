@@ -185,7 +185,7 @@ namespace BuferMAN.WinForms
                 {
                    bufermanApp.ClearEmptyBufers();
 
-                   this.RerenderBufers();
+                   bufermanApp.RerenderBufers();
                    bufermanApp.NeedRerender = false;
                 }
             };
@@ -312,14 +312,14 @@ namespace BuferMAN.WinForms
             this.WindowHidden?.Invoke(this, new EventArgs());
         }
 
-        public void RerenderBufers()
+        public void RerenderBufers(IEnumerable<BuferViewModel> temporaryBuferViewModels, IEnumerable<BuferViewModel> pinnedBuferViewModels)
         {
-            this._renderingHandler.Render(this);
+            this._renderingHandler.Render(this, temporaryBuferViewModels, pinnedBuferViewModels);
         }
 
-        public void RefreshUI()
+        public void RefreshUI(IEnumerable<BuferViewModel> temporaryBuferViewModels, IEnumerable<BuferViewModel> pinnedBuferViewModels)
         {
-            this.RerenderBufers();// TODO (l) this line will work only if I do not use cached button and will recreate all bufers !!!
+            this._bufermanApp.RerenderBufers();// TODO (l) this line will work only if I do not use cached button and will recreate all bufers !!!
             this.RerenderUserManual();
         }
 

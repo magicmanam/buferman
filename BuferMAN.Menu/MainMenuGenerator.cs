@@ -121,13 +121,13 @@ namespace BuferMAN.Menu
         {
             var editMenu = bufermanHost.CreateMenuItem(() => Resource.MenuEdit);
 
-            var undoMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuEditUndo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Undo(); bufermanHost.RerenderBufers(); });
+            var undoMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuEditUndo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Undo(); bufermanHost.RerenderBufers(this._clipboardBuferService.GetTemporaryBufers(), this._clipboardBuferService.GetPinnedBufers()); });
             undoMenuItem.ShortCut = Shortcut.CtrlZ;
             undoMenuItem.Enabled = false;
 
             editMenu.AddMenuItem(undoMenuItem);
 
-            var redoMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuEditRedo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Redo(); bufermanHost.RerenderBufers(); });
+            var redoMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuEditRedo, (sender, args) => { UndoableContext<ApplicationStateSnapshot>.Current.Redo(); bufermanHost.RerenderBufers(this._clipboardBuferService.GetTemporaryBufers(), this._clipboardBuferService.GetPinnedBufers()); });
             redoMenuItem.ShortCut = Shortcut.CtrlY;
             redoMenuItem.Enabled = false;
 
@@ -178,7 +178,7 @@ namespace BuferMAN.Menu
                     this._clipboardBuferService.RemoveTemporaryClips();
                 }
 
-                bufermanHost.RerenderBufers();
+                bufermanHost.RerenderBufers(this._clipboardBuferService.GetTemporaryBufers(), this._clipboardBuferService.GetPinnedBufers());
             };
         }
 
@@ -187,7 +187,7 @@ namespace BuferMAN.Menu
            return (object sender, EventArgs args) =>
         {
                 this._clipboardBuferService.RemoveTemporaryClips();
-                bufermanHost.RerenderBufers();
+                bufermanHost.RerenderBufers(this._clipboardBuferService.GetTemporaryBufers(), this._clipboardBuferService.GetPinnedBufers());
             };
         }
 
