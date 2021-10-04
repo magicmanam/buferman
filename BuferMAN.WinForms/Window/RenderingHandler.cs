@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -13,7 +12,7 @@ using BuferMAN.Infrastructure.Settings;
 
 namespace BuferMAN.WinForms.Window
 {
-	internal class RenderingHandler : IRenderingHandler
+    internal class RenderingHandler : IRenderingHandler
     {
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IBuferHandlersBinder _buferHandlersBinder;

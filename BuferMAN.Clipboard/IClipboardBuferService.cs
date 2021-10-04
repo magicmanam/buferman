@@ -6,14 +6,8 @@ using System.Windows.Forms;
 
 namespace BuferMAN.Clipboard
 {
-	public interface IClipboardBuferService : IStatefulComponent<ApplicationStateSnapshot>
+    public interface IClipboardBuferService : IStatefulComponent<ApplicationStateSnapshot>
     {
-		/// <summary>
-		/// Returns persistent + temporary clips.
-		/// </summary>
-		/// <returns></returns>
-        IEnumerable<IDataObject> GetClips(bool persistentFirst = false);
-
         IEnumerable<BuferViewModel> GetTemporaryBufers();
 
         IEnumerable<BuferViewModel> GetPinnedBufers();

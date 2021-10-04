@@ -18,11 +18,6 @@ namespace BuferMAN.Clipboard
             this._comparer = comparer;
         }
 
-        public IEnumerable<IDataObject> GetClips(bool pinnedFirst = false)
-        {
-            return this._GetAllClips(pinnedFirst).ToList();
-        }   
-
         public int BufersCount { get { return this._tempObjects.Count + this._pinnedObjects.Count; } }
 
         public void RemoveAllBufers()
