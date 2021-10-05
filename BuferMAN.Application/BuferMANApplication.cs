@@ -71,7 +71,17 @@ namespace BuferMAN.Application
             
             if (bufersFilter != null)
             {
-                
+                if (bufersFilter.CreatedBefore.HasValue)
+                {
+                    temporaryBufers = temporaryBufers.Where(b => b.CreatedAt < bufersFilter.CreatedBefore.Value);
+                    pinnedBufers = pinnedBufers.Where(b => b.CreatedAt < bufersFilter.CreatedBefore.Value);
+                }
+
+                if (bufersFilter.CreatedAfter.HasValue)
+                {
+                    temporaryBufers = temporaryBufers.Where(b => b.CreatedAt > bufersFilter.CreatedAfter.Value);
+                    pinnedBufers = pinnedBufers.Where(b => b.CreatedAt > bufersFilter.CreatedAfter.Value);
+                }
             }
 
             this._bufermanHost.RerenderBufers(temporaryBufers, pinnedBufers);

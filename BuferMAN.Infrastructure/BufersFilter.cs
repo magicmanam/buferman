@@ -7,6 +7,7 @@ namespace BuferMAN.Infrastructure
         public BuferType BuferType { get; set; }
         public ClipboardType ClipboardType { get; set; }
         public string Text { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedBefore { get; set; }
+        public DateTime? CreatedAfter { get; set; }
     }
 }
