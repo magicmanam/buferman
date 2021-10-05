@@ -26,6 +26,6 @@ namespace BuferMAN.Infrastructure
         /// Clear bufers that do not contain any data (operation system releases data objects sometimes).
         /// </summary>
         void ClearEmptyBufers();
-        void RerenderBufers();
+        void RerenderBufers(BufersFilter bufersFilter = null);
     }
 }

@@ -39,7 +39,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BuferFocusedEventArgs.cs" />
+    <Compile Include="BufersFilter.cs" />
+    <Compile Include="BuferType.cs" />
     <Compile Include="BuferViewModelExtensions.cs" />
+    <Compile Include="ClipboardType.cs" />
     <Compile Include="ClipboardUpdatedEventArgs.cs" />
     <Compile Include="ContextMenu\BuferContextMenuState.cs" />
     <Compile Include="ContextMenu\BuferPinnedEventArgs.cs" />

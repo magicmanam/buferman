@@ -60,11 +60,21 @@ namespace BuferMAN.Application
             this._fileStorage = fileStorage;
         }
 
-        public void RerenderBufers()
+        public void RerenderBufers(BufersFilter bufersFilter = null)
         {
-            this._bufermanHost.RerenderBufers(
-                this._clipboardBuferService.GetTemporaryBufers(),
-                this._clipboardBuferService.GetPinnedBufers());
+            var temporaryBufers = bufersFilter?.BuferType == BuferType.Pinned ?
+                Enumerable.Empty<BuferViewModel>() :
+                this._clipboardBuferService.GetTemporaryBufers();
+            var pinnedBufers = bufersFilter?.BuferType == BuferType.Temporary ?
+                Enumerable.Empty<BuferViewModel>() :
+                this._clipboardBuferService.GetPinnedBufers();
+            
+            if (bufersFilter != null)
+            {
+                
+            }
+
+            this._bufermanHost.RerenderBufers(temporaryBufers, pinnedBufers);
         }
 
         public void RunInHost(IBufermanHost bufermanHost)
