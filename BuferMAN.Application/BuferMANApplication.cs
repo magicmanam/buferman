@@ -27,7 +27,6 @@ namespace BuferMAN.Application
         private readonly IMainMenuGenerator _mainMenuGenerator;
         private readonly IIDataObjectHandler _dataObjectHandler;
         private readonly IBufersStorageFactory _bufersStorageFactory;
-        private IBufermanHost _bufermanHost;
         private IEnumerable<BufermanMenuItem> _mainMenuItems;
         private readonly IProgramSettingsGetter _settings;
         private bool _shouldCatchCopies = true;
@@ -87,18 +86,18 @@ namespace BuferMAN.Application
                 }
             }
 
-            this._bufermanHost.RerenderBufers(temporaryBufers, pinnedBufers);
+            this.Host.RerenderBufers(temporaryBufers, pinnedBufers);
         }
 
         public void RunInHost(IBufermanHost bufermanHost)
         {
-            this._bufermanHost = bufermanHost;
+            this.Host = bufermanHost;
 
             foreach (var plugin in this._plugins)
             {
                 try
                 {
-                    plugin.Initialize(this._bufermanHost);
+                    plugin.Initialize(this.Host);
                 }
                 catch (Exception exc)
                 {
@@ -107,11 +106,11 @@ namespace BuferMAN.Application
                         .ShowPopup(exc.Message, plugin.Name);
                 }
             }
-            this._dataObjectHandler.Full += this._bufermanHost.OnFullBuferMAN;
+            this._dataObjectHandler.Full += this.Host.OnFullBuferMAN;
             this._dataObjectHandler.Updated += this.Updated;
 
-            this._bufermanHost.WindowActivated += this.OnWindowActivating;
-            this._bufermanHost.ClipbordUpdated += this._ProcessCopyClipboardEvent;
+            this.Host.WindowActivated += this.OnWindowActivating;
+            this.Host.ClipbordUpdated += this._ProcessCopyClipboardEvent;
 
             UndoableContext<ApplicationStateSnapshot>.Current = new UndoableContext<ApplicationStateSnapshot>(this._clipboardBuferService);
 
@@ -121,15 +120,15 @@ namespace BuferMAN.Application
                 {
                     if (e.IsRedo)
                     {
-                        this._bufermanHost.SetStatusBarText(Resource.BuferOperationRestored);
+                        this.Host.SetStatusBarText(Resource.BuferOperationRestored);
                     }
                     else if (e.IsUndo)
                     {
-                        this._bufermanHost.SetStatusBarText(Resource.BuferOperationCancelled);
+                        this.Host.SetStatusBarText(Resource.BuferOperationCancelled);
                     }
                     else
                     {
-                        this._bufermanHost.SetStatusBarText(e.Action.Name);
+                        this.Host.SetStatusBarText(e.Action.Name);
                     }
                 }
             };
@@ -143,8 +142,8 @@ namespace BuferMAN.Application
             this._mainMenuGenerator.GenerateMainMenu(this);
             this.Host.SetTrayMenu(this.GetTrayMenuItems());
 
-            this._bufermanHost.SetOnKeyDown(this.OnKeyDown);
-            this._BuferFocused += this._bufermanHost.BuferFocused;
+            this.Host.SetOnKeyDown(this.OnKeyDown);
+            this._BuferFocused += this.Host.BuferFocused;
         }
 
         public bool NeedRerender { get; set; }
@@ -210,7 +209,7 @@ namespace BuferMAN.Application
                     }// TODO (m) Should be refactored
                 }
 
-                this._bufermanHost.SetStatusBarText(Resource.LastClipboardUpdate + currentTime.ToShortTimeString());
+                this.Host.SetStatusBarText(Resource.LastClipboardUpdate + currentTime.ToShortTimeString());
                 // TODO (m) Should be in separate strip label
             }
             catch (ExternalException exc)
@@ -237,7 +236,7 @@ namespace BuferMAN.Application
             switch (e.KeyCode)
             {
                 case Keys.Escape:
-                    this._bufermanHost.HideWindow();
+                    this.Host.HideWindow();
                     break;
                 case Keys.Space:
                     new KeyboardEmulator().PressEnter();
@@ -274,14 +273,14 @@ namespace BuferMAN.Application
 
         public void Updated(object sender, ClipboardUpdatedEventArgs e)
         {
-            this._bufermanHost.CurrentBuferViewId = e.ViewModel.ViewId;
+            this.Host.CurrentBuferViewId = e.ViewModel.ViewId;
 
             this.NeedRerender = true;
         }
 
         public void OnWindowActivating(object sender, EventArgs eventArgs)
         {
-            this._bufermanHost.ActivateWindow();
+            this.Host.ActivateWindow();
         }
 
         public bool ShouldCatchCopies
@@ -295,18 +294,12 @@ namespace BuferMAN.Application
                 if (this._shouldCatchCopies != value)
                 {
                     this._shouldCatchCopies = value;
-                    this._bufermanHost.SetStatusBarText(this._shouldCatchCopies ? Resource.ResumedStatus : Resource.PausedStatus);
+                    this.Host.SetStatusBarText(this._shouldCatchCopies ? Resource.ResumedStatus : Resource.PausedStatus);
                 }
             }
         }
 
-        public IBufermanHost Host
-        {
-            get
-            {
-                return this._bufermanHost;
-            }
-        }
+        public IBufermanHost Host { get; private set; }
 
         public IEnumerable<BufermanMenuItem> GetTrayMenuItems()
         {
@@ -408,7 +401,7 @@ namespace BuferMAN.Application
         public void Exit()
         {
             this.SaveSession();
-            this._bufermanHost.Exit();
+            this.Host.Exit();
         }
 
         public void ClearEmptyBufers()
