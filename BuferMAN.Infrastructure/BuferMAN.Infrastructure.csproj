@@ -57,6 +57,7 @@
     <Compile Include="IBufermanHost.cs" />
     <Compile Include="IBuferSelectionHandlerFactory.cs" />
     <Compile Include="IBuferSelectionHandler.cs" />
+    <Compile Include="ITime.cs" />
     <Compile Include="Menu\BufermanMenuItem.cs" />
     <Compile Include="Plugins\IBufermanPlugin.cs" />
     <Compile Include="Settings\IBufermanOptionsWindow.cs" />

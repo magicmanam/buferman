@@ -7,20 +7,22 @@ using BuferMAN.Infrastructure.ContextMenu;
 
 namespace BuferMAN.Plugins.DeferredBuferDeletion
 {
-    public class DeferredBuferDeletionWrapper
+    internal class DeferredBuferDeletionWrapper
     {
         private readonly BuferContextMenuState _buferContextMenuState;
         private readonly IBufermanHost _bufermanHost;
         private Timer _timer = null;
         private bool _isTooltipTitleChanged = false;
+        private readonly ITime _time;
 
         private BufermanMenuItem _separatorItem;
         private BufermanMenuItem _cancelDeletionMenuItem;
 
-        public DeferredBuferDeletionWrapper(BuferContextMenuState buferContextMenuState, IBufermanHost bufermanHost)
+        public DeferredBuferDeletionWrapper(BuferContextMenuState buferContextMenuState, IBufermanHost bufermanHost, ITime time)
         {
             this._bufermanHost = bufermanHost;
             this._buferContextMenuState = buferContextMenuState;
+            this._time = time;
 
             var deleteBuferNowMenuItem = bufermanHost.CreateMenuItem(() => Resource.DeleteBuferNowMenuItem, this._DeleteBuferImmediately);
             deleteBuferNowMenuItem.ShortCut = Shortcut.Del;
@@ -116,7 +118,7 @@ namespace BuferMAN.Plugins.DeferredBuferDeletion
         private void _AddCancelDeletionMenuItem()
         {
             this._separatorItem = this._buferContextMenuState.DeleteBuferMenuItem.AddSeparator();
-            var deletionTime = DateTime.Now.AddMilliseconds(this._timer.Interval).ToLocalTime();
+            var deletionTime = this._time.LocalTime.AddMilliseconds(this._timer.Interval).ToLocalTime();
 
             this._cancelDeletionMenuItem = this._bufermanHost
                 .CreateMenuItem(() => string.Format(Resource.CancelDeferredDeletionMenuItem, deletionTime),

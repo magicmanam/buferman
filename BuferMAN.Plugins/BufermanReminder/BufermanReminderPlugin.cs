@@ -7,7 +7,8 @@ namespace BuferMAN.Plugins.BufermanReminder
     public class BufermanReminderPlugin : BufermanPluginBase
     {
         private BufermanMenuItem _mainMenuItem;
-        private DateTime _lastInactivityTime = DateTime.Now;
+        private DateTime _lastInactivityTime;
+        private readonly ITime _time;
 
         public override string Name
         {
@@ -17,17 +18,20 @@ namespace BuferMAN.Plugins.BufermanReminder
             }
         }
 
-        public BufermanReminderPlugin()
+        public BufermanReminderPlugin(ITime time)
         {
+            this._time = time;
             this.Available = true;
             this.Enabled = true;
+
+            this._lastInactivityTime = time.LocalTime;
         }
 
         public override void Initialize(IBufermanHost bufermanHost)
         {
             base.Initialize(bufermanHost);
 
-            this._lastInactivityTime = DateTime.Now;
+            this._lastInactivityTime = this._time.LocalTime;
 
             bufermanHost.WindowHidden += BufermanHost_WindowHidden;
             bufermanHost.WindowActivated += BufermanHost_WindowActivated;
@@ -36,7 +40,7 @@ namespace BuferMAN.Plugins.BufermanReminder
 
         private void BufermanHost_ClipbordUpdated(object sender, EventArgs e)
         {
-            if (DateTime.Now > this._lastInactivityTime.AddDays(1))
+            if (this._time.LocalTime > this._lastInactivityTime.AddDays(1))
             {
                 this.BufermanHost.NotificationEmitter.ShowInfoNotification(Resource.ReminderPluginText, 3000);
             }
@@ -49,7 +53,7 @@ namespace BuferMAN.Plugins.BufermanReminder
 
         private void BufermanHost_WindowHidden(object sender, EventArgs e)
         {
-            this._lastInactivityTime = DateTime.Now;
+            this._lastInactivityTime = this._time.LocalTime;
         }
 
         public override BufermanMenuItem CreateMainMenuItem()

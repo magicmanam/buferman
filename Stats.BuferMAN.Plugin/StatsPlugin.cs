@@ -3,15 +3,15 @@ using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Plugins;
 using System;
 using System.Drawing;
-using System.Windows.Forms;
 
 namespace Stats.BuferMAN.Plugin
 {
     public class StatsPlugin : BufermanPluginBase
     {
         private BufermanMenuItem _mainMenuItem;
-        private readonly DateTime _startTime = DateTime.Now;
-        private DateTime _latestCopyDay = DateTime.Now.Date;
+        private readonly DateTime _startTime;
+        private readonly ITime _time;
+        private DateTime _latestCopyDay;
 
         public override string Name
         {
@@ -21,10 +21,15 @@ namespace Stats.BuferMAN.Plugin
             }
         }
 
-        public StatsPlugin()
+        public StatsPlugin(ITime time)
         {
+            this._time = time;
+
             this.Available = true;
             this.Enabled = true;
+
+            this._startTime = time.LocalTime;
+            this._latestCopyDay = this._startTime.Date;
         }
 
         public long CopiesCount { get; private set; } = 0;
@@ -51,7 +56,7 @@ namespace Stats.BuferMAN.Plugin
         {
             this.CopiesCount++;
 
-            var currentDate = DateTime.Now.Date;
+            var currentDate = this._time.LocalTime.Date;
             if (currentDate != this._latestCopyDay)
             {
                 this._latestCopyDay = currentDate;
@@ -63,7 +68,7 @@ namespace Stats.BuferMAN.Plugin
 
         private string _GetStatisticsText()
         {
-            return this._startTime.Date == DateTime.Now.Date ?
+            return this._startTime.Date == this._time.LocalTime.Date ?
                 string.Format(Resource.TodayStatsInfo, this._startTime, this.CurrentDayCopiesCount) :
                 string.Format(Resource.StatsInfo, this._startTime, this.CopiesCount, this.CurrentDayCopiesCount);
         }

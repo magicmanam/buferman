@@ -36,6 +36,7 @@ namespace BuferMAN.Application
         private readonly IFileStorage _fileStorage;
         private const string SESSION_FILE_PREFIX = "session_state";
         private DateTime _lastClipboardEventDateTime;
+        private ITime _time;
 
         private event EventHandler<BuferFocusedEventArgs> _BuferFocused;
 
@@ -47,7 +48,8 @@ namespace BuferMAN.Application
             IEnumerable<IBufermanPlugin> plugins,
             IBufersStorageFactory bufersStorageFactory,
             IBufermanOptionsWindowFactory optionsWindowFactory,
-            IFileStorage fileStorage)
+            IFileStorage fileStorage,
+            ITime time)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._clipboardWrapper = clipboardWrapper;
@@ -58,6 +60,7 @@ namespace BuferMAN.Application
             this._settings = settings;
             this._optionsWindowFactory = optionsWindowFactory;
             this._fileStorage = fileStorage;
+            this._time = time;
         }
 
         public void RerenderBufers(BufersFilter bufersFilter = null)
@@ -148,7 +151,7 @@ namespace BuferMAN.Application
 
         private void _ProcessCopyClipboardEvent(object sender, EventArgs e)
         {
-            var currentTime = DateTime.Now;
+            var currentTime = this._time.LocalTime;
             if (this._IsDuplicatedEvent(currentTime))
             {
                 return;
@@ -190,7 +193,7 @@ namespace BuferMAN.Application
                 var buferViewModel = new BuferViewModel
                 {
                     Clip = copy,
-                    CreatedAt = DateTime.Now
+                    CreatedAt = this._time.LocalTime
                 };
 
                 if (this.ShouldCatchCopies)
@@ -370,7 +373,7 @@ namespace BuferMAN.Application
             
             if (buferItems.Any())
             {
-                var now = DateTime.Now;
+                var now = this._time.LocalTime;
                 var sessionFile = Path.Combine(this._settings.SessionsRootDirectory, $"{BufermanApplication.SESSION_FILE_PREFIX}_{now.Year}_{now.Month}_{now.Day}_{now.Hour}_{now.Minute}_{now.Second}_{now.Millisecond}_{buferItems.Count()}.json");
 
                 var storage = this._bufersStorageFactory.CreateStorageByFileExtension(sessionFile);

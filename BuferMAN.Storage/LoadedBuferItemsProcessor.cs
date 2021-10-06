@@ -4,7 +4,6 @@ using BuferMAN.Infrastructure.Storage;
 using BuferMAN.Models;
 using BuferMAN.View;
 using magicmanam.UndoRedo;
-using System;
 using System.Collections.Generic;
 
 namespace BuferMAN.Storage
@@ -13,11 +12,13 @@ namespace BuferMAN.Storage
     {
         private readonly IBuferItemDataObjectConverter _buferItemDataObjectConverter;
         private readonly IIDataObjectHandler _dataObjectHandler;
+        private readonly ITime _time;
 
-        public LoadedBuferItemsProcessor(IBuferItemDataObjectConverter buferItemDataObjectConverter, IIDataObjectHandler dataObjectHandler)
+        public LoadedBuferItemsProcessor(IBuferItemDataObjectConverter buferItemDataObjectConverter, IIDataObjectHandler dataObjectHandler, ITime time)
         {
             this._buferItemDataObjectConverter = buferItemDataObjectConverter;
             this._dataObjectHandler = dataObjectHandler;
+            this._time = time;
         }
 
         public void ProcessBuferItems(IEnumerable<BuferItem> bufers)
@@ -33,7 +34,7 @@ namespace BuferMAN.Storage
                     {
                         Clip = dataObject,
                         Alias = bufer.Alias,
-                        CreatedAt = DateTime.Now,
+                        CreatedAt = this._time.LocalTime,
                         Pinned = bufer.Pinned
                     };
 

@@ -9,6 +9,7 @@ namespace BuferMAN.Application
         {
             container.Register<IBufermanApplication, BufermanApplication>(Lifestyle.Singleton);
             container.Register<IIDataObjectHandler, DataObjectHandler>(Lifestyle.Singleton);
+            container.Register<ITime, XTime>(Lifestyle.Singleton);
 
             return container;
         }

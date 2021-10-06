@@ -1,4 +1,5 @@
-﻿using BuferMAN.Infrastructure.ContextMenu;
+﻿using BuferMAN.Infrastructure;
+using BuferMAN.Infrastructure.ContextMenu;
 using BuferMAN.Infrastructure.Menu;
 using System;
 
@@ -6,6 +7,7 @@ namespace BuferMAN.Plugins.DeferredBuferDeletion
 {
     public class DeferredBuferDeletionPlugin : BufermanPluginBase
     {
+        private readonly ITime _time;
         private BufermanMenuItem _mainMenuItem;
 
         public override string Name
@@ -16,8 +18,10 @@ namespace BuferMAN.Plugins.DeferredBuferDeletion
             }
         }
 
-        public DeferredBuferDeletionPlugin()
+        public DeferredBuferDeletionPlugin(ITime time)
         {
+            this._time = time;
+
             this.Available = true;
             this.Enabled = true;
         }
@@ -32,7 +36,7 @@ namespace BuferMAN.Plugins.DeferredBuferDeletion
 
         public override void UpdateBuferItem(BuferContextMenuState contextMenuState)
         {
-            new DeferredBuferDeletionWrapper(contextMenuState, this.BufermanHost);
+            new DeferredBuferDeletionWrapper(contextMenuState, this.BufermanHost, this._time);
         }
 
         private void _DeferredDeletionMenuItem_Click(object sender, EventArgs e)
