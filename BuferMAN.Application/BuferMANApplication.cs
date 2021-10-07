@@ -70,7 +70,7 @@ namespace BuferMAN.Application
             var pinnedBufers = bufersFilter?.BuferType == BuferType.Temporary ?
                 Enumerable.Empty<BuferViewModel>() :
                 this._clipboardBuferService.GetPinnedBufers();
-            
+
             if (bufersFilter != null)
             {
                 if (bufersFilter.CreatedBefore.HasValue)
@@ -90,12 +90,22 @@ namespace BuferMAN.Application
                 {
                     temporaryBufers = temporaryBufers
                         .Where(b => (b.TextData?.Contains(trimmedFilterText) ?? false) ||
-                          (b.TextRepresentation?.Contains(trimmedFilterText) ?? false));
+                          (b.TextRepresentation?.Contains(trimmedFilterText) ?? false) ||
+                          (b.Alias?.Contains(trimmedFilterText) ?? false));
 
                     pinnedBufers = pinnedBufers
                         .Where(b => (b.TextData?.Contains(trimmedFilterText) ?? false) ||
-                          (b.TextRepresentation?.Contains(trimmedFilterText) ?? false));
+                          (b.TextRepresentation?.Contains(trimmedFilterText) ?? false) ||
+                          (b.Alias?.Contains(trimmedFilterText) ?? false));
+                }
 
+                if (bufersFilter.ClipboardType == ClipboardType.Image)
+                {
+                    temporaryBufers = temporaryBufers
+                        .Where(b => b.Clip.GetFormats().Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT));
+
+                    pinnedBufers = pinnedBufers
+                        .Where(b => b.Clip.GetFormats().Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT));
                 }
             }
 
