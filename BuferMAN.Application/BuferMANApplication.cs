@@ -1,4 +1,4 @@
-﻿using BuferMAN.Clipboard;
+using BuferMAN.Clipboard;
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Files;
 using BuferMAN.Infrastructure.Menu;
@@ -386,7 +386,7 @@ namespace BuferMAN.Application
                                    .Where(b => b.Clip.IsStringObject())
                                    .Select(b => b.ToModel()))
                 .ToList();
-            
+
             if (buferItems.Any())
             {
                 var now = this._time.LocalTime;
