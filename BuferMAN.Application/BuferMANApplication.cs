@@ -84,6 +84,19 @@ namespace BuferMAN.Application
                     temporaryBufers = temporaryBufers.Where(b => b.CreatedAt > bufersFilter.CreatedAfter.Value);
                     pinnedBufers = pinnedBufers.Where(b => b.CreatedAt > bufersFilter.CreatedAfter.Value);
                 }
+
+                var trimmedFilterText = bufersFilter.Text?.Trim();
+                if (trimmedFilterText != string.Empty)
+                {
+                    temporaryBufers = temporaryBufers
+                        .Where(b => (b.TextData?.Contains(trimmedFilterText) ?? false) ||
+                          (b.TextRepresentation?.Contains(trimmedFilterText) ?? false));
+
+                    pinnedBufers = pinnedBufers
+                        .Where(b => (b.TextData?.Contains(trimmedFilterText) ?? false) ||
+                          (b.TextRepresentation?.Contains(trimmedFilterText) ?? false));
+
+                }
             }
 
             this.Host.RerenderBufers(temporaryBufers, pinnedBufers);
