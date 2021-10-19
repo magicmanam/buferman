@@ -53,7 +53,7 @@ namespace BuferMAN.WinForms.Tests
         }
 
         [TestMethod]
-        public void On_FileDrop_format_and_one_file_button_has_title_with_filename()
+        public void On_FileDrop_format_and_one_file_When_file_name_is_short_Origin_bufer_title_contains_filename()
         {
             // Arrange
             var file = "c:\\file.txt";
@@ -65,6 +65,9 @@ namespace BuferMAN.WinForms.Tests
                     Clip = data
                 }
             };
+            var programSettingsGetter = A.Fake<IProgramSettingsGetter>();
+            A.CallTo(() => programSettingsGetter.MaxFilePathLengthForBuferTitle)
+                .Returns(300);
 
             // Act
             var wrapper = new BuferHandlersWrapper(
@@ -73,7 +76,7 @@ namespace BuferMAN.WinForms.Tests
                 A.Fake<IBuferSelectionHandlerFactory>(),
                 A.Fake<IFileStorage>(),
                 A.Fake<IBufermanHost>(),
-                A.Fake<IProgramSettingsGetter>(),
+                programSettingsGetter,
                 A.Fake<IProgramSettingsSetter>(),
                 new List<IBufermanPlugin>(),
                 bufer);
