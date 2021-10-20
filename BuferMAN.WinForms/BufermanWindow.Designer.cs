@@ -243,18 +243,17 @@ namespace BuferMAN.WinForms
             if (m.Msg == Messages.WM_CREATE)
             {
                 this._clipboardViewer = new ClipboardViewer(this.Handle);
+                this._clipboardViewer.ClipboardUpdated += (object sender, EventArgs e) =>
+                {
+                    this.ClipbordUpdated?.Invoke(this, EventArgs.Empty);
+                };
                 WindowsFunctions.RegisterHotKey(this.Handle, 0, 1, (int)Keys.C);
-
+                
                 this._StartTrickTimer(23);
             }
             else if (this._clipboardViewer != null)
             {
                 this._clipboardViewer.HandleWindowsMessage(m.Msg, m.WParam, m.LParam);
-            }
-
-            if (m.Msg == Messages.WM_DRAWCLIPBOARD)
-            {
-                this.ClipbordUpdated?.Invoke(this, EventArgs.Empty);
             }
 
             if (m.Msg == Messages.WM_HOTKEY)
