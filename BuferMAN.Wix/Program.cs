@@ -1,14 +1,8 @@
 ﻿using Microsoft.Deployment.WindowsInstaller;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WixSharp;
-using WixSharp.Controls;
-using WixSharp.Forms;
 
 namespace BuferMAN.Wix
 {
