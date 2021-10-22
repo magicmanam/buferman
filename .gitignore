@@ -261,3 +261,6 @@ __pycache__/
 *.pyc
 /ClipboardViewer/Scripts
 /Assets/*
+
+/BuferMAN.Wix/wix/BuferMAN.Wix.g.wxs
+/BuferMAN.Wix/BuferMAN.msi
