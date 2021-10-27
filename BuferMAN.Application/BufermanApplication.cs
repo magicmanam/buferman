@@ -390,7 +390,10 @@ namespace BuferMAN.Application
             if (buferItems.Any())
             {
                 var now = this._time.LocalTime;
-                var sessionFile = Path.Combine(this._settings.SessionsRootDirectory, $"{BufermanApplication.SESSION_FILE_PREFIX}_{now.Year}_{now.Month}_{now.Day}_{now.Hour}_{now.Minute}_{now.Second}_{now.Millisecond}_{buferItems.Count()}.json");
+                var sessionFile = this._fileStorage.CombinePaths(
+                    this._fileStorage.DataDirectory,
+                    this._settings.SessionsSubDirectory,
+                    $"{BufermanApplication.SESSION_FILE_PREFIX}_{now.Year}_{now.Month}_{now.Day}_{now.Hour}_{now.Minute}_{now.Second}_{now.Millisecond}_{buferItems.Count()}.json");
 
                 var storage = this._bufersStorageFactory.CreateStorageByFileExtension(sessionFile);
 
@@ -405,9 +408,13 @@ namespace BuferMAN.Application
 
         private string _GetLatestSessionSavedFilePath()
         {
-            if (this._fileStorage.DirectoryExists(this._settings.SessionsRootDirectory))
+            var sessionsDirectory = this._fileStorage.CombinePaths(
+                this._fileStorage.DataDirectory,
+                this._settings.SessionsSubDirectory);
+
+            if (this._fileStorage.DirectoryExists(sessionsDirectory))
             {
-                return this._fileStorage.GetFiles(this._settings.SessionsRootDirectory, $"{BufermanApplication.SESSION_FILE_PREFIX}_*.json").Max();
+                return this._fileStorage.GetFiles(sessionsDirectory, $"{BufermanApplication.SESSION_FILE_PREFIX}_*.json").Max();
             }
             else
             {

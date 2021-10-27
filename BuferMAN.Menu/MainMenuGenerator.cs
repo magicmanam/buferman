@@ -13,7 +13,6 @@ using System.Threading;
 using System.Collections.Generic;
 using BuferMAN.Infrastructure.Settings;
 using BuferMAN.Infrastructure.Files;
-using BuferMAN.Infrastructure.Storage;
 
 namespace BuferMAN.Menu
 {
@@ -25,7 +24,7 @@ namespace BuferMAN.Menu
         private readonly IIDataObjectHandler _dataObjectHandler;
         private readonly IEnumerable<IBufermanPlugin> _plugins;
         private readonly IBufermanOptionsWindowFactory _optionsWindowFactory;
-        private readonly IBufersStorageFactory _bufersStorageFactory;
+        private readonly IFileStorage _fileStorage;
 
         public MainMenuGenerator(
             IUserFileSelector userFileSelector,
@@ -34,7 +33,7 @@ namespace BuferMAN.Menu
             IIDataObjectHandler dataObjectHandler,
             IEnumerable<IBufermanPlugin> plugins,
             IBufermanOptionsWindowFactory optionsWindowFactory,
-            IBufersStorageFactory bufersStorageFactory)
+            IFileStorage fileStorage)
         {
             this._userFileSelector = userFileSelector;
             this._clipboardBuferService = clipboardBuferService;
@@ -42,7 +41,7 @@ namespace BuferMAN.Menu
             this._dataObjectHandler = dataObjectHandler;
             this._plugins = plugins;
             this._optionsWindowFactory = optionsWindowFactory;
-            this._bufersStorageFactory = bufersStorageFactory;
+            this._fileStorage = fileStorage;
         }
 
         public void GenerateMainMenu(IBufermanApplication bufermanApplication)
@@ -70,7 +69,11 @@ namespace BuferMAN.Menu
             }));
             fileMenu.AddMenuItem(bufermanHost.CreateMenuItem(() => Resource.MenuFileChangeDefault, (object sender, EventArgs args) =>
             {
-                Process.Start(this._settings.DefaultBufersFileName);
+                var defaultBufersFilePath = this._fileStorage.CombinePaths(
+                    this._fileStorage.DataDirectory,
+                    this._settings.DefaultBufersFileName);
+
+                Process.Start(defaultBufersFilePath);
             }));
 
             fileMenu.AddSeparator();

@@ -20,5 +20,9 @@ namespace BuferMAN.Infrastructure.Files
         bool DirectoryExists(string directoryPath);
 
         IEnumerable<string> GetFiles(string baseDirectory, string searchPattern = "*");
+
+        string DataDirectory { get; }
+
+        string CombinePaths(params string[] paths);
     }
 }

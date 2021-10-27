@@ -7,7 +7,7 @@ namespace BuferMAN.Infrastructure.Settings
     public interface IProgramSettingsGetter
     {
         IEnumerable<BufersStorageModel> StoragesToLoadOnStart { get; }
-        string SessionsRootDirectory { get; }
+        string SessionsSubDirectory { get; }
         string DefaultBufersFileName { get; }
         int MaxBufersCount { get; }
         int ExtraBufersCount { get; } // TODO (m) Replace with adding scrolling bufers. Can not be big, because rendering is too slow cause of keyboard emulation.

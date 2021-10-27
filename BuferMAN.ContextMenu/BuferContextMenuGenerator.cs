@@ -10,7 +10,6 @@ using magicmanam.Windows;
 using System.Collections.Generic;
 using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Infrastructure.Storage;
-using BuferMAN.Models;
 using BuferMAN.Infrastructure.Settings;
 using BuferMAN.Infrastructure.Files;
 
@@ -23,18 +22,21 @@ namespace BuferMAN.ContextMenu
         private readonly IClipboardWrapper _clipboardWrapper;
         private readonly IBufersStorageFactory _bufersStorageFactory;
         private readonly IUserFileSelector _userFileSelector;
+        private readonly IFileStorage _fileStorage;
 
         public BuferContextMenuGenerator(IBuferSelectionHandlerFactory buferSelectionHandlerFactory,
             IProgramSettingsGetter settings,
             IClipboardWrapper clipboardWrapper,
             IBufersStorageFactory bufersStorageFactory, 
-            IUserFileSelector userFileSelector)
+            IUserFileSelector userFileSelector,
+            IFileStorage fileStorage)
         {
             this._buferSelectionHandlerFactory = buferSelectionHandlerFactory;
             this._settings = settings;
             this._clipboardWrapper = clipboardWrapper;
             this._bufersStorageFactory = bufersStorageFactory;
             this._userFileSelector = userFileSelector;
+            this._fileStorage = fileStorage;
         }
 
         public IEnumerable<BufermanMenuItem> GenerateContextMenuItems(BuferContextMenuState buferContextMenuState,
@@ -170,7 +172,10 @@ namespace BuferMAN.ContextMenu
                 {
                     var addToDefaultFileMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuAddToDefaultFile, (object sender, EventArgs args) =>
                     {
-                        var bufersStorage = this._bufersStorageFactory.CreateStorageByFileExtension(this._settings.DefaultBufersFileName);
+                        var bufersStorage = this._bufersStorageFactory.CreateStorageByFileExtension(
+                            this._fileStorage.CombinePaths(
+                                this._fileStorage.DataDirectory,
+                                this._settings.DefaultBufersFileName));
 
                         var buferItem = buferContextMenuState.Bufer.ViewModel.ToModel();
 

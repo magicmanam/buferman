@@ -1,7 +1,9 @@
 ﻿using BuferMAN.Infrastructure.Files;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace BuferMAN.Files
 {
@@ -52,5 +54,16 @@ namespace BuferMAN.Files
         {
             return Directory.GetFiles(baseDirectory, searchPattern).ToList();
         }
+
+        public string DataDirectory => Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    Application.ProductName);
+
+        public string CombinePaths(params string[] paths)
+        {
+            return Path.Combine(paths);
+        }
+
+
     }
 }

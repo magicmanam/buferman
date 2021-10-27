@@ -1,10 +1,8 @@
 ﻿using BuferMAN.Infrastructure.Files;
 using BuferMAN.Infrastructure.Settings;
 using BuferMAN.Models;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 
 namespace BuferMAN.Settings
@@ -20,6 +18,7 @@ namespace BuferMAN.Settings
         private readonly SettingItem<int> _buferDefaultBackgroundColorSetting;
         private readonly SettingItem<int> _currentBuferBackgroundColorSetting;
         private readonly SettingItem<int> _focusTooltipDurationSetting;
+        private readonly string _defaultBufersFilePath;
 
         public ProgramSettings(IFileStorage fileStorage)
         {
@@ -69,9 +68,13 @@ namespace BuferMAN.Settings
                 this._currentBuferBackgroundColorSetting
             };
 
-            if (!fileStorage.FileExists(this.DefaultBufersFileName))
+            this._defaultBufersFilePath = fileStorage.CombinePaths(
+                fileStorage.DataDirectory,
+                this.DefaultBufersFileName);
+
+            if (!fileStorage.FileExists(this._defaultBufersFilePath))
             {
-                fileStorage.CreateFile(this.DefaultBufersFileName);
+                fileStorage.CreateFile(this._defaultBufersFilePath);
             }
         }
 
@@ -80,11 +83,11 @@ namespace BuferMAN.Settings
                 new BufersStorageModel
                 {
                     StorageType = BufersStorageType.JsonFile,
-                    StorageAddress = this.DefaultBufersFileName
+                    StorageAddress = this._defaultBufersFilePath
                 }
             };
 
-        public string DefaultBufersFileName => Path.Combine(this._bufermanDataFolder, "bufers.json");
+        public string DefaultBufersFileName => "bufers.json";
 
         public int MaxBufersCount => 30;
 
@@ -281,17 +284,12 @@ namespace BuferMAN.Settings
 
         public int MaxBuferLengthToShowOnAliasCreation => 100;
 
-        public string SessionsRootDirectory
+        public string SessionsSubDirectory
         {
             get
             {
-                return Path.Combine(
-                    this._bufermanDataFolder,
-                    "session");// TODO (s) in constants
+                return "session";
             }
         }
-
-        private readonly string _bufermanDataFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                    "BuferMAN");// TODO (s) in constants
     }
 }
