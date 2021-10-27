@@ -63,6 +63,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="SessionManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BuferMAN.Clipboard\BuferMAN.Clipboard.csproj">

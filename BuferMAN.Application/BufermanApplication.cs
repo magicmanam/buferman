@@ -5,14 +5,12 @@ using BuferMAN.Infrastructure.Menu;
 using BuferMAN.Infrastructure.Plugins;
 using BuferMAN.Infrastructure.Settings;
 using BuferMAN.Infrastructure.Storage;
-using BuferMAN.Models;
 using BuferMAN.View;
 using Logging;
 using magicmanam.UndoRedo;
 using magicmanam.Windows;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -33,9 +31,9 @@ namespace BuferMAN.Application
         private readonly IEnumerable<IBufermanPlugin> _plugins;
         private readonly IBufermanOptionsWindowFactory _optionsWindowFactory;
         private readonly IFileStorage _fileStorage;
-        private const string SESSION_FILE_PREFIX = "session_state";
+        private readonly ISessionManager _sessionManager;
         private DateTime _lastClipboardEventDateTime;
-        private ITime _time;
+        private readonly ITime _time;
 
         private event EventHandler<BuferFocusedEventArgs> _BuferFocused;
 
@@ -48,7 +46,8 @@ namespace BuferMAN.Application
             IBufersStorageFactory bufersStorageFactory,
             IBufermanOptionsWindowFactory optionsWindowFactory,
             IFileStorage fileStorage,
-            ITime time)
+            ITime time,
+            ISessionManager sessionManager)
         {
             this._clipboardBuferService = clipboardBuferService;
             this._clipboardWrapper = clipboardWrapper;
@@ -60,6 +59,7 @@ namespace BuferMAN.Application
             this._optionsWindowFactory = optionsWindowFactory;
             this._fileStorage = fileStorage;
             this._time = time;
+            this._sessionManager = sessionManager;
         }
 
         public void RerenderBufers(BufersFilter bufersFilter = null)
@@ -376,61 +376,9 @@ namespace BuferMAN.Application
             this.Host.SetTrayMenu(this.GetTrayMenuItems());
         }
 
-        public void SaveSession()
-        {
-            var buferItems = this._clipboardBuferService.GetTemporaryBufers()
-                .Where(b => b.Clip.IsStringObject())
-                .Select(b => b.ToModel())
-                .Union(this._clipboardBuferService
-                                   .GetPinnedBufers()
-                                   .Where(b => b.Clip.IsStringObject())
-                                   .Select(b => b.ToModel()))
-                .ToList();
-
-            if (buferItems.Any())
-            {
-                var now = this._time.LocalTime;
-                var sessionFile = this._fileStorage.CombinePaths(
-                    this._fileStorage.DataDirectory,
-                    this._settings.SessionsSubDirectory,
-                    $"{BufermanApplication.SESSION_FILE_PREFIX}_{now.Year}_{now.Month}_{now.Day}_{now.Hour}_{now.Minute}_{now.Second}_{now.Millisecond}_{buferItems.Count()}.json");
-
-                var storage = this._bufersStorageFactory.CreateStorageByFileExtension(sessionFile);
-
-                storage.SaveBufers(buferItems);
-            }
-        }
-
-        public bool IsLatestSessionSaved()
-        {
-            return this._GetLatestSessionSavedFilePath() != null;
-        }
-
-        private string _GetLatestSessionSavedFilePath()
-        {
-            var sessionsDirectory = this._fileStorage.CombinePaths(
-                this._fileStorage.DataDirectory,
-                this._settings.SessionsSubDirectory);
-
-            if (this._fileStorage.DirectoryExists(sessionsDirectory))
-            {
-                return this._fileStorage.GetFiles(sessionsDirectory, $"{BufermanApplication.SESSION_FILE_PREFIX}_*.json").Max();
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public void RestoreSession()
-        {
-            var storage = this._bufersStorageFactory.Create(BufersStorageType.JsonFile, this._GetLatestSessionSavedFilePath());
-            storage.LoadBufers();
-        }
-
         public void Exit()
         {
-            this.SaveSession();
+            this._sessionManager.SaveSession();
             this.Host.Exit();
         }
 

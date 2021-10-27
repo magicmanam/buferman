@@ -11,6 +11,8 @@ namespace BuferMAN.Storage
             container.Register<ILoadedBuferItemsProcessor, LoadedBuferItemsProcessor>(Lifestyle.Singleton);
             container.Register<IBufersStorageFactory, BufersStorageFactory>(Lifestyle.Singleton);
 
+            container.Register<ISessionManager, SessionManager>(Lifestyle.Singleton);
+
             return container;
         }
     }

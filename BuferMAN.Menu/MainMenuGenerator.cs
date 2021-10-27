@@ -13,6 +13,7 @@ using System.Threading;
 using System.Collections.Generic;
 using BuferMAN.Infrastructure.Settings;
 using BuferMAN.Infrastructure.Files;
+using BuferMAN.Infrastructure.Storage;
 
 namespace BuferMAN.Menu
 {
@@ -25,6 +26,7 @@ namespace BuferMAN.Menu
         private readonly IEnumerable<IBufermanPlugin> _plugins;
         private readonly IBufermanOptionsWindowFactory _optionsWindowFactory;
         private readonly IFileStorage _fileStorage;
+        private readonly ISessionManager _sessionManager;
 
         public MainMenuGenerator(
             IUserFileSelector userFileSelector,
@@ -33,7 +35,8 @@ namespace BuferMAN.Menu
             IIDataObjectHandler dataObjectHandler,
             IEnumerable<IBufermanPlugin> plugins,
             IBufermanOptionsWindowFactory optionsWindowFactory,
-            IFileStorage fileStorage)
+            IFileStorage fileStorage,
+            ISessionManager sessionManager)
         {
             this._userFileSelector = userFileSelector;
             this._clipboardBuferService = clipboardBuferService;
@@ -42,6 +45,7 @@ namespace BuferMAN.Menu
             this._plugins = plugins;
             this._optionsWindowFactory = optionsWindowFactory;
             this._fileStorage = fileStorage;
+            this._sessionManager = sessionManager;
         }
 
         public void GenerateMainMenu(IBufermanApplication bufermanApplication)
@@ -87,7 +91,7 @@ namespace BuferMAN.Menu
 
             fileMenu.AddMenuItem(pauseResumeMenuItem);
 
-            if (bufermanApplication.IsLatestSessionSaved())
+            if (this._sessionManager.IsLatestSessionSaved())
             {
                 var restoreSessionMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuFileRestoreSession);
                 // no needs to display bufers count from the recent session because cost/benefit ratio is too high
@@ -95,14 +99,14 @@ namespace BuferMAN.Menu
                 if (this._settings.RestorePreviousSession)
                 {
                     restoreSessionMenuItem.Enabled = false;
-                    bufermanApplication.RestoreSession();
+                    this._sessionManager.RestoreSession();
                 }
                 else
                 {
                     restoreSessionMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
                     {
                         restoreSessionMenuItem.Enabled = false;
-                        bufermanApplication.RestoreSession();
+                        this._sessionManager.RestoreSession();
                     });
                     restoreSessionMenuItem.ShortCut = Shortcut.CtrlR;
                 }

@@ -13,11 +13,7 @@ namespace BuferMAN.Infrastructure
         string GetBufermanTitle();
         string GetBufermanAdminTitle();
         string GetUserManualText();
-        void SaveSession();
-        bool IsLatestSessionSaved();
-        void RestoreSession();
         void Exit();
-
         void SetMainMenu(IEnumerable<BufermanMenuItem> menuItems);
         void RefreshMainMenu();
         void ChangeLanguage(string shortLanguage);

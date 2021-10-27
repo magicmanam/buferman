@@ -76,6 +76,7 @@
     <Compile Include="Menu\IMainMenuGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Storage\IPersistentBufersStorage.cs" />
+    <Compile Include="Storage\ISessionManager.cs" />
     <Compile Include="Window\IRenderingHandler.cs" />
   </ItemGroup>
   <ItemGroup>
