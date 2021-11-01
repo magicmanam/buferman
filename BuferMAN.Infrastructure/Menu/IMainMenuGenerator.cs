@@ -1,7 +1,9 @@
-﻿namespace BuferMAN.Infrastructure.Menu
+﻿using System.Collections.Generic;
+
+namespace BuferMAN.Infrastructure.Menu
 {
     public interface IMainMenuGenerator
     {
-        void GenerateMainMenu(IBufermanApplication bufermanApplication);// TODO (s) maybe this method should return list of items
+        IEnumerable<BufermanMenuItem> GenerateMainMenu(IBufermanApplication bufermanApplication, IBufermanHost bufermanHost);// TODO (s) remove BufermanApplication from parameters
     }
 }

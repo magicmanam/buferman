@@ -162,7 +162,8 @@ namespace BuferMAN.Application
                 storage.LoadBufers();
             }
 
-            this._mainMenuGenerator.GenerateMainMenu(this);
+            this._mainMenuItems = this._mainMenuGenerator.GenerateMainMenu(this, this.Host);
+            this.Host.SetMainMenu(this._mainMenuItems);
             this.Host.SetTrayMenu(this.GetTrayMenuItems());
 
             this.Host.SetOnKeyDown(this.OnKeyDown);
@@ -288,7 +289,8 @@ namespace BuferMAN.Application
                     if (e.Alt)
                     {
                         this.ShouldCatchCopies = !this.ShouldCatchCopies;
-                        this._mainMenuGenerator.GenerateMainMenu(this);
+                        this._mainMenuItems = this._mainMenuGenerator.GenerateMainMenu(this, this.Host);
+                        this.Host.SetMainMenu(this._mainMenuItems);
                     }
                     break;
             }
@@ -350,13 +352,6 @@ namespace BuferMAN.Application
         public string GetUserManualText()
         {
             return Resource.UserManual;
-        }
-
-        public void SetMainMenu(IEnumerable<BufermanMenuItem> menuItems)
-        {
-            this._mainMenuItems = menuItems;
-
-            this.Host.SetMainMenu(menuItems);
         }
 
         public void RefreshMainMenu()

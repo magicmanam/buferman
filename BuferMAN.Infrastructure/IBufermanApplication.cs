@@ -14,7 +14,6 @@ namespace BuferMAN.Infrastructure
         string GetBufermanAdminTitle();
         string GetUserManualText();
         void Exit();
-        void SetMainMenu(IEnumerable<BufermanMenuItem> menuItems);
         void RefreshMainMenu();
         void ChangeLanguage(string shortLanguage);
 

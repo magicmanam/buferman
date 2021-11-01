@@ -48,17 +48,17 @@ namespace BuferMAN.Menu
             this._sessionManager = sessionManager;
         }
 
-        public void GenerateMainMenu(IBufermanApplication bufermanApplication)
+        public IEnumerable<BufermanMenuItem> GenerateMainMenu(IBufermanApplication bufermanApplication, IBufermanHost bufermanHost)
         {
             var items = new List<BufermanMenuItem>
             {
                 this._GenerateFileMenu(bufermanApplication),
-                this._GenerateEditMenu(bufermanApplication.Host),
+                this._GenerateEditMenu(bufermanHost),
                 this._GenerateToolsMenu(bufermanApplication),
-                this._GenerateHelpMenu(bufermanApplication.Host)
+                this._GenerateHelpMenu(bufermanHost)
             };
 
-            bufermanApplication.SetMainMenu(items);
+            return items;
         }
 
         private BufermanMenuItem _GenerateFileMenu(IBufermanApplication bufermanApplication)
