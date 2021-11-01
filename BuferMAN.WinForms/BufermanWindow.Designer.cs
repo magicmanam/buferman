@@ -41,6 +41,7 @@ namespace BuferMAN.WinForms
         public event EventHandler ClipbordUpdated;
         public event EventHandler WindowActivated;
         public event EventHandler WindowHidden;
+        public event EventHandler UILanguageChanged;
 
         public IEnumerable<IBufer> Bufers { get { return this._bufers.ToList(); } }
         internal StatusStrip StatusLine { get; set; }
@@ -459,6 +460,13 @@ namespace BuferMAN.WinForms
             };
 
             this.StatusLine.Items.Insert(0, label);
+        }
+
+        public void ChangeLanguage(string shortLanguage)
+        {
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(shortLanguage);
+
+            this.UILanguageChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void _OnWindowClosing(object sender, FormClosingEventArgs e)

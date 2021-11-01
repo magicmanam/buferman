@@ -43,5 +43,7 @@ namespace BuferMAN.Infrastructure
         int PinnedBufersDividerHeight { get; }
         void SuspendLayoutLogic();
         void ResumeLayoutLogic();
+        void ChangeLanguage(string shortLanguage);
+        event EventHandler UILanguageChanged;
     }
 }

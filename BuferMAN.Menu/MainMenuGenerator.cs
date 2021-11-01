@@ -54,7 +54,7 @@ namespace BuferMAN.Menu
             {
                 this._GenerateFileMenu(bufermanApplication),
                 this._GenerateEditMenu(bufermanHost),
-                this._GenerateToolsMenu(bufermanApplication),
+                this._GenerateToolsMenu(bufermanHost),
                 this._GenerateHelpMenu(bufermanHost)
             };
 
@@ -198,10 +198,8 @@ namespace BuferMAN.Menu
             };
         }
 
-        private BufermanMenuItem _GenerateToolsMenu(IBufermanApplication bufermanApplication)
+        private BufermanMenuItem _GenerateToolsMenu(IBufermanHost bufermanHost)
         {
-            var bufermanHost = bufermanApplication.Host;
-
             var toolsMenu = bufermanHost.CreateMenuItem(() => Resource.MenuTools);
 
             toolsMenu.AddMenuItem(bufermanHost.CreateMenuItem(() => Resource.MenuToolsMemory, this._GetShowMemoryUsageHandler(bufermanHost)));
@@ -210,7 +208,7 @@ namespace BuferMAN.Menu
             {
                 toolsMenu.AddMenuItem(pluginsMenuItems);
             }
-            toolsMenu.AddMenuItem(this._GenerateLanguageMenu(bufermanApplication));
+            toolsMenu.AddMenuItem(this._GenerateLanguageMenu(bufermanHost));
             toolsMenu.AddMenuItem(bufermanHost.CreateMenuSeparatorItem());
             toolsMenu.AddMenuItem(bufermanHost.CreateMenuItem(() => Resource.MenuToolsOptions, (object sender, EventArgs args) => this._optionsWindowFactory.Create().Open()));
 
@@ -267,9 +265,8 @@ namespace BuferMAN.Menu
             }
         }
 
-        private BufermanMenuItem _GenerateLanguageMenu(IBufermanApplication bufermanApplication)
+        private BufermanMenuItem _GenerateLanguageMenu(IBufermanHost bufermanHost)
         {
-            var bufermanHost = bufermanApplication.Host;
             // TODO (m) во время открытия приложения показывать диалог с выбором языка и сохранять это значение
             var languageMenu = bufermanHost.CreateMenuItem(() => Resource.MenuToolsLanguage);
             
@@ -291,12 +288,12 @@ namespace BuferMAN.Menu
 
             englishMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
             {
-                bufermanApplication.ChangeLanguage("en");
+                bufermanHost.ChangeLanguage("en");
                 this._UpdateLanguageMenuItems(englishMenuItem, russianMenuItem);
             });
             russianMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
             {
-                bufermanApplication.ChangeLanguage("ru");
+                bufermanHost.ChangeLanguage("ru");
                 this._UpdateLanguageMenuItems(russianMenuItem, englishMenuItem);
             });
 

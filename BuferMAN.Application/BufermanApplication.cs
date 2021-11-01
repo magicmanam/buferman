@@ -13,7 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace BuferMAN.Application
@@ -134,6 +133,7 @@ namespace BuferMAN.Application
 
             this.Host.WindowActivated += this.OnWindowActivating;
             this.Host.ClipbordUpdated += this._ProcessCopyClipboardEvent;
+            this.Host.UILanguageChanged += _HostUILanguageChanged;
 
             UndoableContext<ApplicationStateSnapshot>.Current = new UndoableContext<ApplicationStateSnapshot>(this._clipboardBuferService);
 
@@ -362,10 +362,8 @@ namespace BuferMAN.Application
             }
         }
 
-        public void ChangeLanguage(string shortLanguage)
+        private void _HostUILanguageChanged(object sender, EventArgs e)
         {
-            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(shortLanguage);
-
             this.RefreshMainMenu();
             this.Host.RefreshUI(this._clipboardBuferService.GetTemporaryBufers(), this._clipboardBuferService.GetPinnedBufers());
             this.Host.SetTrayMenu(this.GetTrayMenuItems());
