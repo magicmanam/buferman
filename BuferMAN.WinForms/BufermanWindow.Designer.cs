@@ -30,7 +30,7 @@ namespace BuferMAN.WinForms
         private Label _userManualLabel;
         private Label _pinnedBufersDivider;// TODO (m) replace with Split Container (along with scrolling bufers feature and pinned area)
         private bool _isAdmin;
-        private IBufermanApplication _bufermanApp;
+        private IBufermanApplication _bufermanApp;// TODO (s) Remove it from here
         private bool _wasWindowClosed = false;
         private bool _wasWindowActivated = false;
         private IProgramSettingsGetter _settingsGetter;
@@ -42,6 +42,7 @@ namespace BuferMAN.WinForms
         public event EventHandler WindowActivated;
         public event EventHandler WindowHidden;
         public event EventHandler UILanguageChanged;
+        public event EventHandler OnExiting;
 
         public IEnumerable<IBufer> Bufers { get { return this._bufers.ToList(); } }
         internal StatusStrip StatusLine { get; set; }
@@ -270,7 +271,7 @@ namespace BuferMAN.WinForms
 
             if (m.Msg == Messages.WM_QUERYENDSESSION)
             {
-                this._bufermanApp.Exit();
+                this.Exit();
             }
 
             base.WndProc(ref m);
@@ -327,6 +328,8 @@ namespace BuferMAN.WinForms
 
         public void Exit()
         {
+            this.OnExiting?.Invoke(this, EventArgs.Empty);
+
             this.TrayIcon.Visible = false;
             WindowsFunctions.UnregisterHotKey(this.Handle, 0);
             this._bufermanApp = null;

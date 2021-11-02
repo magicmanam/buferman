@@ -82,7 +82,7 @@ namespace BuferMAN.Menu
 
             fileMenu.AddSeparator();
 
-            var pauseResumeMenuItem = bufermanHost.CreateMenuItem(() => this._GetPauseResumeMenuItemText(bufermanApplication));
+            var pauseResumeMenuItem = bufermanHost.CreateMenuItem(() => (bufermanApplication.ShouldCatchCopies ? Resource.MenuFilePause : Resource.MenuFileResume) + $" {new String('\t', 1)} Alt+P");
             pauseResumeMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
                 {
                     bufermanApplication.ShouldCatchCopies = !bufermanApplication.ShouldCatchCopies;
@@ -114,14 +114,9 @@ namespace BuferMAN.Menu
                 fileMenu.AddMenuItem(restoreSessionMenuItem);
             }
             fileMenu.AddSeparator();
-            fileMenu.AddMenuItem(bufermanHost.CreateMenuItem(() => Resource.MenuFileExit, (object sender, EventArgs args) => bufermanApplication.Exit()));
+            fileMenu.AddMenuItem(bufermanHost.CreateMenuItem(() => Resource.MenuFileExit, (object sender, EventArgs args) => bufermanHost.Exit()));
 
             return fileMenu;
-        }
-
-        private string _GetPauseResumeMenuItemText(IBufermanApplication bufermanApplication)
-        {
-            return (bufermanApplication.ShouldCatchCopies ? Resource.MenuFilePause : Resource.MenuFileResume) + $" {new String('\t', 1)} Alt+P";
         }
 
         private BufermanMenuItem _GenerateEditMenu(IBufermanHost bufermanHost)

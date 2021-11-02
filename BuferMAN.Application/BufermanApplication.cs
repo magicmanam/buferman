@@ -133,7 +133,8 @@ namespace BuferMAN.Application
 
             this.Host.WindowActivated += this.OnWindowActivating;
             this.Host.ClipbordUpdated += this._ProcessCopyClipboardEvent;
-            this.Host.UILanguageChanged += _HostUILanguageChanged;
+            this.Host.UILanguageChanged += this._HostUILanguageChanged;
+            this.Host.OnExiting += this._OnHostExit;
 
             UndoableContext<ApplicationStateSnapshot>.Current = new UndoableContext<ApplicationStateSnapshot>(this._clipboardBuferService);
 
@@ -333,7 +334,7 @@ namespace BuferMAN.Application
                 this.Host.CreateMenuItem(() => Resource.TrayMenuOptions, (object sender, EventArgs args) => this._optionsWindowFactory.Create().Open()),
                 this.Host.CreateMenuItem(() => Resource.TrayMenuBuferManual, (object sernder, EventArgs args) => this.Host.UserInteraction.ShowPopup(Resource.UserManual + Environment.NewLine + Environment.NewLine + Resource.DocumentationMentioning, Resource.ApplicationTitle)),
                 this.Host.CreateMenuSeparatorItem(),
-                this.Host.CreateMenuItem(() => Resource.MenuFileExit, (object sender, EventArgs args) => this.Exit())
+                this.Host.CreateMenuItem(() => Resource.MenuFileExit, (object sender, EventArgs args) => this.Host.Exit())
             };
 
             return trayIconMenuItems;
@@ -369,10 +370,9 @@ namespace BuferMAN.Application
             this.Host.SetTrayMenu(this.GetTrayMenuItems());
         }
 
-        public void Exit()
+        private void _OnHostExit(object sender, EventArgs e)
         {
             this._sessionManager.SaveSession();
-            this.Host.Exit();
         }
 
         public void ClearEmptyBufers()
