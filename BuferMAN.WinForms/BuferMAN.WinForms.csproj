@@ -83,7 +83,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Window\RenderingHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -94,10 +93,6 @@
     <ProjectReference Include="..\BuferMAN.Assets\BuferMAN.Assets.csproj">
       <Project>{F414504B-8C46-42A6-9508-C1133CC947A7}</Project>
       <Name>BuferMAN.Assets</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BuferMAN.BuferPresentations\BuferMAN.BuferPresentations.csproj">
-      <Project>{ED29E767-AD51-4508-9C1E-3C2446D504D9}</Project>
-      <Name>BuferMAN.BuferPresentations</Name>
     </ProjectReference>
     <ProjectReference Include="..\BuferMAN.Clipboard\BuferMAN.Clipboard.csproj">
       <Project>{DE6FE4D1-5C5A-4069-8D7F-F72C03D6B18A}</Project>
@@ -114,10 +109,6 @@
     <ProjectReference Include="..\BuferMAN.Infrastructure\BuferMAN.Infrastructure.csproj">
       <Project>{F14888DE-E3DE-4225-80AA-F836DCBA8E2E}</Project>
       <Name>BuferMAN.Infrastructure</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\BuferMAN.Plugins\BuferMAN.Plugins.csproj">
-      <Project>{2822F743-087D-403A-A8E9-92FBEAC0A3EF}</Project>
-      <Name>BuferMAN.Plugins</Name>
     </ProjectReference>
     <ProjectReference Include="..\BuferMAN.View\BuferMAN.View.csproj">
       <Project>{60FACDBB-0E8F-4EA9-8E18-99294EF5908A}</Project>

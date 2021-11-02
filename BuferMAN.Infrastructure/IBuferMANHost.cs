@@ -33,6 +33,7 @@ namespace BuferMAN.Infrastructure
         BufermanMenuItem CreateMenuItem(Func<string> textFn, EventHandler eventHandler = null);
         BufermanMenuItem CreateMenuItem(string text, EventHandler eventHandler = null);
         BufermanMenuItem CreateMenuSeparatorItem();
+        IBufer CreateBufer();
         IUserInteraction UserInteraction { get; }
         BuferViewModel LatestFocusedBufer { get; set; }
         int InnerAreaWidth { get; }
@@ -41,8 +42,6 @@ namespace BuferMAN.Infrastructure
         void RemoveBufer(IBufer bufer);
         void SetPinnedBufersDividerY(int y);
         int PinnedBufersDividerHeight { get; }
-        void SuspendLayoutLogic();
-        void ResumeLayoutLogic();
         void ChangeLanguage(string shortLanguage);
         event EventHandler UILanguageChanged;
         event EventHandler OnExiting;

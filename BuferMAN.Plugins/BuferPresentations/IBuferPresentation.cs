@@ -1,10 +1,11 @@
-﻿using System.Windows.Forms;
+﻿using BuferMAN.Infrastructure;
+using System.Windows.Forms;
 
 namespace BuferMAN.Plugins.BuferPresentations
 {
     public interface IBuferPresentation
     {
-        void ApplyToButton(Button button);
+        void ApplyToBufer(IBufer button);
         bool IsCompatibleWithBufer(IDataObject data);
     }
 }

@@ -32,6 +32,9 @@ namespace BuferMAN.Infrastructure
         void HideFocusTooltip();
         int TabIndex { get; set; }
         Point Location { get; set; }
-        Button GetButton();// TODO (l) replace/remove
+        Font Font { get; }
+        Image Image { get; set; }
+        ContentAlignment ImageAlign { get; set; }
+        ContentAlignment TextAlign { get; set; }
     }
 }

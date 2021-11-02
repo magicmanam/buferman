@@ -161,7 +161,7 @@ namespace BuferMAN.WinForms.Tests
                     TextRepresentation = "Image"
                 }
             };
-            var oldFont = bufer.GetButton().Font;
+            var oldFont = bufer.Font;
 
             // Act
             var wrapper = new BuferHandlersWrapper(
@@ -177,7 +177,7 @@ namespace BuferMAN.WinForms.Tests
 
             // Assert
             Assert.AreEqual("Image", bufer.ViewModel.OriginBuferTitle);
-            Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), bufer.GetButton().Font);
+            Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), bufer.Font);
         }
 
         [TestMethod]
@@ -193,7 +193,7 @@ namespace BuferMAN.WinForms.Tests
                     TextRepresentation = "File Content"
                 }
             };
-            var oldFont = bufer.GetButton().Font;
+            var oldFont = bufer.Font;
 
             // Act
             var wrapper = new BuferHandlersWrapper(
@@ -209,7 +209,7 @@ namespace BuferMAN.WinForms.Tests
 
             // Assert
             Assert.AreEqual("File Content", bufer.ViewModel.OriginBuferTitle);
-            Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), bufer.GetButton().Font);
+            Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), bufer.Font);
         }
 
         [TestMethod]
@@ -224,7 +224,7 @@ namespace BuferMAN.WinForms.Tests
                     Clip = data
                 }
             };
-            var oldFont = bufer.GetButton().Font;
+            var oldFont = bufer.Font;
 
             // Act
             var wrapper = new BuferHandlersWrapper(
@@ -240,7 +240,7 @@ namespace BuferMAN.WinForms.Tests
 
             // Assert
             Assert.AreEqual($"<< {Resource.NotTextBufer} >>", bufer.ViewModel.OriginBuferTitle);
-            Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), bufer.GetButton().Font);
+            Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), bufer.Font);
         }
 
         [TestMethod]
@@ -256,7 +256,7 @@ namespace BuferMAN.WinForms.Tests
                     TextRepresentation = "   "
                 }
             };
-            var oldFont = bufer.GetButton().Font;
+            var oldFont = bufer.Font;
 
             // Act
             var wrapper = new BuferHandlersWrapper(
@@ -272,7 +272,7 @@ namespace BuferMAN.WinForms.Tests
 
             // Assert
             Assert.AreEqual($"<< 3   {Resource.WhiteSpaces} >>", bufer.ViewModel.OriginBuferTitle);
-            Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), bufer.GetButton().Font);
+            Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), bufer.Font);
         }
     }
 }

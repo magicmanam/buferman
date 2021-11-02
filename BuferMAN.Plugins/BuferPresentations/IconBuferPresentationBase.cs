@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using BuferMAN.Infrastructure;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace BuferMAN.Plugins.BuferPresentations
@@ -25,11 +26,11 @@ namespace BuferMAN.Plugins.BuferPresentations
                 return this._fileIcon;
             }
         }
-        public virtual void ApplyToButton(Button button)
+        public virtual void ApplyToBufer(IBufer bufer)
         {
-            button.Image = this.FileIcon;
-            button.ImageAlign = ContentAlignment.MiddleRight;
-            button.TextAlign = ContentAlignment.MiddleLeft;
+            bufer.Image = this.FileIcon;
+            bufer.ImageAlign = ContentAlignment.MiddleRight;
+            bufer.TextAlign = ContentAlignment.MiddleLeft;
             //button.BackColor = Color.Khaki;
         }
 

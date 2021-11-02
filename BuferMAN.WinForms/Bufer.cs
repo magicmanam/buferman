@@ -209,5 +209,45 @@ namespace BuferMAN.WinForms
                 this._button.Location = value;
             }
         }
+
+        public Font Font
+        {
+            get
+            {
+                return this._button.Font;
+            }
+        }
+
+        public Image Image
+        {
+            get
+            {
+                return this._button.Image;
+            }
+            set
+            {
+                this._button.Image = value;
+            }
+        }
+        public ContentAlignment ImageAlign
+        {
+            get
+            {
+                return this._button.ImageAlign;
+            }
+            set
+            {
+                this._button.ImageAlign = value;
+            }
+        }
+        public ContentAlignment TextAlign { get
+            {
+                return this._button.TextAlign;
+            }
+            set
+            {
+                this._button.TextAlign = value;
+            }
+        }
     }
 }

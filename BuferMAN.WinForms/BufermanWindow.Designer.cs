@@ -78,14 +78,14 @@ namespace BuferMAN.WinForms
         {
             this._bufers.Add(bufer);
 
-            var button = bufer.GetButton();
+            var button = (bufer as Bufer).GetButton();
             this.Controls.Add(button);
             button.BringToFront();
         }
 
         public void RemoveBufer(IBufer bufer)
         {
-            this.Controls.Remove(bufer.GetButton());
+            this.Controls.Remove((bufer as Bufer).GetButton());
 
             var wasRemoved = this._bufers.Remove(bufer);
             if (!wasRemoved)
@@ -104,12 +104,17 @@ namespace BuferMAN.WinForms
             return new FormMenuItem("-");
         }
 
+        public IBufer CreateBufer()
+        {
+            return new Bufer();
+        }
+
         public void BuferFocused(object sender, BuferFocusedEventArgs e)
         {
-            this._bufers
-                .Single(b => b.ViewModel.ViewId == e.Bufer.ViewId)
-                .GetButton()
-                .Focus();
+            var bufer = this._bufers
+                .Single(b => b.ViewModel.ViewId == e.Bufer.ViewId) as Bufer;
+
+            bufer.GetButton().Focus();
         }
 
         public void SetOnKeyDown(KeyEventHandler handler)
@@ -203,16 +208,6 @@ namespace BuferMAN.WinForms
         public int PinnedBufersDividerHeight
         {
             get { return this._pinnedBufersDivider.Height; }
-        }
-
-        public void SuspendLayoutLogic()
-        {
-            this.SuspendLayout();
-        }
-
-        public void ResumeLayoutLogic()
-        {
-            this.ResumeLayout(false);
         }
 
         private void _StartTrickTimer(int intervalSeconds)
@@ -327,7 +322,9 @@ namespace BuferMAN.WinForms
 
         public void RerenderBufers(IEnumerable<BuferViewModel> temporaryBuferViewModels, IEnumerable<BuferViewModel> pinnedBuferViewModels)
         {
+            this.SuspendLayout();
             this._renderingHandler.Render(this, temporaryBuferViewModels, pinnedBuferViewModels);
+            this.ResumeLayout(false);
         }
 
         public void RefreshUI(IEnumerable<BuferViewModel> temporaryBuferViewModels, IEnumerable<BuferViewModel> pinnedBuferViewModels)

@@ -11,7 +11,7 @@ using BuferMAN.View;
 using BuferMAN.Infrastructure.Settings;
 using BuferMAN.Infrastructure.Menu;
 
-namespace BuferMAN.WinForms.Window
+namespace BuferMAN.Application
 {
     internal class RenderingHandler : IRenderingHandler
     {
@@ -31,8 +31,6 @@ namespace BuferMAN.WinForms.Window
 
         public void Render(IBufermanHost bufermanHost, IEnumerable<BuferViewModel> temporaryBuferViewModels, IEnumerable<BuferViewModel> pinnedBuferViewModels)
         {
-            bufermanHost.SuspendLayoutLogic();
-
             if (this._clipboardBuferService.BufersCount > this._settings.MaxBufersCount)
             {
                 temporaryBuferViewModels = temporaryBuferViewModels.Skip(this._clipboardBuferService.BufersCount - this._settings.MaxBufersCount).ToList();
@@ -59,7 +57,7 @@ namespace BuferMAN.WinForms.Window
 
             if (temporaryBuferViewModels.Any())
             {
-                this._DrawButtonsForBufers(bufermanHost, temporaryBuferViewModels.ToList(), temporaryBuferViewModels.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBuferViewModels.Count() - 1);
+                this._DrawBufers(bufermanHost, temporaryBuferViewModels.ToList(), temporaryBuferViewModels.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT, temporaryBuferViewModels.Count() - 1);
             }
 
             var pinnedBufersDividerY = temporaryBuferViewModels.Count() * BUTTON_HEIGHT + 1;
@@ -67,18 +65,16 @@ namespace BuferMAN.WinForms.Window
 
             if (pinnedBuferViewModels.Any())
             {
-                this._DrawButtonsForBufers(
+                this._DrawBufers(
                     bufermanHost,
                     pinnedBuferViewModels.ToList(),
                     pinnedBufersDividerY + bufermanHost.PinnedBufersDividerHeight + 1 + pinnedBuferViewModels.Count() * BUTTON_HEIGHT - BUTTON_HEIGHT,
                     temporaryBuferViewModels.Count() + pinnedBuferViewModels.Count() - 1,
                     true);
             }
-
-            bufermanHost.ResumeLayoutLogic();
         }
 
-        private void _DrawButtonsForBufers(IBufermanHost bufermanHost, List<BuferViewModel> bufers, int y, int currentButtonIndex,
+        private void _DrawBufers(IBufermanHost bufermanHost, List<BuferViewModel> bufers, int y, int currentButtonIndex,
             bool pinned = false)// TODO (l) remove this parameter: get from bufers collection, but be careful!!!
         {
             foreach (var buferViewModel in bufers)
@@ -87,12 +83,11 @@ namespace BuferMAN.WinForms.Window
 
                 if (bufer == null)
                 {
-                    bufer = new Bufer()
-                    {
-                        BackColor = this._settings.BuferDefaultBackgroundColor,
-                        ViewModel = buferViewModel,
-                        Width = bufermanHost.InnerAreaWidth
-                    };
+                    bufer = bufermanHost.CreateBufer();
+                    bufer.BackColor = this._settings.BuferDefaultBackgroundColor;
+                    bufer.ViewModel = buferViewModel;
+                    bufer.Width = bufermanHost.InnerAreaWidth;
+
                     this._buferHandlersBinder.Bind(bufer, bufermanHost);
 
                     this._TryApplyPresentation(bufer);
@@ -139,7 +134,7 @@ namespace BuferMAN.WinForms.Window
             {
                 if (presentation.IsCompatibleWithBufer(bufer.ViewModel.Clip))
                 {
-                    presentation.ApplyToButton(bufer.GetButton());
+                    presentation.ApplyToBufer(bufer);
                     return;
                 }
             }
