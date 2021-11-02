@@ -30,7 +30,7 @@ namespace BuferMAN.WinForms
         private Label _userManualLabel;
         private Label _pinnedBufersDivider;// TODO (m) replace with Split Container (along with scrolling bufers feature and pinned area)
         private bool _isAdmin;
-        private IBufermanApplication _bufermanApplication;// TODO (s) Remove it from here
+        private IBufermanApplication _bufermanApplication;// TODO (l) Remove it from here - MVP ?
         private bool _wasWindowClosed = false;
         private bool _wasWindowActivated = false;
         private IProgramSettingsGetter _settingsGetter;

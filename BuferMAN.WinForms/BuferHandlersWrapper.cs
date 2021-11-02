@@ -194,7 +194,7 @@ namespace BuferMAN.WinForms
                 () => Resource.MenuAddedToFile,
                 bufer);
 
-            bufer.SetContextMenu(buferContextMenuGenerator.GenerateContextMenuItems(buferContextMenuState, bufermanHost, buferTypeMenuGenerator));
+            bufer.ContextMenu = buferContextMenuGenerator.GenerateContextMenuItems(buferContextMenuState, bufermanHost, buferTypeMenuGenerator);
 
             foreach (var plugin in plugins) if (plugin.Available && plugin.Enabled)
                 {

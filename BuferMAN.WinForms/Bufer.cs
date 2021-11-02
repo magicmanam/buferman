@@ -16,6 +16,7 @@ namespace BuferMAN.WinForms
         private readonly IList<EventHandler> _onClickHandlers = new List<EventHandler>();
         private readonly IList<EventHandler> _onFocusHandlers = new List<EventHandler>();
         private readonly IList<EventHandler> _onUnfocusHandlers = new List<EventHandler>();
+        private IEnumerable<BufermanMenuItem> _contextMenuItems;
 
         public Bufer()
         {
@@ -40,10 +41,18 @@ namespace BuferMAN.WinForms
             return this._button;
         }
 
-        public void SetContextMenu(IEnumerable<BufermanMenuItem> menuItems)
+        public IEnumerable<BufermanMenuItem> ContextMenu
         {
-            this._button.ContextMenu = new System.Windows.Forms.ContextMenu();// TODO (m) remove reference to BuferMAN.ContextMenu (2 places in this project)
-            this._button.ContextMenu.PopulateMenuWithItems(menuItems);
+            get
+            {
+                return this._contextMenuItems;
+            }
+            set
+            {
+                this._contextMenuItems = value;
+                this._button.ContextMenu = new System.Windows.Forms.ContextMenu();// TODO (m) remove reference to BuferMAN.ContextMenu (2 places in this project)
+                this._button.ContextMenu.PopulateMenuWithItems(value);
+            }
         }
 
         public void SetText(string text)
@@ -182,6 +191,22 @@ namespace BuferMAN.WinForms
             get
             {
                 return this._button.TabIndex;
+            }
+            set
+            {
+                this._button.TabIndex = value;
+            }
+        }
+
+        public Point Location
+        {
+            get
+            {
+                return this._button.Location;
+            }
+            set
+            {
+                this._button.Location = value;
             }
         }
     }

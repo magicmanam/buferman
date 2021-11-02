@@ -9,6 +9,7 @@ using BuferMAN.Plugins.BuferPresentations;
 using BuferMAN.BuferPresentations;
 using BuferMAN.View;
 using BuferMAN.Infrastructure.Settings;
+using BuferMAN.Infrastructure.Menu;
 
 namespace BuferMAN.WinForms.Window
 {
@@ -82,7 +83,6 @@ namespace BuferMAN.WinForms.Window
         {
             foreach (var buferViewModel in bufers)
             {
-                Button button;
                 var bufer = bufermanHost.Bufers.SingleOrDefault(b => b.ViewModel.ViewId == buferViewModel.ViewId);
 
                 if (bufer == null)
@@ -99,42 +99,37 @@ namespace BuferMAN.WinForms.Window
                     bufermanHost.AddBufer(bufer);
                 }
 
-                button = bufer.GetButton();
-
                 var isCurrentBufer = buferViewModel.ViewId == bufermanHost.CurrentBuferViewId;
-                for (var i = 0; i < button.ContextMenu.MenuItems.Count; i++)
-                {// TODO (m) remove this shit
-                    var menuItem = button.ContextMenu.MenuItems[i];
-
-                    if (menuItem.Shortcut == Shortcut.CtrlC)
-                    {
-                        menuItem.Enabled = !isCurrentBufer;
-                    }
-                    else
-                    {
-                        for (var j = 0; j < menuItem.MenuItems.Count; j++)
-                        {
-                            var nestedMenuItem = menuItem.MenuItems[j];
-                            if (nestedMenuItem.Shortcut == Shortcut.CtrlC)
-                            {
-                                nestedMenuItem.Enabled = !isCurrentBufer;
-                            }
-                        }
-                    }
-                }// TODO (l) maybe remove this menu item if bufer is current? I can do this if rerender context menu on every change in clipboard service
+                this._UpdateCtrlCMenuItem(bufer.ContextMenu, isCurrentBufer);
 
                 var defaultBackColor = isCurrentBufer ?
                     (pinned ? this._settings.PinnedCurrentBuferBackColor : this._settings.CurrentBuferBackgroundColor) :
                     (pinned ? this._settings.PinnedBuferBackgroundColor : this._settings.BuferDefaultBackgroundColor);
 
-                button.BackColor = defaultBackColor;
+                bufer.BackColor = defaultBackColor;
                 bufer.ViewModel.DefaultBackColor = defaultBackColor;
 
-                button.TabIndex = currentButtonIndex;
-                button.Location = new Point(0, y);
+                bufer.TabIndex = currentButtonIndex;
+                bufer.Location = new Point(0, y);
 
                 currentButtonIndex -= 1;
                 y -= BUTTON_HEIGHT;
+            }
+        }
+
+        private void _UpdateCtrlCMenuItem(IEnumerable<BufermanMenuItem> menuItems, bool isCurrentBufer)
+        {
+            foreach (var menuItem in menuItems)
+            {
+                if (menuItem.ShortCut == Shortcut.CtrlC)
+                {
+                    menuItem.Enabled = !isCurrentBufer;
+                    return;
+                }
+                else
+                {
+                    this._UpdateCtrlCMenuItem(menuItem.Children, isCurrentBufer);
+                }
             }
         }
 

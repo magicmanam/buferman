@@ -9,7 +9,7 @@ namespace BuferMAN.Infrastructure
 {
     public interface IBufer
     {
-        void SetContextMenu(IEnumerable<BufermanMenuItem> menuItems);
+        IEnumerable<BufermanMenuItem> ContextMenu { get; set; }
         void SetText(string text);
         BuferViewModel ViewModel { get; set; }
         Font ApplyFontStyle(FontStyle style);
@@ -30,7 +30,8 @@ namespace BuferMAN.Infrastructure
         void SetMouseOverToolTipTitle(string tooltipTitle);
         void ShowFocusTooltip(string tooltipText, int durationInMilliseconds);
         void HideFocusTooltip();
-        int TabIndex { get; }
+        int TabIndex { get; set; }
+        Point Location { get; set; }
         Button GetButton();// TODO (l) replace/remove
     }
 }
