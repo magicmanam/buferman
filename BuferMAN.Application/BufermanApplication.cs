@@ -163,7 +163,7 @@ namespace BuferMAN.Application
                 storage.LoadBufers();
             }
 
-            this._mainMenuItems = this._mainMenuGenerator.GenerateMainMenu(this, this.Host);
+            this._mainMenuItems = this._mainMenuGenerator.GenerateMainMenu(this.Host);
             this.Host.SetMainMenu(this._mainMenuItems);
             this.Host.SetTrayMenu(this.GetTrayMenuItems());
 
@@ -290,8 +290,6 @@ namespace BuferMAN.Application
                     if (e.Alt)
                     {
                         this.ShouldCatchCopies = !this.ShouldCatchCopies;
-                        this._mainMenuItems = this._mainMenuGenerator.GenerateMainMenu(this, this.Host);
-                        this.Host.SetMainMenu(this._mainMenuItems);
                     }
                     break;
             }
@@ -321,6 +319,7 @@ namespace BuferMAN.Application
                 {
                     this._shouldCatchCopies = value;
                     this.Host.SetStatusBarText(this._shouldCatchCopies ? Resource.ResumedStatus : Resource.PausedStatus);
+                    this.RefreshMainMenu();
                 }
             }
         }

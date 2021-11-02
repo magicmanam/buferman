@@ -30,7 +30,7 @@ namespace BuferMAN.WinForms
         private Label _userManualLabel;
         private Label _pinnedBufersDivider;// TODO (m) replace with Split Container (along with scrolling bufers feature and pinned area)
         private bool _isAdmin;
-        private IBufermanApplication _bufermanApp;// TODO (s) Remove it from here
+        private IBufermanApplication _bufermanApplication;// TODO (s) Remove it from here
         private bool _wasWindowClosed = false;
         private bool _wasWindowActivated = false;
         private IProgramSettingsGetter _settingsGetter;
@@ -140,10 +140,10 @@ namespace BuferMAN.WinForms
 
         public int InnerAreaWidth { get; private set; }
 
-        public void Start(IBufermanApplication bufermanApp, bool isAdmin)
+        public void Start(IBufermanApplication bufermanApplication, bool isAdmin)
         {
             this._isAdmin = isAdmin;
-            this._bufermanApp = bufermanApp;
+            this._bufermanApplication = bufermanApplication;
 
             Application.ThreadException += BufermanWindow._Application_ThreadException;//Must be run before Application.Run() //Note
 
@@ -157,13 +157,13 @@ namespace BuferMAN.WinForms
             };
             this.TrayIcon.DoubleClick += this._TrayIcon_DoubleClick;
 
-            this.NotificationEmitter = new NotificationEmitter(this.TrayIcon, bufermanApp.GetBufermanTitle());
+            this.NotificationEmitter = new NotificationEmitter(this.TrayIcon, bufermanApplication.GetBufermanTitle());
             this.NotificationEmitter.ShowInfoNotification(Resource.NotifyIconStartupText, 1500);
 
             this._InitializeForm();
             this.Text = isAdmin ?
-                bufermanApp.GetBufermanAdminTitle() : 
-                bufermanApp.GetBufermanTitle();
+                bufermanApplication.GetBufermanAdminTitle() : 
+                bufermanApplication.GetBufermanTitle();
 
             this.InnerAreaWidth = this.ClientRectangle.Width;
 
@@ -179,16 +179,16 @@ namespace BuferMAN.WinForms
             this.Controls.Add(this._pinnedBufersDivider);
             this._pinnedBufersDivider.BringToFront();
 
-            bufermanApp.RunInHost(this);
+            bufermanApplication.RunInHost(this);
 
             Application.Idle += (object sender, EventArgs args) =>
             {
-                if (bufermanApp.NeedRerender)
+                if (bufermanApplication.NeedRerender)
                 {
-                   bufermanApp.ClearEmptyBufers();
+                   bufermanApplication.ClearEmptyBufers();
 
-                   bufermanApp.RerenderBufers();
-                   bufermanApp.NeedRerender = false;
+                   bufermanApplication.RerenderBufers();
+                   bufermanApplication.NeedRerender = false;
                 }
             };
 
@@ -286,6 +286,18 @@ namespace BuferMAN.WinForms
             this.StatusLine.Update();
         }
 
+        public bool ShouldCatchCopies
+        {
+            get
+            {
+                return this._bufermanApplication.ShouldCatchCopies;
+            }
+            set
+            {
+                this._bufermanApplication.ShouldCatchCopies = value;
+            }
+        }
+
         public void ActivateWindow()
         {
             var escHotKeyIntroCounter = this._settingsGetter.EscHotKeyIntroductionCounter;
@@ -320,7 +332,7 @@ namespace BuferMAN.WinForms
 
         public void RefreshUI(IEnumerable<BuferViewModel> temporaryBuferViewModels, IEnumerable<BuferViewModel> pinnedBuferViewModels)
         {
-            this._bufermanApp.RerenderBufers();// TODO (l) this line will work only if I do not use cached button and will recreate all bufers !!!
+            this._bufermanApplication.RerenderBufers();// TODO (l) this line will work only if I do not use cached button and will recreate all bufers !!!
             this.RerenderUserManual();
         }
 
@@ -332,7 +344,7 @@ namespace BuferMAN.WinForms
 
             this.TrayIcon.Visible = false;
             WindowsFunctions.UnregisterHotKey(this.Handle, 0);
-            this._bufermanApp = null;
+            this._bufermanApplication = null;
 
             Application.Exit();
         }
@@ -406,8 +418,8 @@ namespace BuferMAN.WinForms
         private string _GetUserManualText()
         {
             return this._isAdmin ?
-                this._bufermanApp.GetUserManualText() :
-                Resource.NotAdminWarning + this._bufermanApp.GetUserManualText();
+                this._bufermanApplication.GetUserManualText() :
+                Resource.NotAdminWarning + this._bufermanApplication.GetUserManualText();
         }
 
         public void RerenderUserManual()
@@ -474,7 +486,7 @@ namespace BuferMAN.WinForms
 
         private void _OnWindowClosing(object sender, FormClosingEventArgs e)
         {
-            if (this._bufermanApp != null)
+            if (this._bufermanApplication != null)
             {
                 var closingWindowExplanationCounter = this._settingsGetter.ClosingWindowExplanationCounter;
 

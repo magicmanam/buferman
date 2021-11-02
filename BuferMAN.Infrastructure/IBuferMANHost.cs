@@ -46,5 +46,6 @@ namespace BuferMAN.Infrastructure
         void ChangeLanguage(string shortLanguage);
         event EventHandler UILanguageChanged;
         event EventHandler OnExiting;
+        bool ShouldCatchCopies { get; set; }
     }
 }

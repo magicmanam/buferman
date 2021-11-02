@@ -48,11 +48,11 @@ namespace BuferMAN.Menu
             this._sessionManager = sessionManager;
         }
 
-        public IEnumerable<BufermanMenuItem> GenerateMainMenu(IBufermanApplication bufermanApplication, IBufermanHost bufermanHost)
+        public IEnumerable<BufermanMenuItem> GenerateMainMenu(IBufermanHost bufermanHost)
         {
             var items = new List<BufermanMenuItem>
             {
-                this._GenerateFileMenu(bufermanApplication),
+                this._GenerateFileMenu(bufermanHost),
                 this._GenerateEditMenu(bufermanHost),
                 this._GenerateToolsMenu(bufermanHost),
                 this._GenerateHelpMenu(bufermanHost)
@@ -61,10 +61,8 @@ namespace BuferMAN.Menu
             return items;
         }
 
-        private BufermanMenuItem _GenerateFileMenu(IBufermanApplication bufermanApplication)
+        private BufermanMenuItem _GenerateFileMenu(IBufermanHost bufermanHost)
         {
-            var bufermanHost = bufermanApplication.Host;
-
             var fileMenu = bufermanHost.CreateMenuItem(() => Resource.MenuFile);
             // TODO (l) add menu item "Load bufers from storage" - will open dialog with default storage, or list of files, or other options. Also setting: check storage(s) to load on start
             // Option: reload from storage/file
@@ -82,12 +80,11 @@ namespace BuferMAN.Menu
 
             fileMenu.AddSeparator();
 
-            var pauseResumeMenuItem = bufermanHost.CreateMenuItem(() => (bufermanApplication.ShouldCatchCopies ? Resource.MenuFilePause : Resource.MenuFileResume) + $" {new String('\t', 1)} Alt+P");
+            var pauseResumeMenuItem = bufermanHost.CreateMenuItem(() => (bufermanHost.ShouldCatchCopies ? Resource.MenuFilePause : Resource.MenuFileResume) + $" {new String('\t', 1)} Alt+P");
             pauseResumeMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
-                {
-                    bufermanApplication.ShouldCatchCopies = !bufermanApplication.ShouldCatchCopies;
-                    pauseResumeMenuItem.TextRefresh();
-                });
+            {
+                bufermanHost.ShouldCatchCopies = !bufermanHost.ShouldCatchCopies;
+            });
 
             fileMenu.AddMenuItem(pauseResumeMenuItem);
 
