@@ -37,7 +37,11 @@ Ctrl+Y - redo previous operation
 ...
 
 ### Terms
+*Bufer* - wrapper over Windows clipboard item.
 *Credentials bufer* - a bufer which minimize your interaction with login forms. Initial bufer's value is used as username, password you can set using *Ctrl + L (Login)* hot key. After that just place a cursor at username field in login form, activate a program using *Alt + C* hot key and select credentials bufer. The program will type your username, press TAB, type a password and Enter key while you just enjoy you life. **Warning:** Passwords are stored in-memory as-is and w/o encryption, so please do not use this feature for real credentials.
+
+### Comparing with other clipboard viewers
+Comparison table of BuferMAN with similar tools (Ditto, Windows 10, ...) you can find [here](https://docs.google.com/spreadsheets/d/1XWATNmQqHqbnp1LXQSSaXm69ETPeDE0AL_RdLjBqzbA/edit?usp=sharing).
 
 ## License
 GNU General Public License v3.0
