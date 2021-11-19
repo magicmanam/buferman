@@ -35,5 +35,8 @@
     <Setting Name="HttpUrlBuferExplanationCounter" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2</Value>
     </Setting>
+    <Setting Name="PreferredTwoLetterISOLanguageName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">en</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

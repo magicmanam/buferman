@@ -14,6 +14,7 @@ namespace BuferMAN.Infrastructure.Settings
         int EscHotKeyIntroductionCounter { set; }
         int ClosingWindowExplanationCounter { set; }
         int HttpUrlBuferExplanationCounter { set; }
+        string PreferredTwoLetterISOLanguageName { set; }
         void MarkThatBuferClickingWasExplained();
         bool IsDirty { get; }
         bool IsDefault { get; }

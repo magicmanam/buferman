@@ -17,6 +17,7 @@ using BuferMAN.View;
 using BuferMAN.Infrastructure.Settings;
 using System.Windows.Input;
 using System.Linq;
+using System.Globalization;
 
 namespace BuferMAN.WinForms
 {
@@ -154,6 +155,8 @@ namespace BuferMAN.WinForms
 
             Application.EnableVisualStyles();
 
+            this._bufermanApplication.SetHost(this);
+
             this.TrayIcon = new NotifyIcon()
             {
                 Text = Resource.NotifyIconStartupText,
@@ -184,7 +187,7 @@ namespace BuferMAN.WinForms
             this.Controls.Add(this._pinnedBufersDivider);
             this._pinnedBufersDivider.BringToFront();
 
-            bufermanApplication.RunInHost(this);
+            bufermanApplication.Run();
 
             Application.Idle += (object sender, EventArgs args) =>
             {
@@ -476,9 +479,21 @@ namespace BuferMAN.WinForms
 
         public void ChangeLanguage(string shortLanguage)
         {
-            System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(shortLanguage);
-
+            this.HostLanguage = shortLanguage;
+            this._settingsSetter.PreferredTwoLetterISOLanguageName = shortLanguage;
             this.UILanguageChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public string HostLanguage
+        {
+            get
+            {
+                return System.Threading.Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName;
+            }
+            set
+            {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(value);
+            }
         }
 
         private void _OnWindowClosing(object sender, FormClosingEventArgs e)

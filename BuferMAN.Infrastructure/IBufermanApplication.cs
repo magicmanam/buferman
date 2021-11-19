@@ -5,7 +5,8 @@ namespace BuferMAN.Infrastructure
 {
     public interface IBufermanApplication
     {
-        void RunInHost(IBufermanHost bufermanHost);
+        void SetHost(IBufermanHost bufermanHost);
+        void Run();
         bool ShouldCatchCopies { get; set; }
         IBufermanHost Host { get; }
         IEnumerable<BufermanMenuItem> GetTrayMenuItems();

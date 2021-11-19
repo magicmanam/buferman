@@ -43,6 +43,11 @@ namespace BuferMAN.Infrastructure
         void SetPinnedBufersDividerY(int y);
         int PinnedBufersDividerHeight { get; }
         void ChangeLanguage(string shortLanguage);
+
+        /// <summary>
+        /// Gets or sets two letter ISO language name.
+        /// </summary>
+        string HostLanguage { get; set; }
         event EventHandler UILanguageChanged;
         event EventHandler OnExiting;
         bool ShouldCatchCopies { get; set; }

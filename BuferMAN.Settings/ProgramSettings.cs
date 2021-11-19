@@ -221,6 +221,19 @@ namespace BuferMAN.Settings
             }
         }
 
+        public string PreferredTwoLetterISOLanguageName
+        {
+            get
+            {
+                return User.Default.PreferredTwoLetterISOLanguageName;
+            }
+            set
+            {
+                User.Default.PreferredTwoLetterISOLanguageName = value;
+                User.Default.Save();
+            }
+        }
+
         public int HttpUrlBuferExplanationCounter
         {
             get

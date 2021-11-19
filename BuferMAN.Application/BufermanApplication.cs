@@ -111,10 +111,14 @@ namespace BuferMAN.Application
             this.Host.RerenderBufers(temporaryBufers, pinnedBufers);
         }
 
-        public void RunInHost(IBufermanHost bufermanHost)
+        public void SetHost(IBufermanHost bufermanHost)
         {
             this.Host = bufermanHost;
+            this.Host.HostLanguage = this._settings.PreferredTwoLetterISOLanguageName;
+        }
 
+        public void Run()
+        {
             foreach (var plugin in this._plugins)
             {
                 try
@@ -123,7 +127,7 @@ namespace BuferMAN.Application
                 }
                 catch (Exception exc)
                 {
-                    bufermanHost
+                    this.Host
                         .UserInteraction
                         .ShowPopup(exc.Message, plugin.Name);
                 }

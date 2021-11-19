@@ -26,5 +26,6 @@ namespace BuferMAN.Infrastructure.Settings
         bool IsBuferClickingExplained { get; }
         int MaxBuferLengthToShowOnAliasCreation { get; }
         int MaxFilePathLengthForBuferTitle { get; }
+        string PreferredTwoLetterISOLanguageName { get; }
     }
 }

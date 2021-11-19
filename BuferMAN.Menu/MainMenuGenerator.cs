@@ -9,7 +9,6 @@ using magicmanam.UndoRedo;
 using BuferMAN.Infrastructure;
 using BuferMAN.Infrastructure.Plugins;
 using BuferMAN.Infrastructure.Menu;
-using System.Threading;
 using System.Collections.Generic;
 using BuferMAN.Infrastructure.Settings;
 using BuferMAN.Infrastructure.Files;
@@ -22,6 +21,7 @@ namespace BuferMAN.Menu
         private readonly IUserFileSelector _userFileSelector;
         private readonly IClipboardBuferService _clipboardBuferService;
         private readonly IProgramSettingsGetter _settings;
+        private readonly IProgramSettingsSetter _settingsSetter;
         private readonly IIDataObjectHandler _dataObjectHandler;
         private readonly IEnumerable<IBufermanPlugin> _plugins;
         private readonly IBufermanOptionsWindowFactory _optionsWindowFactory;
@@ -32,6 +32,7 @@ namespace BuferMAN.Menu
             IUserFileSelector userFileSelector,
             IClipboardBuferService clipboardBuferService,
             IProgramSettingsGetter settings,
+            IProgramSettingsSetter settingsSetter,
             IIDataObjectHandler dataObjectHandler,
             IEnumerable<IBufermanPlugin> plugins,
             IBufermanOptionsWindowFactory optionsWindowFactory,
@@ -41,6 +42,7 @@ namespace BuferMAN.Menu
             this._userFileSelector = userFileSelector;
             this._clipboardBuferService = clipboardBuferService;
             this._settings = settings;
+            this._settingsSetter = settingsSetter;
             this._dataObjectHandler = dataObjectHandler;
             this._plugins = plugins;
             this._optionsWindowFactory = optionsWindowFactory;
@@ -259,7 +261,6 @@ namespace BuferMAN.Menu
 
         private BufermanMenuItem _GenerateLanguageMenu(IBufermanHost bufermanHost)
         {
-            // TODO (m) во время открытия приложения показывать диалог с выбором языка и сохранять это значение
             var languageMenu = bufermanHost.CreateMenuItem(() => Resource.MenuToolsLanguage);
             
             var englishMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuToolsLanguageEn);
@@ -268,7 +269,7 @@ namespace BuferMAN.Menu
             var russianMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuToolsLanguageRu);
             languageMenu.AddMenuItem(russianMenuItem);
 
-            switch(Thread.CurrentThread.CurrentUICulture.TwoLetterISOLanguageName)
+            switch(bufermanHost.HostLanguage)
             {
                 case "ru":
                     this._UpdateLanguageMenuItems(russianMenuItem, englishMenuItem);
@@ -281,11 +282,13 @@ namespace BuferMAN.Menu
             englishMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
             {
                 bufermanHost.ChangeLanguage("en");
+                this._settingsSetter.PreferredTwoLetterISOLanguageName = "en";
                 this._UpdateLanguageMenuItems(englishMenuItem, russianMenuItem);
             });
             russianMenuItem.AddOnClickHandler((object sender, EventArgs args) =>
             {
                 bufermanHost.ChangeLanguage("ru");
+                this._settingsSetter.PreferredTwoLetterISOLanguageName = "ru";
                 this._UpdateLanguageMenuItems(russianMenuItem, englishMenuItem);
             });
 

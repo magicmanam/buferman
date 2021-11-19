@@ -154,5 +154,17 @@ namespace BuferMAN.Settings {
                 this["HttpUrlBuferExplanationCounter"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("en")]
+        public string PreferredTwoLetterISOLanguageName {
+            get {
+                return ((string)(this["PreferredTwoLetterISOLanguageName"]));
+            }
+            set {
+                this["PreferredTwoLetterISOLanguageName"] = value;
+            }
+        }
     }
 }
