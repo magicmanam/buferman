@@ -239,7 +239,7 @@ namespace BuferMAN.WinForms.Tests
                 bufer);
 
             // Assert
-            Assert.AreEqual($"<< {Resource.NotTextBufer} >>", bufer.ViewModel.OriginBuferTitle);
+            Assert.AreEqual(Resource.NotTextBufer, bufer.ViewModel.OriginBuferTitle);
             Assert.AreEqual(new Font(oldFont, FontStyle.Italic | FontStyle.Bold), bufer.Font);
         }
 

@@ -133,13 +133,13 @@
     <value>Файл</value>
   </data>
   <data name="FileContentsBufer" xml:space="preserve">
-    <value>В буфере файлы</value>
+    <value>&lt;&lt; В буфере файлы &gt;&gt;</value>
   </data>
   <data name="FolderBufer" xml:space="preserve">
     <value>Папка</value>
   </data>
   <data name="ImageBufer" xml:space="preserve">
-    <value>Картинка</value>
+    <value>&lt;&lt; Картинка &gt;&gt;</value>
   </data>
   <data name="LastClipboardUpdate" xml:space="preserve">
     <value>Последнее обновление буфера в </value>

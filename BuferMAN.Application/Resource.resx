@@ -136,13 +136,13 @@
     <value>File</value>
   </data>
   <data name="FileContentsBufer" xml:space="preserve">
-    <value>File Content</value>
+    <value>&lt;&lt; File Content &gt;&gt;</value>
   </data>
   <data name="FolderBufer" xml:space="preserve">
     <value>Folder</value>
   </data>
   <data name="ImageBufer" xml:space="preserve">
-    <value>Image</value>
+    <value>&lt;&lt; Image &gt;&gt;</value>
   </data>
   <data name="LastClipboardUpdate" xml:space="preserve">
     <value>The latest clipboard update was at </value>

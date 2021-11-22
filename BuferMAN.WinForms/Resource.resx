@@ -124,7 +124,7 @@
     <value>Files</value>
   </data>
   <data name="NotTextBufer" xml:space="preserve">
-    <value>Not a text</value>
+    <value>&lt;&lt; Not a text &gt;&gt;</value>
   </data>
   <data name="TratataTitle" xml:space="preserve">
     <value>Tra-ta-ta!!!</value>

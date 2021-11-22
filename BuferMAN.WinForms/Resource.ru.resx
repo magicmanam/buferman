@@ -124,7 +124,7 @@
     <value>Файлы</value>
   </data>
   <data name="NotTextBufer" xml:space="preserve">
-    <value>Странный буфер</value>
+    <value>&lt;&lt; Странный буфер &gt;&gt;</value>
   </data>
   <data name="TratataTitle" xml:space="preserve">
     <value>Тра-та-та!!!</value>

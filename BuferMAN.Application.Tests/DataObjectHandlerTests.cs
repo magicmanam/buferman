@@ -110,8 +110,8 @@ namespace BuferMAN.Application.Tests
 
             // Assert
             Assert.IsFalse(viewModel.IsChangeTextAvailable);
-            Assert.AreEqual($"<< {Resource.ImageBufer} >>", viewModel.Representation);
-            Assert.AreEqual($"<< {Resource.ImageBufer} >>", viewModel.TextRepresentation);
+            Assert.AreEqual(Resource.ImageBufer, viewModel.Representation);
+            Assert.AreEqual(Resource.ImageBufer, viewModel.TextRepresentation);
         }
 
         [TestMethod]
@@ -134,8 +134,8 @@ namespace BuferMAN.Application.Tests
 
             // Assert
             Assert.IsFalse(viewModel.IsChangeTextAvailable);
-            Assert.AreEqual($"<< {Resource.FileContentsBufer} >>", viewModel.Representation);
-            Assert.AreEqual($"<< {Resource.FileContentsBufer} >>", viewModel.TextRepresentation);
+            Assert.AreEqual(Resource.FileContentsBufer, viewModel.Representation);
+            Assert.AreEqual(Resource.FileContentsBufer, viewModel.TextRepresentation);
         }
 
         [TestMethod]

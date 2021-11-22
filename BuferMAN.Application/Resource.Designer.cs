@@ -115,7 +115,7 @@ namespace BuferMAN.Application {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File Content.
+        ///   Looks up a localized string similar to &lt;&lt; File Content &gt;&gt;.
         /// </summary>
         internal static string FileContentsBufer {
             get {
@@ -133,7 +133,7 @@ namespace BuferMAN.Application {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image.
+        ///   Looks up a localized string similar to &lt;&lt; Image &gt;&gt;.
         /// </summary>
         internal static string ImageBufer {
             get {

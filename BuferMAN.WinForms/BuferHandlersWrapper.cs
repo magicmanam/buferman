@@ -87,11 +87,11 @@ namespace BuferMAN.WinForms
                 {
                     if (formats.Any(f => string.Equals(f, ClipboardFormats.VISUAL_STUDIO_PROJECT_ITEMS, StringComparison.InvariantCultureIgnoreCase)))
                     {
-                        buferText = this._MakeSpecialBuferText("VISUAL STUDIO project items");
+                        buferText = "<< VISUAL STUDIO project items >>";
                     }
                     else
                     {
-                        buferText = this._MakeSpecialBuferText(Resource.NotTextBufer);
+                        buferText = Resource.NotTextBufer;
                         // TODO (l) maybe track such cases and/or ask user to send info (at least formats list) of this bufer?
                         // Or user can think of some name for this combination of formats
                     }
@@ -214,7 +214,7 @@ namespace BuferMAN.WinForms
         private string _MakeSpecialBuferText(string baseString)
         {
             return $"<< {baseString} >>";
-        }// TODO (m) is duplicated in DataObjectHandler and BigTextBuferPlugin
+        }
 
         private void _Bufer_GotFocus(object sender, EventArgs e)
         {

@@ -189,7 +189,7 @@ namespace BuferMAN.WinForms {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not a text.
+        ///   Looks up a localized string similar to &lt;&lt; Not a text &gt;&gt;.
         /// </summary>
         internal static string NotTextBufer {
             get {

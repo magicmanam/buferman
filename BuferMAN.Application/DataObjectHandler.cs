@@ -60,7 +60,7 @@ namespace BuferMAN.Application
                 {
                     if (firstFile.Length < this._settings.MaxFilePathLengthForBuferTitle)
                     {
-                        buferViewModel.TooltipTitle = this._MakeSpecialBuferText(onlyFolders ? Resource.FolderBufer : Resource.FileBufer);
+                        buferViewModel.TooltipTitle = $"<< {(onlyFolders ? Resource.FolderBufer : Resource.FileBufer)} >>";
                     }
                 }
 
@@ -73,14 +73,14 @@ namespace BuferMAN.Application
                 if (buferViewModel.Clip.GetFormats().Contains(ClipboardFormats.CUSTOM_IMAGE_FORMAT))
                 {
                     buferViewModel.IsChangeTextAvailable = false;
-                    buferViewModel.TextRepresentation = this._MakeSpecialBuferText(Resource.ImageBufer);
+                    buferViewModel.TextRepresentation = Resource.ImageBufer;
                 }
                 else
                 {
                     if (buferViewModel.Clip.GetFormats().Contains(ClipboardFormats.FILE_CONTENTS_FORMAT))
                     {
                         buferViewModel.IsChangeTextAvailable = false;
-                        buferViewModel.TextRepresentation = this._MakeSpecialBuferText(Resource.FileContentsBufer);
+                        buferViewModel.TextRepresentation = Resource.FileContentsBufer;
                     }
                 }
             }
@@ -153,10 +153,5 @@ namespace BuferMAN.Application
 
             return data;
         }
-
-        private string _MakeSpecialBuferText(string baseString)
-        {
-            return $"<< {baseString} >>";
-        }// TODO (m) is duplicated in BuferHandlersWrapper and BigTextBuferPlugin
     }
 }
