@@ -34,19 +34,22 @@ namespace BuferMAN.Plugins.BigTextBufer
 
         public override void UpdateBuferItem(BuferContextMenuState contextMenuState)
         {
-            var buferTextRepresentation = contextMenuState.Bufer.ViewModel.TextRepresentation;
-
-            if (contextMenuState.Bufer.ViewModel.IsChangeTextAvailable && buferTextRepresentation != null && buferTextRepresentation.Length > BigTextBuferPlugin.MaxBuferPresentationLength)
+            if (contextMenuState.Bufer.ViewModel.IsChangeTextAvailable)
             {
-                buferTextRepresentation = buferTextRepresentation.Substring(0, BigTextBuferPlugin.MaxBuferPresentationLength - 300) + Environment.NewLine + Environment.NewLine + "...";
+                var buferTextRepresentation = contextMenuState.Bufer.ViewModel.TextRepresentation;
 
-                contextMenuState.Bufer.ViewModel.Representation = buferTextRepresentation;
-                contextMenuState.Bufer.SetMouseOverToolTip(buferTextRepresentation);
-                contextMenuState.Bufer.ViewModel.TextRepresentation = buferTextRepresentation;
-                contextMenuState.Bufer.ViewModel.TooltipTitle = this._MakeSpecialBuferText(Resource.BigTextBufer);
+                if (buferTextRepresentation != null && buferTextRepresentation.Length > BigTextBuferPlugin.MaxBuferPresentationLength)
+                {
+                    buferTextRepresentation = this._ReduceRepresentation(buferTextRepresentation);
 
-                contextMenuState.Bufer.MouseOverTooltip.ToolTipTitle = contextMenuState.Bufer.ViewModel.TooltipTitle;
-                contextMenuState.Bufer.FocusTooltip.ToolTipTitle = contextMenuState.Bufer.ViewModel.TooltipTitle;
+                    contextMenuState.Bufer.ViewModel.Representation = buferTextRepresentation;
+                    contextMenuState.Bufer.SetMouseOverToolTip(buferTextRepresentation);
+                    contextMenuState.Bufer.ViewModel.TextRepresentation = buferTextRepresentation;
+                    contextMenuState.Bufer.ViewModel.TooltipTitle = Resource.BigTextBufer;
+
+                    contextMenuState.Bufer.MouseOverTooltip.ToolTipTitle = contextMenuState.Bufer.ViewModel.TooltipTitle;
+                    contextMenuState.Bufer.FocusTooltip.ToolTipTitle = contextMenuState.Bufer.ViewModel.TooltipTitle;
+                }
             }
         }
 
@@ -56,9 +59,9 @@ namespace BuferMAN.Plugins.BigTextBufer
             this._mainMenuItem.Checked = this.Enabled;
         }
 
-        private string _MakeSpecialBuferText(string baseString)
+        private string _ReduceRepresentation(string representation)
         {
-            return $"<< {baseString} >>";
-        }// TODO (m) is duplicated in BuferHandlersWrapper and DataObjectHandler
+            return $"{representation.Substring(0, BigTextBuferPlugin.MaxBuferPresentationLength - 300)}{Environment.NewLine}{Environment.NewLine}...";
+        }
     }
 }

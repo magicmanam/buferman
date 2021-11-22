@@ -88,7 +88,7 @@ namespace BuferMAN.Plugins {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Many characters....
+        ///   Looks up a localized string similar to &lt;&lt; Many characters... &gt;&gt;.
         /// </summary>
         internal static string BigTextBufer {
             get {

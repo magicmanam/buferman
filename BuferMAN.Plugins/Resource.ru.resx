@@ -127,7 +127,7 @@
     <value>Отключи свою батарею ({0}%) от зарядки, чтобы она прослужила дольше</value>
   </data>
   <data name="BigTextBufer" xml:space="preserve">
-    <value>Много букв...</value>
+    <value>&lt;&lt; Много букв... &gt;&gt;</value>
   </data>
   <data name="BigTextBuferPlugin" xml:space="preserve">
     <value>Большой текстовый буфер</value>

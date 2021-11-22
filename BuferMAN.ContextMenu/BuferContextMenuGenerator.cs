@@ -77,15 +77,14 @@ namespace BuferMAN.ContextMenu
                     }
                     else
                     {
+                        var data = formatData.ToString();
+                        if (data.Length > 2300)
+                        {
+                            data = $"{data.Substring(0, 2000)}{Environment.NewLine}{Environment.NewLine}...";
+                        }
+
                         particularFormatMenu.AddOnClickHandler((object sender, EventArgs args) =>
                         {
-                            int maxBuferLength = 2300;// TODO (m) into BigTextBuferPlugin
-                            var data = formatData.ToString();
-                            if (data.Length > maxBuferLength)
-                            {
-                                data = data.Substring(0, maxBuferLength - 300) + Environment.NewLine + Environment.NewLine + "...";
-                            }
-
                             bufermanHost.UserInteraction.ShowPopup(data, format);
                         });
                     }
