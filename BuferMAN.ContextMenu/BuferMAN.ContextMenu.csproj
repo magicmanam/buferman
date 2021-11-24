@@ -67,6 +67,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="EditBuferTextMenuItem.cs" />
     <Compile Include="ReturnToInitialTextMenuItem.cs" />
     <Compile Include="TextChangedEventArgs.cs" />
   </ItemGroup>

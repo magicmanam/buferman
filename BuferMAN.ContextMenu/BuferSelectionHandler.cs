@@ -9,20 +9,20 @@ namespace BuferMAN.ContextMenu
 {
 	internal class BuferSelectionHandler : IBuferSelectionHandler
     {
-        private readonly IDataObject _dataObject;
+        private readonly IBufer _bufer;
         private readonly IClipboardWrapper _clipboardWrapper;
         private readonly IBufermanHost _bufermanHost;
 
-        public BuferSelectionHandler(IDataObject dataObject, IClipboardWrapper clipboardWrapper, IBufermanHost bufermanHost)
+        public BuferSelectionHandler(IBufer bufer, IClipboardWrapper clipboardWrapper, IBufermanHost bufermanHost)
         {
-            this._dataObject = dataObject;
+            this._bufer = bufer;
             this._clipboardWrapper = clipboardWrapper;
             this._bufermanHost = bufermanHost;
         }
 
         public void DoOnClipSelection(object sender, EventArgs e)
         {
-            this._clipboardWrapper.SetDataObject(this._dataObject);
+            this._clipboardWrapper.SetDataObject(this._bufer.ViewModel.Clip);
 
             this._bufermanHost.HideWindow();
 

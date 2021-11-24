@@ -128,8 +128,11 @@ namespace BuferMAN.ContextMenu
                         var textDataObject = new DataObject();
                         textDataObject.SetText(buferViewModel.OriginBuferTitle);
 
-                        var textBuferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(textDataObject, bufermanHost);
+                        var oldClip = buferViewModel.Clip;
+                        buferViewModel.Clip = textDataObject;
+                        var textBuferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(bufer, bufermanHost);
                         textBuferSelectionHandler.DoOnClipSelection(sender, args);
+                        buferViewModel.Clip = oldClip;
                     });
                     buferContextMenuState.PasteMenuItem.AddMenuItem(pasteAsTextMenuItem);
 
@@ -143,6 +146,10 @@ namespace BuferMAN.ContextMenu
                 }));
 
                 menuItems.Add(bufermanHost.CreateMenuSeparatorItem());
+
+                var editTextMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuEdit);
+                new EditBuferTextMenuItem(editTextMenuItem, buferContextMenuState, bufermanHost, this._settings, this._clipboardWrapper);
+                menuItems.Add(editTextMenuItem);
 
                 var returnTextToInitialMenuItem = bufermanHost.CreateMenuItem(() => Resource.MenuReturn);
                 new ReturnToInitialTextMenuItem(returnTextToInitialMenuItem, buferContextMenuState.Bufer, bufermanHost);

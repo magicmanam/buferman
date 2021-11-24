@@ -4,6 +4,6 @@ namespace BuferMAN.Infrastructure
 {
     public interface IBuferSelectionHandlerFactory
     {
-        IBuferSelectionHandler CreateHandler(IDataObject dataObject, IBufermanHost bufermanHost);
+        IBuferSelectionHandler CreateHandler(IBufer bufer, IBufermanHost bufermanHost);
     }
 }

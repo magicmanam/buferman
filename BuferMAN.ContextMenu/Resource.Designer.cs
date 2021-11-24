@@ -268,6 +268,15 @@ namespace BuferMAN.ContextMenu {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit bufer.
+        /// </summary>
+        internal static string MenuEdit {
+            get {
+                return ResourceManager.GetString("MenuEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &amp;Formats.
         /// </summary>
         internal static string MenuFormats {

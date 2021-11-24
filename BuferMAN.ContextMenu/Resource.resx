@@ -210,6 +210,9 @@
   <data name="HttpUrlBuferExplanation" xml:space="preserve">
     <value>You just copied HTTP url. Now you can open it in browser via bufer's context menu or Ctrl+B hot key combination</value>
   </data>
+  <data name="MenuEdit" xml:space="preserve">
+    <value>Edit bufer</value>
+  </data>
   <data name="StreamFormat" xml:space="preserve">
     <value>Stream</value>
   </data>

@@ -164,7 +164,7 @@ namespace BuferMAN.WinForms
             this._bufer.AddOnFocusHandler(this._Bufer_GotFocus);
             this._bufer.AddOnUnfocusHandler(this._Bufer_LostFocus);
 
-            var buferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(this._bufer.ViewModel.Clip, bufermanHost);
+            var buferSelectionHandler = this._buferSelectionHandlerFactory.CreateHandler(this._bufer, bufermanHost);
             if (this._settingsGetter.IsBuferClickingExplained)
             {
                 this._bufer.AddOnClickHandler(buferSelectionHandler.DoOnClipSelection);

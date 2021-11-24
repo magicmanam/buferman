@@ -8,20 +8,20 @@ namespace BuferMAN.ContextMenu
 {
     public class ChangeTextMenuItem : ChangingTextMenuItemBase
     {
-        private readonly IProgramSettingsGetter _setting;
+        private readonly IProgramSettingsGetter _settings;
 
-        public ChangeTextMenuItem(BufermanMenuItem menuItem, IBufer bufer, IBufermanHost bufermanHost, IProgramSettingsGetter setting) : base(menuItem, bufer, bufermanHost)
+        public ChangeTextMenuItem(BufermanMenuItem menuItem, IBufer bufer, IBufermanHost bufermanHost, IProgramSettingsGetter settings) : base(menuItem, bufer, bufermanHost)
         {
             menuItem.AddOnClickHandler(this._ChangeText);
             menuItem.ShortCut = Shortcut.CtrlH;
 
-            this._setting = setting;
+            this._settings = settings;
         }
 
         private void _ChangeText(object sender, EventArgs e)
         {
             var buferText = this.ViewModel.OriginBuferTitle;
-            var promptText = buferText.Length < this._setting.MaxBuferLengthToShowOnAliasCreation ?
+            var promptText = buferText.Length < this._settings.MaxBuferLengthToShowOnAliasCreation ?
                 string.Format(Resource.ChangeText, buferText) :
                 Resource.ChangeBigText;
 
