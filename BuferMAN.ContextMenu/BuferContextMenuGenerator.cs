@@ -64,11 +64,11 @@ namespace BuferMAN.ContextMenu
 
                     if (formatData is Stream)
                     {
-                        particularFormatMenu.Text += " (Stream)";
+                        particularFormatMenu.Text += $" ({Resource.StreamFormat})";
                     }
                     else if (formatData is string)
                     {
-                        particularFormatMenu.Text += " (Text)";
+                        particularFormatMenu.Text += $" ({Resource.TextFormat})";
                     }
 
                     if (formatData == null)

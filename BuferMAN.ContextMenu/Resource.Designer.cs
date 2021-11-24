@@ -338,5 +338,23 @@ namespace BuferMAN.ContextMenu {
                 return ResourceManager.GetString("MenuReturn", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stream.
+        /// </summary>
+        internal static string StreamFormat {
+            get {
+                return ResourceManager.GetString("StreamFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text.
+        /// </summary>
+        internal static string TextFormat {
+            get {
+                return ResourceManager.GetString("TextFormat", resourceCulture);
+            }
+        }
     }
 }

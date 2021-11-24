@@ -210,4 +210,10 @@
   <data name="HttpUrlBuferExplanation" xml:space="preserve">
     <value>Вы скопировали Http-ссылку. Открыть её в браузере можно через контекстное меню буфера или комбинацию горячих клавиш Ctrl+B</value>
   </data>
+  <data name="StreamFormat" xml:space="preserve">
+    <value>Поток</value>
+  </data>
+  <data name="TextFormat" xml:space="preserve">
+    <value>Текст</value>
+  </data>
 </root>
